@@ -20,7 +20,12 @@ namespace PI_Bases_y_IS_Grupo_1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-           
+
+         
+          
+
+
+
 
         }
 

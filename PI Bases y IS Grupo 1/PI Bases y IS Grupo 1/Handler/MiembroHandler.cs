@@ -17,12 +17,12 @@ namespace PIBasesISGrupo1.Handler
     {
         private readonly IConfiguration configuration;
 
-
+       
         private SqlConnection conexion;
         private string rutaConexion;
-        public MiembroHandler()
+        public MiembroHandler(IConfiguration config)
         {
-
+            this.configuration = config;
             rutaConexion = configuration.GetConnectionString("ConexionBD");
             conexion = new SqlConnection(rutaConexion);
 
