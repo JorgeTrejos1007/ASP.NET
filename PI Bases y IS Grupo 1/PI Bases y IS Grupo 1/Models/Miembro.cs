@@ -8,7 +8,7 @@ using System.ComponentModel;
 
 namespace PIBasesISGrupo1.Models
 {
-    public class MiembroModel
+    public class Miembro
     {
         public int Id { get; set; }
         public string Genero { get; set; }
