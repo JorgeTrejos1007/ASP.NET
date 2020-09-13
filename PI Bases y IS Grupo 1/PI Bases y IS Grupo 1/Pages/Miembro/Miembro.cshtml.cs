@@ -4,15 +4,19 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using PIBasesISGrupo1.Models;
-namespace PI_Bases_y_IS_Grupo_1.Pages
+
+namespace PIBasesISGrupo_1.Pages.Miembro
 {
-    public class IndexModel : PageModel
+    public class MiembroModel : PageModel
     {
-        
         public void OnGet()
         {
 
+        }
+
+        public void OnPost(int id)
+        {
+           
         }
     }
 }
