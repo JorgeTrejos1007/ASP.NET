@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace PIBasesISGrupo_1.Pages.Miembro
-{s
+{
     public class MiembroModel : PageModel
     {
         public void OnGet()
@@ -16,7 +16,7 @@ namespace PIBasesISGrupo_1.Pages.Miembro
 
         public void OnPost(int id)
         {
-
+           
         }
     }
 }
