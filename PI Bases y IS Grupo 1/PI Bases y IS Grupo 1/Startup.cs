@@ -22,9 +22,6 @@ namespace PI_Bases_y_IS_Grupo_1
             Configuration = configuration;
            
 
-
-
-
         }
 
         public IConfiguration Configuration { get; }
