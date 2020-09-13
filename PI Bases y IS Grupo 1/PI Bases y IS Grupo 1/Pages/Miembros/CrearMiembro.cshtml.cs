@@ -11,7 +11,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
     public class CrearMiembroModel : PageModel
     {
 
-        public Miembro miembro { get; set; }
+        [BindProperty]        
+        public Miembro Miembro { get; set; }
         public void OnGet()
         {
 

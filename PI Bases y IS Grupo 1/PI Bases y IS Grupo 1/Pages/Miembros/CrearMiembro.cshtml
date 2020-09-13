@@ -9,5 +9,12 @@
     <input type="submit" value=" Enviar" />
 </form>
 
-<h2>CrearMiembro</h2>
+
+<h2>Registrarme</h2>
+<form method="post">
+    <input asp-for="@Model.Miembro.Nombre" placeholder="Nombre" />
+    <input asp-for="@Model.Miembro.PrimerApellido" placeholder="Primer apellido" />
+    <input type="submit" value=" Enviar" asp-page-handler="Miembro"/>
+</form>
+
 

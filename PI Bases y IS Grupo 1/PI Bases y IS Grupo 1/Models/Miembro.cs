@@ -14,7 +14,7 @@ namespace PIBasesISGrupo1.Models
         public string Genero { get; set; }
         [Required(ErrorMessage = "Es necesario que ingreses tu nombre")]
         [Display(Name = "Ingrese su Nombre")]
-        public string nombre { get; set; }
+        public string Nombre { get; set; }
         [Required(ErrorMessage = "Es necesario que ingreses tu primer apellido")]
         [Display(Name = "Ingrese su primer apellido")]
         public string PrimerApellido{ get; set; }
