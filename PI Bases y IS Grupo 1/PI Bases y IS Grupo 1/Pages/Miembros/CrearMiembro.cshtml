@@ -3,18 +3,17 @@
 @{
     ViewData["Title"] = "CrearMiembro";
 }
-<form method="post">
-    <h1>Formulario simple</h1>
-    <input type="text" name="id" placeholder="id" />
-    <input type="submit" value=" Enviar" />
-</form>
-
-
 <h2>Registrarme</h2>
 <form method="post">
     <input asp-for="@Model.Miembro.Nombre" placeholder="Nombre" />
     <input asp-for="@Model.Miembro.PrimerApellido" placeholder="Primer apellido" />
-    <input type="submit" value=" Enviar" asp-page-handler="Miembro"/>
+    <input asp-for="@Model.Miembro.SegundoApellido" placeholder="Segundo apellido" /></br></br>
+    <input asp-for="@Model.Miembro.Genero" placeholder="Genero" /></br></br>
+    <input asp-for="@Model.Miembro.SegundoApellido" placeholder="Segundo apellido" /></br></br>
+    <input asp-for="@Model.Miembro.Nacionalidad" placeholder="Nacionalidad" /></br></br>
+    <input asp-for="@Model.Miembro.Correo" placeholder="Correo" /></br></br>
+    <input asp-for="@Model.Miembro.Contraseña" placeholder="Contraseña" /></br></br>
+    <input type="submit" value=" Enviar" asp-page-handler="Miembro" />
 </form>
 
 
