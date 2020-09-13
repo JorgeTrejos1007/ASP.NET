@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1231
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIBasesISGrupo 1", "PI Bases y IS Grupo 1\PIBasesISGrupo 1.csproj", "{7C006F70-42F0-4D7C-ADEC-7662CA098166}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PIBasesISGrupo1", "PI Bases y IS Grupo 1\PIBasesISGrupo1.csproj", "{7C006F70-42F0-4D7C-ADEC-7662CA098166}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
