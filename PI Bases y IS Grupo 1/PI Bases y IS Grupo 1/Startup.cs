@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+
+
+
 namespace PI_Bases_y_IS_Grupo_1
 {
     public class Startup
@@ -17,6 +20,11 @@ namespace PI_Bases_y_IS_Grupo_1
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+           
+
+
+
+
         }
 
         public IConfiguration Configuration { get; }
