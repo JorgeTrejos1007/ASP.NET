@@ -11,14 +11,15 @@ namespace PIBasesISGrupo1.Pages.Miembros
 {
     public class EditarMiembroModel : PageModel
     {
-
-        public void ActionResult(String email)
+        [BindProperty]
+        public Miembro Miembro { get; set; }
+        public void OnGet(String email)
         {
-            ActionResult vista = null;
+            
             try {
 
                 MiembroHandler accesoDatos = new MiembroHandler();
-                Miembro miembroModificar= accesoDatos.obtenerTodoslosMiembros().Find(smodel => smodel.Email == email);
+                Miembro miembroModificar= accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.Email == email);
                 if (miembroModificar == null)
                 {
                      RedirectToPage("index");
@@ -31,19 +32,19 @@ namespace PIBasesISGrupo1.Pages.Miembros
             }
             catch
             {
-                 RedirectToPage("index");
+                  RedirectToPage("index");
             }
 
         }
 
-        public void OnPost()
+
+        public IActionResult OnPost()
         {
+            MiembroHandler accesoDatos = new MiembroHandler();
 
-        }
+            accesoDatos.modificarMiembro(Miembro);
 
-
-        public void OnPostMiembro()
-        {
+            return Redirect("~/Miembros/DesplegarMiembros");
 
         }
 

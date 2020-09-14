@@ -10,7 +10,6 @@ namespace PIBasesISGrupo1.Models
 {
     public class Miembro
     {
-        public int Id { get; set; }
         public string Genero { get; set; }
         [Required(ErrorMessage = "Es necesario que ingreses tu nombre")]
         [Display(Name = "Ingrese su Nombre")]
@@ -28,7 +27,7 @@ namespace PIBasesISGrupo1.Models
         //[RegularExpression("^[0-9]*$", ErrorMessage = "Debe ingresar numeros")]
         public string Email { get; set; }        
         public string Password { get; set; }
-        public string Nacionalidad { get; set; }
+        public string Pais { get; set; }
         public string Hobbies { get; set; }
     }
 }
