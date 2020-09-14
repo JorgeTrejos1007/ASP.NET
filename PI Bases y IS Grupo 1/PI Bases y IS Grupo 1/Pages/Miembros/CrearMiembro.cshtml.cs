@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
+using PIBasesISGrupo1.Handler;
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -22,6 +23,11 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         }
         public void OnPostMiembro() {
+            bool ExitoAlCrear = false;
+            MiembroHandler accesoDatos = new MiembroHandler();
+            ExitoAlCrear = accesoDatos.crearMiembro(Miembro); // recuerde que este método devuelve un booleano                     
+            
+           
         } 
     }
 }

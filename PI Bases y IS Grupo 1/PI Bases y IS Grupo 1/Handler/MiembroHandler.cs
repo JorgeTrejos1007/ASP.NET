@@ -66,17 +66,18 @@ namespace PIBasesISGrupo1.Handler
 
         public bool crearMiembro(Miembro miembro)
         {
-            string consulta = "INSERT INTO Usuario(Genero, Nombre, PrimeApellido, SegundoApellido, Email, Password, Nacionalidad, Hobbies) "
-                + "VALUES (@Genero,@Nombre,@PrimeApellido,@SegundoApellido,@Email,@Password,@Nacionalidad,@Hobbies) ";
+            string consulta = "INSERT INTO Usuario(Genero, Nombre, PrimerApellido, SegundoApellido, Email, Password, Nacionalidad,Hobbies) "
+                + "VALUES (@Genero,@Nombre,@PrimerApellido,@SegundoApellido,@Email,@Password,@Nacionalidad,@Hobbies) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
             comandoParaConsulta.Parameters.AddWithValue("@Genero", miembro.Genero);
             comandoParaConsulta.Parameters.AddWithValue("@Nombre", miembro.Nombre);
-            comandoParaConsulta.Parameters.AddWithValue("@PrimeApellido", miembro.PrimerApellido);
+            comandoParaConsulta.Parameters.AddWithValue("@PrimerApellido", miembro.PrimerApellido);
             comandoParaConsulta.Parameters.AddWithValue("@SegundoApellido", miembro.SegundoApellido);
             comandoParaConsulta.Parameters.AddWithValue("@Email", miembro.Email);
             comandoParaConsulta.Parameters.AddWithValue("@Password", miembro.Password);
+            comandoParaConsulta.Parameters.AddWithValue("@Nacionalidad", miembro.Nacionalidad);
             comandoParaConsulta.Parameters.AddWithValue("@Hobbies", miembro.Hobbies);
 
             
