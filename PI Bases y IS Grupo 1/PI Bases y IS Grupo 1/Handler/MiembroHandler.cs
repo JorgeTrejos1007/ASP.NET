@@ -79,7 +79,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@Password", miembro.Password);
             comandoParaConsulta.Parameters.AddWithValue("@Hobbies", miembro.Hobbies);
 
-            conexion.Open();
+            
 
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();

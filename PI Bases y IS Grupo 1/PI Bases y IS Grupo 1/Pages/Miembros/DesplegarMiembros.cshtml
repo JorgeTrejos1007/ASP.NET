@@ -1,9 +1,38 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Miembros.DesplegarMiembrosModel
+
+
 @{
     ViewData["Title"] = "DesplegarMiembros";
+    var ViewDataMiembros = ViewData["Miembros"] as List<PIBasesISGrupo1.Models.Miembro>;
 }
 
-<h2>DesplegarMiembros</h2>
+<strong>Miembros de nuestra comunidad</strong>
 
 
+<br />
+<br />
+@foreach (var miembro in (List<PIBasesISGrupo1.Models.Miembro>)ViewData["Miembros"])
+{
+    <tr>
+        <td>
+
+            <p>
+                Nombre Completo: @miembro.Nombre @miembro.PrimerApellido
+                @if (@miembro.SegundoApellido != null)
+                {
+                    @miembro.SegundoApellido
+                }
+                <br />
+                Genero: @miembro.Genero<br />
+                Nacionalidad: @miembro.Nacionalidad<br />
+                Hobbies: @miembro.Hobbies<br />
+                Email: @miembro.Email<br />
+
+
+            </p>
+
+        </td>
+
+    </tr>
+}
