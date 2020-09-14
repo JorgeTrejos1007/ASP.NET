@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
+
 using System.Data;
 using System.Data.SqlClient;
-
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using PIBasesISGrupo1.Models;
@@ -15,26 +15,26 @@ namespace PIBasesISGrupo1.Handler
 {
     public class MiembroHandler
     {
-        private readonly IConfiguration configuration;
+        
 
-
+        private ConexionModel conexionBD;
         private SqlConnection conexion;
-        private string rutaConexion;
         public MiembroHandler()
         {
-           
-            rutaConexion = configuration.GetConnectionString("ConexionBD");
-            conexion = new SqlConnection(rutaConexion);
+            conexionBD = new ConexionModel();
+            conexion = conexionBD.Connection();
+
 
 
         }
+       
 
         private DataTable crearTablaConsulta(string consulta)
         {
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
-            conexion.Open();
+         
             adaptadorParaTabla.Fill(consultaFormatoTabla);
             conexion.Close();
             return consultaFormatoTabla;

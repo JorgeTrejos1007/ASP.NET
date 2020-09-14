@@ -17,14 +17,11 @@ namespace PI_Bases_y_IS_Grupo_1
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-
-         
           
-
-
 
 
         }

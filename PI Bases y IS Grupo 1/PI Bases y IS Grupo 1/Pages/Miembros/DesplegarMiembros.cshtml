@@ -7,29 +7,3 @@
 <h2>DesplegarMiembros</h2>
 
 
-<div class="seccion_1" id="s1">
-
-
-    @foreach (var miembro in @ViewData["Miembros"])
-    {
-        <hr /> <h4> <strong> Miembro: </strong> @planeta.id </h4>
-        <p>
-            Nombre: @planeta.nombre <br /> Tipo: @planeta.tipo <br /> Número de anillos: @planeta.numeroAnillos <br />
-        </p>
-        @Html.ActionLink(
-                        "Modificar información", "editarPlaneta",
-                        new {identificador = planeta.id },
-                        new { @class = "btn btn alert-info",
-                        @onclick = "return confirm('¿Quiere modificar este planeta?');"}
-                        )
-
-        @Html.ActionLink(
-                         "Ver contenido digital", "accederArchivo",
-                         new {identificador = planeta.id },
-                         new { @class = "btn btn alert-success" })
-        <hr />
-    }
-
-
-</div>
-
