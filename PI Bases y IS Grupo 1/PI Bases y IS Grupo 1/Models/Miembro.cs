@@ -26,8 +26,9 @@ namespace PIBasesISGrupo1.Models
         [Required(ErrorMessage = "Es necesario que ingreses un correo")]
         [Display(Name = "Ingrese su correo")]
         //[RegularExpression("^[0-9]*$", ErrorMessage = "Debe ingresar numeros")]
-        public string Correo { get; set; }        
-        public string Contraseña { get; set; }
+        public string Email { get; set; }        
+        public string Password { get; set; }
         public string Nacionalidad { get; set; }
+        public string Hobbies { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace PIBasesISGrupo1.Handler
     {
         private readonly IConfiguration configuration;
 
-       
+
         private SqlConnection conexion;
         private string rutaConexion;
         public MiembroHandler(IConfiguration config)
@@ -28,7 +28,7 @@ namespace PIBasesISGrupo1.Handler
 
 
         }
-        /*
+
         private DataTable crearTablaConsulta(string consulta)
         {
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
@@ -39,6 +39,55 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return consultaFormatoTabla;
         }
+
+        public List<Miembro> obtenerTodoslosMiembros()
+        {
+            List<Miembro> miembros = new List<Miembro>();
+            string consulta = "SELECT * FROM Usuario";
+            DataTable tablaResultado = crearTablaConsulta(consulta);
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                miembros.Add(
+                new Miembro
+                {
+                    Genero = Convert.ToString(columna["Genero"]),
+                    Nombre = Convert.ToString(columna["Nombre"]),
+                    PrimerApellido = Convert.ToString(columna["PrimerApellido"]),
+                    SegundoApellido = Convert.ToString(columna["SegundoApellido"]),
+                    Email = Convert.ToString(columna["Email"]),
+                    Password = Convert.ToString(columna["Password"]),
+                    Nacionalidad = Convert.ToString(columna["Nacionalidad"]),
+                    Hobbies = Convert.ToString(columna["Hobbies"])
+                });
+
+            }
+            return miembros;
+        }
+
+        public bool crearMiembro(Miembro miembro)
+        {
+            string consulta = "INSERT INTO Usuario(Genero, Nombre, PrimeApellido, SegundoApellido, Email, Password, Nacionalidad, Hobbies) "
+                + "VALUES (@Genero,@Nombre,@PrimeApellido,@SegundoApellido,@Email,@Password,@Nacionalidad,@Hobbies) ";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@Genero", miembro.Genero);
+            comandoParaConsulta.Parameters.AddWithValue("@Nombre", miembro.Nombre);
+            comandoParaConsulta.Parameters.AddWithValue("@PrimeApellido", miembro.PrimerApellido);
+            comandoParaConsulta.Parameters.AddWithValue("@SegundoApellido", miembro.SegundoApellido);
+            comandoParaConsulta.Parameters.AddWithValue("@Email", miembro.Email);
+            comandoParaConsulta.Parameters.AddWithValue("@Password", miembro.Password);
+            comandoParaConsulta.Parameters.AddWithValue("@Hobbies", miembro.Hobbies);
+
+            conexion.Open();
+
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
+            conexion.Close();
+            return exito;
+        }
+
+        /*
+        
          
         public List<Miembro> obtenerTodoslosPlanetas()
         {
