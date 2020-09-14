@@ -70,7 +70,7 @@ namespace PIBasesISGrupo1.Handler
                 + "VALUES (@Genero,@Nombre,@PrimeApellido,@SegundoApellido,@Email,@Password,@Nacionalidad,@Hobbies) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-
+     
             comandoParaConsulta.Parameters.AddWithValue("@Genero", miembro.Genero);
             comandoParaConsulta.Parameters.AddWithValue("@Nombre", miembro.Nombre);
             comandoParaConsulta.Parameters.AddWithValue("@PrimeApellido", miembro.PrimerApellido);
@@ -79,16 +79,21 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@Password", miembro.Password);
             comandoParaConsulta.Parameters.AddWithValue("@Hobbies", miembro.Hobbies);
 
-            
-
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
             return exito;
         }
 
+        
+        
+        
+        
+        
+        
+        
+        
         /*
         
-         
         public List<Miembro> obtenerTodoslosPlanetas()
         {
             List<Miembro> planetas = new List<Miembro>();
