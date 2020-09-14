@@ -20,9 +20,9 @@ namespace PIBasesISGrupo1.Handler
 
         private SqlConnection conexion;
         private string rutaConexion;
-        public MiembroHandler(IConfiguration config)
+        public MiembroHandler()
         {
-            this.configuration = config;
+           
             rutaConexion = configuration.GetConnectionString("ConexionBD");
             conexion = new SqlConnection(rutaConexion);
 
