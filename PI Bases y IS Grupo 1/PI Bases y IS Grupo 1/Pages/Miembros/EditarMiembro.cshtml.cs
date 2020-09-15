@@ -12,28 +12,32 @@ namespace PIBasesISGrupo1.Pages.Miembros
     public class EditarMiembroModel : PageModel
     {
         [BindProperty]
-        public Miembro Miembro { get; set; }
-        public void OnGet(String email)
-        {
-            
-            try {
+        public Miembro miembro { get; set; }
+        
 
+        public IActionResult OnGet(String email)
+        {
+            IActionResult vista;
+        
+            try {
                 MiembroHandler accesoDatos = new MiembroHandler();
                 Miembro miembroModificar= accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.Email == email);
                 if (miembroModificar == null)
                 {
-                     RedirectToPage("index");
-
+                    vista = Redirect("~/Miembros/DesplegarMiembros");
                 }
                 else {
 
                     ViewData["MiembroModificar"] = miembroModificar;
+                    vista = Page();
                 }
             }
             catch
             {
-                  RedirectToPage("index");
+                vista = Redirect("~/Miembros/DesplegarMiembros");
             }
+
+            return vista;
 
         }
 
@@ -41,11 +45,16 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IActionResult OnPost()
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-
-            accesoDatos.modificarMiembro(Miembro);
-
-            return Redirect("~/Miembros/DesplegarMiembros");
-
+            if (accesoDatos.modificarMiembro(miembro))
+            {
+                TempData["mensaje"] = "Informacion editada con exito";
+                TempData["exitoAlEditar"] = true;
+            }
+            else {
+                TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
+                TempData["exitoAlEditar"] = false;
+            }
+            return RedirectToAction("~/Miembros/EditarMiembro", new { email = miembro.Email });
         }
 
     }
