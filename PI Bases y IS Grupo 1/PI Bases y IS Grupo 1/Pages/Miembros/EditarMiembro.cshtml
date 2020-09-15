@@ -8,25 +8,60 @@
 }
 
 
-
 <h2>Edicion de datos de perfil</h2>
 <form method="post">
 
-    Nombre: <input asp-for="@Model.Miembro.Nombre" value="@datosMiembroModificar.Nombre" />
+    <div>
+        <span asp-validation-for="@Model.Miembro.Nombre" class="text-danger"></span>
+        </br>
+        Nombre: <input asp-for="@Model.Miembro.Nombre" value="@datosMiembroModificar.Nombre" />
 
-    Primer Apellido: <input asp-for="@Model.Miembro.PrimerApellido" value="@datosMiembroModificar.PrimerApellido" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.Miembro.PrimerApellido" class="text-danger"></span>
+        </br>
+        Primer Apellido: <input asp-for="@Model.Miembro.PrimerApellido" value="@datosMiembroModificar.PrimerApellido" />
+     
+    </div>
+    <div>
+        </br>
+        Segundo Apellido: <input asp-for="@Model.Miembro.SegundoApellido" value="@datosMiembroModificar.SegundoApellido" />
+      
+    </div>
+    <div>
+        <span asp-validation-for="@Model.Miembro.Genero" class="text-danger"></span>
+        </br>
+        Genero: <input asp-for="@Model.Miembro.Genero" value="@datosMiembroModificar.Genero" />
 
-    Segundo Apellido: <input asp-for="@Model.Miembro.SegundoApellido" value="@datosMiembroModificar.SegundoApellido" /></br></br>
+    </div>
+    <div>
+        <span asp-validation-for="@Model.Miembro.Pais" class="text-danger"></span>
+        </br>
+        Pais: <input asp-for="@Model.Miembro.Pais" value="@datosMiembroModificar.Pais" />
 
-    Genero: <input asp-for="@Model.Miembro.Genero" value="@datosMiembroModificar.Genero" /></br></br>
+    </div>
 
-    Pais: <input asp-for="@Model.Miembro.Pais" value="@datosMiembroModificar.Pais" /></br></br>
+    <div>
+        </br>
+        Hobbies: <input asp-for="@Model.Miembro.Hobbies" value="@datosMiembroModificar.Hobbies" /></br>
+    </div>
 
-    Hobbies: <input asp-for="@Model.Miembro.Hobbies" value="@datosMiembroModificar.Hobbies" /></br></br>
+    <div>
+        <span asp-validation-for="@Model.Miembro.Email" class="text-danger"></span>
+        </br>
+        Email: <input asp-for="@Model.Miembro.Email" value="@datosMiembroModificar.Email" disabled="@datosMiembroModificar.Email" />
 
-    Email: <input asp-for="@Model.Miembro.Email" value="@datosMiembroModificar.Email" disabled="@datosMiembroModificar.Email" /></br></br>
+    </div>
 
-    Contraseña: <input asp-for="@Model.Miembro.Password" value="@datosMiembroModificar.Password", type="password" /></br></br>
+    <div>
+        <span asp-validation-for="@Model.Miembro.Password" class="text-danger"></span>
+        </br>
+        Contraseña: <input asp-for="@Model.Miembro.Password" value="@datosMiembroModificar.Password" , type="password" />
+
+    </div>
 
     <input type="submit" value="aplicar cambios" aps-page-handler="OnPost" />
 </form>
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

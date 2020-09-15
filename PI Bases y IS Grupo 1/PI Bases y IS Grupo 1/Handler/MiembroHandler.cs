@@ -15,20 +15,14 @@ namespace PIBasesISGrupo1.Handler
 {
     public class MiembroHandler
     {
-        
-
         private ConexionModel conexionBD;
         private SqlConnection conexion;
         public MiembroHandler()
         {
             conexionBD = new ConexionModel();
             conexion = conexionBD.Connection();
-
-
-
         }
        
-
         private DataTable crearTablaConsulta(string consulta)
         {
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
@@ -105,12 +99,6 @@ namespace PIBasesISGrupo1.Handler
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
             return exito;
-        }
-
-
-
-
-
-       
+        }     
     }
 }
