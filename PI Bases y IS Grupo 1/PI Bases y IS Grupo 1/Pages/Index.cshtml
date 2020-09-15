@@ -178,13 +178,17 @@
                         <div class="desc">
                             <h4 class="mt-3 mb-2">Países miembros</h4>
                             <p>
-                                Están integrados todos los países de América Latina y el Caribe.
+                                Entre nuestros Paises Miembros actualmente estan<br/>
+                                @foreach (var miembro in (List<string>)ViewData["PaisesMiembro"])
+                                {
+                                    <li>@miembro</li>
+                                }
 
                             </p>
                         </div>
 
                         <div class="desc">
-                            <h4 class="mt-3 mb-2">¡Ya somos 3046 miembros!</h4>
+                            <h4 class="mt-3 mb-2">¡Ya somos @Html.Label("", ViewData["TotalMiembros"].ToString()) miembros!</h4>
 
                         </div>
                     </div>

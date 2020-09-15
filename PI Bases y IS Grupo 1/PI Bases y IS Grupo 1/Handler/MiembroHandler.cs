@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-
-
 using System.Data;
 using System.Data.SqlClient;
 using System.ComponentModel;
@@ -9,13 +7,11 @@ using System.ComponentModel.DataAnnotations;
 using PIBasesISGrupo1.Models;
 using Microsoft.Extensions.Configuration;
 
-
 namespace PIBasesISGrupo1.Handler
 
 {
     public class MiembroHandler
     {
-        
 
         private ConexionModel conexionBD;
         private SqlConnection conexion;
@@ -34,7 +30,6 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
-         
             adaptadorParaTabla.Fill(consultaFormatoTabla);
             conexion.Close();
             return consultaFormatoTabla;
@@ -56,7 +51,7 @@ namespace PIBasesISGrupo1.Handler
                     SegundoApellido = Convert.ToString(columna["SegundoApellido"]),
                     Email = Convert.ToString(columna["Email"]),
                     Password = Convert.ToString(columna["Password"]),
-                    Nacionalidad = Convert.ToString(columna["Nacionalidad"]),
+                    Nacionalidad = Convert.ToString(columna["Pais"]),
                     Hobbies = Convert.ToString(columna["Hobbies"])
                 });
 
@@ -70,7 +65,6 @@ namespace PIBasesISGrupo1.Handler
                 + "VALUES (@Genero,@Nombre,@PrimerApellido,@SegundoApellido,@Email,@Password,@Nacionalidad,@Hobbies) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-
             comandoParaConsulta.Parameters.AddWithValue("@Genero", miembro.Genero);
             comandoParaConsulta.Parameters.AddWithValue("@Nombre", miembro.Nombre);
             comandoParaConsulta.Parameters.AddWithValue("@PrimerApellido", miembro.PrimerApellido);
@@ -79,59 +73,27 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@Password", miembro.Password);
             comandoParaConsulta.Parameters.AddWithValue("@Nacionalidad", miembro.Nacionalidad);
             comandoParaConsulta.Parameters.AddWithValue("@Hobbies", miembro.Hobbies);
-
-            
-
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
             return exito;
         }
-
-        /*
-        
-         
-        public List<Miembro> obtenerTodoslosPlanetas()
+        public int obtenerNumeroDeMiembros() {
+            Int32 numeroDeMiembros = 0;
+            string consulta = "SELECT COUNT(*) FROM Usuario";
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            numeroDeMiembros = (Int32)comando.ExecuteScalar();
+            return (int)numeroDeMiembros;
+        }
+        public List<string> obtenerPaisesMiembro()
         {
-            List<Miembro> planetas = new List<Miembro>();
-            string consulta = "SELECT * FROM Planeta ";
+            List<string> paisesMiembros = new List<string>();
+            string consulta = "SELECT DISTINCT Pais FROM Usuario";
             DataTable tablaResultado = crearTablaConsulta(consulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {
-                planetas.Add(
-                new Miembro
-                {
-                    nombre = Convert.ToString(columna["nombrePlaneta"]),
-                    tipo = Convert.ToString(columna["tipoPlaneta"]),
-                    id = Convert.ToInt32(columna["planetaId"]),
-                    numeroAnillos = Convert.ToInt32(columna["numeroAnillos"])
-                });
-            }
-            return planetas;
+                paisesMiembros.Add(Convert.ToString(columna["Pais"])) ;
+            }       
+            return paisesMiembros;
         }
-        private byte[] obtenerBytes(HttpPostedFileBase archivo)
-        {
-            byte[] bytes;
-            BinaryReader lector = new BinaryReader(archivo.InputStream);
-            bytes = lector.ReadBytes(archivo.ContentLength);
-            return bytes;
-        }
-        public bool crearPlaneta(Miembro planeta)
-        {
-            string consulta = "INSERT INTO Planeta (archivoPlaneta, tipoArchivo, nombrePlaneta, numeroAnillos, tipoPlaneta) " + "VALUES (@archivo,@tipoArchivo,@nombre,@numeroAnillos,@tipoPlaneta) ";
-
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion); SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-            comandoParaConsulta.Parameters.AddWithValue("@archivo", obtenerBytes(planeta.archivo));
-            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", planeta.archivo.ContentType);
-            comandoParaConsulta.Parameters.AddWithValue("@nombre", planeta.nombre);
-            comandoParaConsulta.Parameters.AddWithValue("@numeroAnillos", planeta.numeroAnillos);
-            comandoParaConsulta.Parameters.AddWithValue("@tipoPlaneta", planeta.tipo);
-
-            conexion.Open();
-            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)             
-            conexion.Close();
-            return exito;
-
-        }
-        */
     }
 }
