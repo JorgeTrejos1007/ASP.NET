@@ -6,7 +6,9 @@
 
     var datosMiembroModificar = (PIBasesISGrupo1.Models.Miembro)ViewData["MiembroModificar"];
     var mensaje = (string)TempData["mensaje"];
-    
+    var imagenTupla = (Tuple<string, byte[]>)ViewData["ImagenMiembro"];
+    var imagenTipo = imagenTupla.Item1;
+    var imagenBytes = imagenTupla.Item2;
 
 }
 
@@ -34,7 +36,8 @@
         }
     }
 
-  
+    <img class="card-img-top" src="data:imagenTipo;base64,@(Convert.ToBase64String(imagenBytes))" with="300" height="300" asp-append-version="true" />
+
 
     <div>
         <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
@@ -86,9 +89,9 @@
         Contraseña: <input asp-for="@Model.miembro.password" value="@datosMiembroModificar.password" , type="password" />
 
     </div>
+
     </br>
     <div>
-
         <input asp-for="@Model.miembro.archivoImagen" type="file" class="btn btn alert-info" />
     </div>
 

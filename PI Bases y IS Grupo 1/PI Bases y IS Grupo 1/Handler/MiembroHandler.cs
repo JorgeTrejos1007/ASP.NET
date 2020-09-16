@@ -61,8 +61,9 @@ namespace PIBasesISGrupo1.Handler
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
-            BinaryReader lector = new BinaryReader(archivo.OpenReadStream()); 
-            bytes = lector.ReadBytes((int )archivo.Length);
+            MemoryStream ms = new MemoryStream();
+            archivo.OpenReadStream().CopyTo(ms);
+            bytes = ms.ToArray();
             return bytes;
         }
 
@@ -91,27 +92,34 @@ namespace PIBasesISGrupo1.Handler
         public bool modificarMiembro(Miembro miembro)
         {
             string consulta = "UPDATE Usuario SET genero=@genero, nombre=@nombre, primerApellido=@primerApellido, " +
-                "segundoApellido=@segundoApellido, password=@password, pais=@pais, hobbies=@hobbies " +
-                "archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo, WHERE email=@email";
+                "segundoApellido=@segundoApellido, password=@password, pais=@pais, hobbies=@hobbies, " +
+                "archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo " + "WHERE email=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@genero", miembro.genero);
             comandoParaConsulta.Parameters.AddWithValue("@nombre", miembro.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@primerApellido", miembro.primerApellido);
-            comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", miembro.segundoApellido);
+            if (String.IsNullOrEmpty(miembro.segundoApellido))
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", DBNull.Value);
+            }
+            else {
+                comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", miembro.segundoApellido);
+            }
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
             comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
-            comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
-            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
-            
+            if (miembro.archivoImagen != null) {
+                comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
+                comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
+            }
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
             return exito;
         }
 
-        public Tuple<byte[], string> descargarContenido(string email)
+        public Tuple<string, byte[]> obtenerImagen(string email)
         {
             byte[] bytes;
             string contentType;
@@ -125,7 +133,7 @@ namespace PIBasesISGrupo1.Handler
             bytes = (byte[])lectorDeDatos["archivoImagen"];
             contentType = lectorDeDatos["tipoArchivo"].ToString();
             conexion.Close();
-            return new Tuple<byte[], string>(bytes, contentType);
+            return new Tuple<string,byte[]>(contentType,bytes);
         }
 
 

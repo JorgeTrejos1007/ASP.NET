@@ -29,6 +29,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 else {
 
                     ViewData["MiembroModificar"] = miembroModificar;
+                    ViewData["ImagenMiembro"] = accesoDatos.obtenerImagen(email);
                     vista = Page();
                 }
             }
