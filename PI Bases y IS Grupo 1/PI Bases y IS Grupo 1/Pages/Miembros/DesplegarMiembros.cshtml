@@ -19,18 +19,18 @@
         <td>
 
             <p>
-                Nombre Completo: @miembro.Nombre @miembro.PrimerApellido
-                @if (@miembro.SegundoApellido != null)
+                Nombre Completo: @miembro.nombre @miembro.primerApellido
+                @if (@miembro.segundoApellido != null)
                 {
-                    @miembro.SegundoApellido
+                    @miembro.segundoApellido
                 }
                 <br />
-                Genero: @miembro.Genero<br />
-                Nacionalidad: @miembro.Pais<br />
-                Hobbies: @miembro.Hobbies<br />
-                Email: @miembro.Email<br />
+                Genero: @miembro.genero<br />
+                Nacionalidad: @miembro.pais<br />
+                Hobbies: @miembro.hobbies<br />
+                Email: @miembro.email<br />
 
-                <a href="~/Miembros/EditarMiembro?email=@miembro.Email">Edit</a>
+                <a href="~/Miembros/EditarMiembro?email=@miembro.email">Edit</a>
 
 
               

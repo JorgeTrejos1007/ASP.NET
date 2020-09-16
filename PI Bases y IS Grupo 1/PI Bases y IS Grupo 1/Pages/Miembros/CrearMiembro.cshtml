@@ -5,14 +5,14 @@
 }
 <h2>Registrarme</h2>
 <form method="post">
-    <input asp-for="@Model.Miembro.Nombre" placeholder="Nombre" />
-    <input asp-for="@Model.Miembro.PrimerApellido" placeholder="Primer apellido" />
-    <input asp-for="@Model.Miembro.SegundoApellido" placeholder="Segundo apellido" /></br></br>
-    <input asp-for="@Model.Miembro.Genero" placeholder="Genero" /></br></br>
-    <input asp-for="@Model.Miembro.SegundoApellido" placeholder="Segundo apellido" /></br></br>
-    <input asp-for="@Model.Miembro.Pais" placeholder="Pais" /></br></br>
-    <input asp-for="@Model.Miembro.Email" placeholder="Correo" /></br></br>
-    <input asp-for="@Model.Miembro.Password" placeholder="Contraseña" /></br></br>
+    <input asp-for="@Model.Miembro.nombre" placeholder="Nombre" />
+    <input asp-for="@Model.Miembro.primerApellido" placeholder="Primer apellido" />
+    <input asp-for="@Model.Miembro.segundoApellido" placeholder="Segundo apellido" /></br></br>
+    <input asp-for="@Model.Miembro.genero" placeholder="Genero" /></br></br>
+    <input asp-for="@Model.Miembro.hobbies" placeholder="Hobbies" /></br></br>
+    <input asp-for="@Model.Miembro.pais" placeholder="Pais" /></br></br>
+    <input asp-for="@Model.Miembro.email" placeholder="Correo" /></br></br>
+    <input asp-for="@Model.Miembro.password" placeholder="Contraseña" /></br></br>
     <input type="submit" value=" Enviar" asp-page-handler="Miembro" />
 </form>
 

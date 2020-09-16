@@ -21,7 +21,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
         
             try {
                 MiembroHandler accesoDatos = new MiembroHandler();
-                Miembro miembroModificar= accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.Email == email);
+                Miembro miembroModificar= accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email);
                 if (miembroModificar == null)
                 {
                     vista = Redirect("~/Miembros/DesplegarMiembros");
@@ -54,7 +54,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
                 TempData["exitoAlEditar"] = false;
             }
-            return RedirectToAction("~/Miembros/EditarMiembro", new { email = miembro.Email });
+            return RedirectToAction("~/Miembros/EditarMiembro", new { email = miembro.email });
         }
 
     }
