@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace PI_Bases_y_IS_Grupo_1
+namespace PIBasesISGrupo1
 {
     public class Program
     {
