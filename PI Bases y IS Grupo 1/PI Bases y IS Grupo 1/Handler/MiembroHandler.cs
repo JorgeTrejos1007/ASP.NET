@@ -81,7 +81,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
-
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; 
             conexion.Close();
             return exito;
@@ -92,8 +92,8 @@ namespace PIBasesISGrupo1.Handler
         public bool modificarMiembro(Miembro miembro)
         {
             string consulta = "UPDATE Usuario SET genero=@genero, nombre=@nombre, primerApellido=@primerApellido, " +
-                "segundoApellido=@segundoApellido, password=@password, pais=@pais, hobbies=@hobbies, " +
-                "archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo " + "WHERE email=@email";
+                "segundoApellido=@segundoApellido, password=@password, pais=@pais, hobbies=@hobbies " 
+                 + "WHERE email=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@genero", miembro.genero);
@@ -110,15 +110,27 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
             comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
-           
-            comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
-            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
-            
-            
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
             return exito;
         }
+
+        public bool actualizarImagen(Miembro miembro) {
+            string consulta = "UPDATE Usuario SET archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo " + "WHERE email=@email";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
+            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
+            comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
+            conexion.Open();
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
+            conexion.Close();
+            return exito;
+        }
+
+
+
 
         public Tuple<string, byte[]> obtenerImagen(string email)
         {

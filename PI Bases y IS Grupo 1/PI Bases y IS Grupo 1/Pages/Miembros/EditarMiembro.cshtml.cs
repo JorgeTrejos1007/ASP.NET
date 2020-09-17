@@ -59,11 +59,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IActionResult OnPost()
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-            if (miembro.archivoImagen == null) {
-                Image restaurarImagen = null;
-                
-                MemoryStream ms = new MemoryStream(imagenArrayBytes);
-                restaurarImagen=Image.FromStream(ms);
+            if (miembro.archivoImagen != null) {
+                accesoDatos.actualizarImagen(miembro);
             }
 
             if (accesoDatos.modificarMiembro(miembro))

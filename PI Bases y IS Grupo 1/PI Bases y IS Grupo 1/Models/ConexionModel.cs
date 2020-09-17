@@ -19,7 +19,7 @@ namespace PIBasesISGrupo1.Models
             string conString = @"Server=desktop-odor35t\basesededatos;Database=BD_Grupo1;Integrated Security = True;Pooling = False";
 
             con = new SqlConnection(conString);
-            con.Open();
+            
             return con;
         }
 

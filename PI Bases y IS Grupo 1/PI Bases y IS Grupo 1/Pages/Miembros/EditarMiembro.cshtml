@@ -1,15 +1,15 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Miembros.EditarMiembroModel
 @{
-    ViewData["Title"] = "EditarMiembro";
+        ViewData["Title"] = "EditarMiembro";
 
 
-    var datosMiembroModificar = (PIBasesISGrupo1.Models.Miembro)ViewData["MiembroModificar"];
-    var mensaje = (string)TempData["mensaje"];
-    var imagenTupla = (Tuple<string, byte[]>)ViewData["ImagenMiembro"];
-    var imagenTipo = imagenTupla.Item1;
-    var imagenBytes = imagenTupla.Item2;
-
+        var datosMiembroModificar = (PIBasesISGrupo1.Models.Miembro)ViewData["MiembroModificar"];
+        var mensaje = (string)TempData["mensaje"];
+        var imagenTupla = (Tuple<string, byte[]>)ViewData["ImagenMiembro"];
+        var imagenTipo = imagenTupla.Item1;
+        var imagenBytes = imagenTupla.Item2;
+        
 }
 
 
@@ -92,10 +92,8 @@
 
     </br>
     <div>
-        <input asp-for="@Model.miembro.archivoImagen" id="cargarImagen" type="file" class="btn btn alert-info" />
+        <input asp-for="@Model.miembro.archivoImagen" type="file"  class="btn btn alert-info" />
        
-
-
 
     </div>
 
