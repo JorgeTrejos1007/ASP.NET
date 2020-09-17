@@ -4,8 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Net.Mime;
+using System.IO;
+using System.Data;
+using System.Drawing;
+
+
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
+
+
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -13,15 +21,19 @@ namespace PIBasesISGrupo1.Pages.Miembros
     {
         [BindProperty]
         public Miembro miembro { get; set; }
-        
 
+        [BindProperty]
+        byte[] imagenArrayBytes { get; set; }
         public IActionResult OnGet(String email)
         {
             IActionResult vista;
-        
+           
+
             try {
                 MiembroHandler accesoDatos = new MiembroHandler();
-                Miembro miembroModificar= accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email);
+                Miembro miembroModificar = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email);
+             
+
                 if (miembroModificar == null)
                 {
                     vista = Redirect("~/Miembros/DesplegarMiembros");
@@ -29,6 +41,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 else {
 
                     ViewData["MiembroModificar"] = miembroModificar;
+                    
                     ViewData["ImagenMiembro"] = accesoDatos.obtenerImagen(email);
                     vista = Page();
                 }
@@ -42,10 +55,17 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         }
 
-
+       
         public IActionResult OnPost()
         {
             MiembroHandler accesoDatos = new MiembroHandler();
+            if (miembro.archivoImagen == null) {
+                Image restaurarImagen = null;
+                
+                MemoryStream ms = new MemoryStream(imagenArrayBytes);
+                restaurarImagen=Image.FromStream(ms);
+            }
+
             if (accesoDatos.modificarMiembro(miembro))
             {
                 TempData["mensaje"] = "Informacion editada con exito";
@@ -59,4 +79,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
         }
 
     }
+
+   
 }
+
+

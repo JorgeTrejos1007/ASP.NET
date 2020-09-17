@@ -110,10 +110,11 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
             comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
-            if (miembro.archivoImagen != null) {
-                comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
-                comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
-            }
+           
+            comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
+            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
+            
+            
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
             return exito;

@@ -51,6 +51,6 @@ namespace PIBasesISGrupo1.Models
         public IFormFile archivoImagen { get; set; }
 
         public string tipoArchivo { get; set; }
-
+        
     }
 }
