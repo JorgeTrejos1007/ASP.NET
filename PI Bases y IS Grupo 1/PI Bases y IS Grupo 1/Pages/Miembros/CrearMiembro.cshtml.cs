@@ -12,7 +12,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
     {
 
         [BindProperty]        
-        public Miembro Miembro { get; set; }
+        public Noticia Miembro { get; set; }
         public void OnGet()
         {
 

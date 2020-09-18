@@ -40,15 +40,15 @@ namespace PIBasesISGrupo1.Handler
             return consultaFormatoTabla;
         }
 
-        public List<Miembro> obtenerTodoslosMiembros()
+        public List<Noticia> obtenerTodoslosMiembros()
         {
-            List<Miembro> miembros = new List<Miembro>();
+            List<Noticia> miembros = new List<Noticia>();
             string consulta = "SELECT * FROM Usuario";
             DataTable tablaResultado = crearTablaConsulta(consulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {
                 miembros.Add(
-                new Miembro
+                new Noticia
                 {
                     Genero = Convert.ToString(columna["Genero"]),
                     Nombre = Convert.ToString(columna["Nombre"]),
@@ -64,7 +64,7 @@ namespace PIBasesISGrupo1.Handler
             return miembros;
         }
 
-        public bool crearMiembro(Miembro miembro)
+        public bool crearMiembro(Noticia miembro)
         {
             string consulta = "INSERT INTO Usuario(Genero, Nombre, PrimeApellido, SegundoApellido, Email, Password, Nacionalidad, Hobbies) "
                 + "VALUES (@Genero,@Nombre,@PrimeApellido,@SegundoApellido,@Email,@Password,@Nacionalidad,@Hobbies) ";
