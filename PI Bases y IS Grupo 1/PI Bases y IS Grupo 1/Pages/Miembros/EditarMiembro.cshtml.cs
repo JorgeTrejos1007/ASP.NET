@@ -12,8 +12,7 @@ using System.Drawing;
 
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
-
-
+using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -23,7 +22,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public Miembro miembro { get; set; }
 
         [BindProperty]
-        byte[] imagenArrayBytes { get; set; }
+        public IFormFile archivoImagen { get; set; }
+
         public IActionResult OnGet(String email)
         {
             IActionResult vista;
@@ -42,7 +42,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
                     ViewData["MiembroModificar"] = miembroModificar;
                     
-                    ViewData["ImagenMiembro"] = accesoDatos.obtenerImagen(email);
+                    
                     vista = Page();
                 }
             }
@@ -59,8 +59,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IActionResult OnPost()
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-            if (miembro.archivoImagen != null) {
-                accesoDatos.actualizarImagen(miembro);
+            if (archivoImagen != null) {
+                accesoDatos.actualizarImagen(miembro.email, archivoImagen);
             }
 
             if (accesoDatos.modificarMiembro(miembro))

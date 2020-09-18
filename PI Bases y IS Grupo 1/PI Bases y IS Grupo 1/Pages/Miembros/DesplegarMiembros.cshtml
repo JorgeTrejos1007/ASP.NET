@@ -4,8 +4,9 @@
 
 @{
     ViewData["Title"] = "DesplegarMiembros";
-   
-    
+  
+
+
 }
 
 <strong>Miembros de nuestra comunidad</strong>
@@ -19,6 +20,8 @@
         <td>
 
             <p>
+                
+                <img class="card-img-top" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" with="40" height="40" asp-append-version="true" />
                 Nombre Completo: @miembro.nombre @miembro.primerApellido
                 @if (@miembro.segundoApellido != null)
                 {
@@ -31,12 +34,7 @@
                 Email: @miembro.email<br />
 
                 <a href="~/Miembros/EditarMiembro?email=@miembro.email">Edit</a>
-
-
-              
-
-
-
+                
             </p>
 
         </td>

@@ -40,15 +40,15 @@ namespace PIBasesISGrupo1.Models
 
         [Required(ErrorMessage = "Es necesario que ingreses tu pais")]
         [Display(Name = "Ingrese su pais")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string pais { get; set; }
 
         [Display(Name = "Ingrese sus hobbies")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string hobbies { get; set; }
 
 
-        public IFormFile archivoImagen { get; set; }
+        
 
         public string tipoArchivo { get; set; }
 

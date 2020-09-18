@@ -51,7 +51,9 @@ namespace PIBasesISGrupo1.Handler
                     email = Convert.ToString(columna["email"]),
                     password = Convert.ToString(columna["password"]),
                     pais = Convert.ToString(columna["pais"]),
-                    hobbies = Convert.ToString(columna["hobbies"])
+                    hobbies = Convert.ToString(columna["hobbies"]),
+                    tipoArchivo= Convert.ToString(columna["tipoArchivo"]),
+                    byteArrayImage= (byte[])columna["archivoImagen"]
                 });
 
             }
@@ -116,13 +118,13 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        public bool actualizarImagen(Miembro miembro) {
+        public bool actualizarImagen(string email, IFormFile archivoImagen) {
             string consulta = "UPDATE Usuario SET archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo " + "WHERE email=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-            comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(miembro.archivoImagen));
-            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", miembro.archivoImagen.ContentType);
-            comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
+            comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(archivoImagen));
+            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivo", archivoImagen.ContentType);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
