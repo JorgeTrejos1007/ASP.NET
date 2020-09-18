@@ -4,6 +4,7 @@
 
 @{
     ViewData["Title"] = "DesplegarMiembros";
+   
     
 }
 
@@ -25,9 +26,15 @@
                 }
                 <br />
                 Genero: @miembro.Genero<br />
-                Nacionalidad: @miembro.Nacionalidad<br />
+                Nacionalidad: @miembro.Pais<br />
                 Hobbies: @miembro.Hobbies<br />
                 Email: @miembro.Email<br />
+
+                <a href="~/Miembros/EditarMiembro?email=@miembro.Email">Edit</a>
+
+
+              
+
 
 
             </p>

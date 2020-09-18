@@ -2,7 +2,90 @@
 @model PIBasesISGrupo1.Pages.Miembros.EditarMiembroModel
 @{
     ViewData["Title"] = "EditarMiembro";
+
+
+    var datosMiembroModificar = (PIBasesISGrupo1.Models.Miembro)ViewData["MiembroModificar"];
+    var mensaje = (string)TempData["mensaje"];
+    
+
 }
 
-<h2>EditarMiembro</h2>
 
+<h2>Edicion de datos de perfil</h2>
+
+
+<form method="post">
+
+    @if (@mensaje != null)
+    {
+        if ((bool)TempData["exitoAlEditar"])
+        {
+            <div class="alert-success">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+        else
+        {
+            <div class="alert-danger">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+    }
+
+
+    <div>
+        <span asp-validation-for="@Model.miembro.Nombre" class="text-danger"></span>
+        </br>
+        Nombre: <input asp-for="@Model.miembro.Nombre" value="@datosMiembroModificar.Nombre" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.PrimerApellido" class="text-danger"></span>
+        </br>
+        Primer Apellido: <input asp-for="@Model.miembro.PrimerApellido" value="@datosMiembroModificar.PrimerApellido" />
+
+    </div>
+    <div>
+        </br>
+        Segundo Apellido: <input asp-for="@Model.miembro.SegundoApellido" value="@datosMiembroModificar.SegundoApellido" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.Genero" class="text-danger"></span>
+        </br>
+        Genero: <input asp-for="@Model.miembro.Genero" value="@datosMiembroModificar.Genero" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.Pais" class="text-danger"></span>
+        </br>
+        Pais: <input asp-for="@Model.miembro.Pais" value="@datosMiembroModificar.Pais" />
+
+    </div>
+
+    <div>
+        </br>
+        Hobbies: <input asp-for="@Model.miembro.Hobbies" value="@datosMiembroModificar.Hobbies" /></br>
+    </div>
+
+    <div>
+        <span asp-validation-for="@Model.miembro.Email" class="text-danger"></span>
+        </br>
+        Email: <input asp-for="@Model.miembro.Email" value="@datosMiembroModificar.Email" />
+
+    </div>
+
+    <div>
+        <span asp-validation-for="@Model.miembro.Password" class="text-danger"></span>
+        </br>
+        Contraseña: <input asp-for="@Model.miembro.Password" value="@datosMiembroModificar.Password" , type="password" />
+
+    </div>
+
+    <input type="submit" value="aplicar cambios" aps-page-handler="OnPost" />
+</form>
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

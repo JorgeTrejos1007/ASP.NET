@@ -4,16 +4,58 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
     public class EditarMiembroModel : PageModel
     {
+        [BindProperty]
+        public Miembro miembro { get; set; }
+        
 
-        public void OnGet()
+        public IActionResult OnGet(String email)
         {
-            
+            IActionResult vista;
+        
+            try {
+                MiembroHandler accesoDatos = new MiembroHandler();
+                Miembro miembroModificar= accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.Email == email);
+                if (miembroModificar == null)
+                {
+                    vista = Redirect("~/Miembros/DesplegarMiembros");
+                }
+                else {
+
+                    ViewData["MiembroModificar"] = miembroModificar;
+                    vista = Page();
+                }
+            }
+            catch
+            {
+                vista = Redirect("~/Miembros/DesplegarMiembros");
+            }
+
+            return vista;
+
         }
+
+
+        public IActionResult OnPost()
+        {
+            MiembroHandler accesoDatos = new MiembroHandler();
+            if (accesoDatos.modificarMiembro(miembro))
+            {
+                TempData["mensaje"] = "Informacion editada con exito";
+                TempData["exitoAlEditar"] = true;
+            }
+            else {
+                TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
+                TempData["exitoAlEditar"] = false;
+            }
+            return RedirectToAction("~/Miembros/EditarMiembro", new { email = miembro.Email });
+        }
+
     }
 }

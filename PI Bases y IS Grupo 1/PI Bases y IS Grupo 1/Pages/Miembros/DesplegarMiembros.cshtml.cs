@@ -20,7 +20,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
         {
             MiembroHandler accesoDatos = new MiembroHandler();
 
-            ViewData["Miembros"] = accesoDatos.obtenerTodoslosMiembros();
+            ViewData["Miembros"] = accesoDatos.obtenerTodosLosMiembros();
 
             
 
