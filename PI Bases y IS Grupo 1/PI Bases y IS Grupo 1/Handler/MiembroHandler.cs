@@ -134,22 +134,7 @@ namespace PIBasesISGrupo1.Handler
 
 
 
-        public Tuple<string, byte[]> obtenerImagen(string email)
-        {
-            byte[] bytes;
-            string contentType;
-            string consulta = "SELECT archivoImagen, tipoArchivo FROM Usuario WHERE email=@email";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-            comandoParaConsulta.Parameters.AddWithValue("@email", email);
-            conexion.Open();
-            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
-            lectorDeDatos.Read();
-            bytes = (byte[])lectorDeDatos["archivoImagen"];
-            contentType = lectorDeDatos["tipoArchivo"].ToString();
-            conexion.Close();
-            return new Tuple<string,byte[]>(contentType,bytes);
-        }
+        
 
 
     }

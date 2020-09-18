@@ -48,8 +48,6 @@ namespace PIBasesISGrupo1.Models
         public string hobbies { get; set; }
 
 
-        
-
         public string tipoArchivo { get; set; }
 
         public byte[] byteArrayImage { get; set; }
