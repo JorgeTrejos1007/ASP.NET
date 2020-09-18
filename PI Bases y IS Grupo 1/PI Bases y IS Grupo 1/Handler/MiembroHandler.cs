@@ -72,7 +72,7 @@ namespace PIBasesISGrupo1.Handler
         public bool crearMiembro(Miembro miembro)
         {
             string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password, pais, hobbies) "
-                + "VALUES (@genero,@nombre,@primeApellido,@segundoApellido,@email,@password,@nacionalidad,@hobbies) ";
+                + "VALUES (@genero,@nombre,@primeApellido,@segundoApellido,@email,@password,@pais,@hobbies) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
      
@@ -82,6 +82,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", miembro.segundoApellido);
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
+            comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
             comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; 
