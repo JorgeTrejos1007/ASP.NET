@@ -13,7 +13,10 @@
     <input asp-for="@Model.Miembro.pais" placeholder="Pais" /></br></br>
     <input asp-for="@Model.Miembro.email" placeholder="Correo" /></br></br>
     <input asp-for="@Model.Miembro.password" placeholder="Contraseña" /></br></br>
-    <input type="submit" value=" Enviar" asp-page-handler="Miembro" />
+
+    <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+
+    <input type="submit" value=" Enviar" class="btn btn-success" asp-page-handler="Miembro" />
 </form>
 
 
