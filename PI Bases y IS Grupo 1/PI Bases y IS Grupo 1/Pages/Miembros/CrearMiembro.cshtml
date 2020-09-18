@@ -2,21 +2,76 @@
 @model PIBasesISGrupo1.Pages.Miembros.CrearMiembroModel
 @{
     ViewData["Title"] = "CrearMiembro";
+    var mensaje = (string)TempData["mensaje"];
 }
 <h2>Registrarme</h2>
-<form method="post">
-    <input asp-for="@Model.Miembro.nombre" placeholder="Nombre" />
-    <input asp-for="@Model.Miembro.primerApellido" placeholder="Primer apellido" />
-    <input asp-for="@Model.Miembro.segundoApellido" placeholder="Segundo apellido" /></br></br>
-    <input asp-for="@Model.Miembro.genero" placeholder="Genero" /></br></br>
-    <input asp-for="@Model.Miembro.hobbies" placeholder="Hobbies" /></br></br>
-    <input asp-for="@Model.Miembro.pais" placeholder="Pais" /></br></br>
-    <input asp-for="@Model.Miembro.email" placeholder="Correo" /></br></br>
-    <input asp-for="@Model.Miembro.password" placeholder="Contraseña" /></br></br>
+<form method="post" enctype="multipart/form-data">
+    @if (@mensaje != null)
+    {
+        if ((bool)TempData["exitoAlEditar"])
+        {
+            <div class="alert-success">
 
-    <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+                <h3> @mensaje </h3>
+            </div>
+        }
+        else
+        {
+            <div class="alert-danger">
 
-    <input type="submit" value=" Enviar" class="btn btn-success" asp-page-handler="Miembro" />
+                <h3> @mensaje </h3>
+            </div>
+        }
+    }
+    <div>
+        <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+        </br>
+        Nombre: <input asp-for="@Model.miembro.nombre" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+        </br>
+        Primer Apellido: <input asp-for="@Model.miembro.primerApellido" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+        </br>
+        Segundo apellido: <input asp-for="@Model.miembro.segundoApellido" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+        </br>
+        Genero: <input asp-for="@Model.miembro.genero" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
+        </br>
+        Pais: <input asp-for="@Model.miembro.pais" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
+        </br>
+        Hobbies: <input asp-for="@Model.miembro.hobbies" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+        </br>
+        Email: <input asp-for="@Model.miembro.email" />
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
+        </br>
+        Contraseña: <input asp-for="@Model.miembro.password" />
+    </div>
+    </br>
+    Subir foto: <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+    </br>
+    <input type="submit" value=" Enviar" class="btn btn-success" />
 </form>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
 
 

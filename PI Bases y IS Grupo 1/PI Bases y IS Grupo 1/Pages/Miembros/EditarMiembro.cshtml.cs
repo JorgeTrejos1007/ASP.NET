@@ -6,10 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Mime;
 using System.IO;
-using System.Data;
-using System.Drawing;
-
-
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;

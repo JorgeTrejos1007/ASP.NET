@@ -36,11 +36,14 @@ namespace PIBasesISGrupo1.Handler
 
         public List<Miembro> obtenerTodosLosMiembros()
         {
+            byte[] byteArray;
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario";
             DataTable tablaResultado = crearTablaConsulta(consulta);
+            
             foreach (DataRow columna in tablaResultado.Rows)
             {
+               
                 miembros.Add(
                 new Miembro
                 {
@@ -52,8 +55,9 @@ namespace PIBasesISGrupo1.Handler
                     password = Convert.ToString(columna["password"]),
                     pais = Convert.ToString(columna["pais"]),
                     hobbies = Convert.ToString(columna["hobbies"]),
-                    tipoArchivo= Convert.ToString(columna["tipoArchivo"]),
-                    byteArrayImage= (byte[])columna["archivoImagen"]
+                    tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
+                    byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"]
+
                 });
 
             }
@@ -72,14 +76,21 @@ namespace PIBasesISGrupo1.Handler
         public bool crearMiembro(Miembro miembro)
         {
             string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password, pais, hobbies) "
-                + "VALUES (@genero,@nombre,@primeApellido,@segundoApellido,@email,@password,@pais,@hobbies) ";
+                + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password,@pais,@hobbies) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
      
             comandoParaConsulta.Parameters.AddWithValue("@genero", miembro.genero);
             comandoParaConsulta.Parameters.AddWithValue("@nombre", miembro.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@primerApellido", miembro.primerApellido);
-            comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", miembro.segundoApellido);
+            if (String.IsNullOrEmpty(miembro.segundoApellido))
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", miembro.segundoApellido);
+            }
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);

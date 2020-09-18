@@ -2,18 +2,10 @@
 @model PIBasesISGrupo1.Pages.Miembros.EditarMiembroModel
 @{
         ViewData["Title"] = "EditarMiembro";
-
-
         var datosMiembroModificar = (PIBasesISGrupo1.Models.Miembro)ViewData["MiembroModificar"];
-        var mensaje = (string)TempData["mensaje"];
-        
-        
+        var mensaje = (string)TempData["mensaje"];           
 }
-
-
 <h2>Edicion de datos de perfil</h2>
-
-
 <form method="post" enctype="multipart/form-data">
 
     @if (@mensaje != null)
@@ -33,11 +25,16 @@
             </div>
         }
     }
-
-
-
-    <img class="card-img-top" src="data:@datosMiembroModificar.tipoArchivo;base64,@(Convert.ToBase64String(@datosMiembroModificar.byteArrayImage))" with="300" height="300" asp-append-version="true" />
-
+    @{
+        if (datosMiembroModificar.byteArrayImage != null)
+        {
+            <img class="card-img-top" src="data:@datosMiembroModificar.tipoArchivo;base64,@(Convert.ToBase64String(@datosMiembroModificar.byteArrayImage))" with="300" height="300" asp-append-version="true" />
+        }
+        else
+        {
+            <img class="card-img-top" src="~/img/imagenGenerica.jpeg" with="300" height="300" asp-append-version="true" />
+        }
+    }
     <div>
         <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
         </br>
@@ -68,35 +65,26 @@
         Pais: <input asp-for="@Model.miembro.pais" value="@datosMiembroModificar.pais" />
 
     </div>
-
     <div>
         <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
         </br>
         Hobbies: <input asp-for="@Model.miembro.hobbies" value="@datosMiembroModificar.hobbies" /></br>
     </div>
-
     <div>
         <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
         </br>
         Email: <input asp-for="@Model.miembro.email" value="@datosMiembroModificar.email" />
 
     </div>
-
     <div>
         <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
         </br>
         Contraseña: <input asp-for="@Model.miembro.password" value="@datosMiembroModificar.password" , type="password" />
 
     </div>
-
     </br>
-    <div>
-        
-        <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
 
-
-    </div>
-
+    Subir foto: <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
     </br>
     <input type="submit" value="aplicar cambios" class="btn btn-success" aps-page-handler="OnPost" />
 </form>

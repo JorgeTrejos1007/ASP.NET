@@ -14,26 +14,36 @@ namespace PIBasesISGrupo1.Pages.Miembros
     {
 
         [BindProperty]        
-        public Miembro Miembro { get; set; }
+        public Miembro miembro { get; set; }
+
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
+
         public void OnGet()
         {
 
         }
-        public void OnPost(int id)
+        
+        public void OnPost()
         {
 
-        }
-        public void OnPostMiembro()
-        {
-            bool ExitoAlCrear = false;
-            MiembroHandler accesoDatos = new MiembroHandler();
-            ExitoAlCrear = accesoDatos.crearMiembro(Miembro); // recuerde que este método devuelve un booleano                     
-            if (archivoImagen == null) {
-
+            MiembroHandler accesoDatos = new MiembroHandler();            
+            if (accesoDatos.crearMiembro(miembro))
+            {
+                TempData["mensaje"] = "Se ha logrado registar con exito";
+                TempData["exitoAlEditar"] = true;
+                if (archivoImagen != null)
+                {
+                    accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                }
+            }
+            else
+            {
+                TempData["mensaje"] = "Se ha logrado registar con exito";
+                TempData["exitoAlEditar"] = false;
             }
 
+            
         }
     }
 }
