@@ -94,7 +94,15 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
-            comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
+            
+            if (String.IsNullOrEmpty(miembro.hobbies))
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@hobbies", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
+            }
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; 
             conexion.Close();
@@ -123,7 +131,14 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
-            comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
+            if (String.IsNullOrEmpty(miembro.hobbies))
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@hobbies", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
+            }
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
             conexion.Close();
