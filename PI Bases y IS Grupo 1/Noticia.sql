@@ -1,9 +1,0 @@
-﻿CREATE TABLE Noticia(
-noticiaId INTEGER PRIMARY KEY IDENTITY,
-titulo NVARCHAR(MAX) NOT NULL,
-fecha DATE NOT NULL,
-archivoNoticia VARBINARY(MAX) NOT NULL,
-tipoArchivoNoticia NVARCHAR(50) NOT NULL,
-archivoImagen VARBINARY(MAX) NOT NULL,
-tipoArchivoImagen NVARCHAR(50) NOT NULL,
-)
