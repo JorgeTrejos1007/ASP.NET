@@ -67,7 +67,24 @@
     </br>
     Subir foto: <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
     </br>
+    <p>
+        <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
+    </p> <select asp-for="@Model.miembro.idioma" multiple size="11">
+        <option value="Arabe">Arabe</option>
+        <option value="Aleman">Aleman</option>
+        <option value="Bengali">Bengali</option>
+        <option value="Español">Español</option>
+        <option value="Frances">Frances</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Ingles">Ingles</option>
+        <option value="Mandarin">Mandarin</option>
+        <option value="Panyabí">Panyabí</option>
+        <option value="Portugues">Portugues</option>
+        <option value="Ruso">Ruso</option>
+    </select></br>
+
     <input type="submit" value=" Enviar" class="btn btn-success" />
+
 </form>
 
 @section scripts{
