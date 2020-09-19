@@ -1,0 +1,72 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.PaginaInicioEncuestaModel
+@{
+    ViewData["Title"] = "Lista de encuestas";
+}
+
+<h2>Lista de encuestas</h2>
+
+<p>
+    <a asp-page="CrearEncuesta">Crear encuesta</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h3>Nombre de Encuesta</h3>
+            </th>
+            <th>
+                <h3>Categoría</h3>
+            </th>
+            <th>
+                <h3>Tópico</h3>
+            </th>
+            <th>
+                <h3>Autor</h3>
+            </th>
+            <th>
+                <h3>Vigencia</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if ((List<PIBasesISGrupo1.Models.EncuestaModel>)ViewData["Encuestas"] != null)
+            {
+                foreach (var item in (List<PIBasesISGrupo1.Models.EncuestaModel>)ViewData["Encuestas"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombreEncuesta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.categoria)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.topico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.autor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vigencia) días
+                        </td>
+                        <td>
+
+                            <a asp-page="./Edit" asp-route-id="@item.id">Edit</a>
+                            <a asp-page="./Details" asp-route-id="@item.id"> Details </a>
+                            <a asp-page="./Delete" asp-route-id="@item.id"> Delete </a>
+                        </td>
+                    </tr>
+
+
+
+
+                }
+            }
+        }
+    </tbody>
+</table>
+

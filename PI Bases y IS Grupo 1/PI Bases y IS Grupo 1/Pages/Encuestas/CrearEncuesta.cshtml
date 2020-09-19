@@ -3,98 +3,13 @@
 @{
     ViewData["Title"] = "CrearEncuesta";
 }
-
 <h2>CrearEncuesta</h2>
 
-<div class="col-md-12">
-    <h2>Seleccione el tópico de su encuesta:</h2>
-    <select id="catalago" name="OS">
-        <option selected value="0"> Tópicos</option>
-        <optgroup label="Bases de datos">
-            <option value="1">Entidades</option>
-            <option value="2"> Tipos de entidad</option>
-            <option value="3">
-                Relación </option >
-
-                </optgroup >
-
-                <optgroup label= "Ingeniería en software" >
-
-                <option value= "4" > Scrum </option >
-
-                <option value= "5" > DevOps </option >
-
-                <option value= "6" > Valor del negocio
-            </option>
-        </optgroup>
-        <optgroup label="Diseño y Desempeño">
-
-            <option value= "7" > Recolecta de datos</option>
-            <option value="8">
-                Correlación </option >
-
-                <option value= "9" > Variables de respuesta
-            </option>
-        </optgroup>
-    </select>
-    <br></br>
-    <div id="numeroPreguntas">
-
-        <label for='canpreg'>Cantidad de preguntas:</label>
-        <input type='text' id='canpreg' name='canpreg'>
-
-
-        <button id= "boton" onclick= "myFunction()" > Crear preguntas</button>
-    </div>
-    <br>
-    <div id="autor">
-
-        <label for='autor'>Autor:</label>
-        <input type='text' id='autor' name='autor'>
-
-        </div >
-        <br>
-        <div id= "vigencia" >
-
-        <label for='vigencia'>Vigencia de la encuesta:</label>
-        <input type='text' id='vigencia' name='vigencia'>
-
-        </div >
-
-
-
-        <div id= "demo" >
-
-
-        </div >
-
-        <script id="elscript " type="text/javascript">
-
-        function myFunction() {
-            document.getElementById('demo').innerHTML = '';
-            var x = document.getElementById("canpreg").value;
-
-            for (var i = 0; i < x; i++)
-            {
-                var pregunta = document.getElementById("demo");
-                var h2 = document.createElement("h3");
-                var br = document.createElement("br");
-
-                h2.appendChild(document.createTextNode("Pregunta " + (i + 1)));
-
-                document.getElementById("demo").appendChild(h2);
-                pregunta.insertAdjacentHTML("beforeend", "<form method='get'>");
-                pregunta.insertAdjacentHTML("beforeend", " <label for='fname'>Pregunta:</label> <input type='text' id='fname' name='fname'> <br><br");
-                //pregunta.insertAdjacentHTML("beforeend", " <label for='opcion1'>Opción 1:</label> <input asp-for= 'Model.Encuesta.opcion1  ' id = 'opcion1' name = 'opcion1'> <br><br" );
-                //pregunta.insertAdjacentHTML("beforeend", " <label for='opcion2'>Opción 2:</label> <input asp-for='  Model.Encuesta.opcion1  ' id = 'opcion2' name = 'opcion2'> <br><br" );
-                //pregunta.insertAdjacentHTML("beforeend", " <label for='opcion3'>Opción 3:</label> <input asp-for=' Model.Encuesta.opcion1  ' id = 'opcion3' name = 'opcion3'> <br><br" );
-                //pregunta.insertAdjacentHTML("beforeend", " <label for='opcion4'>Opción 4:</label> <input asp-for='  Model.Encuesta.opcion1  ' id = 'opcion4' name = 'opcion4'> <br><br" );
-                //pregunta.insertAdjacentHTML("beforeend", " <input type='submit' value=' Enviar' asp-page-handler='EncuestaModel' />" );
-                pregunta.insertAdjacentHTML("beforeend", "</form>");
-                document.getElementById("demo").append(br);
-                
-           }
-       }
-        </script>
-
-    </div>
+<form method="post">
+    <input asp-for="@Model.encuesta.nombreEncuesta" placeholder="Nombre de la encuesta" /> <br /><br />
+    <input asp-for="@Model.encuesta.autor" placeholder="Autor" /> <br /><br />
+    <input asp-for="@Model.encuesta.categoria" placeholder="Categoria" /> <br /><br />
+    <input asp-for="@Model.encuesta.topico" placeholder="Topico" /> <br /><br />
+    <input asp-for="@Model.encuesta.vigencia" placeholder="Vigencia" /> <br /><br />
+    <input type="submit" value=" Crear encuesta" asp-page-handler="Encuesta" />
+</form>

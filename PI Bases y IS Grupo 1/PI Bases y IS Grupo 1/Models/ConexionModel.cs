@@ -15,8 +15,8 @@ namespace PIBasesISGrupo1.Models
 
             SqlConnection con;
             
-            //string conString = @"Server=172.16.202.24;Database=BD_Grupo1;User ID=Grupo1;password=Adriancito;";
-            string conString = @"Server=LAPTOP-3EUSIQQG\ADRIANCITO;Database=BD_Grupo1;Integrated Security = True;Pooling = False";
+            string conString = @"Server=172.16.202.24;Database=BD_Grupo1;User ID=Grupo1;password=Adriancito;";
+            //string conString = @"Server=LAPTOP-3EUSIQQG\ADRIANCITO;Database=BD_Grupo1;Integrated Security = True;Pooling = False";
 
             con = new SqlConnection(conString);
             con.Open();
