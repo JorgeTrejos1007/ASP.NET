@@ -82,14 +82,43 @@
         <option value="Portugues">Portugues</option>
         <option value="Ruso">Ruso</option>
     </select></br>
-   
+         <div id="numeroPreguntas">
+
+             <label for='canpreg'>Cantidad de habilidades:</label>
+             <input type='text' id='canpreg' name='canpreg'>
 
 
+             <form>
+                 <input type="button"
+                        asp-for="@Model.miembro.habilidad " onclick="miFuncion()"
+                        value="Activar Función">
+             </form>
+           
 
-    <input type="submit" value=" Enviar" class="btn btn-success" />
+             <input type="submit" value=" Enviar" class="btn btn-success" />
 
 </form>
+<script type="text/javascript">
+    function miFuncion() {
+        var x = document.getElementById("canpreg").value
+        var habilidades= []
+        for (i = 1; i <= x; i++) {
+            var customerName = prompt("Favor ingrese habilidad " + i, "escriba aqui ");
+            habilidades.push(customerName);
+             
+        }
+        var str = 'hello there';
+        document.getElementById('para').innerHTML = habilidades
+        //document.write(habilidades);
+        return habilidades
+        
+    }
  
+ 
+    
+    
+</script>
+
 <scripts>
 
 
