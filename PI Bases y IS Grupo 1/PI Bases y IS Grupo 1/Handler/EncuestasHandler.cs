@@ -107,5 +107,15 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return encuesta;
         }
+
+        public bool borrarEncuesta(int id) {
+            string consulta = "DELETE FROM Encuestas WHERE idEncuesta=@id";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@id", id);
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            return exito;
+        }
     }
 }

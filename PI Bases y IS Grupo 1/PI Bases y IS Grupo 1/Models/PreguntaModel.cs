@@ -7,6 +7,9 @@ namespace PIBasesISGrupo1.Models
 {
     public class PreguntaModel
     {
+        public int encuestaID { get; set; }
+
+        public int preguntaID { get; set; }
         public string pregunta { get; set; }
 
         public string opcion1 { get; set; }

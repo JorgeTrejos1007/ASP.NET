@@ -24,9 +24,13 @@
             </div>
         }
     }
+    <!--<label asp-for="@Model.encuesta.id">ID</label><br>-->
+
 
     <label asp-for="@Model.encuesta.nombreEncuesta">Nombre de la encuesta</label><br>
     <input asp-for="@Model.encuesta.nombreEncuesta" placeholder="@Model.encuesta.nombreEncuesta" /> <br /><br />
+
+    <input type="hidden" asp-for="@Model.encuesta.id" placeholder="@Model.encuesta.id" />
 
     <label asp-for="@Model.encuesta.autor">Autor de la encuesta</label><br>
     <input asp-for="@Model.encuesta.autor" placeholder="@Model.encuesta.autor" /> <br /><br />
