@@ -1,0 +1,26 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.NoticiasModel
+@{
+    ViewData["Title"] = "Noticias";
+}
+
+<h2>Noticias</h2>
+<form method="post" enctype="multipart/form-data">
+    <div>
+
+        Titulo de noticia: <input asp-for="@Model.noticia.titulo" />
+        </br>
+        </br>
+        Fecha de publicacion: <input asp-for="@Model.noticia.fecha" type="date" />
+        </br>
+        </br>
+        Archivo txt con la noticia: <input asp-for="@Model.archivoNoticia" type="file" />
+        </br>
+        </br>
+        Imagen de la noticia: <input asp-for="@Model.archivoImagen" type="file" />
+        </br>
+        </br>
+        <input type="submit" value=" Enviar"/>
+    </div>
+
+</form>

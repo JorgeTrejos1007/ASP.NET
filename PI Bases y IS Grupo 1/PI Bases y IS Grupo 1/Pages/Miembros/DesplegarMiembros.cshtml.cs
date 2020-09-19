@@ -14,16 +14,12 @@ namespace PIBasesISGrupo1.Pages.Miembros
     public class DesplegarMiembrosModel : PageModel
     {
         [BindProperty]
-        public Noticia Miembro { get; set; }
+        public Miembro Miembro { get; set; }
         
         public void OnGet()
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-
             ViewData["Miembros"] = accesoDatos.obtenerTodosLosMiembros();
-
-            
-
         }
     }
 }
