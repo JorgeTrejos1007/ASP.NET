@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
     <!-- main css -->
     <link rel="stylesheet" href="css/style.css" />
+    
 </head>
 
 <body>
@@ -220,8 +221,14 @@
                             {
                                 <a> @noticia.titulo</a>
                                 <img class="img-fluid" src="data: @noticia.tipoArchivoImagen;base64,@(Convert.ToBase64String(@noticia.arrayArchivoImagen))" asp-append-version="true" />
+                                <!--
+                                    <iframe scrolling="no" style="background-color: Snow;" frameBorder="0" style="height:200px;width:300px;" src="data:@noticia.tipoArchivoNoticia;base64,@(Convert.ToBase64String(@noticia.arrayArchivoNoticia))"></iframe>
+                                    <embed src="data:@noticia.tipoArchivoNoticia;base64,@(Convert.ToBase64String(@noticia.arrayArchivoNoticia))" charset=utf-8>
                                 
+                                    
+                                 -->
                                 
+
                             }
                         </div>
                     </div>
