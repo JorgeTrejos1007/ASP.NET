@@ -9,25 +9,26 @@ using PIBasesISGrupo1.Handler;
 
 namespace PIBasesISGrupo1.Pages.Encuestas
 {
-    public class CrearEncuestaModel : PageModel
+    public class EditarEncuestaModel : PageModel
     {
-       [BindProperty]
+        [BindProperty]
         public EncuestaModel encuesta { get; set; }
-        public void OnGet()
-        {
-
-        }
-        public IActionResult OnPostEncuesta()
+        public void OnGet(int id)
         {
             EncuestasHandler accesodatos = new EncuestasHandler();
-            if (accesodatos.crearEncuesta(encuesta))
+            this.encuesta = accesodatos.obtenerTuplaEncuesta(id);
+        }
+        public IActionResult OnPostModificarEncuesta()
+        {
+            EncuestasHandler accesodatos = new EncuestasHandler();
+            if (accesodatos.modificarEncuesta(encuesta))
             {
-                TempData["mensaje"] = "Encuesta creada con exito";
+                TempData["mensaje"] = "Encuesta editada con exito";
                 TempData["exitoAlEditar"] = true;
             }
             else
             {
-                TempData["mensaje"] = "Algo salió mal y no fue posible crear la encuesta :(";
+                TempData["mensaje"] = "Algo salió mal y no fue posible editar la encuesta :(";
                 TempData["exitoAlEditar"] = false;
             }
             return Redirect("~/Encuestas/PaginaInicioEncuesta");
