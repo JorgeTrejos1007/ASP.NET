@@ -77,9 +77,10 @@ namespace PIBasesISGrupo1.Handler
         {
             string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password, pais, hobbies) "
                 + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password,@pais,@hobbies) ";
+            string consultaHabilidades = "insert INTO Habilidades(email, habilidad) Values('@email','@habilidad')";
+            string consultaIdiomas = "insert INTO Idiomas(email, idioma) Values('@email','@idioma')";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-     
             comandoParaConsulta.Parameters.AddWithValue("@genero", miembro.genero);
             comandoParaConsulta.Parameters.AddWithValue("@nombre", miembro.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@primerApellido", miembro.primerApellido);
@@ -94,7 +95,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
             comandoParaConsulta.Parameters.AddWithValue("@password", miembro.password);
             comandoParaConsulta.Parameters.AddWithValue("@pais", miembro.pais);
-            
+
             if (String.IsNullOrEmpty(miembro.hobbies))
             {
                 comandoParaConsulta.Parameters.AddWithValue("@hobbies", DBNull.Value);
@@ -104,10 +105,38 @@ namespace PIBasesISGrupo1.Handler
                 comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
             }
             conexion.Open();
-            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; 
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            if (miembro.habilidad.Length > 0)
+            {
+                for (int habilidad = 0; habilidad < miembro.habilidad.Length; habilidad++)
+                {
+                    SqlCommand c = new SqlCommand(consultaHabilidades, conexion);
+                    adaptadorParaTabla = new SqlDataAdapter(c);
+                    c.Parameters.AddWithValue("@email", "Clari@gmail.com");
+                    c.Parameters.AddWithValue("@habilidad", miembro.habilidad[habilidad]);
+                    conexion.Open();
+                    exito = c.ExecuteNonQuery() >= 1;
+                    conexion.Close();
+                }
+            }
+            if (miembro.idioma.Length > 0)
+            {
+                comandoParaConsulta = new SqlCommand(consultaIdiomas, conexion);
+                adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+                for (int idioma = 0; idioma < miembro.idioma.Length; idioma++)
+                {
+                    comandoParaConsulta = new SqlCommand(consultaIdiomas, conexion);
+                    adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+                    comandoParaConsulta.Parameters.AddWithValue("@email", miembro.email);
+                    comandoParaConsulta.Parameters.AddWithValue("@idioma", miembro.habilidad[idioma]);
+                    exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+                }
+            }
             conexion.Close();
             return exito;
         }
+
 
 
 

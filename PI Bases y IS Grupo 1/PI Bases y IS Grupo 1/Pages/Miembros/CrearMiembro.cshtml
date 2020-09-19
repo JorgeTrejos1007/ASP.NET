@@ -82,20 +82,25 @@
         <option value="Portugues">Portugues</option>
         <option value="Ruso">Ruso</option>
     </select></br>
-         <div id="numeroPreguntas">
-
-             <label for='canpreg'>Cantidad de habilidades:</label>
-             <input type='text' id='canpreg' name='canpreg'>
-
-
-             <form>
-                 <input type="button"
-                        asp-for="@Model.miembro.habilidad " onclick="miFuncion()"
-                        value="Activar Función">
-             </form>
-           
-
-             <input type="submit" value=" Enviar" class="btn btn-success" />
+    <p><strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
+    </p> <select asp-for="@Model.miembro.habilidad" multiple size="15">
+        <option value="Empatia">Empatía</option>
+        <option value="Saber escuchar">Saber escuchar</option>
+        <option value="Liderazgo">Liderazgo</option>
+        <option value="Flexibilidad">Flexibilidad</option>
+        <option value="Optimismo">Optimismo</option>
+        <option value="Confianza">Confianza</option>
+        <option value="Optimismo">Optimismo</option>
+        <option value="Confianza">Confianza</option>
+        <option value="Comunicacion">Comunicacion</option>
+        <option value="Convencimiento">Convencimiento</option>
+        <option value="Esfuerzo">Esfuerzo</option>
+        <option value="Dedicacion">Dedicacion</option>
+        <option value="Comprension">Comprension</option>
+        <option value="Asertividad">Asertividad</option>
+        <option value="Credibilidad">Credibilidad</option>
+    </select></br>
+    <input type="submit" value=" Enviar" class="btn btn-success" />
 
 </form>
 <script type="text/javascript">
@@ -107,8 +112,7 @@
             habilidades.push(customerName);
              
         }
-        var str = 'hello there';
-        document.getElementById('para').innerHTML = habilidades
+        document.getElementById('habilidad').innerHTML = habilidades
         //document.write(habilidades);
         return habilidades
         
