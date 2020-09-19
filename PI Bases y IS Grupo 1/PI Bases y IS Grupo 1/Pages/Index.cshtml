@@ -221,13 +221,15 @@
                   @foreach (var noticia in (List<PIBasesISGrupo1.Models.Noticia>)ViewData["Noticias"])
                    {
                      <div class="single_course">
-                       <a> @noticia.titulo</a>
-                       <img class="img-fluid" src="data: @noticia.tipoArchivoImagen;base64,@(Convert.ToBase64String(@noticia.arrayArchivoImagen))" asp-append-version="true" />
+                         <div class="course_head">
+                             <a> @noticia.titulo</a>
+                             <img class="img-fluid" src="data: @noticia.tipoArchivoImagen;base64,@(Convert.ToBase64String(@noticia.arrayArchivoImagen))" asp-append-version="true" />
+                         </div>
 
-                       <p id="text"></p>
-                        <script>
+                         <p id="text"></p>
+                         <script>
                           $('#text').load("data:@noticia.tipoArchivoNoticia;base64,@(Convert.ToBase64String(@noticia.arrayArchivoNoticia))");
-                        </script>
+                         </script>
                      </div>
                    }
                  </div>
