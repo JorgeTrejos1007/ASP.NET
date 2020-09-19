@@ -37,29 +37,29 @@
             {
                 foreach (var item in (List<PIBasesISGrupo1.Models.EncuestaModel>)ViewData["Encuestas"])
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.nombreEncuesta)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.categoria)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.topico)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.autor)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.vigencia) días
-                        </td>
-                        <td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreEncuesta)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.categoria)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.topico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.autor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.vigencia) días
+            </td>
+            <td>
 
-                            <a asp-page="./Edit" asp-route-id="@item.id">Edit</a>
-                            <a asp-page="./Details" asp-route-id="@item.id"> Details </a>
-                            <a asp-page="./Delete" asp-route-id="@item.id"> Delete </a>
-                        </td>
-                    </tr>
+                <a asp-page="./EditarEncuesta" asp-route-id="@item.id">Editar</a>
+                <a asp-page="./Details" asp-route-id="@item.id"> Details </a>
+                <a asp-page="./Delete" asp-route-id="@item.id"> Delete </a>
+            </td>
+        </tr>
 
 
 
