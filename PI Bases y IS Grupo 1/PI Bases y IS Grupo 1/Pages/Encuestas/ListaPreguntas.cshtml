@@ -6,7 +6,7 @@
 
 <h2>IndexPreguntas</h2>
 <p>
-    <a asp-page="CrearPregunta">Create New</a>
+    <a asp-page="CrearPregunta" asp-route-id="@ViewData["id"]">Crear pregunta</a>
 </p>
 <table class="table">
     <thead>
@@ -17,3 +17,28 @@
         </tr>
     </thead>
     <tbody>
+        @{
+            if ((List<PIBasesISGrupo1.Models.PreguntaModel>)ViewData["Preguntas"] != null)
+            {
+                foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)ViewData["Preguntas"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.pregunta)
+                        </td>
+                        <td>
+
+                            <a asp-page="./EditarEncuesta" asp-route-id="@item.preguntaID">Editar</a>
+                            
+                            <a asp-page="./BorrarEncuesta" asp-route-id="@item.preguntaID"> Borrar </a>
+                        </td>
+                    </tr>
+
+
+
+
+                }
+            }
+        }
+    </tbody>
+</table>

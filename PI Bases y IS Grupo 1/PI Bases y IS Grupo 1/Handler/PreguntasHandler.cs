@@ -31,16 +31,16 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return consultaFormatoTabla;
         }
-        public bool crearEncuesta(PreguntaModel pregunta)
+        public bool crearPregunta(PreguntaModel pregunta)
         {
-            string consulta = "INSERT INTO Preguntas(idEncuestaFK, idPregunta, pregunta, opcion1, opcion2, opcion3, opcion4) "
-            + "VALUES (@idEncuestaFK,@idPregunta,@pregunta,@opcion1,@opcion2, @opcion3, @opcion4) ";
+            string consulta = "INSERT INTO Preguntas(idEncuestaFK, pregunta, opcion1, opcion2, opcion3, opcion4) "
+            + "VALUES (@idEncuestaFK,@pregunta,@opcion1,@opcion2, @opcion3, @opcion4) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
-
+           // pregunta.encuestaID = idEncuesta;
             comandoParaConsulta.Parameters.AddWithValue("@idEncuestaFK", pregunta.encuestaID);
-            comandoParaConsulta.Parameters.AddWithValue("@idPregunta", pregunta.preguntaID);
+            //comandoParaConsulta.Parameters.AddWithValue("@idPregunta", pregunta.preguntaID);
             comandoParaConsulta.Parameters.AddWithValue("@pregunta", pregunta.pregunta);
             comandoParaConsulta.Parameters.AddWithValue("@opcion1", pregunta.opcion1);
             comandoParaConsulta.Parameters.AddWithValue("@opcion2", pregunta.opcion2);

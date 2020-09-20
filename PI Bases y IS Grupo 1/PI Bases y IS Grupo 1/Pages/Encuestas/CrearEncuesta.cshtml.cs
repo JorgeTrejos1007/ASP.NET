@@ -11,8 +11,9 @@ namespace PIBasesISGrupo1.Pages.Encuestas
 {
     public class CrearEncuestaModel : PageModel
     {
-       [BindProperty]
+        [BindProperty]
         public EncuestaModel encuesta { get; set; }
+       
         public void OnGet()
         {
 
