@@ -38,53 +38,117 @@
     <div>
         <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
         </br>
-        Nombre: <input asp-for="@Model.miembro.nombre" value="@datosMiembroModificar.nombre" />
+        <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" value="@datosMiembroModificar.nombre" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
         </br>
-        Primer Apellido: <input asp-for="@Model.miembro.primerApellido" value="@datosMiembroModificar.primerApellido" />
+        <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" value="@datosMiembroModificar.primerApellido" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
         </br>
-        Segundo Apellido: <input asp-for="@Model.miembro.segundoApellido" value="@datosMiembroModificar.segundoApellido" />
+        <strong>Segundo Apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" value="@datosMiembroModificar.segundoApellido" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
         </br>
-        Genero: <input asp-for="@Model.miembro.genero" value="@datosMiembroModificar.genero" />
+        <strong>Genero:</strong> <input asp-for="@Model.miembro.genero" value="@datosMiembroModificar.genero" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
         </br>
-        Pais: <input asp-for="@Model.miembro.pais" value="@datosMiembroModificar.pais" />
+        <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" value="@datosMiembroModificar.pais" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
         </br>
-        Hobbies: <input asp-for="@Model.miembro.hobbies" value="@datosMiembroModificar.hobbies" /></br>
+        <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" value="@datosMiembroModificar.hobbies" /></br>
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
         </br>
-        Email: <input asp-for="@Model.miembro.email" value="@datosMiembroModificar.email" />
+        <strong>Email:</strong> <input asp-for="@Model.miembro.email" value="@datosMiembroModificar.email" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
         </br>
-        Contraseña: <input asp-for="@Model.miembro.password" value="@datosMiembroModificar.password" , type="password" />
+        <strong> Contraseña:</strong> <input asp-for="@Model.miembro.password" value="@datosMiembroModificar.password" , type="password" />
 
     </div>
+
+    @{
+        if (datosMiembroModificar.idiomas != null)
+        {
+            <strong>Idiomas:</strong><br />
+            @foreach (var idioma in datosMiembroModificar.idiomas)
+            {
+                @idioma<br />
+
+            }
+        }
+
+        if (datosMiembroModificar.habilidades != null)
+        {
+            <strong>Habilidades:</strong><br />
+            @foreach (var habilidad in datosMiembroModificar.habilidades)
+            {
+                @habilidad<br />
+
+            }
+        }
+
+    }
+
+    </br>
+    <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
     </br>
 
-    Subir foto: <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+    <p>
+        <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
+    </p> <select asp-for="@Model.miembro.idiomas" multiple size="11" value="@datosMiembroModificar.idiomas">
+        <option value="Arabe">Arabe</option>
+        <option value="Aleman">Aleman</option>
+        <option value="Bengali">Bengali</option>
+        <option value="Español">Español</option>
+        <option value="Frances">Frances</option>
+        <option value="Hindi">Hindi</option>
+        <option value="Ingles">Ingles</option>
+        <option value="Mandarin">Mandarin</option>
+        <option value="Panyabí">Panyabí</option>
+        <option value="Portugues">Portugues</option>
+        <option value="Ruso">Ruso</option>
+    </select></br>
+    <p>
+        <strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
+    </p> <select asp-for="@Model.miembro.habilidades" multiple size="15" value="@datosMiembroModificar.habilidades">
+        <option value="Empatia">Empatía</option>
+        <option value="Saber escuchar">Saber escuchar</option>
+        <option value="Liderazgo">Liderazgo</option>
+        <option value="Flexibilidad">Flexibilidad</option>
+        <option value="Optimismo">Optimismo</option>
+        <option value="Confianza">Confianza</option>
+        <option value="Optimismo">Optimismo</option>
+        <option value="Confianza">Confianza</option>
+        <option value="Comunicacion">Comunicacion</option>
+        <option value="Convencimiento">Convencimiento</option>
+        <option value="Esfuerzo">Esfuerzo</option>
+        <option value="Dedicacion">Dedicacion</option>
+        <option value="Comprension">Comprension</option>
+        <option value="Asertividad">Asertividad</option>
+        <option value="Credibilidad">Credibilidad</option>
+    </select></br>
+
+
+
+
+
     </br>
     <input type="submit" value="aplicar cambios" class="btn btn-success" aps-page-handler="OnPost" />
 </form>

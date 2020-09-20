@@ -41,7 +41,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
             }
             else
             {
-                TempData["mensaje"] = "Se ha logrado registar con exito";
+                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
 
