@@ -30,6 +30,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
             MiembroHandler accesoDatos = new MiembroHandler();            
             if (accesoDatos.crearMiembro(miembro))
             {
+
+
                 TempData["mensaje"] = "Se ha logrado registar con exito";
                 TempData["exitoAlEditar"] = true;
                 if (archivoImagen != null)
