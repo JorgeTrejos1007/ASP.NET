@@ -30,16 +30,42 @@
                         <img class="card-img-top" src="~/img/imagenGenerica.jpeg" with="40" height="40" asp-append-version="true" />
                     }
                 }
-                Nombre Completo: @miembro.nombre @miembro.primerApellido
+                <strong>Nombre Completo:</strong> @miembro.nombre @miembro.primerApellido
                 @if (@miembro.segundoApellido != null)
                 {
                     @miembro.segundoApellido
                 }
                 <br />
-                Genero: @miembro.genero<br />
-                Nacionalidad: @miembro.pais<br />
-                Hobbies: @miembro.hobbies<br />
-                Email: @miembro.email<br />
+                <strong>Genero:</strong> @miembro.genero<br />
+                <strong>Nacionalidad:</strong> @miembro.pais<br />
+                <strong>Hobbies:</strong> @miembro.hobbies<br />
+                <strong>Email:</strong> @miembro.email<br />
+
+
+                @{
+                    if (@miembro.idiomas != null)
+                    {
+                        <strong>Idiomas:</strong><br />
+                        @foreach (var idioma in @miembro.idiomas)
+                        {
+                            @idioma<br />
+
+                        }
+                    }
+
+                    if (@miembro.habilidades != null)
+                    {
+                        <strong>Habilidades:</strong><br />
+                        @foreach (var habilidad in @miembro.habilidades)
+                        {
+                            @habilidad<br />
+
+                        }
+                    }
+
+                }
+
+
 
                 <a href="~/Miembros/EditarMiembro?email=@miembro.email" class="btn btn-info">Editar perfil</a>
 
