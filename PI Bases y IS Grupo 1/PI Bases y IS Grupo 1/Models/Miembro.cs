@@ -49,8 +49,8 @@ namespace PIBasesISGrupo1.Models
 
 
         public string tipoArchivo { get; set; }
-        public string[] idioma { get; set; }
-        public string[] habilidad { get; set; }
+        public string[] idiomas { get; set; }
+        public string[] habilidades { get; set; }
         public byte[] byteArrayImage { get; set; }
 
     }

@@ -39,11 +39,11 @@ namespace PIBasesISGrupo1.Handler
             
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario";
-            DataTable tablaResultado = crearTablaConsulta(consulta);
+            DataTable tablaMiembro = crearTablaConsulta(consulta);
             
-            foreach (DataRow columna in tablaResultado.Rows)
+            foreach (DataRow columna in tablaMiembro.Rows)
             {
-               
+
                 miembros.Add(
                 new Miembro
                 {
@@ -56,13 +56,58 @@ namespace PIBasesISGrupo1.Handler
                     pais = Convert.ToString(columna["pais"]),
                     hobbies = Convert.ToString(columna["hobbies"]),
                     tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
-                    byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"]
-                    
+                    byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"],
+                    idiomas = obtenerIdiomas(Convert.ToString(columna["email"])),
+                    habilidades = obtenerHabilidades(Convert.ToString(columna["email"]))
                 });
 
             }
             return miembros;
         }
+
+        private string[] obtenerIdiomas(string email) {
+            List<string> idiomas= new List<string>();
+         
+            string consultaIdioma = "SELECT idioma FROM Idiomas " + "WHERE email=@email";
+            SqlCommand comandoParaConsulta = new SqlCommand(consultaIdioma, conexion);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            conexion.Open();
+            SqlDataReader lectorColumna = comandoParaConsulta.ExecuteReader();
+            while (lectorColumna.Read())
+            {
+
+                idiomas.Add(lectorColumna["idioma"].ToString());
+            }
+            conexion.Close();
+
+            return idiomas.ToArray();
+        }
+
+
+
+        private string[] obtenerHabilidades(string email)
+        {
+            List<string> habilidades = new List<string>();
+
+            string consultaIdioma = "SELECT habilidad FROM Habilidades " + "WHERE email=@email";
+            SqlCommand comandoParaConsulta = new SqlCommand(consultaIdioma, conexion);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            conexion.Open();
+            SqlDataReader lectorColumna = comandoParaConsulta.ExecuteReader();
+            while (lectorColumna.Read())
+            {
+
+                habilidades.Add(lectorColumna["habilidad"].ToString());
+            }
+            conexion.Close();
+
+            return habilidades.ToArray();
+        }
+
+
+
+
+
 
         private byte[] obtenerBytes(IFormFile archivo)
         {
@@ -108,11 +153,11 @@ namespace PIBasesISGrupo1.Handler
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             
-            if (miembro.habilidad.Length>0) {
+            if (miembro.habilidades.Length>0) {
                 exito = insertatHabilidadesMiembro(miembro);
             }
 
-            if (miembro.idioma.Length > 0)
+            if (miembro.idiomas.Length > 0)
             {
                 exito = insertatIdiomasMiembro(miembro);
             }
@@ -121,33 +166,32 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        public bool insertatHabilidadesMiembro(Miembro miembro) {
+        private bool insertatHabilidadesMiembro(Miembro miembro) {
             string consultaHabilidades = "insert INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
             
             bool exito=false;
-            for (int habilidad = 0; habilidad < miembro.habilidad.Length; habilidad++)
+            for (int habilidad = 0; habilidad < miembro.habilidades.Length; habilidad++)
             {
                 SqlCommand comandoParaConsultaHabilidades = new SqlCommand(consultaHabilidades, conexion);
                 SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsultaHabilidades);
                 comandoParaConsultaHabilidades.Parameters.AddWithValue("@email", miembro.email);
-                comandoParaConsultaHabilidades.Parameters.AddWithValue("@habilidad", miembro.habilidad[habilidad]);
+                comandoParaConsultaHabilidades.Parameters.AddWithValue("@habilidad", miembro.habilidades[habilidad]);
                 exito = comandoParaConsultaHabilidades.ExecuteNonQuery() >= 1;
             }
-         
             return exito;
         }
 
-        public bool insertatIdiomasMiembro(Miembro miembro)
+        private bool insertatIdiomasMiembro(Miembro miembro)
         {
             string consultaIdiomas = "insert INTO Idiomas(email, idioma) Values(@email,@idioma) ";
           
             bool exito = false;
-            for (int idioma = 0; idioma < miembro.idioma.Length; idioma++)
+            for (int idioma = 0; idioma < miembro.idiomas.Length; idioma++)
             {
                 SqlCommand comandoParaConsultaIdiomas = new SqlCommand(consultaIdiomas, conexion);
                 SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsultaIdiomas);
                 comandoParaConsultaIdiomas.Parameters.AddWithValue("@email", miembro.email);
-                comandoParaConsultaIdiomas.Parameters.AddWithValue("@idioma", miembro.habilidad[idioma]);
+                comandoParaConsultaIdiomas.Parameters.AddWithValue("@idioma", miembro.idiomas[idioma]);
                 exito = comandoParaConsultaIdiomas.ExecuteNonQuery() >= 1;
             }
 
