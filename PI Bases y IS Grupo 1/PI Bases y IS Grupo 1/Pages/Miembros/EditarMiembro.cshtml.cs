@@ -20,6 +20,12 @@ namespace PIBasesISGrupo1.Pages.Miembros
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
 
+        [BindProperty]
+        public string[] habilidadesBorrar { get; set; }
+
+        [BindProperty]
+        public string[] idiomasBorrar { get; set; }
+
         public IActionResult OnGet(String email)
         {
             IActionResult vista;

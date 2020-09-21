@@ -84,24 +84,45 @@
     </div>
 
     @{
-        if (datosMiembroModificar.idiomas != null)
+        if (datosMiembroModificar.idiomas.Length > 0)
         {
+            <br />
+            <br />
             <strong>Idiomas:</strong><br />
-            @foreach (var idioma in datosMiembroModificar.idiomas)
-            {
-                @idioma<br />
+            <p>
+                <strong>Para borrar mas de un idioma mantenga apretado Control + click</strong>
+            </p>
 
-            }
+            <select asp-for="@Model.idiomasBorrar" multiple size=" @datosMiembroModificar.idiomas.Length">
+
+                @foreach (var idioma in datosMiembroModificar.idiomas)
+                {
+                    <option value="@idioma">@idioma</option>
+
+
+                }
+            </select>
         }
 
-        if (datosMiembroModificar.habilidades != null)
+        if (datosMiembroModificar.habilidades.Length>0)
         {
+            <br />
+            <br />
             <strong>Habilidades:</strong><br />
-            @foreach (var habilidad in datosMiembroModificar.habilidades)
-            {
-                @habilidad<br />
 
-            }
+
+            <p>
+                <strong>Para borrar mas de una habilidad mantenga apretado Control + click</strong>
+            </p>
+            <select asp-for="@Model.habilidadesBorrar" multiple size=" @datosMiembroModificar.habilidades.Length">
+
+                @foreach (var habilidad in datosMiembroModificar.habilidades)
+                {
+
+                    <option value="@habilidad">@habilidad</option>
+
+                }
+            </select>
         }
 
     }
@@ -112,7 +133,7 @@
 
     <p>
         <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
-    </p> <select asp-for="@Model.miembro.idiomas" multiple size="11" value="@datosMiembroModificar.idiomas">
+    </p> <select asp-for="@Model.miembro.idiomas" multiple size="11">
         <option value="Arabe">Arabe</option>
         <option value="Aleman">Aleman</option>
         <option value="Bengali">Bengali</option>
