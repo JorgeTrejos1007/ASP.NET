@@ -154,20 +154,20 @@ namespace PIBasesISGrupo1.Handler
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             
             if (miembro.habilidades.Length>0) {
-                exito = insertatHabilidadesMiembro(miembro);
+                exito = insertarHabilidadesMiembro(miembro);
             }
 
             if (miembro.idiomas.Length > 0)
             {
-                exito = insertatIdiomasMiembro(miembro);
+                exito = insertarIdiomasMiembro(miembro);
             }
 
             conexion.Close();
             return exito;
         }
 
-        private bool insertatHabilidadesMiembro(Miembro miembro) {
-            string consultaHabilidades = "insert INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
+        private bool insertarHabilidadesMiembro(Miembro miembro) {
+            string consultaHabilidades = "INSERT INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
             
             bool exito=false;
             for (int habilidad = 0; habilidad < miembro.habilidades.Length; habilidad++)
@@ -181,9 +181,9 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        private bool insertatIdiomasMiembro(Miembro miembro)
+        private bool insertarIdiomasMiembro(Miembro miembro)
         {
-            string consultaIdiomas = "insert INTO Idiomas(email, idioma) Values(@email,@idioma) ";
+            string consultaIdiomas = "INSERT INTO Idiomas(email, idioma) Values(@email,@idioma) ";
           
             bool exito = false;
             for (int idioma = 0; idioma < miembro.idiomas.Length; idioma++)
@@ -194,11 +194,44 @@ namespace PIBasesISGrupo1.Handler
                 comandoParaConsultaIdiomas.Parameters.AddWithValue("@idioma", miembro.idiomas[idioma]);
                 exito = comandoParaConsultaIdiomas.ExecuteNonQuery() >= 1;
             }
-
-          
             return exito;
         }
 
+        public bool eliminarIdiomasMiembro(string email, string[]idiomasBorrar)
+        {
+            string consultaIdiomas = "DELETE FROM Idiomas WHERE email=@email and idioma=@idioma";
+
+            bool exito = false;
+            conexion.Open();
+            for (int idioma = 0; idioma < idiomasBorrar.Length; idioma++)
+            {
+                SqlCommand comandoParaConsultaIdiomas = new SqlCommand(consultaIdiomas, conexion);
+                SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsultaIdiomas);
+                comandoParaConsultaIdiomas.Parameters.AddWithValue("@email", email);
+                comandoParaConsultaIdiomas.Parameters.AddWithValue("@idioma", idiomasBorrar[idioma]);
+                exito = comandoParaConsultaIdiomas.ExecuteNonQuery() >= 1;
+            }
+            conexion.Close();
+            return exito;
+        }
+
+        public bool eliminarHabilidesMiembro(string email, string[] habilidadesBorrar )
+        {
+            
+            string consultaHabilidades = "DELETE FROM Habilidades WHERE email=@email and habilidad=@habilidad";
+            conexion.Open();
+            bool exito = false;
+            for (int habilidad = 0; habilidad < habilidadesBorrar.Length; habilidad++)
+            {
+                SqlCommand comandoParaConsultaHabilidades = new SqlCommand(consultaHabilidades, conexion);
+                SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsultaHabilidades);
+                comandoParaConsultaHabilidades.Parameters.AddWithValue("@email", email);
+                comandoParaConsultaHabilidades.Parameters.AddWithValue("@habilidad", habilidadesBorrar[habilidad]);
+                exito = comandoParaConsultaHabilidades.ExecuteNonQuery() >= 1;
+            }
+            conexion.Close();
+            return exito;
+        }
 
 
 
@@ -231,7 +264,18 @@ namespace PIBasesISGrupo1.Handler
                 comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
             }
             conexion.Open();
-            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; // indica que se agregO una tupla (cuando es mayor o igual que 1)
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1; 
+
+            if (miembro.habilidades!=null)
+            {
+                exito = insertarHabilidadesMiembro(miembro);
+            }
+
+            if (miembro.idiomas!=null)
+            {
+                exito = insertarIdiomasMiembro(miembro);
+            }
+
             conexion.Close();
             return exito;
         }
@@ -248,12 +292,5 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
-
-
-
-
-        
-
-
     }
 }

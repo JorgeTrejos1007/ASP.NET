@@ -29,7 +29,18 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IActionResult OnGet(String email)
         {
             IActionResult vista;
-           
+
+            string[] habilidadesElegir= { "Empatia", "Saber escuchar", "Liderazgo", "Flexibilidad",
+            "Optimismo","Confianza","Optimismo","Confianza","Comunicacion","Convencimiento","Esfuerzo","Dedicacion",
+            "Comprension","Asertividad","Credibilidad"};
+
+            string[] idiomasElegir = { "Arabe", "Aleman", "Bengali", "Español",
+            "Frances","Hindi","Ingles","Mandarin","Panyabí","Portugues","Ruso"};
+
+
+            ViewData["HabilidadesElegir"] = habilidadesElegir;
+
+            ViewData["idiomasElegir"] = idiomasElegir;
 
             try {
                 MiembroHandler accesoDatos = new MiembroHandler();
@@ -64,6 +75,16 @@ namespace PIBasesISGrupo1.Pages.Miembros
             if (archivoImagen != null) {
                 accesoDatos.actualizarImagen(miembro.email, archivoImagen);
             }
+
+            if (habilidadesBorrar.Length>0) {
+                accesoDatos.eliminarHabilidesMiembro(miembro.email, habilidadesBorrar);
+            }
+
+            if (idiomasBorrar.Length > 0)
+            {
+                accesoDatos.eliminarIdiomasMiembro(miembro.email, idiomasBorrar);
+            }
+
 
             if (accesoDatos.modificarMiembro(miembro))
             {
