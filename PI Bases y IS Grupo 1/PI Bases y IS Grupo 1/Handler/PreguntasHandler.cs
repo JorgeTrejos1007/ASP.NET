@@ -23,6 +23,7 @@ namespace PIBasesISGrupo1.Handler
         }
         private DataTable crearTablaConsulta(string consulta)
         {
+            
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
@@ -50,6 +51,71 @@ namespace PIBasesISGrupo1.Handler
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
+        }
+
+        public List<PreguntaModel> obtenerPreguntas(int encuestaID)
+        {
+            List<PreguntaModel> preguntas = new List<PreguntaModel>();
+            string consulta = "SELECT * FROM Preguntas WHERE idEncuestaFK=@encuestaID";
+          
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@encuestaID", encuestaID);
+
+            DataTable consultaFormatoTabla = new DataTable();
+
+            adaptadorParaTabla.Fill(consultaFormatoTabla);
+            
+          
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                preguntas.Add(
+                new PreguntaModel
+                {
+                    encuestaID = Convert.ToInt32(columna["idEncuestaFK"]),
+                    preguntaID = Convert.ToInt32(columna["idPregunta"]),
+                    pregunta = Convert.ToString(columna["pregunta"]),
+                    opcion1 = Convert.ToString(columna["opcion1"]),
+                    opcion2= Convert.ToString(columna["opcion2"]),
+                    opcion3 = Convert.ToString(columna["opcion3"]),
+                    opcion4 = Convert.ToString(columna["opcion4"]),
+                });
+
+            }
+            return preguntas;
+        }
+
+        public bool borrarPregunta(int idPregunta)
+        {
+            string consulta = "DELETE FROM Preguntas WHERE idPregunta=@id";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@id", idPregunta);
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            return exito;
+        }
+
+        public PreguntaModel obtenerTuplaPregunta(int idEncuesta, int idPregunta)
+        {
+            PreguntaModel pregunta = new PreguntaModel();
+            string consulta = "SELECT * FROM Preguntas WHERE idEncuestaFK=@idEncuesta AND idPregunta=@idPregunta ";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@idEncuesta", idEncuesta);
+            comandoParaConsulta.Parameters.AddWithValue("@idPregunta", idPregunta);
+            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+            lectorDeDatos.Read();
+            pregunta.encuestaID = (int)lectorDeDatos["idEncuestaFK"];
+            pregunta.preguntaID = (int)lectorDeDatos["idPregunta"];
+            pregunta.pregunta = (string)lectorDeDatos["pregunta"];
+            pregunta.opcion1 = (string)lectorDeDatos["opcion1"];
+            pregunta.opcion2 = (string)lectorDeDatos["opcion2"];
+            pregunta.opcion3 = (string)lectorDeDatos["opcion3"];
+            pregunta.opcion4 = (string)lectorDeDatos["opcion4"];
+            conexion.Close();
+            return pregunta;
         }
     }
 }

@@ -21,6 +21,7 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         }
         public IActionResult OnPostPregunta()
         {
+
             PreguntasHandler accesodatos = new PreguntasHandler();
             if (accesodatos.crearPregunta(pregunta))
             {
@@ -32,7 +33,8 @@ namespace PIBasesISGrupo1.Pages.Encuestas
                 TempData["mensaje"] = "Algo salió mal y no fue posible crear la pregunta :(";
                 TempData["exitoAlEditar"] = false;
             }
-            return Redirect("~/Encuestas/ListaPreguntas");
+            
+            return RedirectToPage("ListaPreguntas", new { id = pregunta.encuestaID });
         }
     }
 }

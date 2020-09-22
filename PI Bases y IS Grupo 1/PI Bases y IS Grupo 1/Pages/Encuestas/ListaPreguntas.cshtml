@@ -18,9 +18,9 @@
     </thead>
     <tbody>
         @{
-            if ((List<PIBasesISGrupo1.Models.PreguntaModel>)ViewData["Preguntas"] != null)
+            if ((List<PIBasesISGrupo1.Models.PreguntaModel>)Model.preguntas != null)
             {
-                foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)ViewData["Preguntas"])
+                foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.preguntas)
                 {
                     <tr>
                         <td>
@@ -28,9 +28,9 @@
                         </td>
                         <td>
 
-                            <a asp-page="./EditarEncuesta" asp-route-id="@item.preguntaID">Editar</a>
+                            <a asp-page="./EditarPregunta" asp-route-idEnc="@item.encuestaID" asp-route-idPreg="@item.preguntaID">Editar</a>
                             
-                            <a asp-page="./BorrarEncuesta" asp-route-id="@item.preguntaID"> Borrar </a>
+                            <a asp-page="./BorrarPregunta"  asp-route-idEnc="@item.encuestaID" asp-route-idPreg="@item.preguntaID"> Borrar </a>
                         </td>
                     </tr>
 

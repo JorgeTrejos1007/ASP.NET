@@ -1,0 +1,22 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.BorrarPreguntaModel
+@{
+    ViewData["Title"] = "BorrarPregunta";
+}
+
+<h2>BorrarPregunta</h2>
+<h3>¿Está seguro que quiere borrar esta PREGUNTA?</h3>
+<div>
+
+    <label asp-for="@Model.pregunta.pregunta"><h4><b>Pregunta:</b></h4> @Model.pregunta.pregunta</label> <br>
+    <label asp-for="@Model.pregunta.opcion1"><h4><b>Opción 1:</b></h4> @Model.pregunta.opcion1</label><br>
+    <label asp-for="@Model.pregunta.opcion2"><h4><b>Opción 2:</b></h4> @Model.pregunta.opcion2</label><br>
+    <label asp-for="@Model.pregunta.opcion3"><h4><b>Opción 3:</b></h4> @Model.pregunta.opcion3</label><br>
+    <label asp-for="@Model.pregunta.opcion4"><h4><b>Opción 4: </b></h4> @Model.pregunta.opcion4 días</label><br>
+
+</div>
+<form method="post">
+    <input type="hidden" asp-for="@Model.pregunta.preguntaID" />
+    <input type="submit" value="Borrar" asp-page-handler="borrarPregunta" /> |
+    <a asp-page="./Encuestas/ListaPreguntas">Volver</a>
+</form>
