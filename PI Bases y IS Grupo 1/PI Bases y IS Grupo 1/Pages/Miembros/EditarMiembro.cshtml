@@ -59,7 +59,12 @@
     <div>
         <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
         </br>
-        <strong>Genero:</strong> <input asp-for="@Model.miembro.genero" value="@datosMiembroModificar.genero" />
+        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+        </br>
+        <strong>Genero:</strong>
+        </br>
+        <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
+        <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
 
     </div>
     <div>

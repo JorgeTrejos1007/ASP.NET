@@ -26,46 +26,50 @@
     <div>
         <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
         </br>
-        Nombre: <input asp-for="@Model.miembro.nombre" />
+        <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" />
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
         </br>
-        Primer Apellido: <input asp-for="@Model.miembro.primerApellido" />
+        <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" />
 
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
         </br>
-        Segundo apellido: <input asp-for="@Model.miembro.segundoApellido" />
+        <strong>Segundo apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" />
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
         </br>
-        Genero: <input asp-for="@Model.miembro.genero" />
+        <strong>Genero:</strong>
+        </br>
+        <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
+        <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
+
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
         </br>
-        Pais: <input asp-for="@Model.miembro.pais" />
+        <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" />
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
         </br>
-        Hobbies: <input asp-for="@Model.miembro.hobbies" />
+        <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" />
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
         </br>
-        Email: <input asp-for="@Model.miembro.email" />
+        <strong>Email:</strong> <input asp-for="@Model.miembro.email" />
     </div>
     <div>
         <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
         </br>
-        Contraseña: <input asp-for="@Model.miembro.password" />
+        <strong>Contraseña:</strong> <input asp-for="@Model.miembro.password", type="password"/>
     </div>
     </br>
-    Subir foto: <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+    <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
     </br>
     <p>
         <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
