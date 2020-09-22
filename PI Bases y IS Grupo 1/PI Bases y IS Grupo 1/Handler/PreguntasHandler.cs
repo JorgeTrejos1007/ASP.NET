@@ -86,12 +86,13 @@ namespace PIBasesISGrupo1.Handler
             return preguntas;
         }
 
-        public bool borrarPregunta(int idPregunta)
+        public bool borrarPregunta(int idEncuesta, int idPregunta)
         {
-            string consulta = "DELETE FROM Preguntas WHERE idPregunta=@id";
+            string consulta = "DELETE FROM Preguntas WHERE idPregunta=@idPreg AND idEncuestaFK=@idEnc";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-            comandoParaConsulta.Parameters.AddWithValue("@id", idPregunta);
+            comandoParaConsulta.Parameters.AddWithValue("@idPreg", idPregunta);
+            comandoParaConsulta.Parameters.AddWithValue("@idEnc", idEncuesta);
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
@@ -116,6 +117,26 @@ namespace PIBasesISGrupo1.Handler
             pregunta.opcion4 = (string)lectorDeDatos["opcion4"];
             conexion.Close();
             return pregunta;
+        }
+
+        public bool modificarPregunta(PreguntaModel pregunta)
+        {
+            string consulta = "UPDATE Preguntas SET pregunta=@pregunta, opcion1=@opcion1, opcion2=@opcion2, opcion3=@opcion3, opcion4=@opcion4 WHERE idEncuestaFK=@idEncuesta AND idPregunta=@idPregunta";
+
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@idEncuesta", pregunta.encuestaID);
+            comandoParaConsulta.Parameters.AddWithValue("@idPregunta", pregunta.preguntaID);
+            comandoParaConsulta.Parameters.AddWithValue("@pregunta", pregunta.pregunta);
+            comandoParaConsulta.Parameters.AddWithValue("@opcion1", pregunta.opcion1);
+            comandoParaConsulta.Parameters.AddWithValue("@opcion2", pregunta.opcion2);
+            comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
+            comandoParaConsulta.Parameters.AddWithValue("@opcion4", pregunta.opcion4);
+
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            return exito;
         }
     }
 }

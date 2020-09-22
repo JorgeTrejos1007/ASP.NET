@@ -9,7 +9,7 @@ using PIBasesISGrupo1.Handler;
 
 namespace PIBasesISGrupo1.Pages.Encuestas
 {
-    public class BorrarPreguntaModel : PageModel
+    public class EditarPreguntaModel : PageModel
     {
         [BindProperty]
         public PreguntaModel pregunta { get; set; }
@@ -18,10 +18,10 @@ namespace PIBasesISGrupo1.Pages.Encuestas
             PreguntasHandler accesodatos = new PreguntasHandler();
             this.pregunta = accesodatos.obtenerTuplaPregunta(idEnc, idPreg);
         }
-        public IActionResult OnPostBorrarPregunta()
+        public IActionResult OnPostEditarPregunta()
         {
             PreguntasHandler accesodatos = new PreguntasHandler();
-            accesodatos.borrarPregunta(pregunta.encuestaID ,pregunta.preguntaID);
+            accesodatos.modificarPregunta(pregunta);
             return RedirectToPage("ListaPreguntas", new { id = pregunta.encuestaID });
         }
     }

@@ -7,6 +7,7 @@
 <h2>Crear Pregunta</h2>
 
 <form method="post">
+
     <input asp-for="@Model.pregunta.pregunta" placeholder="Pregunta" /></br></br>
     <input type="hidden" asp-for="@Model.pregunta.encuestaID" value="@ViewData["idEncuesta"]" />
     <input asp-for="@Model.pregunta.opcion1" placeholder="Opción 1" /></br></br>

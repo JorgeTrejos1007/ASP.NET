@@ -4,10 +4,12 @@
     ViewData["Title"] = "IndexPreguntas";
 }
 
-<h2>IndexPreguntas</h2>
+<h2>Lista de preguntas</h2>
 <p>
     <a asp-page="CrearPregunta" asp-route-id="@ViewData["id"]">Crear pregunta</a>
+    <a asp-page="PaginaInicioEncuesta">Volver</a>
 </p>
+
 <table class="table">
     <thead>
         <tr>
@@ -24,13 +26,17 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.pregunta)
+                            <b>Pregunta: </b>@Html.DisplayFor(modelItem => item.pregunta)<br>
+                            <b>Opción 1: </b>@Html.DisplayFor(modelItem => item.opcion1)<br>
+                            <b>Opción 2: </b> @Html.DisplayFor(modelItem => item.opcion2)<br>
+                            <b>Opción 3: </b>@Html.DisplayFor(modelItem => item.opcion3)<br>
+                            <b>Opción 4: </b>@Html.DisplayFor(modelItem => item.opcion4)
                         </td>
                         <td>
 
                             <a asp-page="./EditarPregunta" asp-route-idEnc="@item.encuestaID" asp-route-idPreg="@item.preguntaID">Editar</a>
                             
-                            <a asp-page="./BorrarPregunta"  asp-route-idEnc="@item.encuestaID" asp-route-idPreg="@item.preguntaID"> Borrar </a>
+                            <a asp-page="./BorrarPregunta" asp-route-idEnc="@item.encuestaID" asp-route-idPreg="@item.preguntaID">Borrar</a>
                         </td>
                     </tr>
 
