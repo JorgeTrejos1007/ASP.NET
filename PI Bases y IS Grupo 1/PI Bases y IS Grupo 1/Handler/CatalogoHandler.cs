@@ -49,7 +49,7 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        public bool insertarTopico(string categoria)
+        public bool insertarCategoria(string categoria)
         {
             string consulta = " INSERT INTO Categoria(nombreCategoriaPK)"
             + "VALUES (@nombreCategoria)";
