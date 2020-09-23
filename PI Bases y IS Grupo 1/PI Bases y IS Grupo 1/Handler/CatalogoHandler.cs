@@ -67,7 +67,7 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        private List<string> obtenerTopicosAsociadosACategorias(string categoria)
+        public List<string> obtenerTopicosAsociadosACategorias(string categoria)
         {
             List<string> topicos = new List<string>();
 
@@ -87,13 +87,11 @@ namespace PIBasesISGrupo1.Handler
         }
 
 
-        private List<string> obtenerCategorias()
+        public List<string> obtenerCategorias()
         {
             List<string> categorias = new List<string>();
-
-            string consultaCategorias = "SELECT * FROM Categoria";
+            string consultaCategorias = "SELECT nombreCategoriaPK FROM Categoria";
             SqlCommand comandoParaConsulta = new SqlCommand(consultaCategorias, conexion);
-            
             conexion.Open();
             SqlDataReader lectorColumna = comandoParaConsulta.ExecuteReader();
             while (lectorColumna.Read())
@@ -102,12 +100,25 @@ namespace PIBasesISGrupo1.Handler
                 categorias.Add(lectorColumna["nombreCategoriaPK"].ToString());
             }
             conexion.Close();
-
             return categorias;
         }
 
 
+        public List<Tuple<string, string>> obteneTodosLosTopicosYCategoriasAsociadas()
+        {
+            List<Tuple<string, string>> topicosYCategoriasAsociadas = new List<Tuple<string, string>>();
+            string consultaCategorias = "SELECT * FROM Topico";
+            DataTable tablaTopico = crearTablaConsulta(consultaCategorias);
+            foreach (DataRow columna in tablaTopico.Rows) {
+                topicosYCategoriasAsociadas.Add(new Tuple<string, string>(Convert.ToString(columna["nombreTopicoPK"]), Convert.ToString(columna["nombreCategoriaFK"])));
 
+            }
+
+
+
+
+           return topicosYCategoriasAsociadas;
+        }
 
 
     }
