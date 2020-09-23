@@ -88,7 +88,7 @@ namespace PIBasesISGrupo1.Handler
                     preguntaID = Convert.ToInt32(columna["idPregunta"]),
                     pregunta = Convert.ToString(columna["pregunta"]),
                     opcion1 = Convert.ToString(columna["opcion1"]),
-                    opcion2= Convert.ToString(columna["opcion2"]),
+                    opcion2 = Convert.ToString(columna["opcion2"]),
                     opcion3 = Convert.ToString(columna["opcion3"]),
                     opcion4 = Convert.ToString(columna["opcion4"]),
                 });
@@ -124,8 +124,21 @@ namespace PIBasesISGrupo1.Handler
             pregunta.pregunta = (string)lectorDeDatos["pregunta"];
             pregunta.opcion1 = (string)lectorDeDatos["opcion1"];
             pregunta.opcion2 = (string)lectorDeDatos["opcion2"];
-            pregunta.opcion3 = (string)lectorDeDatos["opcion3"];
-            pregunta.opcion4 = (string)lectorDeDatos["opcion4"];
+            if (lectorDeDatos["opcion3"] != DBNull.Value && lectorDeDatos["opcion4"] != DBNull.Value)
+            {
+                pregunta.opcion3 = (string)lectorDeDatos["opcion3"];
+                pregunta.opcion4 = (string)lectorDeDatos["opcion4"];
+            }
+            else if (lectorDeDatos["opcion3"] != DBNull.Value)
+            {
+                pregunta.opcion3 = (string)lectorDeDatos["opcion3"];
+                pregunta.opcion4 = null;
+            }
+            else {
+                pregunta.opcion3 = null;
+                pregunta.opcion4 = null;
+            }
+           
             conexion.Close();
             return pregunta;
         }
@@ -142,8 +155,21 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@pregunta", pregunta.pregunta);
             comandoParaConsulta.Parameters.AddWithValue("@opcion1", pregunta.opcion1);
             comandoParaConsulta.Parameters.AddWithValue("@opcion2", pregunta.opcion2);
-            comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
-            comandoParaConsulta.Parameters.AddWithValue("@opcion4", pregunta.opcion4);
+            if (pregunta.opcion3 != null && pregunta.opcion4 != null)
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion4", pregunta.opcion4);
+            }
+            else if (pregunta.opcion3 != null)
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion4", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@opcion3", DBNull.Value);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion4", DBNull.Value);
+            }
 
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
