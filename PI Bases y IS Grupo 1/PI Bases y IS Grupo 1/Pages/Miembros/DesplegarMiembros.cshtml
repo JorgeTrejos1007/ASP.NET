@@ -4,7 +4,9 @@
 
 @{
     ViewData["Title"] = "DesplegarMiembros";
-    
+  
+
+
 }
 
 <strong>Miembros de nuestra comunidad</strong>
@@ -18,17 +20,54 @@
         <td>
 
             <p>
-                Nombre Completo: @miembro.Nombre @miembro.PrimerApellido
-                @if (@miembro.SegundoApellido != null)
+                @{
+                    if (@miembro.byteArrayImage != null)
+                    {
+                        <img class="card-img-top" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" with="40" height="40" asp-append-version="true" />
+                    }
+                    else
+                    {
+                        <img class="card-img-top" src="~/img/imagenGenerica.jpeg" with="40" height="40" asp-append-version="true" />
+                    }
+                }
+                <strong>Nombre Completo:</strong> @miembro.nombre @miembro.primerApellido
+                @if (@miembro.segundoApellido != null)
                 {
-                    @miembro.SegundoApellido
+                    @miembro.segundoApellido
                 }
                 <br />
-                Genero: @miembro.Genero<br />
-                Nacionalidad: @miembro.Nacionalidad<br />
-                Hobbies: @miembro.Hobbies<br />
-                Email: @miembro.Email<br />
+                <strong>Genero:</strong> @miembro.genero<br />
+                <strong>Pais:</strong> @miembro.pais<br />
+                <strong>Hobbies:</strong> @miembro.hobbies<br />
+                <strong>Email:</strong> @miembro.email<br />
 
+
+                @{
+                    if (@miembro.idiomas != null)
+                    {
+                        <strong>Idiomas:</strong><br />
+                        @foreach (var idioma in @miembro.idiomas)
+                        {
+                            @idioma<br />
+
+                        }
+                    }
+
+                    if (@miembro.habilidades != null)
+                    {
+                        <strong>Habilidades:</strong><br />
+                        @foreach (var habilidad in @miembro.habilidades)
+                        {
+                            @habilidad<br />
+
+                        }
+                    }
+
+                }
+
+
+
+                <a href="~/Miembros/EditarMiembro?email=@miembro.email" class="btn btn-info">Editar perfil</a>
 
             </p>
 

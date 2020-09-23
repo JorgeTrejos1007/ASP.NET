@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
+using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -13,21 +14,48 @@ namespace PIBasesISGrupo1.Pages.Miembros
     {
 
         [BindProperty]        
-        public Miembro Miembro { get; set; }
+        public Miembro miembro { get; set; }
+
+        [BindProperty]
+        public IFormFile archivoImagen { get; set; }
+
         public void OnGet()
         {
 
         }
-        public void OnPost(int id)
+        
+        public void OnPost()
         {
 
-        }
-        public void OnPostMiembro() {
-            bool ExitoAlCrear = false;
-            MiembroHandler accesoDatos = new MiembroHandler();
-            ExitoAlCrear = accesoDatos.crearMiembro(Miembro); // recuerde que este método devuelve un booleano                     
+            try
+            {
+                MiembroHandler accesoDatos = new MiembroHandler();
+                if (accesoDatos.crearMiembro(miembro))
+                {
+
+
+                    TempData["mensaje"] = "Se ha logrado registar con exito";
+                    TempData["exitoAlEditar"] = true;
+                    if (archivoImagen != null)
+                    {
+                        accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                    }
+                }
+                else
+                {
+                    TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                    TempData["exitoAlEditar"] = false;
+                }
+
+            }
+            catch {
+
+                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                TempData["exitoAlEditar"] = false;
+            }
             
-           
-        } 
+
+            
+        }
     }
 }

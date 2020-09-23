@@ -2,7 +2,194 @@
 @model PIBasesISGrupo1.Pages.Miembros.EditarMiembroModel
 @{
     ViewData["Title"] = "EditarMiembro";
+    var datosMiembroModificar = (PIBasesISGrupo1.Models.Miembro)ViewData["MiembroModificar"];
+    var mensaje = (string)TempData["mensaje"];
+    var habilidadesElegir = (string[])ViewData["HabilidadesElegir"];
+
+    var idiomasElegir= (string[])ViewData["idiomasElegir"];
 }
+<h2>Edicion de datos de perfil</h2>
+<form method="post" enctype="multipart/form-data">
 
-<h2>EditarMiembro</h2>
+    @if (@mensaje != null)
+    {
+        if ((bool)TempData["exitoAlEditar"])
+        {
+            <div class="alert-success">
 
+                <h3> @mensaje </h3>
+            </div>
+        }
+        else
+        {
+            <div class="alert-danger">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+    }
+    @{
+        if (datosMiembroModificar.byteArrayImage != null)
+        {
+            <img class="card-img-top" src="data:@datosMiembroModificar.tipoArchivo;base64,@(Convert.ToBase64String(@datosMiembroModificar.byteArrayImage))" with="300" height="300" asp-append-version="true" />
+        }
+        else
+        {
+            <img class="card-img-top" src="~/img/imagenGenerica.jpeg" with="300" height="300" asp-append-version="true" />
+        }
+    }
+    <div>
+        <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+        </br>
+        <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" value="@datosMiembroModificar.nombre" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+        </br>
+        <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" value="@datosMiembroModificar.primerApellido" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+        </br>
+        <strong>Segundo Apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" value="@datosMiembroModificar.segundoApellido" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+        </br>
+        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+        </br>
+        <strong>Genero:</strong>
+        </br>
+        <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
+        <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
+        </br>
+        <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" value="@datosMiembroModificar.pais" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
+        </br>
+        <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" value="@datosMiembroModificar.hobbies" /></br>
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+        </br>
+        <strong>Email:</strong> <input asp-for="@Model.miembro.email" value="@datosMiembroModificar.email" />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
+        </br>
+        <strong> Contraseña:</strong> <input asp-for="@Model.miembro.password" value="@datosMiembroModificar.password" , type="password" />
+
+    </div>
+
+    @{
+        if (datosMiembroModificar.idiomas.Length > 0)
+        {
+            <br />
+            <br />
+            <strong>Idiomas:</strong><br />
+            <p>
+                <strong>Para borrar mas de un idioma mantenga apretado Control + click</strong>
+            </p>
+
+            <select asp-for="@Model.idiomasBorrar" multiple size=" @datosMiembroModificar.idiomas.Length">
+
+                @foreach (var idioma in datosMiembroModificar.idiomas)
+                {
+                    <option value="@idioma">@idioma</option>
+
+
+                }
+            </select>
+        }
+
+        if (datosMiembroModificar.habilidades.Length > 0)
+        {
+            <br />
+            <br />
+            <strong>Habilidades:</strong><br />
+
+
+            <p>
+                <strong>Para borrar mas de una habilidad mantenga apretado Control + click</strong>
+            </p>
+            <select asp-for="@Model.habilidadesBorrar" multiple size="@datosMiembroModificar.habilidades.Length">
+
+                @foreach (var habilidad in datosMiembroModificar.habilidades)
+                {
+
+                    <option value="@habilidad">@habilidad</option>
+
+                }
+            </select>
+        }
+
+    }
+
+    </br>
+    <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+    </br>
+
+
+    @{
+        int cantidadIdiomasDisponibles = idiomasElegir.Length - @datosMiembroModificar.idiomas.Length;
+        <p>
+            <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
+        </p> <select asp-for="@Model.miembro.idiomas" multiple size="@cantidadIdiomasDisponibles">
+            @foreach (var idioma in idiomasElegir)
+            {
+                if (!@datosMiembroModificar.idiomas.Contains(idioma))
+                {
+
+                    <option value="@idioma">@idioma</option>
+                }
+            }
+
+        </select>
+
+
+    }
+
+
+    </br>
+
+
+    @{
+        int cantidadHabilidadesDisponibles = @habilidadesElegir.Length - @datosMiembroModificar.habilidades.Length;
+
+        <p>
+            <strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
+        </p> <select asp-for="@Model.miembro.habilidades" multiple size="@cantidadHabilidadesDisponibles">
+            @foreach (var habilidad in habilidadesElegir)
+            {
+                if (!@datosMiembroModificar.habilidades.Contains(@habilidad))
+                {
+
+                    <option value="@habilidad">@habilidad</option>
+                }
+            }
+
+        </select>
+    }
+
+
+
+
+
+
+
+    </br>
+    <input type="submit" value="aplicar cambios" class="btn btn-success" aps-page-handler="OnPost" />
+</form>
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

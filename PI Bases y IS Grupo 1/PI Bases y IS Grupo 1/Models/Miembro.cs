@@ -3,32 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations; //Para las librerias de Required y Display. Para hacer binding de las propiedades del modelo vista
-using System.Web; //Para incluir los objetos HttpPostedFileBase para recuperar archivos (pdf,imagenes)
+
 using System.ComponentModel;
+using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Models
 {
     public class Miembro
     {
-        public int Id { get; set; }
-        public string Genero { get; set; }
+        [Required(ErrorMessage = "Es necesario que ingreses tu genero")]
+        [Display(Name = "Ingrese su genero")]
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        public string genero { get; set; }
+
         [Required(ErrorMessage = "Es necesario que ingreses tu nombre")]
         [Display(Name = "Ingrese su Nombre")]
-        public string Nombre { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        public string nombre { get; set; }
+
         [Required(ErrorMessage = "Es necesario que ingreses tu primer apellido")]
         [Display(Name = "Ingrese su primer apellido")]
-        public string PrimerApellido{ get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        public string primerApellido { get; set; }
 
-        [Required(ErrorMessage = "Es necesario que ingreses tu segundo apellido")]
         [Display(Name = "Ingrese su segundo apellido")]
-        public string SegundoApellido { get; set; }
+        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        public string segundoApellido { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingreses un correo")]
+        
+
         [Display(Name = "Ingrese su correo")]
-        //[RegularExpression("^[0-9]*$", ErrorMessage = "Debe ingresar numeros")]
-        public string Email { get; set; }        
-        public string Password { get; set; }
-        public string Nacionalidad { get; set; }
-        public string Hobbies { get; set; }
+        [RegularExpression(@"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
+        public string email { get; set; }
+
+        [Required(ErrorMessage = "Es necesario que ingreses tu contraseña")]
+        [Display(Name = "Ingrese su contraseña")]
+        public string password { get; set; }
+
+        [Required(ErrorMessage = "Es necesario que ingreses tu pais")]
+        [Display(Name = "Ingrese su pais")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        public string pais { get; set; }
+
+        [Display(Name = "Ingrese sus hobbies")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        public string hobbies { get; set; }
+
+
+        public string tipoArchivo { get; set; }
+        public string[] idiomas { get; set; }
+        public string[] habilidades { get; set; }
+        public byte[] byteArrayImage { get; set; }
+
     }
 }
