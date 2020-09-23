@@ -29,3 +29,5 @@
     <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion4"></textarea><br>
     <input type="submit" value=" Modificar pregunta" asp-page-handler="editarPregunta" />
 </form>
+
+<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>

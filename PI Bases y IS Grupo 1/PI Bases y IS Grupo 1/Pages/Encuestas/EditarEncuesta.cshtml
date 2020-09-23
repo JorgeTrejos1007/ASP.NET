@@ -2,46 +2,27 @@
 @model PIBasesISGrupo1.Pages.Encuestas.EditarEncuestaModel
 @{
     ViewData["Title"] = "EditarEncuesta";
-    var mensaje = (string)TempData["mensaje"];
 }
 <h2>Editar Encuesta</h2>
 
 <form method="post">
-    @if (@mensaje != null)
-    {
-        if ((bool)TempData["exitoAlEditar"])
-        {
-            <div class="alert-success">
-
-                <h3> @mensaje </h3>
-            </div>
-        }
-        else
-        {
-            <div class="alert-danger">
-
-                <h3> @mensaje </h3>
-            </div>
-        }
-    }
-    <!--<label asp-for="@Model.encuesta.id">ID</label><br>-->
-
-
     <label asp-for="@Model.encuesta.nombreEncuesta">Nombre de la encuesta</label><br>
-    <input asp-for="@Model.encuesta.nombreEncuesta" placeholder="@Model.encuesta.nombreEncuesta" /> <br /><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.nombreEncuesta" placeholder="@Model.encuesta.nombreEncuesta"></textarea><br /><br />
 
-    <input type="hidden" asp-for="@Model.encuesta.id" placeholder="@Model.encuesta.id" />
+    <input type="hidden" asp-for="@Model.encuesta.id" />
 
     <label asp-for="@Model.encuesta.autor">Autor de la encuesta</label><br>
-    <input asp-for="@Model.encuesta.autor" placeholder="@Model.encuesta.autor" /> <br /><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.autor" placeholder="@Model.encuesta.autor"></textarea><br /><br />
 
     <label asp-for="@Model.encuesta.categoria">Categoría</label><br>
-    <input asp-for="@Model.encuesta.categoria" placeholder="@Model.encuesta.categoria" /> <br /><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.categoria" placeholder="@Model.encuesta.categoria"> </textarea><br /><br />
 
     <label asp-for="@Model.encuesta.topico">Tópico</label><br>
-    <input asp-for="@Model.encuesta.topico" placeholder="@Model.encuesta.topico" /> <br /><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.topico" placeholder="@Model.encuesta.topico"> </textarea><br /><br />
 
     <label asp-for="@Model.encuesta.vigencia">Vigencia</label><br>
-    <input asp-for="@Model.encuesta.vigencia" placeholder="@Model.encuesta.vigencia" /> <br /><br />
+    <input asp-for="@Model.encuesta.vigencia" placeholder="@Model.encuesta.vigencia" /><br /><br />
     <input type="submit" value=" Modificar encuesta" asp-page-handler="ModificarEncuesta" />
 </form>
+
+<br /><a asp-page="PaginaInicioEncuesta">Volver</a>

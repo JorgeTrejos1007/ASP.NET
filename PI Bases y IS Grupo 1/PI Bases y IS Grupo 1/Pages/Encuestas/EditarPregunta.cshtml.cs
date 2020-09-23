@@ -17,6 +17,7 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         {
             PreguntasHandler accesodatos = new PreguntasHandler();
             this.pregunta = accesodatos.obtenerTuplaPregunta(idEnc, idPreg);
+            ViewData["idEncuesta"] = idEnc;
         }
         public IActionResult OnPostEditarPregunta()
         {

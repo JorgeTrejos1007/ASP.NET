@@ -6,10 +6,20 @@
 <h2>Crear Encuesta</h2>
 
 <form method="post">
-    <input asp-for="@Model.encuesta.nombreEncuesta" placeholder="Nombre de la encuesta" /> <br /><br />
-    <input asp-for="@Model.encuesta.autor" placeholder="Autor" /> <br /><br />
-    <input asp-for="@Model.encuesta.categoria" placeholder="Categoria" /> <br /><br />
-    <input asp-for="@Model.encuesta.topico" placeholder="Topico" /> <br /><br />
-    <input asp-for="@Model.encuesta.vigencia" placeholder="Vigencia" /> <br /><br />
+    <label asp-for="@Model.encuesta.nombreEncuesta">Nombre de la encuesta</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.nombreEncuesta"></textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.autor">Autor de la encuesta</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.autor"></textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.categoria">Categoría</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.categoria"></textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.topico">Tópico</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.topico"></textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.vigencia">Vigencia</label><br>
+    <input asp-for="@Model.encuesta.vigencia" /><br /><br />
     <input type="submit" value=" Crear encuesta" asp-page-handler="Encuesta" />
 </form>
+<br /><a asp-page="PaginaInicioEncuesta">Volver</a>

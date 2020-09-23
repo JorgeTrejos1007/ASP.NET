@@ -19,5 +19,5 @@
     <input type="hidden" asp-for="@Model.pregunta.encuestaID" />
     <input type="hidden" asp-for="@Model.pregunta.preguntaID" />
     <input type="submit" value="Borrar" asp-page-handler="borrarPregunta" /> |
-    <a asp-page="./Encuestas/ListaPreguntas">Volver</a>
+    <a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>
 </form>

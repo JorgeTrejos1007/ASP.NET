@@ -8,13 +8,29 @@
 
 <form method="post">
 
-    <input asp-for="@Model.pregunta.pregunta" placeholder="Pregunta" /></br></br>
+    <label asp-for="@Model.pregunta.pregunta">Pregunta</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.pregunta"></textarea><br>
+
+
     <input type="hidden" asp-for="@Model.pregunta.encuestaID" value="@ViewData["idEncuesta"]" />
-    <input asp-for="@Model.pregunta.opcion1" placeholder="Opción 1" /></br></br>
-    <input asp-for="@Model.pregunta.opcion2" placeholder="Opción 2" /></br></br>
-    <input asp-for="@Model.pregunta.opcion3" placeholder="Opción 3" /></br></br>
-    <input asp-for="@Model.pregunta.opcion4" placeholder="Opción 4" /></br></br>
-    
+    <input type="hidden" asp-for="@Model.pregunta.preguntaID" />
+
+    <label asp-for="@Model.pregunta.opcion1">Opción 1:</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion1"></textarea><br>
+
+
+    <label asp-for="@Model.pregunta.opcion2">Opción 2:</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion2"></textarea><br>
+
+    <label asp-for="@Model.pregunta.opcion3">Opción 3:</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion3"></textarea><br>
+
+    <label asp-for="@Model.pregunta.opcion4">Opción 4:</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion4"></textarea><br>
+
     <input type="submit" value="Crear" asp-page-handler="Pregunta" />
 </form>
+
+<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>
+                        
 
