@@ -25,6 +25,7 @@ namespace PIBasesISGrupo1.Handler
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
+            
             MemoryStream ms = new MemoryStream();
             archivo.OpenReadStream().CopyTo(ms);
             bytes = ms.ToArray();
@@ -33,7 +34,7 @@ namespace PIBasesISGrupo1.Handler
 
         public bool proponerCurso(Cursos curso, IFormFile archivo) {
             string consulta = "INSERT INTO Curso(nombre,emailUsuarioFK,documentoInformativo,tipoDocumentoInformativo)"
-          + "VALUES (@nombreCurso,@emailEducador,@documento,@tipoDocumento)";
+          + "VALUES (@nombreCurso,@emailEducador,@documento),@tipoDocumento";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", curso.nombre);
