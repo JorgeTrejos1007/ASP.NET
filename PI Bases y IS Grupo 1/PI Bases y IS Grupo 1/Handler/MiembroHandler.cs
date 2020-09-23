@@ -292,5 +292,31 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
+
+        public int obtenerNumeroDeMiembros()
+        {
+            Int32 numeroDeMiembros = 0;
+            string consulta = "SELECT COUNT(*) FROM Usuario";
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            conexion.Open();
+            numeroDeMiembros = (Int32)comando.ExecuteScalar();
+            conexion.Close();
+            return (int)numeroDeMiembros;
+        }
+        public List<string> obtenerPaisesMiembro()
+        {
+            List<string> paisesMiembros = new List<string>();
+            string consulta = "SELECT DISTINCT Pais FROM Usuario";
+            DataTable tablaResultado = crearTablaConsulta(consulta);
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                paisesMiembros.Add(Convert.ToString(columna["Pais"]));
+            }
+            conexion.Open();
+            return paisesMiembros;
+            conexion.Close();
+        }
+
+
     }
 }
