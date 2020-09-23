@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Models
 {
-    public class Curso
+    public class Cursos
     {
         [Required(ErrorMessage = "Es necesario que ingreses el Nombre del Curso")]
         [Display(Name = "Ingrese el Nombre del Curso")]
@@ -27,7 +27,7 @@ namespace PIBasesISGrupo1.Models
         public string emailDelQueLoPropone { get; set; }
         public string emailDelEducador { get; set; }
         public string emailDelMiembroDeNucleo { get; set; }
-        public  string[] emailDeEstudiantes { get; set; }
+        public string[] emailDeEstudiantes { get; set; }
         //public  List<Materiales> { get; set; }
 
     }
