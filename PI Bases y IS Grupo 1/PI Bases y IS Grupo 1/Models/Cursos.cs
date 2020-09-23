@@ -13,7 +13,7 @@ namespace PIBasesISGrupo1.Models
     {
         [Required(ErrorMessage = "Es necesario que ingreses el Nombre del Curso")]
         [Display(Name = "Ingrese el Nombre del Curso")]
-        [RegularExpression(@"^[a-zA-Z][a-zA-Z-0-9]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombre { get; set; }
         [Required(ErrorMessage = "Es necesario que ingreses el documento con la Descripcion y contenido del Curso")]
         [Display(Name = "Ingrese el documento descriptivo del Curso")]

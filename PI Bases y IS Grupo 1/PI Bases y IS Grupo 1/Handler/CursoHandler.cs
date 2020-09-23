@@ -25,7 +25,6 @@ namespace PIBasesISGrupo1.Handler
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
-            
             MemoryStream ms = new MemoryStream();
             archivo.OpenReadStream().CopyTo(ms);
             bytes = ms.ToArray();
@@ -34,13 +33,13 @@ namespace PIBasesISGrupo1.Handler
 
         public bool proponerCurso(Cursos curso, IFormFile archivo) {
             string consulta = "INSERT INTO Curso(nombre,emailUsuarioFK,documentoInformativo,tipoDocumentoInformativo)"
-          + "VALUES (@nombreCurso,@emailEducador,@documento),@tipoDocumento";
+          + "VALUES (@nombreCurso,@emailEducador,@documentoInformativo,@tipoDocumentoInformativo)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", curso.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@emailEducador", curso.emailDelQueLoPropone);
-            comandoParaConsulta.Parameters.AddWithValue("@documento", obtenerBytes(archivo));
-            comandoParaConsulta.Parameters.AddWithValue("@tipoDocumento", archivo.ContentType);
+            comandoParaConsulta.Parameters.AddWithValue("@documentoInformativo", obtenerBytes(archivo));
+            comandoParaConsulta.Parameters.AddWithValue("@tipoDocumentoInformativo", archivo.ContentType);
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             if (curso.topicos.Length > 0)
@@ -53,12 +52,12 @@ namespace PIBasesISGrupo1.Handler
         public bool insertarRelacionConTopico(Cursos curso) {
             bool exito = false;
             string consultaATablaContiene = "INSERT INTO Contiene(nombreCursoFK,nombreTopicoFK)"
-            + "VALUES (@nombreCurso,@topico)";
-            for (int topic = 0; topic < curso.topicos.Length; ++topic) {
+            + "VALUES (@nombreCurso,@nombreTopico)";
+            for (int topico = 0; topico < curso.topicos.Length; ++topico) {
                 SqlCommand comandoParaConsulta = new SqlCommand(consultaATablaContiene, conexion);
                 SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
                 comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", curso.nombre);
-                comandoParaConsulta.Parameters.AddWithValue("@nombreTopico", curso.emailDelQueLoPropone);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreTopico", curso.topicos[topico]);
                 exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             }
             return exito;

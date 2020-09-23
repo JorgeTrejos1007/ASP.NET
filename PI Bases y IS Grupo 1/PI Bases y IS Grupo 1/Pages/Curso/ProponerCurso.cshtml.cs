@@ -9,7 +9,7 @@ using System.IO;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
-
+using System.ComponentModel.DataAnnotations;
 namespace PIBasesISGrupo1.Pages.Curso
 {
     public class ProponerCursoModel : PageModel
@@ -17,6 +17,8 @@ namespace PIBasesISGrupo1.Pages.Curso
         [BindProperty]
         public Cursos curso { get; set; }
         [BindProperty]
+
+        [Required(ErrorMessage = "Es necesario que suba el documento descriptivo del curso")]
         public IFormFile archivo { get; set; }
         public IActionResult OnGet()
         {

@@ -3,10 +3,32 @@
 @{
     ViewData["Title"] = "Proponga un Curso Para Nuestra Comunidad";
     var topicosYCategorias = (List<Tuple<string, string>>)ViewData["TopicosYCategorias"];
+    var mensaje = (string)TempData["mensaje"];
 }
 
 <h2>ProponerCurso</h2>
 <form method="post" enctype="multipart/form-data">
+
+    @if (@mensaje != null)
+    {
+        if ((bool)TempData["exitoAlProponer"])
+        {
+            <div class="alert-success">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+        else
+        {
+            <div class="alert-danger">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+    }
+
+
+
     <div>
         <span asp-validation-for="@Model.curso.nombre" class="text-danger"></span>
         </br>
@@ -20,7 +42,9 @@
 
     </div>
     </br>
+
     <span asp-validation-for="@Model.archivo" class="text-danger"></span>
+    </br>
     <strong>Subir Documento Descriptivo del Curso:</strong> <input asp-for="@Model.archivo" type="file" class="btn btn alert-info" />
     </br>
     @{
