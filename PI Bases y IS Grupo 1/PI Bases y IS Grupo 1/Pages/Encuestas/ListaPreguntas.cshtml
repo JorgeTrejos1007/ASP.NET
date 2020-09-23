@@ -29,8 +29,15 @@
                             <b>Pregunta: </b>@Html.DisplayFor(modelItem => item.pregunta)<br>
                             <b>Opción 1: </b>@Html.DisplayFor(modelItem => item.opcion1)<br>
                             <b>Opción 2: </b> @Html.DisplayFor(modelItem => item.opcion2)<br>
-                            <b>Opción 3: </b>@Html.DisplayFor(modelItem => item.opcion3)<br>
-                            <b>Opción 4: </b>@Html.DisplayFor(modelItem => item.opcion4)
+                            @if (item.opcion3 != "")
+                            {
+                                <b>Opción 3: </b>@Html.DisplayFor(modelItem => item.opcion3)<br>
+                            }
+                            @if (item.opcion4 != "")
+                            {
+                                <b>Opción 4: </b>@Html.DisplayFor(modelItem => item.opcion4)
+                            }
+
 
                         </td>
                         <td>
