@@ -28,6 +28,7 @@ namespace PIBasesISGrupo1.Models
         public string emailDelEducador { get; set; }
         public string emailDelMiembroDeNucleo { get; set; }
         public  string[] emailDeEstudiantes { get; set; }
+        //public  List<Materiales> { get; set; }
 
     }
 }
