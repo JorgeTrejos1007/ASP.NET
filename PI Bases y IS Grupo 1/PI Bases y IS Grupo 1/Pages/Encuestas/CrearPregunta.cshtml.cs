@@ -23,17 +23,8 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         {
 
             PreguntasHandler accesodatos = new PreguntasHandler();
-            if (accesodatos.crearPregunta(pregunta))
-            {
-                TempData["mensaje"] = "Pregunta creada con exito";
-                TempData["exitoAlEditar"] = true;
-            }
-            else
-            {
-                TempData["mensaje"] = "Algo salió mal y no fue posible crear la pregunta :(";
-                TempData["exitoAlEditar"] = false;
-            }
-            
+            accesodatos.crearPregunta(pregunta);
+
             return RedirectToPage("ListaPreguntas", new { id = pregunta.encuestaID });
         }
     }

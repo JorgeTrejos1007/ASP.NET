@@ -39,15 +39,26 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
-           // pregunta.encuestaID = idEncuesta;
+        
             comandoParaConsulta.Parameters.AddWithValue("@idEncuestaFK", pregunta.encuestaID);
-            //comandoParaConsulta.Parameters.AddWithValue("@idPregunta", pregunta.preguntaID);
             comandoParaConsulta.Parameters.AddWithValue("@pregunta", pregunta.pregunta);
             comandoParaConsulta.Parameters.AddWithValue("@opcion1", pregunta.opcion1);
             comandoParaConsulta.Parameters.AddWithValue("@opcion2", pregunta.opcion2);
-            comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
-            comandoParaConsulta.Parameters.AddWithValue("@opcion4", pregunta.opcion4);
-
+            if (pregunta.opcion3  != null && pregunta.opcion4 != null)
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion4", pregunta.opcion4);
+            }
+            else if(pregunta.opcion3 != null)
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@opcion3", pregunta.opcion3);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion4", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@opcion3", DBNull.Value);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion4", DBNull.Value);
+            }
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;

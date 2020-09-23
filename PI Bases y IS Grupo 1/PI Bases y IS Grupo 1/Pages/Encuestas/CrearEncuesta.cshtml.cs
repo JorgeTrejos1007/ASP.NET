@@ -21,16 +21,7 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         public IActionResult OnPostEncuesta()
         {
             EncuestasHandler accesodatos = new EncuestasHandler();
-            if (accesodatos.crearEncuesta(encuesta))
-            {
-                TempData["mensaje"] = "Encuesta creada con exito";
-                TempData["exitoAlEditar"] = true;
-            }
-            else
-            {
-                TempData["mensaje"] = "Algo salió mal y no fue posible crear la encuesta :(";
-                TempData["exitoAlEditar"] = false;
-            }
+            accesodatos.crearEncuesta(encuesta);      
             return Redirect("~/Encuestas/PaginaInicioEncuesta");
         }
     }

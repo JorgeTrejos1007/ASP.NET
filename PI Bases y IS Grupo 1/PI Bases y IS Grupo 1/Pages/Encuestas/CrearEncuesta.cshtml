@@ -7,19 +7,28 @@
 
 <form method="post">
     <label asp-for="@Model.encuesta.nombreEncuesta">Nombre de la encuesta</label><br>
+    <span asp-validation-for="@Model.encuesta.nombreEncuesta" class="text-danger"></span><br />
     <textarea rows="5" cols="125" asp-for="@Model.encuesta.nombreEncuesta"></textarea><br /><br />
 
     <label asp-for="@Model.encuesta.autor">Autor de la encuesta</label><br>
+    <span asp-validation-for="@Model.encuesta.autor" class="text-danger"></span><br />
     <textarea rows="5" cols="125" asp-for="@Model.encuesta.autor"></textarea><br /><br />
 
     <label asp-for="@Model.encuesta.categoria">Categoría</label><br>
+    <span asp-validation-for="@Model.encuesta.categoria" class="text-danger"></span><br />
     <textarea rows="5" cols="125" asp-for="@Model.encuesta.categoria"></textarea><br /><br />
 
     <label asp-for="@Model.encuesta.topico">Tópico</label><br>
+    <span asp-validation-for="@Model.encuesta.topico" class="text-danger"></span><br />
     <textarea rows="5" cols="125" asp-for="@Model.encuesta.topico"></textarea><br /><br />
 
     <label asp-for="@Model.encuesta.vigencia">Vigencia</label><br>
+    <span asp-validation-for="@Model.encuesta.vigencia" class="text-danger"></span><br />
     <input asp-for="@Model.encuesta.vigencia" /><br /><br />
     <input type="submit" value=" Crear encuesta" asp-page-handler="Encuesta" />
 </form>
 <br /><a asp-page="PaginaInicioEncuesta">Volver</a>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
