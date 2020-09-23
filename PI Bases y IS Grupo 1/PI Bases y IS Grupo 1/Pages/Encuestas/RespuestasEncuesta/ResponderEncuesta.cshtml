@@ -1,0 +1,56 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta.ResponderEncuestaModel
+@{
+    ViewData["Title"] = "ResponderEncuesta";
+}
+
+<h2>Responder Encuestas</h2>
+
+<table class="table">
+<thead>
+    <tr>
+        <th>
+            <h3>Nombre de Encuesta</h3>
+        </th>
+        <th>
+            <h3>Categoría</h3>
+        </th>
+        <th>
+            <h3>Tópico</h3>
+        </th>
+        <th>
+            <h3>Autor</h3>
+        </th>
+        <th>
+            <h3>Vigencia</h3>
+        </th>
+        <th></th>
+    </tr>
+</thead>
+<tbody>
+    @{
+        if (Model.encuesta != null)
+        {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.nombreEncuesta)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.categoria)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.topico)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.autor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.vigencia) días
+                    </td>
+                </tr>
+            }
+        }
+    }
+</tbody>
+</table>
+

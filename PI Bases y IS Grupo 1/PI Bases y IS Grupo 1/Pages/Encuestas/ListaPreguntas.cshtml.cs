@@ -15,15 +15,12 @@ namespace PIBasesISGrupo1.Pages.Encuestas
     {
         [BindProperty]
         public List<PreguntaModel> preguntas { get; set; }
-        
-        int idEncuesta=0;
 
         public void OnGet(int id)
         {
             ViewData["id"]= id;
-            idEncuesta = id;
             PreguntasHandler accesoDatos = new PreguntasHandler();
-            preguntas = accesoDatos.obtenerPreguntas(idEncuesta);
+            preguntas = accesoDatos.obtenerPreguntas(id);
             
             
         }
