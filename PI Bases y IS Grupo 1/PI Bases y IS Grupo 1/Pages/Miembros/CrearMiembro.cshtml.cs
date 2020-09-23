@@ -27,23 +27,33 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public void OnPost()
         {
 
-            MiembroHandler accesoDatos = new MiembroHandler();            
-            if (accesoDatos.crearMiembro(miembro))
+            try
             {
-
-
-                TempData["mensaje"] = "Se ha logrado registar con exito";
-                TempData["exitoAlEditar"] = true;
-                if (archivoImagen != null)
+                MiembroHandler accesoDatos = new MiembroHandler();
+                if (accesoDatos.crearMiembro(miembro))
                 {
-                    accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+
+
+                    TempData["mensaje"] = "Se ha logrado registar con exito";
+                    TempData["exitoAlEditar"] = true;
+                    if (archivoImagen != null)
+                    {
+                        accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                    }
                 }
+                else
+                {
+                    TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                    TempData["exitoAlEditar"] = false;
+                }
+
             }
-            else
-            {
+            catch {
+
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
+            
 
             
         }
