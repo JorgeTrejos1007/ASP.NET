@@ -23,11 +23,11 @@ namespace PIBasesISGrupo1.Models
         public string[] topicos { get; set; }
         [Display(Name = "Ingrese su correo")]
         [RegularExpression(@"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
-        public string email { get; set; }
         public string emailDelQueLoPropone { get; set; }
         public string emailDelEducador { get; set; }
         public string emailDelMiembroDeNucleo { get; set; }
         public string[] emailDeEstudiantes { get; set; }
+        public string tipoDocInformativo { get; set; }
         //public  List<Materiales> { get; set; }
 
     }

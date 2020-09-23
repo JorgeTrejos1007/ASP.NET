@@ -15,17 +15,39 @@ namespace PIBasesISGrupo1.Pages.Curso
     public class ProponerCursoModel : PageModel
     {
         [BindProperty]
-        public Cursos miembro { get; set; }
+        public Cursos curso { get; set; }
+        [BindProperty]
+        public IFormFile archivo { get; set; }
         public IActionResult OnGet()
         {
             IActionResult vista;
-            List<string> topicos;
+            
             try
             {
-                MiembroHandler accesoDatos = new MiembroHandler();
-                LobtenerTopicosAsociadosACategorias
+                vista = Page();
+                CatalogoHandler accesoCatalago = new CatalogoHandler();
+                ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
             }
-                return vista;
+            catch
+            {
+                vista = Redirect("~/Curso/ProponerCurso");
+            }
+            return vista;
+        }
+        public IActionResult OnPost()
+        {
+            CursoHandler accesoDatos = new CursoHandler();
+            if (accesoDatos.proponerCurso(curso,archivo))
+            {
+                TempData["mensaje"] = "Curso Propuesto Con Exito";
+                TempData["exitoAlProponer"] = true;
+            }
+            else
+            {
+                TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
+                TempData["exitoAlProponer"] = false;
+            }
+            return RedirectToAction("~/Cursos/ProponerCurso");
         }
     }
 }
