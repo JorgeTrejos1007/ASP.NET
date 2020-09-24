@@ -16,6 +16,7 @@ namespace PIBasesISGrupo1.Pages.Catalogos
         [BindProperty]
         string categoria { get; set; }
 
+        [BindProperty]
         public Catalogo catalogo { get; set; }
 
         public void OnGet()
@@ -28,7 +29,7 @@ namespace PIBasesISGrupo1.Pages.Catalogos
         public void OnPostAgregarCategoria()
         {
             CatalogoHandler accesoCatalogo = new CatalogoHandler();
-            accesoCatalogo.insertarCategoria(categoria);
+            accesoCatalogo.insertarCategoria(catalogo.categoria);
         }
 
         public void OnPostAgregarTopico()

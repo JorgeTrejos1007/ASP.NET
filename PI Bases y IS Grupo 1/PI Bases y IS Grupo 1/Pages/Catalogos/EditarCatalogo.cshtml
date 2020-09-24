@@ -1,20 +1,25 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Catalogos.EditarCatalogoModel
-@{var Categorias = (List<string>)ViewData["Categorias"];
-    List<SelectListItem> tiposCategorias = new List<SelectListItem>(){
-
-        foreach (var categoria in Categorias) {
-            new SelectListItem { Text = categoria };
-        }
-        ////////
-    };
+@{var categorias = (List<string>)ViewData["Categorias"];
+    List<SelectListItem> tiposCategorias = new List<SelectListItem>();
+    foreach (var categoria in categorias)
+    {
+        tiposCategorias.Add(new SelectListItem { Text = @categoria });
+    }
 }
 
+<div>
+    <form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
+        <input asp-for="@Model.catalogo.categoria" />
+        <button class="btn btn-default">Compartir</button>
+    </form>
+</div>
 
-<form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
-    <button class="btn btn-default">Compartir</button>
-</form>
-
-<form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
-    <button class="btn btn-default">Compartir</button>
-</form>
+<br>
+<div>
+    <form asp-page-handler="AgregarTopico" method="post" enctype="multipart/form-data">
+        @Html.LabelFor(model => model.catalogo.categoria)
+        @Html.DropDownListFor(model => model.catalogo.categoria, tiposCategorias, "-Sin selección-", new { @class = "form-control" })
+        <button class="btn btn-default">Agregar Topico</button>
+    </form>
+</div>
