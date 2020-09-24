@@ -12,7 +12,11 @@ namespace PIBasesISGrupo1.Pages
     public class CatalogoModel : PageModel
     {
         [BindProperty]
-        public string[] topicosAelegir { get; set; }
+        public string categoria { get; set; }
+
+        [BindProperty]
+        public Catalogo catalogo { get; set; }
+
 
         public void OnGet()
         {
@@ -23,9 +27,37 @@ namespace PIBasesISGrupo1.Pages
 
         public void OnPost()
         {
-            CatalogoHandler accesoCatalago = new CatalogoHandler();
-            
+            /*CatalogoHandler accesoCatalogoTopico = new CatalogoHandler();
+            if (accesoCatalogoTopico.insertarTopico(catalogo))
+            {
+                TempData["mensaje"] = "Topico agregado exito";
+                TempData["exitoAlEditar"] = true;
+            }
+            else
+            {
+                TempData["mensaje"] = "Algo salió mal al añadir tópico";
+                TempData["exitoAlEditar"] = false;
+            }*/
         }
+
+        public void OnPostCategoria()
+        {
+            CatalogoHandler accesoCatalogoCategoria = new CatalogoHandler();
+            if (accesoCatalogoCategoria.insertarCategoria(categoria))
+            {
+                TempData["mensaje"] = "Topico agregado exito";
+                TempData["exitoAlEditar"] = true;
+            }
+            else
+            {
+                TempData["mensaje"] = "Algo salió mal al añadir tópico";
+                TempData["exitoAlEditar"] = false;
+            }
+        }
+
+
+     
+
 
     }
 }
