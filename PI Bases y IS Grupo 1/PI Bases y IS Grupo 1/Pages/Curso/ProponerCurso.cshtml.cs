@@ -38,18 +38,34 @@ namespace PIBasesISGrupo1.Pages.Curso
         }
         public IActionResult OnPost()
         {
-            CursoHandler accesoDatos = new CursoHandler();
-            if (accesoDatos.proponerCurso(curso,archivo))
+
+            try
             {
-                TempData["mensaje"] = "Curso Propuesto Con Exito";
-                TempData["exitoAlProponer"] = true;
+                CursoHandler accesoDatos = new CursoHandler();
+                if (accesoDatos.proponerCurso(curso, archivo))
+                {
+                    TempData["mensaje"] = "Curso Propuesto Con Exito";
+                    TempData["exitoAlProponer"] = true;
+                }
+                else
+                {
+                    TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
+                    TempData["exitoAlProponer"] = false;
+                }
+                
+
             }
-            else
-            {
-                TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
+            catch {
+
+                TempData["mensaje"] = "Solo un educador puede proponer un curso";
                 TempData["exitoAlProponer"] = false;
+
             }
             return RedirectToAction("~/Cursos/ProponerCurso");
+
+
+
+
         }
     }
 }

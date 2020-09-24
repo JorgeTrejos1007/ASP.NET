@@ -32,7 +32,7 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool proponerCurso(Cursos curso, IFormFile archivo) {
-            string consulta = "INSERT INTO Curso(nombre,emailUsuarioFK,documentoInformativo,tipoDocumentoInformativo)"
+            string consulta = "INSERT INTO Curso(nombre,emailEducadorFK,documentoInformativo,tipoDocumentoInformativo)"
           + "VALUES (@nombreCurso,@emailEducador,@documentoInformativo,@tipoDocumentoInformativo)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
