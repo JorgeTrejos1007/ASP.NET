@@ -23,7 +23,7 @@ namespace PIBasesISGrupo1.Models
         public string[] topicos { get; set; }
         [Display(Name = "Ingrese su correo")]
         [RegularExpression(@"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
-
+        public string estado { get; set; }
         public float precio {get; set;} 
         public string emailDelQueLoPropone { get; set; }
         public string emailDelEducador { get; set; }

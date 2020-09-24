@@ -63,5 +63,33 @@ namespace PIBasesISGrupo1.Handler
             return exito;
 
         }
+        public List<Cursos> obtenerCursosPropuestos()
+        {
+            List<Cursos> cursos = new List<Cursos>();
+            string consultaCategorias = "SELECT * FROM Topico WHERE estado = 'No Aprobado'";
+            DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
+            foreach (DataRow columna in tablaCurso.Rows)
+            {
+                cursos.Add(new Cursos
+                {
+                    nombre = Convert.ToString(columna["nombre"]), estado = Convert.ToString(columna["estado"]),}); 
+            }
+
+
+
+
+            return topicosYCategoriasAsociadas;
+        }
+        private DataTable crearTablaConsulta(string consulta)
+        {
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            DataTable consultaFormatoTabla = new DataTable();
+
+            adaptadorParaTabla.Fill(consultaFormatoTabla);
+            conexion.Close();
+            return consultaFormatoTabla;
+        }
+
     }
 }

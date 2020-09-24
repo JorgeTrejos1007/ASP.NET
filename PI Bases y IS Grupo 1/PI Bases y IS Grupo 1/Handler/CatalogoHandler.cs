@@ -103,7 +103,6 @@ namespace PIBasesISGrupo1.Handler
             return categorias;
         }
 
-
         public List<Tuple<string, string>> obteneTodosLosTopicosYCategoriasAsociadas()
         {
             List<Tuple<string, string>> topicosYCategoriasAsociadas = new List<Tuple<string, string>>();
