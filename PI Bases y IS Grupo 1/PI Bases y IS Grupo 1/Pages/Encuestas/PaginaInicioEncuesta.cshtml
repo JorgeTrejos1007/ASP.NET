@@ -58,7 +58,9 @@
 
                 <a asp-page="./EditarEncuesta" asp-route-id="@item.id">Editar</a> |
                 <a asp-page="./ListaPreguntas" asp-route-id="@item.id"> Añadir Preguntas </a> |
+                <a asp-page="./RespuestasEncuesta/ResponderEncuesta" asp-route-idEnc="@item.id"> Responder Encuesta </a> |
                 <a asp-page="./BorrarEncuesta" asp-route-id="@item.id"> Borrar </a>
+
             </td>
         </tr>
 

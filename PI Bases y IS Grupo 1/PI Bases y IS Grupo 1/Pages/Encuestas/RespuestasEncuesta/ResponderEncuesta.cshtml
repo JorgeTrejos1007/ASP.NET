@@ -7,30 +7,30 @@
 <h2>Responder Encuestas</h2>
 
 <table class="table">
-<thead>
-    <tr>
-        <th>
-            <h3>Nombre de Encuesta</h3>
-        </th>
-        <th>
-            <h3>Categoría</h3>
-        </th>
-        <th>
-            <h3>Tópico</h3>
-        </th>
-        <th>
-            <h3>Autor</h3>
-        </th>
-        <th>
-            <h3>Vigencia</h3>
-        </th>
-        <th></th>
-    </tr>
-</thead>
-<tbody>
-    @{
-        if (Model.encuesta != null)
-        {
+    <thead>
+        <tr>
+            <th>
+                <h3>Nombre de Encuesta</h3>
+            </th>
+            <th>
+                <h3>Categoría</h3>
+            </th>
+            <th>
+                <h3>Tópico</h3>
+            </th>
+            <th>
+                <h3>Autor</h3>
+            </th>
+            <th>
+                <h3>Vigencia</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.encuesta != null)
+            {
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => Model.encuesta.nombreEncuesta)
@@ -50,7 +50,37 @@
                 </tr>
             }
         }
-    }
-</tbody>
+    </tbody>
 </table>
 
+
+
+<h3>Lista de preguntas:</h3>
+
+<form method="post">
+    @{
+        if ((List<PIBasesISGrupo1.Models.PreguntaModel>)Model.preguntas != null)
+        {
+
+            foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.preguntas)
+            {
+
+                <b>Pregunta: </b>@Html.DisplayFor(modelItem => item.pregunta)<br>
+                <input type="radio" asp-for="@item" value="@item.opcion1" />@item.opcion1 <br>
+                <input type="radio" asp-for="@item" value="@item.opcion2" />@item.opcion2<br>
+                @if (item.opcion3 != "")
+                {
+                    <input type="radio" asp-for="@item" value="@item.opcion3" />@item.opcion3<br>
+                }
+                @if (item.opcion4 != "")
+                {
+                    <input type="radio" asp-for="@item" value="@item.opcion4" />@item.opcion4<br>
+                }
+                <label>---------------------------------------------------------------------------------------------------------------------------------------</label>
+                <br />
+
+            }
+        }
+    }
+    <input type="submit" value="Enviar respuesta" />
+</form>

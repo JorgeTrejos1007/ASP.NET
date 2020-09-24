@@ -18,12 +18,14 @@ namespace PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta
         [BindProperty]
         public EncuestaModel encuesta { get; set; }
 
+        [BindProperty]
+        public List<PreguntaModel> preguntas { get; set; }
         public void OnGet(int idEnc)
         {
             EncuestasHandler accesoDatosEncuesta = new EncuestasHandler();
             encuesta = accesoDatosEncuesta.obtenerTuplaEncuesta(idEnc);
             PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
-            ViewData["Preguntas"] = accesoDatosPregunta.obtenerPreguntas(idEnc);
+            preguntas = accesoDatosPregunta.obtenerPreguntas(idEnc);
         }
     }
 }
