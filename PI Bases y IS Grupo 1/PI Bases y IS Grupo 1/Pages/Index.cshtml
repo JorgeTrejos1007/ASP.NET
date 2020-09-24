@@ -214,7 +214,6 @@
             </div>
            
             <div class="row">
-              <!-- single course -->
                <div class="col-lg-12">
 
                    <div class="owl-carousel active_course">
@@ -231,17 +230,20 @@
 
                                <div class="course_content">
                                    <h4 class="mb-3">
+
                                        <a>@noticia.titulo</a>
                                    </h4>
 
                                    <p>
                                        @noticia.fecha
                                    </p>
-                                    <p id="text"></p>
-                                   
-               
-                                   
-                               </div>
+                                   <details>
+                                       <summary class="tag mb-4 d-inline-block">Ver noticia</summary> 
+                                   <p id="contenido">
+                                       @noticia.contenidoNoticia
+                                   </p>
+                                   </details>
+</div>
                            </div>
                        }
 
