@@ -8,18 +8,20 @@
 <form method="post" enctype="multipart/form-data">
     <div>
 
-        Titulo de noticia: <input asp-for="@Model.noticia.titulo" />
+        <strong>Titulo de noticia:</strong> <input asp-for="@Model.noticia.titulo" />
         </br>
         </br>
-        Fecha de publicacion: <input asp-for="@Model.noticia.fecha" type="date" />
+        <strong>Fecha de publicacion:</strong> <input asp-for="@Model.noticia.fecha" type="date" />
         </br>
         </br>
-
+        @{
+            <label asp-for="@Model.noticia.contenidoNoticia">Contenido de la noticia:</label><br>
+            <textarea rows="5" cols="125" asp-for="@Model.noticia.contenidoNoticia"> </textarea><br /><br />
+        }
         
-        Contenido de la noticia:<input asp-for="@Model.noticia.contenidoNoticia" />
         </br>
         </br>
-        Imagen de la noticia: <input asp-for="@Model.archivoImagen" type="file" />
+        <strong>Imagen de la noticia:</strong> <input asp-for="@Model.archivoImagen" type="file" />
         </br>
         </br>
         <input type="submit" value=" Enviar" />
