@@ -1,0 +1,19 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Catalogos.EditarCatalogoModel
+@{var Categorias = (List<string>)ViewData["Categorias"];
+    List<SelectListItem> tiposCategorias = new List<SelectListItem>(){
+
+        foreach (var categoria in Categorias) {
+            new SelectListItem { Text = categoria };
+        }
+    };
+}
+
+
+<form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
+    <button class="btn btn-default">Compartir</button>
+</form>
+
+<form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
+    <button class="btn btn-default">Compartir</button>
+</form>

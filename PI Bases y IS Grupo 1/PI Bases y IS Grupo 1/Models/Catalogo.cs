@@ -18,7 +18,6 @@ namespace PIBasesISGrupo1.Models
         [Required(ErrorMessage = "Es necesario que ingrese un tópico")]
         [Display(Name = "Ingrese un tópico")]
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
-
         public string categoria { get; set; }
     }
 }

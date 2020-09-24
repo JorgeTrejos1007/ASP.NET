@@ -6,25 +6,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
+using Microsoft.AspNetCore.Http;
 
-namespace PIBasesISGrupo1.Pages.Catalogo
+
+namespace PIBasesISGrupo1.Pages.Catalogos
 {
     public class EditarCatalogoModel : PageModel
     {
         [BindProperty]
         string categoria { get; set; }
 
+        public Catalogo catalogo { get; set; }
+
         public void OnGet()
         {
+            CatalogoHandler accesoCatalogo = new CatalogoHandler();
+            ViewData["Categorias"] = accesoCatalogo.obtenerCategorias();
 
         }
-
 
         public void OnPostAgregarCategoria()
         {
             CatalogoHandler accesoCatalogo = new CatalogoHandler();
             accesoCatalogo.insertarCategoria(categoria);
+        }
 
+        public void OnPostAgregarTopico()
+        {
+            CatalogoHandler accesoCatalogo = new CatalogoHandler();
+            accesoCatalogo.insertarTopico(catalogo);
         }
 
     }
