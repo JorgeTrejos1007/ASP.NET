@@ -45,8 +45,7 @@ namespace PIBasesISGrupo1.Handler
                 {
                     titulo = Convert.ToString(columna["titulo"]),
                     fecha = Convert.ToDateTime(columna["fecha"]),
-                    arrayArchivoNoticia = (byte[])columna["archivoNoticia"],
-                    tipoArchivoNoticia = Convert.ToString(columna["tipoArchivoNoticia"]),
+                    contenidoNoticia = Convert.ToString(columna["contenido"]),
                     arrayArchivoImagen = (byte[])columna["archivoImagen"],
                     tipoArchivoImagen = Convert.ToString(columna["tipoArchivoImagen"]),
                 });
@@ -64,17 +63,16 @@ namespace PIBasesISGrupo1.Handler
             return bytes;
         }
 
-        public bool crearNoticia(Noticia noticia, IFormFile archivoNoticia, IFormFile archivoImagen)
+        public bool crearNoticia(Noticia noticia, IFormFile archivoImagen)
         {
-            string consulta = "INSERT INTO Noticia(titulo, fecha, archivoNoticia, tipoArchivoNoticia, archivoImagen, tipoArchivoImagen) "
-                + "VALUES (@titulo, @fecha, @archivoNoticia, @tipoArchivoNoticia, @archivoImagen, @tipoArchivoImagen) ";
+            string consulta = "INSERT INTO Noticia(titulo, fecha, contenido, archivoImagen, tipoArchivoImagen) "
+                + "VALUES (@titulo, @fecha, @contenidoNoticia, @archivoImagen, @tipoArchivoImagen) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
             comandoParaConsulta.Parameters.AddWithValue("@titulo", noticia.titulo);
             comandoParaConsulta.Parameters.AddWithValue("@fecha", noticia.fecha);
-            comandoParaConsulta.Parameters.AddWithValue("@archivoNoticia", obtenerBytes(archivoNoticia));
-            comandoParaConsulta.Parameters.AddWithValue("@tipoArchivoNoticia", archivoNoticia.ContentType);
+            comandoParaConsulta.Parameters.AddWithValue("@contenidoNoticia", noticia.contenidoNoticia);
             comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(archivoImagen));
             comandoParaConsulta.Parameters.AddWithValue("@tipoArchivoImagen", archivoImagen.ContentType);
 

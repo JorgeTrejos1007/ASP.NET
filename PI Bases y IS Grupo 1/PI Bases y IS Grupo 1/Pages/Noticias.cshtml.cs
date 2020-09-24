@@ -19,8 +19,7 @@ namespace PIBasesISGrupo1.Pages
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
 
-        [BindProperty]
-        public IFormFile archivoNoticia { get; set; }
+ 
 
 
         public void OnGet()
@@ -32,7 +31,7 @@ namespace PIBasesISGrupo1.Pages
         {
 
             NoticiaHandler accesoDatos = new NoticiaHandler();
-            if (accesoDatos.crearNoticia(noticia, archivoNoticia,archivoImagen))
+            if (accesoDatos.crearNoticia(noticia,archivoImagen))
             {
                 TempData["mensaje"] = "Se ha logrado agregar noticia con exito";
                 TempData["exitoAlEditar"] = true;

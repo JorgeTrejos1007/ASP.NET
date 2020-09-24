@@ -20,11 +20,9 @@ namespace PIBasesISGrupo1.Models
         public DateTime fecha { get; set; }
 
 
-        public string tipoArchivoNoticia { get; set; }
-
-        [Required(ErrorMessage = "Es necesario que ingreses un archivo en formato txt")]
+        [Required(ErrorMessage = "Es necesario que ingreses la descripcion de la noticia")]
         [Display(Name = "Ingrese la noticia")]
-        public byte[] arrayArchivoNoticia { get; set; }
+        public string contenidoNoticia { get; set; }
 
         public string tipoArchivoImagen { get; set; }
 

@@ -240,23 +240,7 @@
                                     <p id="text"></p>
                                    
                
-                                   <!--
-                                      <script>
-                                           $('#text').load("data:@noticia.tipoArchivoNoticia;base64,@(Convert.ToBase64String(@noticia.arrayArchivoNoticia))");
-                                      </script>    
-                                       <embed src="data:@noticia.tipoArchivoNoticia;base64,@(Convert.ToBase64String(@noticia.arrayArchivoNoticia))">
-                                       https://stackoverflow.com/questions/10682277/jquery-load-function-multiple-time
-                                   -->
-                                   <script>
-
-                                      
-                                       var pId = $("#text > p").length + 1;
-                                       $('#text').append("<p></p>").attr("id", "text" + pId).load("data:@noticia.tipoArchivoNoticia;base64,@(Convert.ToBase64String(@noticia.arrayArchivoNoticia))");
-
-                                       
-                                       
-                                   </script>
-                                  
+                                   
                                </div>
                            </div>
                        }
