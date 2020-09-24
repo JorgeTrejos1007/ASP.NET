@@ -63,22 +63,41 @@ namespace PIBasesISGrupo1.Handler
             return exito;
 
         }
-        public List<Cursos> obtenerCursosPropuestos()
+        public List<Tuple<Cursos,Miembro>> obtenerCursosPropuestos()
         {
-            List<Cursos> cursos = new List<Cursos>();
-            string consultaCategorias = "SELECT * FROM Topico WHERE estado = 'No Aprobado'";
+            List<Tuple<Cursos, Miembro>> cursos = new List<Tuple<Cursos, Miembro>>();
+            string consultaCategorias = "SELECT C.nombre,C.estado,C.precio,C.emailEducadorFK,C.documentoInformativo,E.nombre,E.primerApellido,E.segundoApellido" +
+            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email;";
             DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
+            Cursos cursoTemporal;
+            Miembro educadorTemporal;
             foreach (DataRow columna in tablaCurso.Rows)
             {
-                cursos.Add(new Cursos
+                cursoTemporal= new Cursos
                 {
-                    nombre = Convert.ToString(columna["nombre"]), estado = Convert.ToString(columna["estado"]),}); 
+                    nombre = Convert.ToString(columna["C.nombre"]),
+                    estado = Convert.ToString(columna["C.estado"]),
+                    precio=(float)(columna["C.precio"]),
+                    emailDelEducador = Convert.ToString(columna["C.emailEducadorFK"]),
+                    byteArrayDocument = (byte [])columna["C.documentoInformativo"]
+                };
+                educadorTemporal = new Miembro
+                {
+                    nombre = Convert.ToString(columna["E.nombre"]), 
+                    primerApellido = Convert.ToString(columna["E.primerApellido"]),
+                    segundoApellido = Convert.ToString(columna["E.segundoApellido"])
+
+                };
+                cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
+
+                
+                
             }
 
 
 
 
-            return topicosYCategoriasAsociadas;
+            return cursos;
         }
         private DataTable crearTablaConsulta(string consulta)
         {
