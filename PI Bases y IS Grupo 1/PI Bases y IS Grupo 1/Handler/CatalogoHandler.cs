@@ -36,8 +36,8 @@ namespace PIBasesISGrupo1.Handler
             + "VALUES (@nombreTopico,@nombreCategoria)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
-            comandoParaConsulta.Parameters.AddWithValue("@nombreTopico", catalogo.topico);
-            comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", catalogo.categoria);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreTopico", catalogo.topico.ToUpper());
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", catalogo.categoria.ToUpper());
             
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
@@ -52,7 +52,7 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
-            comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", categoria);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", categoria.ToUpper());
           
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
@@ -66,7 +66,7 @@ namespace PIBasesISGrupo1.Handler
 
             string consultaTopicosAsociados = "SELECT nombreTopicoPK FROM Topico WHERE nombreCategoriaFK=@categoria";
             SqlCommand comandoParaConsulta = new SqlCommand(consultaTopicosAsociados, conexion);
-            comandoParaConsulta.Parameters.AddWithValue("@categoria", categoria);
+            comandoParaConsulta.Parameters.AddWithValue("@categoria", categoria.ToUpper());
             conexion.Open();
             SqlDataReader lectorColumna = comandoParaConsulta.ExecuteReader();
             while (lectorColumna.Read())
