@@ -20,12 +20,25 @@ namespace PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta
 
         [BindProperty]
         public List<PreguntaModel> preguntas { get; set; }
+
+        [BindProperty]
+        public PreguntaModel preguntaBorrada { get; set; }
+
         public void OnGet(int idEnc)
         {
             EncuestasHandler accesoDatosEncuesta = new EncuestasHandler();
             encuesta = accesoDatosEncuesta.obtenerTuplaEncuesta(idEnc);
             PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
-            preguntas = accesoDatosPregunta.obtenerPreguntas(idEnc);
+            ViewData["preguntas"] = accesoDatosPregunta.obtenerPreguntas(idEnc);
+        }
+
+        public void OnPostRespuesta(List<PreguntaModel> preguntas )
+        {
+            preguntas.Remove(preguntaBorrada);
+            respuesta.respuesta = String.Format("{0}", Request.Form["opcion"]);
+            RespuestasHandler accesodatos = new RespuestasHandler();
+            accesodatos.crearRespuesta(respuesta);
+
         }
     }
 }

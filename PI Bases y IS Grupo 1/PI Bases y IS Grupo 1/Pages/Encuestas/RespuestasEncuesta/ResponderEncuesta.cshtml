@@ -2,6 +2,8 @@
 @model PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta.ResponderEncuestaModel
 @{
     ViewData["Title"] = "ResponderEncuesta";
+    var listaPreguntas = (List<PIBasesISGrupo1.Models.PreguntaModel>)ViewData["preguntas"];
+
 }
 
 <h2>Responder Encuestas</h2>
@@ -57,30 +59,48 @@
 
 <h3>Lista de preguntas:</h3>
 
-<form method="post">
-    @{
-        if ((List<PIBasesISGrupo1.Models.PreguntaModel>)Model.preguntas != null)
+@{
+    if (listaPreguntas != null)
+    {
+
+
+        foreach (var @item in @listaPreguntas)
         {
-
-            foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.preguntas)
-            {
-
+            <form method="post">
                 <b>Pregunta: </b>@Html.DisplayFor(modelItem => item.pregunta)<br>
-                <input type="radio" asp-for="@item" value="@item.opcion1" />@item.opcion1 <br>
-                <input type="radio" asp-for="@item" value="@item.opcion2" />@item.opcion2<br>
+
+                <input type="hidden" asp-for="@Model.respuesta.encuestaID" value="@item.encuestaID" />
+                <input type="hidden" asp-for="@Model.respuesta.preguntaID" value="@item.preguntaID" />
+                <input type="hidden" asp-for="@Model.respuesta.nombre" value="Anonimo" />
+                
+                <input type="hidden" asp-for="@Model.preguntaBorrada.encuestaID" value="@item.encuestaID" />
+                <input type="hidden" asp-for="@Model.preguntaBorrada.preguntaID" value="@item.preguntaID" />
+                <input type="hidden" asp-for="@Model.preguntaBorrada.pregunta" value="@item.pregunta" />
+                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion1" value="@item.opcion1" />
+                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion2" value="@item.opcion2" />
+                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion3" value="@item.opcion3" />
+                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion4" value="@item.opcion4" />
+
+                <input type="radio" name="opcion" id="opcion1" value="@item.opcion1" />@item.opcion1 <br>
+                <input type="radio" name="opcion" id="opcion2" value="@item.opcion2" />@item.opcion2<br>
                 @if (item.opcion3 != "")
                 {
-                    <input type="radio" asp-for="@item" value="@item.opcion3" />@item.opcion3<br>
+                    <input type="radio" name="opcion" id="opcion3" value="@item.opcion3" />@item.opcion3<br>
                 }
                 @if (item.opcion4 != "")
                 {
-                    <input type="radio" asp-for="@item" value="@item.opcion4" />@item.opcion4<br>
+                    <input type="radio" name="opcion" id="opcion4" value="@item.opcion4" />@item.opcion4<br>
                 }
-                <label>---------------------------------------------------------------------------------------------------------------------------------------</label>
-                <br />
 
-            }
+
+                <input type="hidden" asp-for="@Model.preguntas" value="@listaPreguntas" />
+
+
+                <input type="submit" value="Enviar respuesta" asp-page-handler="Respuesta" asp-route-pregunta ="@Model."/>
+            </form>
+            <label>---------------------------------------------------------------------------------------------------------------------------------------</label>
+            <br />
         }
     }
-    <input type="submit" value="Enviar respuesta" />
-</form>
+}
+
