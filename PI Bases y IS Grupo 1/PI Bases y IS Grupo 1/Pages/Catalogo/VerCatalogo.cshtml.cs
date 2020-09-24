@@ -25,20 +25,7 @@ namespace PIBasesISGrupo1.Pages
         }
 
 
-        public void OnPost()
-        {
-            /*CatalogoHandler accesoCatalogoTopico = new CatalogoHandler();
-            if (accesoCatalogoTopico.insertarTopico(catalogo))
-            {
-                TempData["mensaje"] = "Topico agregado exito";
-                TempData["exitoAlEditar"] = true;
-            }
-            else
-            {
-                TempData["mensaje"] = "Algo salió mal al añadir tópico";
-                TempData["exitoAlEditar"] = false;
-            }*/
-        }
+        
 
         public void OnPostCategoria()
         {

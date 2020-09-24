@@ -20,7 +20,5 @@ namespace PIBasesISGrupo1.Models
         [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
 
         public string categoria { get; set; }
-
-
     }
 }
