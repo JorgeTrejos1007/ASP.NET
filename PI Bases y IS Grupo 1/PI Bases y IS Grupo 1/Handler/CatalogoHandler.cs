@@ -38,11 +38,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreTopico", catalogo.topico);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", catalogo.categoria);
-            if (!String.IsNullOrEmpty(catalogo.topico) && !String.IsNullOrEmpty(catalogo.categoria))
-            {
-                comandoParaConsulta.Parameters.AddWithValue("@nombreTopico", catalogo.topico);
-                comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", catalogo.categoria);
-            }
+            
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
@@ -57,10 +53,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
             comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", categoria);
-            if (!string.IsNullOrEmpty(categoria))
-            {
-                comandoParaConsulta.Parameters.AddWithValue("@nombreCategoria", categoria);
-            }
+          
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();

@@ -6,31 +6,36 @@
     {
         tiposCategorias.Add(new SelectListItem { Text = @categoria });
     }
-    var mensajeCategoria = (string)TempData["mensaje"];
+    var mensajeCategoria = (string)TempData["mensajeCategoria"];
+
+
+    var mensajeTopico = (string)TempData["mensajeTopico"];
 }
 
 <div>
     <form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
 
-        @{
-            if (@mensajeCategoria != null)
+
+        @if (@mensajeCategoria != null)
+        {
+            if ((bool)TempData["exitoAlAgregarCategoria"])
             {
-                if ((bool)TempData["exitoAlAgregarCategoria"])
-                {
-                    <div class="alert-success">
-                        <h3> @mensajeCategoria </h3>
-                    </div>
-                }
-                else
-                {
-                    <div class="alert-danger">
-                        <h3> @mensajeCategoria </h3>
-                    </div>
-                }
+                <div class="alert-success">
+                    <h3> @mensajeCategoria </h3>
+                </div>
+            }
+            else
+            {
+                <div class="alert-danger">
+                    <h3> @mensajeCategoria </h3>
+                </div>
             }
         }
+        <span asp-validation-for="@Model.catalogo.categoria" class="text-danger"></span>
+        <br>
+        <strong>Agregar nueva categoría</strong>
         <input asp-for="@Model.catalogo.categoria" />
-        <button class="btn btn-default">Compartir</button>
+        <button class="btn btn-default">Agregar categoría</button>
     </form>
 </div>
 
@@ -39,8 +44,44 @@
 <br>
 <div>
     <form asp-page-handler="AgregarTopico" method="post" enctype="multipart/form-data">
-        @Html.LabelFor(model => model.catalogo.categoria)
+
+
+
+
+
+        @Html.ValidationMessageFor(model => model.catalogo.categoria, "", new { @class = "text-danger" })
+        <br>
+        <strong>Selecione una categoría</strong>
         @Html.DropDownListFor(model => model.catalogo.categoria, tiposCategorias, "-Sin selección-", new { @class = "form-control" })
+
+
+
+        <span asp-validation-for="@Model.catalogo.topico" class="text-danger"></span>
+        <br>
+        <strong>Escriba el topico que desea añadir</strong>
+        <input asp-for="@Model.catalogo.topico" />
         <button class="btn btn-default">Agregar Topico</button>
+
+        @if (@mensajeTopico != null)
+        {
+            if ((bool)TempData["exitoAlAgregarTopico"])
+            {
+                <div class="alert-success">
+                    <h3> @mensajeTopico </h3>
+                </div>
+            }
+            else
+            {
+                <div class="alert-danger">
+                    <h3> @mensajeTopico </h3>
+                </div>
+            }
+        }
+
+
     </form>
 </div>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
