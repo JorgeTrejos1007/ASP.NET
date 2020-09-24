@@ -2,7 +2,14 @@
 @model PIBasesISGrupo1.Pages.Curso.AprobarCursoModel
 @{
     ViewData["Title"] = "AprobarCurso";
+    var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro>>)ViewData["CursosPropuestos"];
+
+}
+<h2>Cursos Propuestos</h2>
+@foreach (var infoCursos in listaDeCursos){
+    var curso = infoCursos.Item1;
+    var educador = infoCursos.Item2;
+
 }
 
-<h2>AprobarCurso</h2>
 
