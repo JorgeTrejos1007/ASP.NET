@@ -6,14 +6,35 @@
     {
         tiposCategorias.Add(new SelectListItem { Text = @categoria });
     }
+    var mensajeCategoria = (string)TempData["mensaje"];
 }
 
 <div>
     <form asp-page-handler="AgregarCategoria" method="post" enctype="multipart/form-data">
+
+        @{
+            if (@mensajeCategoria != null)
+            {
+                if ((bool)TempData["exitoAlAgregarCategoria"])
+                {
+                    <div class="alert-success">
+                        <h3> @mensajeCategoria </h3>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert-danger">
+                        <h3> @mensajeCategoria </h3>
+                    </div>
+                }
+            }
+        }
         <input asp-for="@Model.catalogo.categoria" />
         <button class="btn btn-default">Compartir</button>
     </form>
 </div>
+
+
 
 <br>
 <div>

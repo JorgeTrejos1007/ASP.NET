@@ -26,17 +26,32 @@ namespace PIBasesISGrupo1.Pages.Catalogos
 
         }
 
-        public void OnPostAgregarCategoria()
+        public IActionResult OnPostAgregarCategoria()
         {
-            CatalogoHandler accesoCatalogo = new CatalogoHandler();
-            accesoCatalogo.insertarCategoria(catalogo.categoria);
-        }
+            try
+            {
+                CatalogoHandler accesoCatalogo = new CatalogoHandler();
+                accesoCatalogo.insertarCategoria(catalogo.categoria);
+                TempData["mensaje"] = "Categoría agregada con exito";
+                TempData["exitoAlAgregarCategoria"] = true;
 
+            }
+            catch {
+                TempData["mensaje"] = "Es posible que se esté agregando una categoría existente";
+                TempData["exitoAlAgregarCategoria"] = false;
+                
+            }
+            return RedirectToPage("EditarCatalogo");
+        }
         public void OnPostAgregarTopico()
         {
             CatalogoHandler accesoCatalogo = new CatalogoHandler();
             accesoCatalogo.insertarTopico(catalogo);
         }
-
     }
 }
+
+
+
+
+    
