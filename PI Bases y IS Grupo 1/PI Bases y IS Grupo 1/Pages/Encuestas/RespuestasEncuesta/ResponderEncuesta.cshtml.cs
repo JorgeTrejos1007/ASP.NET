@@ -22,23 +22,37 @@ namespace PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta
         public List<PreguntaModel> preguntas { get; set; }
 
         [BindProperty]
-        public PreguntaModel preguntaBorrada { get; set; }
+        public PreguntaModel preguntaActual { get; set; }
 
-        public void OnGet(int idEnc)
+        [BindProperty]
+        public int idSiguientePregunta { get; set; }
+
+        public void OnGet(int idEnc, int idPreg, int indexSiguiente)
         {
             EncuestasHandler accesoDatosEncuesta = new EncuestasHandler();
             encuesta = accesoDatosEncuesta.obtenerTuplaEncuesta(idEnc);
-            PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
-            ViewData["preguntas"] = accesoDatosPregunta.obtenerPreguntas(idEnc);
+            if (idPreg == 0) {
+                PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
+                preguntas = accesoDatosPregunta.obtenerPreguntas(idEnc);
+
+                preguntaActual = preguntas[0];
+                idPreg = preguntaActual.preguntaID;
+                idSiguientePregunta = preguntas[indexSiguiente].preguntaID;
+                ViewData["idSiguiente"] = idSiguientePregunta;
+            }
+            else
+            {
+                PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
+                preguntaActual = accesoDatosPregunta.obtenerTuplaPregunta(idEnc, idPreg);
+            }
         }
 
-        public void OnPostRespuesta(List<PreguntaModel> preguntas )
-        {
-            preguntas.Remove(preguntaBorrada);
+        public IActionResult OnPostRespuesta( )
+        {   
             respuesta.respuesta = String.Format("{0}", Request.Form["opcion"]);
             RespuestasHandler accesodatos = new RespuestasHandler();
             accesodatos.crearRespuesta(respuesta);
-
+            return RedirectToPage("ResponderEncuesta", new { idEnc = preguntaActual.encuestaID, idPreg = preguntaActual.preguntaID });
         }
     }
 }

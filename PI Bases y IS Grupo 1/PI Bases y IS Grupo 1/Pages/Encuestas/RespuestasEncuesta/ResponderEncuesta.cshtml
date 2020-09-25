@@ -2,8 +2,6 @@
 @model PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta.ResponderEncuestaModel
 @{
     ViewData["Title"] = "ResponderEncuesta";
-    var listaPreguntas = (List<PIBasesISGrupo1.Models.PreguntaModel>)ViewData["preguntas"];
-
 }
 
 <h2>Responder Encuestas</h2>
@@ -57,50 +55,38 @@
 
 
 
-<h3>Lista de preguntas:</h3>
+<h3>Pregunta:</h3>
 
 @{
-    if (listaPreguntas != null)
+    if (Model.preguntaActual != null)
     {
+<form method="post">
+    <b>Pregunta: </b>@Html.DisplayFor(modelItem => Model.preguntaActual.pregunta)<br>
+
+    <input type="hidden" asp-for="@Model.respuesta.encuestaID" value="@Model.preguntaActual.encuestaID" />
+    <input type="hidden" asp-for="@Model.respuesta.preguntaID" value="@Model.preguntaActual.preguntaID" />
+    <input type="hidden" asp-for="@Model.respuesta.nombre" value="Anonimo" />
+
+    <input type="hidden" asp-for="@Model.preguntaActual.encuestaID" value="@Model.preguntaActual.encuestaID" />
+    <input type="hidden" asp-for="@Model.preguntaActual.preguntaID" value="@Model.preguntaActual.preguntaID" />
 
 
-        foreach (var @item in @listaPreguntas)
-        {
-            <form method="post">
-                <b>Pregunta: </b>@Html.DisplayFor(modelItem => item.pregunta)<br>
+    <input type="radio" name="opcion" id="opcion1" value="@Model.preguntaActual.opcion1" />@Model.preguntaActual.opcion1 <br>
+    <input type="radio" name="opcion" id="opcion2" value="@Model.preguntaActual.opcion2" />@Model.preguntaActual.opcion2<br>
+    @if (@Model.preguntaActual.opcion3 != "")
+    {
+        <input type="radio" name="opcion" id="opcion3" value="@Model.preguntaActual..opcion3" />@Model.preguntaActual.opcion3<br>
+    }
+    @if (@Model.preguntaActual.opcion4 != "")
+    {
+        <input type="radio" name="opcion" id="opcion4" value="@Model.preguntaActual.opcion4" />@Model.preguntaActual.opcion4<br>
+    }
 
-                <input type="hidden" asp-for="@Model.respuesta.encuestaID" value="@item.encuestaID" />
-                <input type="hidden" asp-for="@Model.respuesta.preguntaID" value="@item.preguntaID" />
-                <input type="hidden" asp-for="@Model.respuesta.nombre" value="Anonimo" />
-                
-                <input type="hidden" asp-for="@Model.preguntaBorrada.encuestaID" value="@item.encuestaID" />
-                <input type="hidden" asp-for="@Model.preguntaBorrada.preguntaID" value="@item.preguntaID" />
-                <input type="hidden" asp-for="@Model.preguntaBorrada.pregunta" value="@item.pregunta" />
-                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion1" value="@item.opcion1" />
-                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion2" value="@item.opcion2" />
-                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion3" value="@item.opcion3" />
-                <input type="hidden" asp-for="@Model.preguntaBorrada.opcion4" value="@item.opcion4" />
+    <input type="submit" value="Enviar respuesta" asp-page-handler="Respuesta" />
+</form>
+        <label>---------------------------------------------------------------------------------------------------------------------------------------</label>
+        <br />
 
-                <input type="radio" name="opcion" id="opcion1" value="@item.opcion1" />@item.opcion1 <br>
-                <input type="radio" name="opcion" id="opcion2" value="@item.opcion2" />@item.opcion2<br>
-                @if (item.opcion3 != "")
-                {
-                    <input type="radio" name="opcion" id="opcion3" value="@item.opcion3" />@item.opcion3<br>
-                }
-                @if (item.opcion4 != "")
-                {
-                    <input type="radio" name="opcion" id="opcion4" value="@item.opcion4" />@item.opcion4<br>
-                }
-
-
-                <input type="hidden" asp-for="@Model.preguntas" value="@listaPreguntas" />
-
-
-                <input type="submit" value="Enviar respuesta" asp-page-handler="Respuesta" asp-route-pregunta ="@Model."/>
-            </form>
-            <label>---------------------------------------------------------------------------------------------------------------------------------------</label>
-            <br />
-        }
     }
 }
 

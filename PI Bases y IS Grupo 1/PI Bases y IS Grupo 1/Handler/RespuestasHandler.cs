@@ -33,13 +33,13 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearRespuesta(RespuestaModel respuesta)
         {
-            string consulta = "INSERT INTO Encuestas(id, nombre, idEncuestaFK, idPreguntaFK, respuesta) "
-            + "VALUES (@id,@nombre,@encuestaID,@preguntaID,@respuesta) ";
+            string consulta = "INSERT INTO Respuestas(nombre, idEncuestaFK, idPreguntaFK, respuesta) "
+            + "VALUES (@nombre,@encuestaID,@preguntaID,@respuesta) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
 
-            comandoParaConsulta.Parameters.AddWithValue("@id", respuesta.id);
+            //comandoParaConsulta.Parameters.AddWithValue("@id", respuesta.id);
             comandoParaConsulta.Parameters.AddWithValue("@nombre", respuesta.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@encuestaID", respuesta.encuestaID);
             comandoParaConsulta.Parameters.AddWithValue("@preguntaID", respuesta.preguntaID);
