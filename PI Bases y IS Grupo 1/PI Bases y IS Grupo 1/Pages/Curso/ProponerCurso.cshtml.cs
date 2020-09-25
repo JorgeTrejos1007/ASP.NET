@@ -49,7 +49,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 }
                 else
                 {
-                    TempData["mensaje"] = "Algo salió mal y no fue posible editadar la informacion :(";
+                    TempData["mensaje"] = "Algo salió mal y no fue posible proponer el curso";
                     TempData["exitoAlProponer"] = false;
                 }
                 
