@@ -6,28 +6,57 @@
 
 }
 <h2>Cursos Propuestos</h2>
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link rel="icon" href="img/favicon.png" type="image/png" />
+    <title>Courses Details</title>
+
+    <link rel="stylesheet" href="~css/bootstrap.css" />
+    <link rel="stylesheet" href="~css/flaticon.css" />
+    <link rel="stylesheet" href="~css/themify-icons.css" />
+    <link rel="stylesheet" href="~vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~vendors/nice-select/css/nice-select.css" />
+    <link rel="stylesheet" href="~css/style.css" />
+</head>
+
+
 @foreach (var infoCursos in listaDeCursos)
 {
     var curso = infoCursos.Item1;
     var educador = infoCursos.Item2;
-    <table class="table">
-         
-            <tr>
-                <th>Nombre De Curso</th>
-                <th>Propuesto</th>
-            </tr>
-            <tr>
-                <td>@curso.nombre</td>
-                <td>@educador.nombre </td>
-                 
-            </tr>
-            
-            
-        
-
-    </table>
-
-
+    <div class="col-lg-4 right-contents">
+        <ul>
+            <li>
+                <a class="justify-content-between d-flex" href="#">
+                    <p>Educador</p>
+                    <span class="or">@educador.nombre</span>
+                </a>
+            </li>
+            <li>
+                <a class="justify-content-between d-flex" href="#">
+                    <p>Precio </p>
+                    <span>$@curso.precio</span>
+                </a>
+            </li>
+            <li>
+                <a class="justify-content-between d-flex" href="#">
+                    <p>Available Seats </p>
+                    <span>15</span>
+                </a>
+            </li>
+            <li>
+                <a class="justify-content-between d-flex" href="#">
+                    <p>Schedule </p>
+                    <span>2.00 pm to 4.00 pm</span>
+                </a>
+            </li>
+        </ul>
+        <a href="#" class="primary-btn2 text-uppercase enroll rounded-0 text-white">Enroll the course</a>
+    </div>
 }
+
 
 
