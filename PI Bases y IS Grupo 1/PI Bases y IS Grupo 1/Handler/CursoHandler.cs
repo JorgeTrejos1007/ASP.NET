@@ -111,6 +111,18 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return consultaFormatoTabla;
         }
+        public bool aprobarCurso(string nombreCurso)
+        {
+            //UPDATE Curso SET estado='Aprobado' WHERE estado='No aprobado' AND nombre='Cardiologia'
+            string consulta = "UPDATE Curso " + "SET estado=Aprobado " + "WHERE estado=No aprobado " + "AND nombre=@nombreCurso";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            conexion.Open();
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            return exito;
+        }
 
     }
 }

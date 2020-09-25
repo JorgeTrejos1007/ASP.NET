@@ -14,15 +14,18 @@ using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 namespace PIBasesISGrupo1.Pages.Curso
 {
+
     public class AprobarCursoModel : PageModel
     {
+        CursoHandler cursoHandler = new CursoHandler();
         public void OnGet()
         {
-            CursoHandler cursoHandler = new CursoHandler();
+            
             ViewData["CursosPropuestos"] = cursoHandler.obtenerCursosPropuestos();
         }
-        public void onPost()
+        public void onPost(string nombreCurso)
         {
+            bool exito = cursoHandler.aprobarCurso(nombreCurso);
         }
     }
 }

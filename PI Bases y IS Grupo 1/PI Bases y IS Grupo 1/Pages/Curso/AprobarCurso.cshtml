@@ -27,35 +27,39 @@
 {
     var curso = infoCursos.Item1;
     var educador = infoCursos.Item2;
-    <div class="col-lg-4 right-contents">
-        <ul>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Educador</p>
-                    <span class="or">@educador.nombre</span>
-                </a>
-            </li>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Precio </p>
-                    <span>$@curso.precio</span>
-                </a>
-            </li>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Available Seats </p>
-                    <span>15</span>
-                </a>
-            </li>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Schedule </p>
-                    <span>2.00 pm to 4.00 pm</span>
-                </a>
-            </li>
-        </ul>
-        <a href="#" class="primary-btn2 text-uppercase enroll rounded-0 text-white">Enroll the course</a>
-    </div>
+<div class="col-lg-4 right-contents">
+    <ul>
+        <li>
+            <a class="justify-content-between d-flex" href="#">
+                <p>Educador</p>
+                <span class="or">@educador.nombre</span>
+            </a>
+        </li>
+        <li>
+            <a class="justify-content-between d-flex" href="#">
+                <p>Precio </p>
+                <span>$@curso.precio</span>
+            </a>
+        </li>
+        <li>
+            <a class="justify-content-between d-flex" href="#">
+                <p>Available Seats </p>
+                <span>15</span>
+            </a>
+        </li>
+        <li>
+            <a class="justify-content-between d-flex" href="#">
+                <p>Schedule </p>
+                <span>2.00 pm to 4.00 pm</span>
+            </a>
+        </li>
+    </ul>
+    <form method="post" asp-route-id="@curso.nombre">
+        <button class="btn btn-default">Aprobar</button>
+    </form>
+
+ 
+</div>
 }
 
 
