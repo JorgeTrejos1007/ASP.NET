@@ -6,9 +6,27 @@
 
 }
 <h2>Cursos Propuestos</h2>
-@foreach (var infoCursos in listaDeCursos){
+@foreach (var infoCursos in listaDeCursos)
+{
     var curso = infoCursos.Item1;
     var educador = infoCursos.Item2;
+    <table class="table">
+         
+            <tr>
+                <th>Nombre De Curso</th>
+                <th>Propuesto</th>
+            </tr>
+            <tr>
+                <td>@curso.nombre</td>
+                <td>@educador.nombre </td>
+                 
+            </tr>
+            
+            
+        
+
+    </table>
+
 
 }
 

@@ -66,8 +66,9 @@ namespace PIBasesISGrupo1.Handler
         public List<Tuple<Cursos,Miembro>> obtenerCursosPropuestos()
         {
             List<Tuple<Cursos, Miembro>> cursos = new List<Tuple<Cursos, Miembro>>();
-            string consultaCategorias = "SELECT C.nombre,C.estado,C.precio,C.emailEducadorFK,C.documentoInformativo,E.nombre,E.primerApellido,E.segundoApellido" +
-            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email;";
+            string consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
+                " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
+            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email";
             DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
             Cursos cursoTemporal;
             Miembro educadorTemporal;
@@ -75,17 +76,18 @@ namespace PIBasesISGrupo1.Handler
             {
                 cursoTemporal= new Cursos
                 {
-                    nombre = Convert.ToString(columna["C.nombre"]),
-                    estado = Convert.ToString(columna["C.estado"]),
-                    precio=(float)(columna["C.precio"]),
-                    emailDelEducador = Convert.ToString(columna["C.emailEducadorFK"]),
-                    byteArrayDocument = (byte [])columna["C.documentoInformativo"]
+                    nombre = Convert.ToString(columna["nombreCurso"]),
+                    estado = Convert.ToString(columna["estado"]),
+                    precio=Convert.ToDouble(columna["precio"]),
+                    emailDelEducador = Convert.ToString(columna["emailEducador"]),
+                    byteArrayDocument = (byte [])columna["documento"],
+                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
                 };
                 educadorTemporal = new Miembro
                 {
-                    nombre = Convert.ToString(columna["E.nombre"]), 
-                    primerApellido = Convert.ToString(columna["E.primerApellido"]),
-                    segundoApellido = Convert.ToString(columna["E.segundoApellido"])
+                    nombre = Convert.ToString(columna["nombreEducador"]), 
+                    primerApellido = Convert.ToString(columna["primerApellido"]),
+                    segundoApellido = Convert.ToString(columna["segundoApellido"])
 
                 };
                 cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
