@@ -17,15 +17,19 @@ namespace PIBasesISGrupo1.Pages.Curso
 
     public class AprobarCursoModel : PageModel
     {
+    
+
         CursoHandler cursoHandler = new CursoHandler();
         public void OnGet()
         {
             
             ViewData["CursosPropuestos"] = cursoHandler.obtenerCursosPropuestos();
         }
-        public void onPost(string nombreCurso)
+        public IActionResult OnPost(string id)
         {
-            bool exito = cursoHandler.aprobarCurso(nombreCurso);
+            bool exito = cursoHandler.aprobarCurso(id);
+
+            return RedirectToPage("AprobarCurso");
         }
     }
 }

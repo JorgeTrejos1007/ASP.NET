@@ -68,7 +68,7 @@ namespace PIBasesISGrupo1.Handler
             List<Tuple<Cursos, Miembro>> cursos = new List<Tuple<Cursos, Miembro>>();
             string consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
                 " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
-            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email";
+            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='No aprobado'";
             DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
             Cursos cursoTemporal;
             Miembro educadorTemporal;
@@ -92,15 +92,47 @@ namespace PIBasesISGrupo1.Handler
                 };
                 cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
 
-                
-                
+            
             }
-
-
-
-
             return cursos;
         }
+
+        public List<Tuple<Cursos, Miembro>> obtenerCursosDisponibles()
+        {
+            List<Tuple<Cursos, Miembro>> cursos = new List<Tuple<Cursos, Miembro>>();
+            string consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
+                " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
+            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='Aprobado'";
+            DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
+            Cursos cursoTemporal;
+            Miembro educadorTemporal;
+            foreach (DataRow columna in tablaCurso.Rows)
+            {
+                cursoTemporal = new Cursos
+                {
+                    nombre = Convert.ToString(columna["nombreCurso"]),
+                    estado = Convert.ToString(columna["estado"]),
+                    precio = Convert.ToDouble(columna["precio"]),
+                    emailDelEducador = Convert.ToString(columna["emailEducador"]),
+                    byteArrayDocument = (byte[])columna["documento"],
+                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
+                };
+                educadorTemporal = new Miembro
+                {
+                    nombre = Convert.ToString(columna["nombreEducador"]),
+                    primerApellido = Convert.ToString(columna["primerApellido"]),
+                    segundoApellido = Convert.ToString(columna["segundoApellido"])
+
+                };
+                cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
+
+
+            }
+            return cursos;
+        }
+
+
+
         private DataTable crearTablaConsulta(string consulta)
         {
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
@@ -113,8 +145,8 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool aprobarCurso(string nombreCurso)
         {
-            //UPDATE Curso SET estado='Aprobado' WHERE estado='No aprobado' AND nombre='Cardiologia'
-            string consulta = "UPDATE Curso " + "SET estado=Aprobado " + "WHERE estado=No aprobado " + "AND nombre=@nombreCurso";
+            
+            string consulta = "UPDATE Curso " + "SET estado='Aprobado' " + "WHERE nombre=@nombreCurso";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);

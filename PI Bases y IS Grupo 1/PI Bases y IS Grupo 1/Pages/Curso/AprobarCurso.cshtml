@@ -14,53 +14,61 @@
     <link rel="icon" href="img/favicon.png" type="image/png" />
     <title>Courses Details</title>
 
-    <link rel="stylesheet" href="~css/bootstrap.css" />
-    <link rel="stylesheet" href="~css/flaticon.css" />
-    <link rel="stylesheet" href="~css/themify-icons.css" />
-    <link rel="stylesheet" href="~vendors/owl-carousel/owl.carousel.min.css" />
-    <link rel="stylesheet" href="~vendors/nice-select/css/nice-select.css" />
-    <link rel="stylesheet" href="~css/style.css" />
+    <link rel="stylesheet" href="~/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/flaticon.css" />
+    <link rel="stylesheet" href="~/css/themify-icons.css" />
+    <link rel="stylesheet" href="~/vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="~/vendors/nice-select/css/nice-select.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
 </head>
 
 
-@foreach (var infoCursos in listaDeCursos)
-{
-    var curso = infoCursos.Item1;
-    var educador = infoCursos.Item2;
-<div class="col-lg-4 right-contents">
-    <ul>
-        <li>
-            <a class="justify-content-between d-flex" href="#">
-                <p>Educador</p>
-                <span class="or">@educador.nombre</span>
-            </a>
-        </li>
-        <li>
-            <a class="justify-content-between d-flex" href="#">
-                <p>Precio </p>
-                <span>$@curso.precio</span>
-            </a>
-        </li>
-        <li>
-            <a class="justify-content-between d-flex" href="#">
-                <p>Available Seats </p>
-                <span>15</span>
-            </a>
-        </li>
-        <li>
-            <a class="justify-content-between d-flex" href="#">
-                <p>Schedule </p>
-                <span>2.00 pm to 4.00 pm</span>
-            </a>
-        </li>
-    </ul>
-    <form method="post" asp-route-id="@curso.nombre">
-        <button class="btn btn-default">Aprobar</button>
-    </form>
+    @foreach (var infoCursos in listaDeCursos)
+    {
+        var curso = infoCursos.Item1;
+        var educador = infoCursos.Item2;
+        <div class="col-lg-4 right-contents">
+            <ul>
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Curso</p>
+                        <span class="or">@curso.nombre</span>
 
- 
-</div>
-}
 
+                    </a>
+                </li>
+
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Email</p>
+                        <span class="or">@curso.emailDelEducador</span>
+
+
+                    </a>
+                </li>
+
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Educador</p>
+                        <span class="or">@educador.nombre @educador.primerApellido </span>
+
+
+                    </a>
+                </li>
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Precio </p>
+                        <span>$@curso.precio</span>
+                    </a>
+                </li>
+
+            </ul>
+           
+            <form method="post" asp-route-id="@curso.nombre">
+                <button class="primary-btn2 text-uppercase enroll rounded-0 text-white">Aprobar</button>
+            </form>
+        </div>
+        
+    }
 
 
