@@ -62,30 +62,29 @@
     {
 <form method="post">
     <b>Pregunta: </b>@Html.DisplayFor(modelItem => Model.preguntaActual.pregunta)<br>
-
+    
     <input type="hidden" asp-for="@Model.respuesta.encuestaID" value="@Model.preguntaActual.encuestaID" />
     <input type="hidden" asp-for="@Model.respuesta.preguntaID" value="@Model.preguntaActual.preguntaID" />
     <input type="hidden" asp-for="@Model.respuesta.nombre" value="Anonimo" />
 
     <input type="hidden" asp-for="@Model.preguntaActual.encuestaID" value="@Model.preguntaActual.encuestaID" />
-    <input type="hidden" asp-for="@Model.preguntaActual.preguntaID" value="@Model.preguntaActual.preguntaID" />
+    
 
 
     <input type="radio" name="opcion" id="opcion1" value="@Model.preguntaActual.opcion1" />@Model.preguntaActual.opcion1 <br>
     <input type="radio" name="opcion" id="opcion2" value="@Model.preguntaActual.opcion2" />@Model.preguntaActual.opcion2<br>
     @if (@Model.preguntaActual.opcion3 != "")
     {
-        <input type="radio" name="opcion" id="opcion3" value="@Model.preguntaActual..opcion3" />@Model.preguntaActual.opcion3<br>
+        <input type="radio" name="opcion" id="opcion3" value="@Model.preguntaActual.opcion3" />@Model.preguntaActual.opcion3<br>
     }
     @if (@Model.preguntaActual.opcion4 != "")
     {
         <input type="radio" name="opcion" id="opcion4" value="@Model.preguntaActual.opcion4" />@Model.preguntaActual.opcion4<br>
     }
 
-    <input type="submit" value="Enviar respuesta" asp-page-handler="Respuesta" />
+    <input type="submit" value="Enviar respuesta" asp-route-indexSig="@ViewData["indexSig"]" asp-page-handler="Respuesta" />
 </form>
-        <label>---------------------------------------------------------------------------------------------------------------------------------------</label>
-        <br />
+       
 
     }
 }

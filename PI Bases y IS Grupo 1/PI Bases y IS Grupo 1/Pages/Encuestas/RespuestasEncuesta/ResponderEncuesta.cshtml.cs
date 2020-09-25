@@ -24,35 +24,42 @@ namespace PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta
         [BindProperty]
         public PreguntaModel preguntaActual { get; set; }
 
-        [BindProperty]
-        public int idSiguientePregunta { get; set; }
+      
 
-        public void OnGet(int idEnc, int idPreg, int indexSiguiente)
+        public IActionResult OnGet(int idEnc, int indexSig)
         {
             EncuestasHandler accesoDatosEncuesta = new EncuestasHandler();
             encuesta = accesoDatosEncuesta.obtenerTuplaEncuesta(idEnc);
-            if (idPreg == 0) {
-                PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
-                preguntas = accesoDatosPregunta.obtenerPreguntas(idEnc);
-
-                preguntaActual = preguntas[0];
-                idPreg = preguntaActual.preguntaID;
-                idSiguientePregunta = preguntas[indexSiguiente].preguntaID;
-                ViewData["idSiguiente"] = idSiguientePregunta;
-            }
-            else
+            PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
+            preguntas = accesoDatosPregunta.obtenerPreguntas(idEnc);
+            if (preguntas.Count > indexSig)
             {
-                PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
-                preguntaActual = accesoDatosPregunta.obtenerTuplaPregunta(idEnc, idPreg);
+                if (indexSig == 0)
+                {
+
+                    preguntaActual = preguntas[0];
+
+                    ViewData["indexSig"] = indexSig; // =0
+                    return Page();
+                }
+                else
+                {
+                    preguntaActual = preguntas[indexSig];
+                    ViewData["indexSig"] = indexSig;
+                    return Page();
+                }
+            }
+            else {
+                return Redirect("../../Index");
             }
         }
 
-        public IActionResult OnPostRespuesta( )
+        public IActionResult OnPostRespuesta(int indexSig)
         {   
             respuesta.respuesta = String.Format("{0}", Request.Form["opcion"]);
             RespuestasHandler accesodatos = new RespuestasHandler();
             accesodatos.crearRespuesta(respuesta);
-            return RedirectToPage("ResponderEncuesta", new { idEnc = preguntaActual.encuestaID, idPreg = preguntaActual.preguntaID });
+            return RedirectToPage("ResponderEncuesta", new { idEnc = preguntaActual.encuestaID, indexSig = indexSig + 1 });
         }
     }
 }
