@@ -1,0 +1,37 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.EditarEncuestaModel
+@{
+    ViewData["Title"] = "EditarEncuesta";
+}
+<h2>Editar Encuesta</h2>
+
+<form method="post">
+    <label asp-for="@Model.encuesta.nombreEncuesta">Nombre de la encuesta</label><br>
+    <span asp-validation-for="@Model.encuesta.nombreEncuesta" class="text-danger"></span><br /><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.nombreEncuesta" placeholder="@Model.encuesta.nombreEncuesta"></textarea><br /><br />
+
+    <input type="hidden" asp-for="@Model.encuesta.id" />
+
+    <label asp-for="@Model.encuesta.autor">Autor de la encuesta</label><br>
+    <span asp-validation-for="@Model.encuesta.autor" class="text-danger"></span><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.autor" placeholder="@Model.encuesta.autor"></textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.categoria">Categoría</label><br>
+    <span asp-validation-for="@Model.encuesta.categoria" class="text-danger"></span><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.categoria" placeholder="@Model.encuesta.categoria"> </textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.topico">Tópico</label><br>
+    <span asp-validation-for="@Model.encuesta.topico" class="text-danger"></span><br />
+    <textarea rows="5" cols="125" asp-for="@Model.encuesta.topico" placeholder="@Model.encuesta.topico"> </textarea><br /><br />
+
+    <label asp-for="@Model.encuesta.vigencia">Vigencia</label><br>
+    <span asp-validation-for="@Model.encuesta.vigencia" class="text-danger"></span><br />
+    <input asp-for="@Model.encuesta.vigencia" placeholder="@Model.encuesta.vigencia" /><br /><br />
+    <input type="submit" value=" Modificar encuesta" asp-page-handler="ModificarEncuesta" />
+</form>
+
+<br /><a asp-page="PaginaInicioEncuesta">Volver</a>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}
