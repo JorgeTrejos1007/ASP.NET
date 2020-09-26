@@ -2,8 +2,7 @@
 @model PIBasesISGrupo1.Pages.Curso.CursosDisponiblesModel
 @{ 
 
-    var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro>>)ViewData["CursosDisponibles"];
-
+    var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosDisponibles"];
 }
     
 
@@ -64,10 +63,23 @@
                     <span>$@curso.precio</span>
                 </a>
             </li>
+            <li>
+                <a class="justify-content-between d-flex" href="#">
+                    <p>Topicos</p>
+                    @foreach (var infoTopicos in infoCursos.Item3)
+                    {
+                        var topico = infoTopicos.Item1;
+                        var categoria = infoTopicos.Item2;
+                        <span class="or">@topico, </span>
+                        <br>
+                  
+
+                    }
+                </a>
+            </li>
 
         </ul>
 
-       
     </div>
 
 }

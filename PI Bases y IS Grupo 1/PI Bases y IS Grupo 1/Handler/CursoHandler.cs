@@ -97,15 +97,21 @@ namespace PIBasesISGrupo1.Handler
             return cursos;
         }
 
-        public List<Tuple<Cursos, Miembro>> obtenerCursosDisponibles()
+        public List<Tuple<Cursos, Miembro,List<Tuple<string,string>>>> obtenerCursosDisponibles()
         {
-            List<Tuple<Cursos, Miembro>> cursos = new List<Tuple<Cursos, Miembro>>();
+            List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>> cursos = new List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>>();
             string consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
                 " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
             "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='Aprobado'";
+            string consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
+            " FROM Curso Cu Join  Contiene C ON Cu.nombre = C.nombreCursoFK" +
+            " JOIN Topico T ON C.nombreTopicoFK = T.nombreTopicoPK JOIN Categoria Cat ON Cat.nombreCategoriaPK = T.nombreCategoriaFK" +
+            " WHERE Cu.estado = 'Aprobado'; ";
             DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
+            DataTable tableTopicos = crearTablaConsulta(consultaTopicos);
             Cursos cursoTemporal;
             Miembro educadorTemporal;
+            List<Tuple<string, string>> catalogo;
             foreach (DataRow columna in tablaCurso.Rows)
             {
                 cursoTemporal = new Cursos
@@ -117,14 +123,23 @@ namespace PIBasesISGrupo1.Handler
                     byteArrayDocument = (byte[])columna["documento"],
                     tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
                 };
-                educadorTemporal = new Miembro
+                catalogo = new List <Tuple<string, string>>();
+                foreach (DataRow columnaTopicos in tableTopicos.Rows)
+                {
+                    if (String.Equals(cursoTemporal.nombre, Convert.ToString(columnaTopicos["nombreCurso"]))) {
+                        catalogo.Add(new Tuple <string, string>(Convert.ToString(columnaTopicos["topico"]), Convert.ToString(columnaTopicos["category"])));
+                    }
+
+                }
+                    educadorTemporal = new Miembro
                 {
                     nombre = Convert.ToString(columna["nombreEducador"]),
                     primerApellido = Convert.ToString(columna["primerApellido"]),
                     segundoApellido = Convert.ToString(columna["segundoApellido"])
 
                 };
-                cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
+               
+                cursos.Add(new Tuple<Cursos, Miembro, List<Tuple<string, string>>>(cursoTemporal, educadorTemporal,catalogo));
 
 
             }
