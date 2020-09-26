@@ -3,14 +3,12 @@
 @{
     ViewData["Title"] = "Lista de encuestas";
     var mensaje = (string)TempData["mensaje"];
-
 }
 
 <h2>Lista de encuestas</h2>
 
 <p>
     <a asp-page="CrearEncuesta">Crear encuesta</a>
-    <br /><a href="../Index">Volver al inicio</a>
 </p>
 
 @{
@@ -19,6 +17,7 @@
         if ((bool)TempData["falloAlenviarCorreo"])
         {
             <div class="alert-danger">
+
                 <h3> @mensaje </h3>
             </div>
 
@@ -26,11 +25,14 @@
         else
         {
             <div class="alert-success">
+
                 <h3> @mensaje </h3>
             </div>
         }
     }
 }
+
+
 
 
 <table class="table">
@@ -78,11 +80,10 @@
                         </td>
                         <td>
 
-                            <a asp-page="./EditarEncuesta" asp-route-id="@item.id">Editar</a> |
-                            <a asp-page="./ListaPreguntas" asp-route-id="@item.id"> Añadir Preguntas </a> |
-                            <a asp-page="./RespuestasEncuesta/ResponderEncuesta" asp-route-idEnc="@item.id" asp-route-indexPregunta="0"> Responder Encuesta </a>
-                            <a asp-page="./MostrarRespuestas" asp-route-id="@item.id"> Ver respuestas </a> |
-                            <a asp-page="./BorrarEncuesta" asp-route-id="@item.id"> Borrar </a>
+
+                            <a asp-page="./EditarEncuesta" class="btn btn-default" asp-route-id="@item.id">Editar</a>
+                            <a asp-page="./ListaPreguntas" class="btn btn-default" asp-route-id="@item.id"> Preguntas </a>
+                            <a asp-page="./BorrarEncuesta" class="btn btn-default" asp-route-id="@item.id"> Borrar </a>
                             <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
                                 <button class="btn btn-default">Compartir</button>
                             </form>
