@@ -27,6 +27,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
 
+            conexion.Open();
             adaptadorParaTabla.Fill(consultaFormatoTabla);
             conexion.Close();
             return consultaFormatoTabla;
@@ -45,9 +46,44 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@preguntaID", respuesta.preguntaID);
             comandoParaConsulta.Parameters.AddWithValue("@respuesta", respuesta.respuesta);
 
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
+        }
+
+        public List<MostarRespuestaModel> obtenerRespuestas(int encuestaID)
+        {
+            List<MostarRespuestaModel> respuestas = new List<MostarRespuestaModel>();
+            string consulta = " SELECT Preguntas.pregunta, Respuestas.idPreguntaFK, Respuestas.nombre, Respuestas.respuesta " +
+                "FROM Preguntas JOIN Respuestas ON Preguntas.idEncuestaFK = Respuestas.idEncuestaFK AND Preguntas.idPregunta = Respuestas.idPreguntaFK " +
+                "WHERE Respuestas.idEncuestaFK=@encuestaID ORDER BY Respuestas.idPreguntaFK";
+
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@encuestaID", encuestaID);
+
+            DataTable consultaFormatoTabla = new DataTable();
+
+            adaptadorParaTabla.Fill(consultaFormatoTabla);
+
+
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                respuestas.Add(
+                new MostarRespuestaModel
+                {
+                   
+                    preguntaID = Convert.ToInt32(columna["idPreguntaFK"]),
+                    nombre = Convert.ToString(columna["nombre"]),
+                    respuesta = Convert.ToString(columna["respuesta"]),
+                    pregunta = Convert.ToString(columna["pregunta"]),
+                   
+                });
+
+            }
+            return respuestas;
         }
     }
 }

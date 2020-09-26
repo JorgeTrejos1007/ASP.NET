@@ -2,6 +2,8 @@
 @model PIBasesISGrupo1.Pages.Encuestas.PaginaInicioEncuestaModel
 @{
     ViewData["Title"] = "Lista de encuestas";
+    var mensaje = (string)TempData["mensaje"];
+
 }
 
 <h2>Lista de encuestas</h2>
@@ -10,6 +12,26 @@
     <a asp-page="CrearEncuesta">Crear encuesta</a>
     <br /><a href="../Index">Volver al inicio</a>
 </p>
+
+@{
+    if (@mensaje != null)
+    {
+        if ((bool)TempData["falloAlenviarCorreo"])
+        {
+            <div class="alert-danger">
+                <h3> @mensaje </h3>
+            </div>
+
+        }
+        else
+        {
+            <div class="alert-success">
+                <h3> @mensaje </h3>
+            </div>
+        }
+    }
+}
+
 
 <table class="table">
     <thead>
@@ -38,31 +60,36 @@
             {
                 foreach (var item in (List<PIBasesISGrupo1.Models.EncuestaModel>)ViewData["Encuestas"])
                 {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.nombreEncuesta)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.categoria)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.topico)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.autor)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.vigencia) días
-            </td>
-            <td>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombreEncuesta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.categoria)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.topico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.autor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vigencia) días
+                        </td>
+                        <td>
 
-                <a asp-page="./EditarEncuesta" asp-route-id="@item.id">Editar</a> |
-                <a asp-page="./ListaPreguntas" asp-route-id="@item.id"> Añadir Preguntas </a> |
-                <a asp-page="./RespuestasEncuesta/ResponderEncuesta" asp-route-idEnc="@item.id" asp-route-indexPregunta="0"> Responder Encuesta </a> |
-                <a asp-page="./BorrarEncuesta" asp-route-id="@item.id"> Borrar </a>
+                            <a asp-page="./EditarEncuesta" asp-route-id="@item.id">Editar</a> |
+                            <a asp-page="./ListaPreguntas" asp-route-id="@item.id"> Añadir Preguntas </a> |
+                            <a asp-page="./RespuestasEncuesta/ResponderEncuesta" asp-route-idEnc="@item.id" asp-route-indexPregunta="0"> Responder Encuesta </a>
+                            <a asp-page="./MostrarRespuestas" asp-route-id="@item.id"> Ver respuestas </a> |
+                            <a asp-page="./BorrarEncuesta" asp-route-id="@item.id"> Borrar </a>
+                            <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
+                                <button class="btn btn-default">Compartir</button>
+                            </form>
 
-            </td>
-        </tr>
+
+                        </td>
+                    </tr>
 
 
 

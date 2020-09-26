@@ -27,6 +27,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
 
+            conexion.Open();
             adaptadorParaTabla.Fill(consultaFormatoTabla);
             conexion.Close();
             return consultaFormatoTabla;
@@ -45,6 +46,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@autor", encuesta.autor);
             comandoParaConsulta.Parameters.AddWithValue("@vigencia", encuesta.vigencia);
 
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
@@ -84,6 +86,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@autor", encuesta.autor);
             comandoParaConsulta.Parameters.AddWithValue("@vigencia", encuesta.vigencia);
 
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
@@ -96,6 +99,8 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@id", id);
+
+            conexion.Open();
             SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
             lectorDeDatos.Read();
             encuesta.id = id;
@@ -113,9 +118,13 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@id", id);
+
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
         }
+        public List<string> obtenerTodosLosEmails()        {            List<string> miembrosEmail = new List<string>();            string consulta = "SELECT email FROM Usuario";            DataTable tablaResultado = crearTablaConsulta(consulta);            foreach (DataRow columna in tablaResultado.Rows)            {                miembrosEmail.Add(Convert.ToString(columna["email"]));            }            return miembrosEmail;        }
+
     }
 }

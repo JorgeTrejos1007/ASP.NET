@@ -28,6 +28,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
 
+            conexion.Open();
             adaptadorParaTabla.Fill(consultaFormatoTabla);
             conexion.Close();
             return consultaFormatoTabla;
@@ -59,6 +60,8 @@ namespace PIBasesISGrupo1.Handler
                 comandoParaConsulta.Parameters.AddWithValue("@opcion3", DBNull.Value);
                 comandoParaConsulta.Parameters.AddWithValue("@opcion4", DBNull.Value);
             }
+
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
@@ -104,6 +107,8 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@idPreg", idPregunta);
             comandoParaConsulta.Parameters.AddWithValue("@idEnc", idEncuesta);
+
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
@@ -117,6 +122,8 @@ namespace PIBasesISGrupo1.Handler
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@idEncuesta", idEncuesta);
             comandoParaConsulta.Parameters.AddWithValue("@idPregunta", idPregunta);
+
+            conexion.Open();
             SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
             lectorDeDatos.Read();
             pregunta.encuestaID = (int)lectorDeDatos["idEncuestaFK"];
@@ -171,6 +178,7 @@ namespace PIBasesISGrupo1.Handler
                 comandoParaConsulta.Parameters.AddWithValue("@opcion4", DBNull.Value);
             }
 
+            conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             conexion.Close();
             return exito;
