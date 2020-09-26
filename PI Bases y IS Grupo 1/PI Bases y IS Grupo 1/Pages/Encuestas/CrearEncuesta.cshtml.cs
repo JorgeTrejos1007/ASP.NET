@@ -16,7 +16,8 @@ namespace PIBasesISGrupo1.Pages.Encuestas
        
         public void OnGet()
         {
-
+            CatalogoHandler accesoCatalogo = new CatalogoHandler();
+            ViewData["Categorias"] = accesoCatalogo.obtenerCategorias();
         }
         public IActionResult OnPostEncuesta()
         {

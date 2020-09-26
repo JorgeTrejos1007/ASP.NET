@@ -2,6 +2,14 @@
 @model PIBasesISGrupo1.Pages.Encuestas.CrearEncuestaModel
 @{
     ViewData["Title"] = "CrearEncuesta";
+    var categorias = (List<string>)ViewData["Categorias"];
+
+    List<SelectListItem> tiposCategorias = new List<SelectListItem>();
+    foreach (var categoria in categorias)
+    {
+        tiposCategorias.Add(new SelectListItem { Text = @categoria });
+    }
+
 }
 <h2>Crear Encuesta</h2>
 
@@ -17,6 +25,14 @@
     <label asp-for="@Model.encuesta.categoria">Categoría</label><br>
     <span asp-validation-for="@Model.encuesta.categoria" class="text-danger"></span><br />
     <textarea rows="5" cols="125" asp-for="@Model.encuesta.categoria"></textarea><br /><br />
+
+    @Html.ValidationMessageFor(model => model.encuesta.categoria, "", new { @class = "text-danger" })
+    <br>
+    <strong>Selecione una categoría</strong>
+    @Html.DropDownListFor(model => model.encuesta.categoria, tiposCategorias, "-Sin selección-", new { @class = "form-control" })
+
+
+
 
     <label asp-for="@Model.encuesta.topico">Tópico</label><br>
     <span asp-validation-for="@Model.encuesta.topico" class="text-danger"></span><br />
