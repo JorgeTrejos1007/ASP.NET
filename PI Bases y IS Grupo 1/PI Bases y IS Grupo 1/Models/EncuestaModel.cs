@@ -16,9 +16,7 @@ namespace PIBasesISGrupo1.Models
         [Required(ErrorMessage = "Es necesario que ingreses el autor de la encuesta")]
         public string autor { get; set; }
 
-        [Required(ErrorMessage = "Es necesario que ingreses la categoria de la encuesta")]
-        public string categoria { get; set; }
-
+   
         [Required(ErrorMessage = "Es necesario que ingreses el topico de la encuesta")]
         public string topico { get; set; }
 

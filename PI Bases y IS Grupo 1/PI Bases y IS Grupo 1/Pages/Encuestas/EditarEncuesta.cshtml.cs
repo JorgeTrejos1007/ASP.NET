@@ -17,6 +17,9 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         {
             EncuestasHandler accesodatos = new EncuestasHandler();
             this.encuesta = accesodatos.obtenerTuplaEncuesta(id);
+
+            CatalogoHandler accesoCatalago = new CatalogoHandler();
+            ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
         }
         public IActionResult OnPostModificarEncuesta()
         {

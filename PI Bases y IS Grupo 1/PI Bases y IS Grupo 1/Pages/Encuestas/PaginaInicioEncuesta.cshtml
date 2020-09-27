@@ -2,7 +2,7 @@
 @model PIBasesISGrupo1.Pages.Encuestas.PaginaInicioEncuestaModel
 @{
     ViewData["Title"] = "Lista de encuestas";
-    var mensaje = (string)TempData["mensaje"];
+    
 }
 
 <h2>Lista de encuestas</h2>
@@ -10,28 +10,6 @@
 <p>
     <a asp-page="CrearEncuesta">Crear encuesta</a>
 </p>
-
-@{
-    if (@mensaje != null)
-    {
-        if ((bool)TempData["falloAlenviarCorreo"])
-        {
-            <div class="alert-danger">
-
-                <h3> @mensaje </h3>
-            </div>
-
-        }
-        else
-        {
-            <div class="alert-success">
-
-                <h3> @mensaje </h3>
-            </div>
-        }
-    }
-}
-
 
 
 
@@ -41,9 +19,7 @@
             <th>
                 <h3>Nombre de Encuesta</h3>
             </th>
-            <th>
-                <h3>Categoría</h3>
-            </th>
+
             <th>
                 <h3>Tópico</h3>
             </th>
@@ -66,9 +42,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.nombreEncuesta)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.categoria)
-                        </td>
+         
                         <td>
                             @Html.DisplayFor(modelItem => item.topico)
                         </td>

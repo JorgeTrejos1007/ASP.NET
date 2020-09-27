@@ -34,13 +34,12 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearEncuesta(EncuestaModel encuesta)
         {
-            string consulta = "INSERT INTO Encuestas(categoria, topico, nombreEncuesta, autor, vigencia) "
-            + "VALUES (@categoria,@topico,@nombreEncuesta,@autor,@vigencia) ";
+            string consulta = "INSERT INTO Encuestas(topicoFK, nombreEncuesta, autor, vigencia) "
+            + "VALUES (@topico,@nombreEncuesta,@autor,@vigencia) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
-           
-            comandoParaConsulta.Parameters.AddWithValue("@categoria", encuesta.categoria);
+            
             comandoParaConsulta.Parameters.AddWithValue("@topico", encuesta.topico);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEncuesta", encuesta.nombreEncuesta);
             comandoParaConsulta.Parameters.AddWithValue("@autor", encuesta.autor);
@@ -62,8 +61,7 @@ namespace PIBasesISGrupo1.Handler
                 new EncuestaModel
                 {
                     id = Convert.ToInt32(columna["idEncuesta"]),
-                    categoria = Convert.ToString(columna["categoria"]),
-                    topico = Convert.ToString(columna["topico"]),
+                    topico = Convert.ToString(columna["topicoFK"]),
                     nombreEncuesta = Convert.ToString(columna["nombreEncuesta"]),
                     autor = Convert.ToString(columna["autor"]),
                     vigencia = Convert.ToInt32(columna["vigencia"])
@@ -74,13 +72,12 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool modificarEncuesta(EncuestaModel encuesta)
         {
-            string consulta = "UPDATE Encuestas SET categoria=@categoria, topico=@topico, nombreEncuesta=@nombreEncuesta, autor=@autor, vigencia=@vigencia WHERE idEncuesta=@id"; 
+            string consulta = "UPDATE Encuestas SET topicoFK=@topico, nombreEncuesta=@nombreEncuesta, autor=@autor, vigencia=@vigencia WHERE idEncuesta=@id"; 
             
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
             comandoParaConsulta.Parameters.AddWithValue("@id", encuesta.id);
-            comandoParaConsulta.Parameters.AddWithValue("@categoria", encuesta.categoria);
             comandoParaConsulta.Parameters.AddWithValue("@topico", encuesta.topico);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEncuesta", encuesta.nombreEncuesta);
             comandoParaConsulta.Parameters.AddWithValue("@autor", encuesta.autor);
@@ -104,8 +101,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
             lectorDeDatos.Read();
             encuesta.id = id;
-            encuesta.categoria = (string)lectorDeDatos["categoria"];
-            encuesta.topico = (string)lectorDeDatos["topico"];
+            encuesta.topico = (string)lectorDeDatos["topicoFK"];
             encuesta.nombreEncuesta = (string)lectorDeDatos["nombreEncuesta"];
             encuesta.autor = (string)lectorDeDatos["autor"];
             encuesta.vigencia = (int)lectorDeDatos["vigencia"];

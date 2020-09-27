@@ -2,6 +2,7 @@
 @model PIBasesISGrupo1.Pages.Encuestas.EditarEncuestaModel
 @{
     ViewData["Title"] = "EditarEncuesta";
+    var topicosYCategorias = (List<Tuple<string, string>>)ViewData["TopicosYCategorias"];
 }
 <h2>Editar Encuesta</h2>
 
@@ -15,14 +16,24 @@
     <label asp-for="@Model.encuesta.autor">Autor de la encuesta</label><br>
     <span asp-validation-for="@Model.encuesta.autor" class="text-danger"></span><br />
     <textarea rows="5" cols="125" asp-for="@Model.encuesta.autor" placeholder="@Model.encuesta.autor"></textarea><br /><br />
-
-    <label asp-for="@Model.encuesta.categoria">Categoría</label><br>
-    <span asp-validation-for="@Model.encuesta.categoria" class="text-danger"></span><br />
-    <textarea rows="5" cols="125" asp-for="@Model.encuesta.categoria" placeholder="@Model.encuesta.categoria"> </textarea><br /><br />
-
-    <label asp-for="@Model.encuesta.topico">Tópico</label><br>
+    
+    <strong>Seleccione Topico </strong>
     <span asp-validation-for="@Model.encuesta.topico" class="text-danger"></span><br />
-    <textarea rows="5" cols="125" asp-for="@Model.encuesta.topico" placeholder="@Model.encuesta.topico"> </textarea><br /><br />
+    </br>
+    @{
+        <select asp-for="@Model.encuesta.topico" value="@Model.encuesta.topico" size="@topicosYCategorias.Count">
+            @foreach (var topicoYCategoria in topicosYCategorias)
+            {
+
+                <option value="@topicoYCategoria.Item1">Topico:@topicoYCategoria.Item1 Categoria:@topicoYCategoria.Item2</option>
+
+                <br>
+            }
+        </select>
+    }
+    <br>
+    <br>
+
 
     <label asp-for="@Model.encuesta.vigencia">Vigencia</label><br>
     <span asp-validation-for="@Model.encuesta.vigencia" class="text-danger"></span><br />
