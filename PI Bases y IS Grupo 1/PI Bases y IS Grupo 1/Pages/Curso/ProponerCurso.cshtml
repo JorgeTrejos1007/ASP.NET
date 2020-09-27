@@ -1,0 +1,71 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.ProponerCursoModel
+@{
+    ViewData["Title"] = "Proponga un Curso Para Nuestra Comunidad";
+    var topicosYCategorias = (List<Tuple<string, string>>)ViewData["TopicosYCategorias"];
+    var mensaje = (string)TempData["mensaje"];
+}
+
+<h2>ProponerCurso</h2>
+<form method="post" enctype="multipart/form-data">
+
+    @if (@mensaje != null)
+    {
+        if ((bool)TempData["exitoAlProponer"])
+        {
+            <div class="alert-success">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+        else
+        {
+            <div class="alert-danger">
+
+                <h3> @mensaje </h3>
+            </div>
+        }
+    }
+
+
+
+    <div>
+        <span asp-validation-for="@Model.curso.nombre" class="text-danger"></span>
+        </br>
+        <strong>Nombre del Curso:</strong> <input asp-for="@Model.curso.nombre" , />
+
+    </div>
+    <div>
+        <span asp-validation-for="@Model.curso.emailDelQueLoPropone" class="text-danger"></span>
+        </br>
+        <strong>Ingresa tu Email:</strong> <input asp-for="@Model.curso.emailDelQueLoPropone" , />
+
+    </div>
+    </br>
+
+    <span asp-validation-for="@Model.archivo" class="text-danger"></span>
+    </br>
+    <strong>Subir Documento Descriptivo del Curso:</strong> <input asp-for="@Model.archivo" type="file" class="btn btn alert-info" />
+    </br>
+    @{
+        <select asp-for="@Model.curso.topicos" multiple size="@topicosYCategorias.Count">
+            @foreach (var topicoYCategoria in topicosYCategorias)
+            {
+
+                <option value="@topicoYCategoria.Item1">Topico:@topicoYCategoria.Item1 Categoria:@topicoYCategoria.Item2</option>
+
+                <br>
+            }
+
+        </select>
+    }
+    <br>
+    <input type="submit" value="aplicar cambios" class="btn btn-success" aps-page-handler="OnPost" />
+</form>
+
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
