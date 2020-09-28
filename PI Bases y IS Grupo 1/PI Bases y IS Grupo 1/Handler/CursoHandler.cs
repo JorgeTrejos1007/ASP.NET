@@ -32,14 +32,15 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool proponerCurso(Cursos curso, IFormFile archivo) {
-            string consulta = "INSERT INTO Curso(nombre,emailEducadorFK,documentoInformativo,tipoDocumentoInformativo)"
-          + "VALUES (@nombreCurso,@emailEducador,@documentoInformativo,@tipoDocumentoInformativo)";
+            string consulta = "INSERT INTO Curso(nombre,emailEducadorFK,documentoInformativo,tipoDocumentoInformativo,precio)"
+          + "VALUES (@nombreCurso,@emailEducador,@documentoInformativo,@tipoDocumentoInformativo,@precio)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", curso.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@emailEducador", curso.emailDelQueLoPropone);
             comandoParaConsulta.Parameters.AddWithValue("@documentoInformativo", obtenerBytes(archivo));
             comandoParaConsulta.Parameters.AddWithValue("@tipoDocumentoInformativo", archivo.ContentType);
+            comandoParaConsulta.Parameters.AddWithValue("@precio", curso.precio);
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             if (curso.topicos.Length > 0)
