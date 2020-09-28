@@ -17,8 +17,16 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         public void OnGet(int id)
         {
             ViewData["id"] = id;
-            RespuestasHandler accesoDatos = new RespuestasHandler();
-            respuestas = accesoDatos.obtenerRespuestas(id);
+            try
+            {
+                RespuestasHandler accesoDatos = new RespuestasHandler();
+                ViewData["respuestas"] = accesoDatos.obtenerRespuestas(id);
+            }
+            catch {
+                ViewData["Mensaje"] = "Aun no hay respuestas";
+
+            }
+            
 
         }
     }

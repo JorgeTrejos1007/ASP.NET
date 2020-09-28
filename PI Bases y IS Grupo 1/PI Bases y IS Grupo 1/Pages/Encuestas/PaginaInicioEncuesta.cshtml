@@ -58,6 +58,8 @@
                             <a asp-page="./EditarEncuesta" class="btn btn-default" asp-route-id="@item.id">Editar</a>
                             <a asp-page="./ListaPreguntas" class="btn btn-default" asp-route-id="@item.id"> Preguntas </a>
                             <a asp-page="./BorrarEncuesta" class="btn btn-default" asp-route-id="@item.id"> Borrar </a>
+                            <a asp-page="./MostrarRespuestas" class="btn btn-default" asp-route-id="@item.id"> Ver respuestas </a>
+                            
                             <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
                                 <button class="btn btn-default">Compartir</button>
                             </form>
