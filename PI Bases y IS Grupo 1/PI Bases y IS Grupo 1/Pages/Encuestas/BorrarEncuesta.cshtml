@@ -1,0 +1,22 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.BorrarEncuestaModel
+@{
+    ViewData["Title"] = "BorrarEncuesta";
+}
+
+<h2>BorrarEncuesta</h2>
+
+<h3>¿Está seguro que quiere borrar esta encuesta?</h3>
+<div>
+
+    <label asp-for="@Model.encuesta.nombreEncuesta"><h4><b>Nombre de la encuesta:</b></h4> @Model.encuesta.nombreEncuesta</label> <br>
+    <label asp-for="@Model.encuesta.autor"><h4><b>Autor de la encuesta:</b></h4> @Model.encuesta.autor</label><br>
+    <label asp-for="@Model.encuesta.topico"><h4><b>Tópico:</b></h4> @Model.encuesta.topico</label><br>
+    <label asp-for="@Model.encuesta.vigencia"><h4><b>Vigencia: </b></h4> @Model.encuesta.vigencia días</label><br>
+
+</div>
+    <form method="post">
+        <input type="hidden" asp-for="@Model.encuesta.id" />
+        <input type="submit" value="Borrar" asp-page-handler="borrarEncuesta" /> |
+        <a asp-page="PaginaInicioEncuesta">Volver</a>
+    </form>

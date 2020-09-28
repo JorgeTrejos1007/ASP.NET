@@ -1,0 +1,40 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.EditarPreguntaModel
+@{
+    ViewData["Title"] = "EditarPregunta";
+}
+
+<h2>Editar Pregunta</h2>
+
+<form method="post">
+
+    <label asp-for="@Model.pregunta.pregunta">Pregunta</label><br>
+    <span asp-validation-for="@Model.pregunta.pregunta" class="text-danger"></span><br />
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.pregunta"></textarea><br>
+
+
+    <input type="hidden" asp-for="@Model.pregunta.encuestaID" />
+    <input type="hidden" asp-for="@Model.pregunta.preguntaID" />
+
+    <label asp-for="@Model.pregunta.opcion1">Opción 1:</label><br>
+    <span asp-validation-for="@Model.pregunta.opcion1" class="text-danger"></span><br />
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion1"></textarea><br>
+
+
+    <label asp-for="@Model.pregunta.opcion2">Opción 2:</label><br>
+    <span asp-validation-for="@Model.pregunta.opcion2" class="text-danger"></span><br />
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion2"></textarea><br>
+
+    <label asp-for="@Model.pregunta.opcion3">Opción 3:</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion3"></textarea><br>
+
+    <label asp-for="@Model.pregunta.opcion4">Opción 4:</label><br>
+    <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion4"></textarea><br>
+    <input type="submit" value=" Modificar pregunta" asp-page-handler="editarPregunta" />
+</form>
+
+<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

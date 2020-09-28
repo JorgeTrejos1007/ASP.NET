@@ -1,0 +1,77 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.PaginaInicioEncuestaModel
+@{
+    ViewData["Title"] = "Lista de encuestas";
+    
+}
+
+<h2>Lista de encuestas</h2>
+
+<p>
+    <a asp-page="CrearEncuesta">Crear encuesta</a>
+</p>
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h3>Nombre de Encuesta</h3>
+            </th>
+
+            <th>
+                <h3>Tópico</h3>
+            </th>
+            <th>
+                <h3>Autor</h3>
+            </th>
+            <th>
+                <h3>Vigencia</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if ((List<PIBasesISGrupo1.Models.EncuestaModel>)ViewData["Encuestas"] != null)
+            {
+                foreach (var item in (List<PIBasesISGrupo1.Models.EncuestaModel>)ViewData["Encuestas"])
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombreEncuesta)
+                        </td>
+         
+                        <td>
+                            @Html.DisplayFor(modelItem => item.topico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.autor)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.vigencia) días
+                        </td>
+                        <td>
+
+
+                            <a asp-page="./EditarEncuesta" class="btn btn-default" asp-route-id="@item.id">Editar</a>
+                            <a asp-page="./ListaPreguntas" class="btn btn-default" asp-route-id="@item.id"> Preguntas </a>
+                            <a asp-page="./BorrarEncuesta" class="btn btn-default" asp-route-id="@item.id"> Borrar </a>
+                            <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
+                                <button class="btn btn-default">Compartir</button>
+                            </form>
+
+
+                        </td>
+                    </tr>
+
+
+
+
+                }
+            }
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,87 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.RespuestasEncuesta.ResponderEncuestaModel
+@{
+    ViewData["Title"] = "ResponderEncuesta";
+}
+
+<h2>Responder Encuestas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h3>Nombre de Encuesta</h3>
+            </th>
+       
+            <th>
+                <h3>Tópico</h3>
+            </th>
+            <th>
+                <h3>Autor</h3>
+            </th>
+            <th>
+                <h3>Vigencia</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (Model.encuesta != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.nombreEncuesta)
+                    </td>
+   
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.topico)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.autor)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => Model.encuesta.vigencia) días
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+
+
+<h3>Pregunta:</h3>
+
+@{
+    if (Model.preguntaActual != null)
+    {
+<form method="post">
+    <b>Pregunta: </b>@Html.DisplayFor(modelItem => Model.preguntaActual.pregunta)<br>
+    
+    <input type="hidden" asp-for="@Model.respuesta.encuestaID" value="@Model.preguntaActual.encuestaID" />
+    <input type="hidden" asp-for="@Model.respuesta.preguntaID" value="@Model.preguntaActual.preguntaID" />
+    <input type="hidden" asp-for="@Model.respuesta.nombre" value="Anonimo" />
+
+    <input type="hidden" asp-for="@Model.preguntaActual.encuestaID" value="@Model.preguntaActual.encuestaID" />
+    
+
+
+    <input type="radio" name="opcion" id="opcion1" value="@Model.preguntaActual.opcion1" />@Model.preguntaActual.opcion1 <br>
+    <input type="radio" name="opcion" id="opcion2" value="@Model.preguntaActual.opcion2" />@Model.preguntaActual.opcion2<br>
+    @if (@Model.preguntaActual.opcion3 != "")
+    {
+        <input type="radio" name="opcion" id="opcion3" value="@Model.preguntaActual.opcion3" />@Model.preguntaActual.opcion3<br>
+    }
+    @if (@Model.preguntaActual.opcion4 != "")
+    {
+        <input type="radio" name="opcion" id="opcion4" value="@Model.preguntaActual.opcion4" />@Model.preguntaActual.opcion4<br>
+    }
+
+    <input type="submit" value="Enviar respuesta" asp-route-indexSig="@ViewData["indexSig"]" asp-page-handler="Respuesta" />
+</form>
+       
+
+    }
+}
+

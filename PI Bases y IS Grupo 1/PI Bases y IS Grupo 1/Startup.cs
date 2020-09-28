@@ -13,7 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 
 
-namespace PI_Bases_y_IS_Grupo_1
+namespace PIBasesISGrupo1
 {
     public class Startup
     {

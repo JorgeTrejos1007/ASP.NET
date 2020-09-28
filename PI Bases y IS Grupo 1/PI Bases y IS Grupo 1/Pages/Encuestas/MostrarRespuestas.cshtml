@@ -1,0 +1,49 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Encuestas.MostrarRespuestasModel
+@{
+    ViewData["Title"] = "MostrarRespuestas";
+}
+
+<h2>MostrarRespuestas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <h3>Respuestas</h3>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if ((List<PIBasesISGrupo1.Models.MostarRespuestaModel>)Model.respuestas != null)
+            {
+                var index = Model.respuestas[0].preguntaID;
+                <td>
+                <b><h4>Pregunta: </h4></b><h4>@Model.respuestas[0].pregunta</h4>
+                </td>
+                foreach (var item in (List<PIBasesISGrupo1.Models.MostarRespuestaModel>)Model.respuestas)
+                {
+                <tr>
+                    <td>
+                    @if (index != item.preguntaID)
+                    {
+                        index = item.preguntaID;
+                        
+                            <b><h4>Pregunta: </h4></b><h4>@Html.DisplayFor(modelItem => item.pregunta)</h4>
+
+
+    }
+
+    <b>Nombre: </b>@Html.DisplayFor(modelItem => item.nombre)<br>
+    <b>Respuesta: </b>@Html.DisplayFor(modelItem => item.respuesta)<br>
+</td>
+
+
+
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

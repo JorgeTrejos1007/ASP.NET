@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace PI_Bases_y_IS_Grupo_1.Pages
+namespace PIBasesISGrupo1.Pages
 {
     public class PrivacyModel : PageModel
     {
