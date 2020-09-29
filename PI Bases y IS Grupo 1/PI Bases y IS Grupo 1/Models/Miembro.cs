@@ -50,7 +50,7 @@ namespace PIBasesISGrupo1.Models
         [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string hobbies { get; set; }
 
-
+        public string tipoDeUsuario { get; set; }
         public string tipoArchivo { get; set; }
         public string[] idiomas { get; set; }
         public string[] habilidades { get; set; }

@@ -58,7 +58,8 @@ namespace PIBasesISGrupo1.Handler
                     tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
                     byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"],
                     idiomas = obtenerIdiomas(Convert.ToString(columna["email"])),
-                    habilidades = obtenerHabilidades(Convert.ToString(columna["email"]))
+                    habilidades = obtenerHabilidades(Convert.ToString(columna["email"])),
+                    tipoDeUsuario=Convert.ToString(columna["tipoDeUsuario"])
                 });
 
             }
