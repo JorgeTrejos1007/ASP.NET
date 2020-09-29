@@ -99,7 +99,7 @@ namespace PIBasesISGrupo1.Handler
         public List<Tuple<string, string>> obteneTodosLosTopicosYCategoriasAsociadas()
         {
             List<Tuple<string, string>> topicosYCategoriasAsociadas = new List<Tuple<string, string>>();
-            string consultaCategorias = "SELECT * FROM Topico";
+            string consultaCategorias = "SELECT * FROM Topico ORDER BY nombreCategoriaFK";
             DataTable tablaTopico = crearTablaConsulta(consultaCategorias);
             foreach (DataRow columna in tablaTopico.Rows) {
                 topicosYCategoriasAsociadas.Add(new Tuple<string, string>(Convert.ToString(columna["nombreTopicoPK"]), Convert.ToString(columna["nombreCategoriaFK"])));
