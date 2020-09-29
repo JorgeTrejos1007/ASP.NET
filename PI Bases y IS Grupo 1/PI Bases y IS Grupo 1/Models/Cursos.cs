@@ -26,7 +26,11 @@ namespace PIBasesISGrupo1.Models
         public string estado { get; set; }
         [Required(ErrorMessage = "Es necesario que el curso tenga un precio asignado")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Por favor ingrese solo digitos validos. Ejemplo: 99 ")]
-        public double precio {get; set;} 
+        public double precio {get; set;}
+  
+        [Required(ErrorMessage = "Es necesario que ingreses el email")]
+        [Display(Name = "Ingrese el documento descriptivo del Curso")]
+        [RegularExpression(@"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
         public string emailDelQueLoPropone { get; set; }
         public string emailDelEducador { get; set; }
         public string emailDelMiembroDeNucleo { get; set; }

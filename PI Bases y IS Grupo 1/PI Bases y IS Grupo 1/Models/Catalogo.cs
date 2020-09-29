@@ -11,13 +11,13 @@ namespace PIBasesISGrupo1.Models
 
         [Required(ErrorMessage = "Es necesario que ingrese un tópico")]
         [Display(Name = "Ingrese un tópico")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
 
         public string topico { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingrese una categoría")]
         [Display(Name = "Ingrese un tópico")]
-        [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [RegularExpression(@"^[a-zA-Z\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string categoria { get; set; }
     }
 }
