@@ -38,10 +38,10 @@
     <label asp-for="@Model.encuesta.vigencia">Vigencia</label><br>
     <span asp-validation-for="@Model.encuesta.vigencia" class="text-danger"></span><br />
     <input asp-for="@Model.encuesta.vigencia" placeholder="@Model.encuesta.vigencia" /><br /><br />
-    <input type="submit" value=" Modificar encuesta" asp-page-handler="ModificarEncuesta" />
+    <input type="submit" value=" Modificar encuesta" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="ModificarEncuesta" />
 </form>
 
-<br /><a asp-page="PaginaInicioEncuesta">Volver</a>
+<br /><a asp-page="PaginaInicioEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 
 @section scripts{
     <partial name="_ValidationScriptsPartial" />

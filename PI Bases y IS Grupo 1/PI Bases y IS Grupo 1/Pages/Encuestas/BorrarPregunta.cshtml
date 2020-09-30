@@ -18,6 +18,6 @@
 <form method="post">
     <input type="hidden" asp-for="@Model.pregunta.encuestaID" />
     <input type="hidden" asp-for="@Model.pregunta.preguntaID" />
-    <input type="submit" value="Borrar" asp-page-handler="borrarPregunta" /> |
-    <a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>
+    <input type="submit" value="Borrar" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="borrarPregunta" /> |
+    <a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 </form>

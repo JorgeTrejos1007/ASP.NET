@@ -30,10 +30,10 @@
 
     <label asp-for="@Model.pregunta.opcion4">Opción 4:</label><br>
     <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion4"></textarea><br>
-    <input type="submit" value=" Modificar pregunta" asp-page-handler="editarPregunta" />
+    <input type="submit" value=" Modificar pregunta" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="editarPregunta" />
 </form>
 
-<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>
+<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 
 @section scripts{
     <partial name="_ValidationScriptsPartial" />

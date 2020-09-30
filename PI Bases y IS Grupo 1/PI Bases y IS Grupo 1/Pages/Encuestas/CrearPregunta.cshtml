@@ -31,10 +31,10 @@
     <label asp-for="@Model.pregunta.opcion4">Opción 4:</label><br>
     <textarea rows="5" cols="125" asp-for="@Model.pregunta.opcion4"></textarea><br>
 
-    <input type="submit" value="Crear" asp-page-handler="Pregunta" />
+    <input type="submit" value="Crear" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="Pregunta" />
 </form>
 
-<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]">Volver</a>
+<br /><a asp-page="ListaPreguntas" asp-route-id="@ViewData["idEncuesta"]" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 
 @section scripts{
     <partial name="_ValidationScriptsPartial" />

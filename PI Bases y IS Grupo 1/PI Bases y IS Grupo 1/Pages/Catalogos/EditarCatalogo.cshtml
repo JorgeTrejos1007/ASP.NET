@@ -35,7 +35,7 @@
         <br>
         <strong>Agregar nueva categoría</strong>
         <input asp-for="@Model.catalogo.categoria" />
-        <button class="btn btn-default">Agregar categoría</button>
+        <button class="primary-btn2 text-uppercase enroll rounded-0">Agregar categoría</button>
     </form>
 </div>
 
@@ -52,15 +52,17 @@
         @Html.ValidationMessageFor(model => model.catalogo.categoria, "", new { @class = "text-danger" })
         <br>
         <strong>Selecione una categoría</strong>
+        <br />
         @Html.DropDownListFor(model => model.catalogo.categoria, tiposCategorias, "-Sin selección-", new { @class = "form-control" })
 
 
-
+        <br />
         <span asp-validation-for="@Model.catalogo.topico" class="text-danger"></span>
         <br>
         <strong>Escriba el topico que desea añadir</strong>
+        <br />
         <input asp-for="@Model.catalogo.topico" />
-        <button class="btn btn-default">Agregar Topico</button>
+        <button class="primary-btn2 text-uppercase enroll rounded-0">Agregar Topico</button>
 
         @if (@mensajeTopico != null)
         {

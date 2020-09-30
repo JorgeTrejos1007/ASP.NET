@@ -4,75 +4,87 @@
 
 @{
     ViewData["Title"] = "DesplegarMiembros";
-  
+
 
 
 }
 
-<strong>Miembros de nuestra comunidad</strong>
-
-
 <br />
-<br />
+<div class="row justify-content-center">
+    <div class="col-lg-5">
+        <div class="main_title">
+            <h2 class="mb-3">Miembros de la comunidad</h2>
+        </div>
+    </div>
+</div>
+
 @foreach (var miembro in (List<PIBasesISGrupo1.Models.Miembro>)ViewData["Miembros"])
 {
-    <tr>
-        <td>
-
-            <p>
-                @{
-                    if (@miembro.byteArrayImage != null)
-                    {
-                        <img class="card-img-top" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" with="40" height="40" asp-append-version="true" />
-                    }
-                    else
-                    {
-                        <img class="card-img-top" src="~/img/imagenGenerica.jpeg" with="40" height="40" asp-append-version="true" />
-                    }
-                }
-                <strong>Nombre Completo:</strong> @miembro.nombre @miembro.primerApellido
-                @if (@miembro.segundoApellido != null)
+    <div class="member_list">
+        <p>
+            @{
+                if (@miembro.byteArrayImage != null)
                 {
-                    @miembro.segundoApellido
+                    <img class="member_img" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" asp-append-version="true" />
+                }
+                else
+                {
+                    <img class="member_img" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                }
+            }
+            <br />
+            <br />
+            <h4 class="title_color">Nombre Completo:</h4> @miembro.nombre @miembro.primerApellido
+            @if (@miembro.segundoApellido != null)
+            {
+                @miembro.segundoApellido
+            }
+            <br />
+            <br />
+            <h4 class="title_color">Tipo de usuario: </h4>@miembro.tipoDeUsuario<br />
+            <br />
+            <h4 class="title_color">
+                Genero:
+            </h4> @miembro.genero<br />
+            <br />
+            <h4 class="title_color">Pais:</h4> @miembro.pais<br />
+            <br />
+            <h4 class="title_color">Hobbies:</h4> @miembro.hobbies<br />
+            <br />
+            <h4 class="title_color">Email:</h4> @miembro.email<br />
+
+
+            <br />
+            @{
+                if (@miembro.idiomas != null)
+                {
+                    <h4 class="title_color">
+                        Idiomas:
+                    </h4>
+                    @foreach (var idioma in @miembro.idiomas)
+                    {
+                        @idioma<br />
+
+                    }
                 }
                 <br />
-                <strong>Genero:</strong> @miembro.genero<br />
-                <strong>Pais:</strong> @miembro.pais<br />
-                <strong>Hobbies:</strong> @miembro.hobbies<br />
-                <strong>Email:</strong> @miembro.email<br />
-
-
-                @{
-                    if (@miembro.idiomas != null)
+                if (@miembro.habilidades != null)
+                {
+                    <h4 class="title_color">
+                        Habilidades:
+                    </h4>
+                    @foreach (var habilidad in @miembro.habilidades)
                     {
-                        <strong>Idiomas:</strong><br />
-                        @foreach (var idioma in @miembro.idiomas)
-                        {
-                            @idioma<br />
+                         @habilidad <br />
 
-                        }
                     }
-
-                    if (@miembro.habilidades != null)
-                    {
-                        <strong>Habilidades:</strong><br />
-                        @foreach (var habilidad in @miembro.habilidades)
-                        {
-                            @habilidad<br />
-
-                        }
-                    }
-
                 }
-                <strong>Tipo de usuario: </strong>@miembro.tipoDeUsuario
 
-                <br/>
-                <a href="~/Miembros/EditarMiembro?email=@miembro.email" class="btn btn-info">Editar perfil</a>
+            }
 
 
-            </p>
 
-        </td>
 
-    </tr>
+        </p>
+    </div>
 }
