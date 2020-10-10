@@ -25,13 +25,41 @@ namespace PIBasesISGrupo1.Handler
 
         public DataTable crearTablaConsulta(string consulta)
         {
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlCommand comandoParaConsulta = this.crearComandoParaConsulta(consulta);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
+            conexion.Open();
             adaptadorParaTabla.Fill(consultaFormatoTabla);
             conexion.Close();
             return consultaFormatoTabla;
         }
+
+        public SqlCommand crearComandoParaConsulta(string consulta)
+        {
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            return comandoParaConsulta;
+        }
+
+        public List<string> obtenerDatosDeColumna(SqlCommand comandoParaConsulta,string columnaAconsultar) {
+            List<string> datosDeColumna = new List<string>();
+            conexion.Open();
+            SqlDataReader lectorColumna = comandoParaConsulta.ExecuteReader();
+            while (lectorColumna.Read())
+            {
+                datosDeColumna.Add(lectorColumna[columnaAconsultar].ToString());
+            }
+            conexion.Close();
+
+            return datosDeColumna;
+        }
+
+        public bool ejecutarComandoParaConsulta(SqlCommand ComandoParaConsulta) {
+            conexion.Open();
+            bool exito = ComandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            return exito;
+        }
+
 
     }
 }
