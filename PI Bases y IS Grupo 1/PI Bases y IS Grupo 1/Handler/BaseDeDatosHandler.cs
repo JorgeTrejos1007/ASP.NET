@@ -23,9 +23,9 @@ namespace PIBasesISGrupo1.Handler
             conexion = conexionBD.Connection();
         }
 
-        public DataTable crearTablaConsulta(string consulta)
+        public DataTable crearTablaConsulta(SqlCommand comandoParaConsulta)
         {
-            SqlCommand comandoParaConsulta = this.crearComandoParaConsulta(consulta);
+        
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
             conexion.Open();
