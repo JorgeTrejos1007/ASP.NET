@@ -36,7 +36,6 @@ namespace PIBasesISGrupo1.Handler
 
         public List<Miembro> obtenerTodosLosMiembros()
         {
-            
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario";
             DataTable tablaMiembro = crearTablaConsulta(consulta);
@@ -65,6 +64,15 @@ namespace PIBasesISGrupo1.Handler
             }
             return miembros;
         }
+
+        public Miembro obtenerDatosDeMiembro(string correo, string password) {
+            Miembro miembro = new Miembro();
+
+            return miembro;
+        }
+
+
+
 
         private string[] obtenerIdiomas(string email) {
             List<string> idiomas= new List<string>();
