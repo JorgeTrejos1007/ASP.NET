@@ -37,9 +37,13 @@ namespace PIBasesISGrupo1.Pages.Login
             MiembroHandler accesoDatos = new MiembroHandler();
             Miembro miembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
             IActionResult vista;
-
+            
             if (miembro != null)
             {
+
+                Sesion.guardarDatosDeSesion(HttpContext.Session, "User", miembro);
+
+                //var datos = Sesion.GetObjectFromJson<Miembro>(HttpContext.Session,"User");
 
                 vista = Redirect("/Index");
                 //vista = Redirect("/Miembros/CrearMiembro");
