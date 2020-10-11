@@ -25,6 +25,7 @@ namespace PIBasesISGrupo1.Handler
 
         public DataTable crearTablaConsulta(SqlCommand comandoParaConsulta)
         {
+        
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
             conexion.Open();
