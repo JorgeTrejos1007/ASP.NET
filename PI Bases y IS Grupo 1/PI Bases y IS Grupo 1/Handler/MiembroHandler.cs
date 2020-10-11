@@ -17,8 +17,12 @@ namespace PIBasesISGrupo1.Handler
     {
         private ConexionModel conexionBD;
         private SqlConnection conexion;
+        private BaseDeDatosHandler baseDeDatos;
+
+
         public MiembroHandler()
         {
+            baseDeDatos = new BaseDeDatosHandler();
             conexionBD = new ConexionModel();
             conexion = conexionBD.Connection();
         }
@@ -65,15 +69,7 @@ namespace PIBasesISGrupo1.Handler
             return miembros;
         }
 
-        public Miembro obtenerDatosDeMiembro(string correo, string password) {
-            Miembro miembro = new Miembro();
-
-            return miembro;
-        }
-
-
-
-
+       
         private string[] obtenerIdiomas(string email) {
             List<string> idiomas= new List<string>();
          
