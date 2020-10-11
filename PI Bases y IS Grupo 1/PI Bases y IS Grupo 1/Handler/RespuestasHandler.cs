@@ -83,5 +83,30 @@ namespace PIBasesISGrupo1.Handler
             }
             return respuestas;
         }
+
+        public int cantidadVecesElegidaUnaOpcion(int encuestaID, int preguntaID, string opcion)
+        {
+            if (opcion !=null) {
+                int cantidadRespuestaOpcion = 0;
+                string consulta = "SELECT COUNT(respuesta) AS [cantidad] FROM Respuesta WHERE respuesta = @opcion AND idPreguntaFK = @preguntaID AND idEncuestaFK = @enecuestaID";
+                SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+                SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+
+                comandoParaConsulta.Parameters.AddWithValue("@encuestaID", encuestaID);
+                comandoParaConsulta.Parameters.AddWithValue("@preguntaID", preguntaID);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion", opcion);
+
+
+                conexion.Open();
+                SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+                lectorDeDatos.Read();
+                cantidadRespuestaOpcion = (int)lectorDeDatos["cantidad"];
+                return cantidadRespuestaOpcion;
+            }
+            else
+            {
+                return -1;
+            }
+        }
     }
 }
