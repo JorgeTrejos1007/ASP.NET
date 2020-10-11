@@ -6,10 +6,10 @@
 
 }
 <h2>Cursos Propuestos</h2>
-
+<div class="cursos-container">
     @foreach (var infoCursos in listaDeCursos)
     {
-        
+
         var curso = infoCursos.Item1;
         var educador = infoCursos.Item2;
         <div class="col-lg-4 right-contents">
@@ -42,7 +42,7 @@
                 </li>
 
                 <li>
-                  
+
                     <a href="data:@curso.tipoDocInformativo;base64,@(Convert.ToBase64String(curso.byteArrayDocument))" download="@curso.nombre .pdf">
                         <span class="or">Descargar documento descriptivo del curso</span>
                     </a>
@@ -58,12 +58,12 @@
 
 
             </ul>
-           
+
             <form method="post" asp-route-id="@curso.nombre">
                 <button class="primary-btn2 text-uppercase enroll rounded-0">Aprobar</button>
             </form>
         </div>
-        
-    }
 
+    }
+</div>
 
