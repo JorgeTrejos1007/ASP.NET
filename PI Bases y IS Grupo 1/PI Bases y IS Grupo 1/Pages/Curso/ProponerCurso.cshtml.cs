@@ -22,6 +22,8 @@ namespace PIBasesISGrupo1.Pages.Curso
         public IFormFile archivo { get; set; }
         public IActionResult OnGet()
         {
+
+            
             IActionResult vista;
             
             try

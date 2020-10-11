@@ -41,12 +41,12 @@ namespace PIBasesISGrupo1.Pages.Login
             if (miembro != null)
             {
 
-                Sesion.guardarDatosDeSesion(HttpContext.Session, "User", miembro);
+                Sesion.guardarDatosDeSesion(HttpContext.Session, miembro);
 
                 //var datos = Sesion.GetObjectFromJson<Miembro>(HttpContext.Session,"User");
 
                 vista = Redirect("/Index");
-                //vista = Redirect("/Miembros/CrearMiembro");
+                
             }
             else {
                 TempData["mensaje"] = "Correo o contraseña incorrecta";
