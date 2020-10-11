@@ -62,7 +62,7 @@
         <br>
         <strong>Favor elegir los Topicos:</strong>
         <br>
-        <select class="mul-select" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
+        <select class="seleccionMultiple" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
             @foreach (var topicoYCategoria in topicosYCategorias)
             {
 
