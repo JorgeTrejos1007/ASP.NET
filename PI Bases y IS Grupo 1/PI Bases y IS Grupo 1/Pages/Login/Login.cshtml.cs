@@ -41,7 +41,8 @@ namespace PIBasesISGrupo1.Pages.Login
             if (miembro != null)
             {
 
-                vista = RedirectToPage("~/Pages/index");
+                vista = Redirect("/Index");
+                //vista = Redirect("/Miembros/CrearMiembro");
             }
             else {
                 TempData["mensaje"] = "Correo o contraseña incorrecta";
