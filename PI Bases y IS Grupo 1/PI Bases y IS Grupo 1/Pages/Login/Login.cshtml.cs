@@ -9,18 +9,46 @@ using PIBasesISGrupo1.Handler;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
-
+using System.ComponentModel.DataAnnotations;
 
 namespace PIBasesISGrupo1.Pages.Login
 {
     public class LoginModel : PageModel
     {
+        [BindProperty]
+        [Required(ErrorMessage = "Es necesario que ingreses tu correo")]
+        public string email { get; set; }
+
+        [BindProperty]
+        [Required(ErrorMessage = "Es necesario que ingreses tu contraseña")]
+        public string password { get; set; }
+
         public void OnGet()
         {
             
 
 
 
+        }
+
+        public IActionResult OnPost()
+        {
+
+            MiembroHandler accesoDatos = new MiembroHandler();
+            Miembro miembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
+            IActionResult vista;
+
+            if (miembro != null)
+            {
+
+                vista = RedirectToPage("~/Pages/index");
+            }
+            else {
+                TempData["mensaje"] = "Correo o contraseña incorrecta";
+                vista= Page();
+            }
+
+            return vista;
         }
     }
 }
