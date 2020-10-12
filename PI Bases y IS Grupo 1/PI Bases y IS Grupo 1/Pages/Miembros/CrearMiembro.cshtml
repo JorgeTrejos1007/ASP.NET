@@ -4,6 +4,7 @@
     ViewData["Title"] = "CrearMiembro";
     var mensaje = (string)TempData["mensaje"];
     var idiomas = (string[])ViewData["idiomas"];
+    var habilidades = (string[])ViewData["habilidades"];
 
 
 
@@ -78,9 +79,7 @@
     </br>
     <p>
         <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
-    </p> <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="  @idiomas.Length">
-    
-    <option value="Arabe">Arabe</option>
+    </p> <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
     @foreach (var idioma in idiomas)
     {
 
@@ -91,23 +90,15 @@
 </select></br>
  
     <p><strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
-    </p> <select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="15">
-        <option value="Empatia">Empatía</option>
-        <option value="Saber escuchar">Saber escuchar</option>
-        <option value="Liderazgo">Liderazgo</option>
-        <option value="Flexibilidad">Flexibilidad</option>
-        <option value="Optimismo">Optimismo</option>
-        <option value="Confianza">Confianza</option>
-        <option value="Optimismo">Optimismo</option>
-        <option value="Confianza">Confianza</option>
-        <option value="Comunicacion">Comunicacion</option>
-        <option value="Convencimiento">Convencimiento</option>
-        <option value="Esfuerzo">Esfuerzo</option>
-        <option value="Dedicacion">Dedicacion</option>
-        <option value="Comprension">Comprension</option>
-        <option value="Asertividad">Asertividad</option>
-        <option value="Credibilidad">Credibilidad</option>
-    </select></br>
+    </p> <select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
+    @foreach (var habilidad in habilidades)
+    {
+
+        <option value="@habilidad">@habilidad</option>
+
+        <br>
+    }
+</select></br>
     <input type="submit" value=" Enviar" class="btn btn-success" />
 
 </form>
