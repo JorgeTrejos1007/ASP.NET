@@ -15,19 +15,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         [BindProperty]        
         public Miembro miembro { get; set; }
-
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
-         
-
-    public IActionResult OnGet()
-        {
-            IActionResult vista;
-
-            try
-            {
-                vista = Page();
-                ViewData["idiomas"] = new string[73]
+        public string [] idiomas= new string[73]
                   { "Azeri", "Afrikaans", "Albanes", "Aleman", "Alsaciano",
                         "Anglosajon", "Arabe", "Aragones", "Armenio", "Asturiano", "Aymara", "Bengali", "Bielorruso",
                         "Birmano", "Bosnio", "Breton","Bulgaro", "Canares", "Catalan", "Chamorro", "Checo", "Cheroqui",
@@ -38,10 +28,26 @@ namespace PIBasesISGrupo1.Pages.Miembros
                         "Noruego", "Occitano", "Papiamento", "PersaPolaco", "Portugues", "Rumano","Ruso",
                         "Serbio", "Somali", "Sueco", "Tailandes", "Turco"
                   };
+        public string [] habilidades= new string[17]
+               {
+                    "Empatia","Saber escuchar","Liderazgo", "Flexibilidad","Optimismo", "Confianza","Honestidad",
+                    "Paciencia","Comunicacion","Convencimiento","Esfuerzo", "Esfuerzo","Dedicacion","Comprension",
+                    "Comprension", "Asertividad", "Credibilidad"
+
+               };
+
+        public IActionResult OnGet()
+        {
+            IActionResult vista;
+            try
+            {
+                vista = Page();
+                ViewData["idiomas"] = idiomas;
+                ViewData["habilidades"] = habilidades;
             }
             catch
             {
-                vista = Redirect("~/Curso/ProponerCurso");
+                vista = Redirect("~/Curso/CrearMiembro");
             }
             return vista;
             
