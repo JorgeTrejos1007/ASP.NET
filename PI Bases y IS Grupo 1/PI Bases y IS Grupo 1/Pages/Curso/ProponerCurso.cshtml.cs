@@ -20,10 +20,11 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         [Required(ErrorMessage = "Es necesario que suba el documento descriptivo del curso")]
         public IFormFile archivo { get; set; }
+
         public IActionResult OnGet()
         {
-
             
+      
             IActionResult vista;
             
             try

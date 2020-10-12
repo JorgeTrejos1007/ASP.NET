@@ -33,7 +33,7 @@ namespace PIBasesISGrupo1.Pages.Login
 
         public IActionResult OnPost()
         {
-
+            
             MiembroHandler accesoDatos = new MiembroHandler();
             Miembro miembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
             IActionResult vista;
