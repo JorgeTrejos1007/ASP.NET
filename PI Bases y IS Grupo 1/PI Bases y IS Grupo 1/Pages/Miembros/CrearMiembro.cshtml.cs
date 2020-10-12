@@ -47,7 +47,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
             }
             catch
             {
-                vista = Redirect("~/Curso/ProponerCurso");
+                vista = Redirect("~/Curso/CrearMiembro");
             }
             return vista;
             
