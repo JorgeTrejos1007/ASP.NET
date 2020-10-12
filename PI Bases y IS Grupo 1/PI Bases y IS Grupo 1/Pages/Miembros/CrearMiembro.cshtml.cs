@@ -18,11 +18,35 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
+         
 
-        public void OnGet()
+    public IActionResult OnGet()
         {
+            IActionResult vista;
 
-        }
+            try
+            {
+                vista = Page();
+                ViewData["idiomas"] = new string[73]
+                  { "Azeri", "Afrikaans", "Albanes", "Aleman", "Alsaciano",
+                        "Anglosajon", "Arabe", "Aragones", "Armenio", "Asturiano", "Aymara", "Bengali", "Bielorruso",
+                        "Birmano", "Bosnio", "Breton","Bulgaro", "Canares", "Catalan", "Chamorro", "Checo", "Cheroqui",
+                        "Chino", "Coreano", "Corso", "Croata", "Curdo", "Danes", "Eslovaco", "Esloveno", "Español", "Esperanto",
+                        "Estonio","Euskera", "Feroes", "Fiyiano", "Finlandes", "Frances", "Frison", "Gales", "Gallego", "Georgiano",
+                        "Griego", "Guarani", "Gujarati","Hebreo", "Hindi", "Holandes", "Hungaro", "Ido","Indonesio", "Ingles",
+                        "Irlandes", "Islandes", "Italiano", "Japones", "Javanes","Latin", "Lituano", "Luxemburgues", "Macedonio",
+                        "Noruego", "Occitano", "Papiamento", "PersaPolaco", "Portugues", "Rumano","Ruso",
+                        "Serbio", "Somali", "Sueco", "Tailandes", "Turco"
+                  };
+            }
+            catch
+            {
+                vista = Redirect("~/Curso/ProponerCurso");
+            }
+            return vista;
+            
+          
+    }
         
         public void OnPost()
         {
