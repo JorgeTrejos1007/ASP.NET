@@ -14,6 +14,7 @@ namespace PIBasesISGrupo1.Handler
 
     public class BaseDeDatosHandler
     {
+
         private ConexionModel conexionBD;
         private SqlConnection conexion;
 
