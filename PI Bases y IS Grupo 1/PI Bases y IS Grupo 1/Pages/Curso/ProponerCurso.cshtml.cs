@@ -6,10 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Mime;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using PIBasesISGrupo1.Filtros;
+
 namespace PIBasesISGrupo1.Pages.Curso
 {
     public class ProponerCursoModel : PageModel
@@ -21,6 +24,8 @@ namespace PIBasesISGrupo1.Pages.Curso
         [Required(ErrorMessage = "Es necesario que suba el documento descriptivo del curso")]
         public IFormFile archivo { get; set; }
 
+        [PermisosDeVista(nivelDePermisoDeVista: 2)]
+       
         public IActionResult OnGet()
         {
             
