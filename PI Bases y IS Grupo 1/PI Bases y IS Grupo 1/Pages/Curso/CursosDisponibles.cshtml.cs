@@ -22,9 +22,15 @@ namespace PIBasesISGrupo1.Pages.Curso
          
         public void OnPost()
         {
- 
-             
-
+            try
+            {
+                Int32 precio = Int32.Parse(busqueda);
+                ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosBuscados("C.precio =" + busqueda);
+            }
+            catch {
+                ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosBuscados("(C.nombre ="+busqueda+" OR E.nombre = "+busqueda+" )");
+            }
+            
 
 
 
