@@ -86,9 +86,9 @@ namespace PIBasesISGrupo1.Handler
 
         public int cantidadVecesElegidaUnaOpcion(int encuestaID, int preguntaID, string opcion)
         {
-            if (opcion !=null) {
+            if (opcion !="") {
                 int cantidadRespuestaOpcion = 0;
-                string consulta = "SELECT COUNT(respuesta) AS [cantidad] FROM Respuesta WHERE respuesta = @opcion AND idPreguntaFK = @preguntaID AND idEncuestaFK = @enecuestaID";
+                string consulta = "SELECT COUNT(respuesta) AS [cantidad] FROM Respuesta WHERE respuesta = @opcion AND idPreguntaFK = @preguntaID AND idEncuestaFK = @encuestaID";
                 SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
                 SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
@@ -101,6 +101,7 @@ namespace PIBasesISGrupo1.Handler
                 SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
                 lectorDeDatos.Read();
                 cantidadRespuestaOpcion = (int)lectorDeDatos["cantidad"];
+                conexion.Close();
                 return cantidadRespuestaOpcion;
             }
             else

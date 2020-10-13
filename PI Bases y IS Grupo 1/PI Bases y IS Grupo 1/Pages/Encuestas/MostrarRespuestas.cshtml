@@ -2,29 +2,50 @@
 @model PIBasesISGrupo1.Pages.Encuestas.MostrarRespuestasModel
 @{
     ViewData["Title"] = "MostrarRespuestas";
-    var respuestas = (List<PIBasesISGrupo1.Models.MostarRespuestaModel>)ViewData["respuestas"];
+    var listaConteoRespuestasPorOpcion = (List<int>)ViewData["listaConteoRespuestasPorOpcion"];
 }
 
 <a asp-page="PaginaInicioEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 
 <h2>Ver respuestas</h2>
+<div class="encuestas-container">
+    @{
 
-@{
-    foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
-    {
-        @Html.DisplayFor(modelItem => item.pregunta);
-        <br />
-        @Html.DisplayFor(modelItem => item.opcion1);
-        <br />        
+        foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
+        {
+            <div class="encuestas__elements">
 
-        <br />
-        @Html.DisplayFor(modelItem => item.opcion2);
-        <br />
-       
-        <br>
-
-        
-
+                @{
+                    <h4>Pregunta:</h4>
+                    @Html.DisplayFor(modelItem => item.pregunta);
+                    <h5>Opcion 1:</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.opcion1) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                    </p>
+                    listaConteoRespuestasPorOpcion.RemoveAt(0);
+                    <h5>Opcion 2:</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.opcion2) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                    </p>
+                    listaConteoRespuestasPorOpcion.RemoveAt(0);
+                    if (listaConteoRespuestasPorOpcion[0] >= 0)
+                    {
+                        <h5>Opcion 3:</h5>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.opcion3) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                        </p>
+                        listaConteoRespuestasPorOpcion.RemoveAt(0);
+                    }
+                    if (listaConteoRespuestasPorOpcion[0] >= 0)
+                    {
+                        <h5>Opcion 4:</h5>
+                        <p>
+                            @Html.DisplayFor(modelItem => item.opcion4) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                        </p>
+                        listaConteoRespuestasPorOpcion.RemoveAt(0);
+                    }
+                }
+            </div>
+        }
     }
-
-}
+</div>
