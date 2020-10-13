@@ -12,6 +12,7 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public string busqueda { get; set; }
+
         private CursoHandler cursoHandler = new CursoHandler();
         public void OnGet()
         {
@@ -19,7 +20,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosDisponibles();
         }
          
-        public void OnPost( )
+        public void OnPost()
         {
  
              

@@ -12,13 +12,10 @@
 <form  method="post" target="_blank">
 
     <p>
-
-        Búsqueda de Cursos: <input type="search" asp-for="@Model.busqueda" name="busquedaCurso"   placeholder="Nombre, instructor, precio">
-
-         
-         
+        
+         Búsqueda de Cursos: <input asp-for="@Model.busqueda" type="search" placeholder="Nombre, instructor, precio"/>
     </p>
-    <input type="submit" value="Buscar Curso">
+    <input type="submit" value="Buscar Curso"/>
 
 </form>
 <div class="cursos-container">
