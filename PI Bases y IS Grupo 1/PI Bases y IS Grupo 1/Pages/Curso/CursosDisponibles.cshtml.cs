@@ -10,25 +10,22 @@ namespace PIBasesISGrupo1.Pages.Curso
 {
     public class CursosDisponiblesModel : PageModel
     {
-        [BindProperty]
-        public string busqueda { get; set; }
-
         private CursoHandler cursoHandler = new CursoHandler();
         public void OnGet()
         {
 
             ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosDisponibles();
         }
-         
-        public void OnPost()
+        [HttpPost]
+        public void OnPost(string searching)
         {
             try
             {
-                Int32 precio = Int32.Parse(busqueda);
-                ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosBuscados("C.precio =" + busqueda);
+                Int32 precio = Int32.Parse(searching);
+                ViewData["CursosDisponibles"] = cursoHandler.buscarCursosPorPrecio(searching);
             }
             catch {
-                ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosBuscados("(C.nombre ="+busqueda+" OR E.nombre = "+busqueda+" )");
+                ViewData["CursosDisponibles"] = cursoHandler.buscarCursosPorNombreOInstructor(searching);
             }
             
 

@@ -1,82 +1,89 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Curso.CursosDisponiblesModel
-@{ 
+@{
 
     var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosDisponibles"];
 }
-    
+
 
 
 <h2>Cursos Disponibles</h2>
- 
-<form  method="post" target="_blank">
+@using (Html.BeginForm( ))
+{
+    @Html.TextBox("searching")<input type="submit"  placeholder="Nombre, instructor o precio" value=" Buscar Curso" />
 
-    <p>
-
-        Búsqueda de Cursos: <input asp-for="@Model.busqueda" type="search" placeholder="Nombre, instructor, precio" />
-        <input type="submit" value="Buscar Curso" />
-    </p>
-    
-
-</form>
+} 
 <div class="cursos-container">
-    @foreach (var infoCursos in listaDeCursos)
+    @if (listaDeCursos.Count > 0)
     {
-        var curso = infoCursos.Item1;
-        var educador = infoCursos.Item2;
-        <div class="col-lg-4 right-contents">
-            <ul>
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Curso</p>
-                        <span class="or">@curso.nombre</span>
+
+        @foreach (var infoCursos in listaDeCursos)
+        {
+            var curso = infoCursos.Item1;
+            var educador = infoCursos.Item2;
+            <div class="col-lg-4 right-contents">
+                <ul>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Curso</p>
+                            <span class="or">@curso.nombre</span>
 
 
-                    </a>
-                </li>
+                        </a>
+                    </li>
 
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Email</p>
-                        <span class="or">@curso.emailDelEducador</span>
-
-
-                    </a>
-                </li>
-
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Educador</p>
-                        <span class="or">@educador.nombre @educador.primerApellido </span>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Email</p>
+                            <span class="or">@curso.emailDelEducador</span>
 
 
-                    </a>
-                </li>
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Precio </p>
-                        <span>$@curso.precio</span>
-                    </a>
-                </li>
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Topicos</p>
-                        <br>
-                        @{
-                            var topicos = "";
+                        </a>
+                    </li>
 
-                            @foreach (var infoTopicos in infoCursos.Item3)
-                            {
-                                topicos = topicos + " " + infoTopicos.Item1;
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Educador</p>
+                            <span class="or">@educador.nombre @educador.primerApellido </span>
 
 
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Precio </p>
+                            <span>$@curso.precio</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Topicos</p>
+                            <br>
+                            @{
+                                var topicos = "";
+
+                                @foreach (var infoTopicos in infoCursos.Item3)
+                                {
+                                    topicos = topicos + " " + infoTopicos.Item1;
+
+
+                                }
                             }
-                        }
-                        <span class="or"> @topicos </span>
+                            <span class="or"> @topicos </span>
 
-                    </a>
-                </li>
-            </ul>
-        </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3" style=" color:red">
+                No se encontraron Coincidencias
+            </td>
+        </tr>
+
     }
 </div>
