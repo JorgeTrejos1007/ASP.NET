@@ -8,6 +8,19 @@
 
 
 <h2>Cursos Disponibles</h2>
+ 
+<form  method="post" target="_blank">
+
+    <p>
+
+        Búsqueda de Cursos: <input type="search" asp-for="@Model.busqueda" name="busquedaCurso"   placeholder="Nombre, instructor, precio">
+
+         
+         
+    </p>
+    <input type="submit" value="Buscar Curso">
+
+</form>
 <div class="cursos-container">
     @foreach (var infoCursos in listaDeCursos)
     {

@@ -10,11 +10,23 @@ namespace PIBasesISGrupo1.Pages.Curso
 {
     public class CursosDisponiblesModel : PageModel
     {
-        CursoHandler cursoHandler = new CursoHandler();
+        [BindProperty]
+        public string busqueda { get; set; }
+        private CursoHandler cursoHandler = new CursoHandler();
         public void OnGet()
         {
 
             ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosDisponibles();
+        }
+         
+        public void OnPost( )
+        {
+ 
+             
+
+
+
+
         }
     }
 }
