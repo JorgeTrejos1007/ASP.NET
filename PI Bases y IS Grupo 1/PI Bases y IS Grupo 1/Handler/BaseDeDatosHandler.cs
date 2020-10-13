@@ -14,7 +14,6 @@ namespace PIBasesISGrupo1.Handler
 
     public class BaseDeDatosHandler
     {
-
         private ConexionModel conexionBD;
         private SqlConnection conexion;
 
@@ -24,9 +23,10 @@ namespace PIBasesISGrupo1.Handler
             conexion = conexionBD.Connection();
         }
 
-        public DataTable crearTablaConsulta(SqlCommand comandoParaConsulta)
+        public DataTable crearTablaConsulta(string consulta)
         {
-        
+
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
             conexion.Open();
@@ -60,6 +60,7 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
+        
 
 
     }

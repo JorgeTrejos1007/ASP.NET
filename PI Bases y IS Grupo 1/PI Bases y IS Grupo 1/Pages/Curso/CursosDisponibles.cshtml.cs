@@ -22,10 +22,10 @@ namespace PIBasesISGrupo1.Pages.Curso
             try
             {
                 Int32 precio = Int32.Parse(searching);
-                ViewData["CursosDisponibles"] = cursoHandler.buscarCursosPorPrecio(searching);
+                ViewData["CursosDisponibles"] = cursoHandler.buscarCursos(true, searching); ;
             }
             catch {
-                ViewData["CursosDisponibles"] = cursoHandler.buscarCursosPorNombreOInstructor(searching);
+                ViewData["CursosDisponibles"] = cursoHandler.buscarCursos(false,searching);
             }
             
 

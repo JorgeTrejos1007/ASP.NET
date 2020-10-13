@@ -10,9 +10,11 @@
 <h2>Cursos Disponibles</h2>
 @using (Html.BeginForm( ))
 {
-    @Html.TextBox("searching")<input type="submit"  placeholder="Nombre, instructor o precio" value=" Buscar Curso" />
+    @Html.TextBox("searching")<input type="submit" value=" Buscar Curso" placeholder="Nombre, instructor, precio"/>
 
-} 
+}
+
+ 
 <div class="cursos-container">
     @if (listaDeCursos.Count > 0)
     {
