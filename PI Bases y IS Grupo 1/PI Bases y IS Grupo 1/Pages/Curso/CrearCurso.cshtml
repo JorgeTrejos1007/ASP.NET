@@ -4,26 +4,42 @@
     ViewData["Title"] = "CrearCurso";
 }
 
-
+<head>
+    <style> 
+        
+    
+    </style>
+</head>
 
 <body>
-    <h2> CrearCurso</h2>
-    <input id="crearSeccion" type="button" class="primary-btn2 text-uppercase enroll rounded-0" value="Agregar sección" onclick="crearSeccion()">
+    <h2> Cree un curso</h2>
+    <div class="comment-form">
+        <h4>Inserte nuevas secciones para el curso </h4>
+        <form>
+            <div class="form-group form-inline">
+                <div class="form-group col-lg-6 col-md-6 name">
+                    <input id="nombreSeccion" type="text" class="form-control" placeholder="Ingrese el nombre de la sección" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+
+                </div>
+                <input id="crearSeccion" type="button" class="primary-btn2 text-uppercase enroll rounded-0" value="Agregar sección" onclick="mostrarSecciones()">
+            </div>
+        </form>
+    </div>
+   
+    
     </br>
     <div id="areaSecciones">
 
 
     </div>
     <div id="seccionesCreadas" class="content">
-        <ul id="listaSecciones" class="course_list">
-
-        </ul>
+        <ul id="listaSecciones" class="course_list"></ul>
 
     </div>
 
     <script>
 
-        var nombreSeccion;
+        //var nombreSeccion;
 
         function crearSeccion() {
 
@@ -52,24 +68,26 @@
             var li = document.createElement("li");
             var a = document.createElement("a");
             var parrafo = document.createElement("p");
-            var text = document.createTextNode(document.getElementById("seccion").value);
-            //document.getElementById("areaSecciones").innerHTML = "";
+            var text = document.createTextNode(document.getElementById("nombreSeccion").value);
+            document.getElementById("nombreSeccion").value = "";
             parrafo.appendChild(text);
 
             a.setAttribute("class", "primary-btn text-uppercase");
             a.setAttribute("value", "Ver detalles");
+            a.innerHTML = `<strong>Detalles</strong>`;
             li.setAttribute("class", "justify-content-between d-flex")
             li.appendChild(parrafo);
             li.appendChild(a);
             seccion.appendChild(li);
 
         }
-        //<a class="primary-btn text-uppercase" href="#">View Details</a>
+                //<a class="primary-btn text-uppercase" href="#">View Details</a>
 
 
     </script>
 
-  
+
+
 
 
 </body>
