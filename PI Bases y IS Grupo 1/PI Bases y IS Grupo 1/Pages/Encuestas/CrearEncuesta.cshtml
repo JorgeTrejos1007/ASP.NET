@@ -21,7 +21,7 @@
     <span asp-validation-for="@Model.encuesta.topico" class="text-danger"></span><br />
     </br>
     @{
-        <select asp-for="@Model.encuesta.topico" size="@topicosYCategorias.Count">
+        <select class="mul-select" asp-for="@Model.encuesta.topico" size="@topicosYCategorias.Count" multiple="multiple">
             @foreach (var topicoYCategoria in topicosYCategorias)
             {
 

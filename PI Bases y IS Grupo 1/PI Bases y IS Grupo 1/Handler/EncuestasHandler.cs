@@ -53,7 +53,7 @@ namespace PIBasesISGrupo1.Handler
         public List<EncuestaModel> obtenerEncuestas()
         {
             List<EncuestaModel> encuestas = new List<EncuestaModel>();
-            string consulta = "SELECT * FROM Encuestas";
+            string consulta = "SELECT * FROM Encuesta";
             DataTable tablaResultado = crearTablaConsulta(consulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {

@@ -11,8 +11,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 
-
-
 namespace PIBasesISGrupo1
 {
     public class Startup
@@ -38,8 +36,13 @@ namespace PIBasesISGrupo1
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
+            services.AddDistributedMemoryCache();
+            services.AddSession();
+            services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+           services.AddAuthentication();
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,11 +57,12 @@ namespace PIBasesISGrupo1
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
+            app.UseAuthentication();
+          
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseMvc();
         }
     }

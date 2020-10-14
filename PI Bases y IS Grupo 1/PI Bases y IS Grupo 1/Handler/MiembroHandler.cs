@@ -17,8 +17,12 @@ namespace PIBasesISGrupo1.Handler
     {
         private ConexionModel conexionBD;
         private SqlConnection conexion;
+        private BaseDeDatosHandler baseDeDatos;
+
+
         public MiembroHandler()
         {
+            baseDeDatos = new BaseDeDatosHandler();
             conexionBD = new ConexionModel();
             conexion = conexionBD.Connection();
         }
@@ -36,7 +40,6 @@ namespace PIBasesISGrupo1.Handler
 
         public List<Miembro> obtenerTodosLosMiembros()
         {
-            
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario";
             DataTable tablaMiembro = crearTablaConsulta(consulta);
@@ -66,6 +69,7 @@ namespace PIBasesISGrupo1.Handler
             return miembros;
         }
 
+       
         private string[] obtenerIdiomas(string email) {
             List<string> idiomas= new List<string>();
          

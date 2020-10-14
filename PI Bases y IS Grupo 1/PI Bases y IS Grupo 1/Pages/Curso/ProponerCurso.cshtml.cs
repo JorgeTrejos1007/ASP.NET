@@ -6,12 +6,16 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Mime;
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using PIBasesISGrupo1.Filters;
+
 namespace PIBasesISGrupo1.Pages.Curso
 {
+    //[PermisosDeVista(nivel: 2)]
     public class ProponerCursoModel : PageModel
     {
         [BindProperty]
@@ -20,19 +24,29 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         [Required(ErrorMessage = "Es necesario que suba el documento descriptivo del curso")]
         public IFormFile archivo { get; set; }
+
+        
         public IActionResult OnGet()
         {
+           
             IActionResult vista;
-            
-            try
+            Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(HttpContext.Session);
+            if (miembroSesionActual != null)
             {
-                vista = Page();
-                CatalogoHandler accesoCatalago = new CatalogoHandler();
-                ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
+                try
+                {
+                    vista = Page();
+                    CatalogoHandler accesoCatalago = new CatalogoHandler();
+                    ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
+                }
+                catch
+                {
+                    vista = Redirect("~/Curso/ProponerCurso");
+                }
+
             }
-            catch
-            {
-                vista = Redirect("~/Curso/ProponerCurso");
+            else {
+                vista= Redirect("~/Login/Login");
             }
             return vista;
         }
