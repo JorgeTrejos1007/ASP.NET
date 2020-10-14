@@ -37,8 +37,15 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             try
             {
-                ViewData["idiomas"] = idiomas;
-                ViewData["habilidades"] = habilidades;
+
+                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
+                if (miembroDeLaComunidad != null) {
+
+                }
+                else {
+                    ViewData["idiomas"] = idiomas;
+                    ViewData["habilidades"] = habilidades;
+                }           
             }
             catch
             {
