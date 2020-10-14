@@ -35,13 +35,13 @@ namespace PIBasesISGrupo1.Pages.Login
         {
             
             MiembroHandler accesoDatos = new MiembroHandler();
-            Miembro miembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
+            Miembro datosDelmiembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
             IActionResult vista;
             
-            if (miembro != null)
+            if (datosDelmiembro != null)
             {
 
-                Sesion.guardarDatosDeSesion(HttpContext.Session, miembro);
+                Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro);
 
                 //var datos = Sesion.GetObjectFromJson<Miembro>(HttpContext.Session,"User");
 

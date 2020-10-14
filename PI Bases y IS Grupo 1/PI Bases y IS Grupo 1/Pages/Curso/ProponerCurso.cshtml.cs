@@ -11,7 +11,7 @@ using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
-using PIBasesISGrupo1.Filtros;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
@@ -24,13 +24,12 @@ namespace PIBasesISGrupo1.Pages.Curso
         [Required(ErrorMessage = "Es necesario que suba el documento descriptivo del curso")]
         public IFormFile archivo { get; set; }
 
-        [PermisosDeVista(nivelDePermisoDeVista: 2)]
-       
+        [PermisosDeVista(nivel:2)]
         public IActionResult OnGet()
         {
-            
-      
-            IActionResult vista;
+           
+
+             IActionResult vista;
             
             try
             {
