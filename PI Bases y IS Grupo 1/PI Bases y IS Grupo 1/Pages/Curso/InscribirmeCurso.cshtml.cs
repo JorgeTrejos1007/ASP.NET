@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
@@ -35,28 +38,31 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                };
 
-        public void OnGet(string nombreCurso)
+        public IActionResult OnGet(string nombreCurso)
         {
+            IActionResult vista;
             try
             {
+                vista = Page();
                 ViewData["nombreCurso"] = nombreCurso;
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null) {
 
                 }
                 else {
+                    
                     ViewData["idiomas"] = idiomas;
                     ViewData["habilidades"] = habilidades;
                 }           
             }
             catch
             {
-                Redirect("~/Curso/CrearMiembro");
+                vista = Redirect("~/Curso/InscribirmeCurso");
             }
-
+            return vista;
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
 
             try
@@ -72,8 +78,6 @@ namespace PIBasesISGrupo1.Pages.Curso
                     MiembroHandler accesoDatos = new MiembroHandler();
                     if (accesoDatos.crearMiembro(miembro))
                     {
-
-
                         TempData["mensaje"] = "Se ha logrado registar con exito";
                         TempData["exitoAlEditar"] = true;
                         if (archivoImagen != null)
@@ -82,7 +86,6 @@ namespace PIBasesISGrupo1.Pages.Curso
                         }
                         accesoDatos.registrarEstudiante(miembro.email);
                         accesoDatos.inscribirEstudianteACurso(miembro.email, curso.nombre);
-                        Redirect("~/Curso/CursosDisponibles");
                     }
                     else
                     {
@@ -97,6 +100,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
+            return Redirect("~/Curso/CursosDisponibles");
         }
     }
 }
