@@ -11,6 +11,8 @@ namespace PIBasesISGrupo1.Pages.Curso
     public class InscribirmeCursoModel : PageModel
     {
         [BindProperty]
+        public Cursos curso { get; set; }
+        [BindProperty]
         public Miembro miembro { get; set; }
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
@@ -33,11 +35,11 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                };
 
-        public void OnGet()
+        public void OnGet(string nombreCurso)
         {
             try
             {
-
+                ViewData["nombreCurso"] = nombreCurso;
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null) {
 
@@ -59,24 +61,35 @@ namespace PIBasesISGrupo1.Pages.Curso
 
             try
             {
-                MiembroHandler accesoDatos = new MiembroHandler();
-                if (accesoDatos.crearMiembro(miembro))
+                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
+                if (miembroDeLaComunidad != null)
                 {
+                    
 
-
-                    TempData["mensaje"] = "Se ha logrado registar con exito";
-                    TempData["exitoAlEditar"] = true;
-                    if (archivoImagen != null)
-                    {
-                        accesoDatos.actualizarImagen(miembro.email, archivoImagen);
-                    }
                 }
                 else
                 {
-                    TempData["mensaje"] = "Se ha ocurrido un error en el registro";
-                    TempData["exitoAlEditar"] = false;
-                }
+                    MiembroHandler accesoDatos = new MiembroHandler();
+                    if (accesoDatos.crearMiembro(miembro))
+                    {
 
+
+                        TempData["mensaje"] = "Se ha logrado registar con exito";
+                        TempData["exitoAlEditar"] = true;
+                        if (archivoImagen != null)
+                        {
+                            accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                        }
+                        accesoDatos.registrarEstudiante(miembro.email);
+                        accesoDatos.inscribirEstudianteACurso(miembro.email, curso.nombre);
+                        Redirect("~/Curso/CursosDisponibles");
+                    }
+                    else
+                    {
+                        TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                        TempData["exitoAlEditar"] = false;
+                    }
+                }
             }
             catch
             {
@@ -84,9 +97,6 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
-
-
-
         }
     }
 }
