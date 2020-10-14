@@ -34,7 +34,7 @@ namespace PIBasesISGrupo1.Models
         
 
         [Display(Name = "Ingrese su correo")]
-        [RegularExpression(@"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
+        [RegularExpression(@"^[_A-Za-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
         public string email { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingreses tu contraseña")]
