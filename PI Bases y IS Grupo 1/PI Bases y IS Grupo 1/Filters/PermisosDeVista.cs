@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Session;
 
 namespace PIBasesISGrupo1.Filters
 {
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class,AllowMultiple = false)]
     public class PermisosDeVista : AuthorizeAttribute, IAuthorizationFilter 
     {
         private int nivelDePermisoDeVista;
@@ -26,12 +26,15 @@ namespace PIBasesISGrupo1.Filters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            
 
+
+            string pagina = context.HttpContext.Request.Path.Value;
             Miembro miembroSesionActual=Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
 
+            //context.Result = new RedirectResult("/Curso/ProponerCurso");
+            
             //throw new NotImplementedException();
-            context.Result = new RedirectResult("/Accounts/Login");
+            //context.Result = new RedirectResult(pagina);
         }
     }
 

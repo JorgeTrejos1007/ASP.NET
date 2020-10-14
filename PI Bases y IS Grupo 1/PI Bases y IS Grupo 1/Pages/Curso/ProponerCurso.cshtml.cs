@@ -15,6 +15,7 @@ using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
+    [PermisosDeVista(nivel: 2)]
     public class ProponerCursoModel : PageModel
     {
         [BindProperty]
@@ -24,7 +25,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         [Required(ErrorMessage = "Es necesario que suba el documento descriptivo del curso")]
         public IFormFile archivo { get; set; }
 
-        [PermisosDeVista(nivel:2)]
+        
         public IActionResult OnGet()
         {
            

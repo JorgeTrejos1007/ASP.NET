@@ -65,14 +65,19 @@
                                         <a class="nav-link" href="/Curso/CursosDisponibles">Cursos Disponibles</a>
                                     </li>
                                     @{
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Curso/ProponerCurso">Proponer curso</a>
+                                        </li>
+
                                         if (Context.Session.GetString("User") != null)
                                         {
+
+
                                             <li class="nav-item">
                                                 <a class="nav-link" href="/Curso/AprobarCurso">Cursos Propuestos</a>
                                             </li>
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/Curso/ProponerCurso">Proponer curso</a>
-                                            </li>
+
                                         }
                                     }
 
@@ -81,6 +86,8 @@
                             </li>
 
                             @{
+                     
+                               
                                 if (Context.Session.GetString("User") != null)
                                 {
                                     <li class="nav-item">
