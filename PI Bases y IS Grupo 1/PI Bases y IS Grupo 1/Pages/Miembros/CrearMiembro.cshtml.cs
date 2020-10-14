@@ -54,7 +54,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
           
     }
         
-        public void OnPost()
+        public IActionResult OnPost()
         {
 
             try
@@ -83,9 +83,10 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
-            
+            return RedirectToAction("~/Miembros/CrearMiembro");
 
-            
+
+
         }
     }
 }
