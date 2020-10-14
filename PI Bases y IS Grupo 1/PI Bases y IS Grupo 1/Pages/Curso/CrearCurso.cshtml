@@ -9,9 +9,13 @@
 <body>
     <h2> CrearCurso</h2>
     <input id="crearSeccion" type="button" class="primary-btn2 text-uppercase enroll rounded-0" value="Agregar sección" onclick="crearSeccion()">
-    
+    </br>
     <div id="areaSecciones">
 
+
+    </div>
+    <div id="seccionesCreadas">
+       
 
     </div>
 
@@ -21,15 +25,17 @@
             var seccion = document.getElementById("areaSecciones");
 
             var input = document.createElement("input");
-            var text = document.createTextNode("Ingrese el nombre de la sección");
-            input.setAttribute("name", "campo" + i);
+            var text = document.createTextNode("Ingrese el nombre de la sección ");
+            input.setAttribute("name", "campo");
             input.setAttribute("size", "12");
             input.className = "input";
-            input.id = ("seccion" + i);
+            input.id = ("seccion");
             seccion.appendChild(text);
             seccion.appendChild(input);
-
+            seccion.innerHTML += `</br> </br>`
+            //seccion.innerHTML+= `<input type="file" class="btn btn alert-info" multiple />`
         }
+
 
     </script>
 
