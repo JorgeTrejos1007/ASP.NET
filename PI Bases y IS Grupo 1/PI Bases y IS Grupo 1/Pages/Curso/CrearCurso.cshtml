@@ -14,31 +14,62 @@
 
 
     </div>
-    <div id="seccionesCreadas">
-       
+    <div id="seccionesCreadas" class="content">
+        <ul id="listaSecciones" class="course_list">
+
+        </ul>
 
     </div>
 
     <script>
 
-        function crearSeccion() {
-            var seccion = document.getElementById("areaSecciones");
+        var nombreSeccion;
 
+        function crearSeccion() {
+
+            var seccion = document.getElementById("areaSecciones");
+            seccion.innerHTML = "";
             var input = document.createElement("input");
+            var boton = document.createElement("input");
             var text = document.createTextNode("Ingrese el nombre de la sección ");
             input.setAttribute("name", "campo");
             input.setAttribute("size", "12");
             input.className = "input";
             input.id = ("seccion");
+            boton.setAttribute("type", "button");
+            boton.setAttribute("onclick", "mostrarSecciones()");
+            boton.setAttribute("value", "Crear");
+            boton.setAttribute("class", "primary-btn2 text-uppercase enroll rounded-0");
             seccion.appendChild(text);
             seccion.appendChild(input);
-            seccion.innerHTML += `</br> </br>`
+            seccion.appendChild(boton);
+            seccion.innerHTML += `</br> </br>`;
+            nombreSeccion = input.value;
             //seccion.innerHTML+= `<input type="file" class="btn btn alert-info" multiple />`
         }
+        function mostrarSecciones() {
+            var seccion = document.getElementById("listaSecciones");
+            var li = document.createElement("li");
+            var a = document.createElement("a");
+            var parrafo = document.createElement("p");
+            var text = document.createTextNode(document.getElementById("seccion").value);
+            //document.getElementById("areaSecciones").innerHTML = "";
+            parrafo.appendChild(text);
+
+            a.setAttribute("class", "primary-btn text-uppercase");
+            a.setAttribute("value", "Ver detalles");
+            li.setAttribute("class", "justify-content-between d-flex")
+            li.appendChild(parrafo);
+            li.appendChild(a);
+            seccion.appendChild(li);
+
+        }
+        //<a class="primary-btn text-uppercase" href="#">View Details</a>
 
 
     </script>
 
+  
 
 
 </body>
