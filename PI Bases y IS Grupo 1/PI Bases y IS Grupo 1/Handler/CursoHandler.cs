@@ -171,6 +171,12 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
+        /*
+        public bool crearSeccion(){
+            string consulta = "INSERT into Seccion " +"" ;
+            
+        }
+        */
 
     }
 }
