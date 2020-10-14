@@ -170,6 +170,24 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
+        public bool registrarEstudiante(string correoEstudiante) {
+            string consulta = "INSERT INTO Estudiante(emailEstudianteFK) "
+                + "VALUES (@email) ";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@email", correoEstudiante);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+
+            return exito;
+        }
+        public bool inscribirEstudianteACurso(string emailEstudiante, string nombreDeCurso) {
+            string consulta = "INSERT INTO Inscribirse(emailEstudianteFK,nombreCursoFK) "
+                + "VALUES (@emailEstudiante,@nombreDeCurso)";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreDeCurso", nombreDeCurso);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            return exito;
+        }
 
         private bool insertarHabilidadesMiembro(Miembro miembro) {
             string consultaHabilidades = "INSERT INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
