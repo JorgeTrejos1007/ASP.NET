@@ -40,7 +40,7 @@ namespace PIBasesISGrupo1
             services.AddSession();
             services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddAuthentication();
+           services.AddAuthentication();
 
 
         }

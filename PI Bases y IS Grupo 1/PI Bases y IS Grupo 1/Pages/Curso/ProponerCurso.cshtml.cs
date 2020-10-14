@@ -15,7 +15,7 @@ using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
-    [PermisosDeVista(nivel: 2)]
+    //[PermisosDeVista(nivel: 2)]
     public class ProponerCursoModel : PageModel
     {
         [BindProperty]
@@ -29,18 +29,24 @@ namespace PIBasesISGrupo1.Pages.Curso
         public IActionResult OnGet()
         {
            
+            IActionResult vista;
+            Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(HttpContext.Session);
+            if (miembroSesionActual != null)
+            {
+                try
+                {
+                    vista = Page();
+                    CatalogoHandler accesoCatalago = new CatalogoHandler();
+                    ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
+                }
+                catch
+                {
+                    vista = Redirect("~/Curso/ProponerCurso");
+                }
 
-             IActionResult vista;
-            
-            try
-            {
-                vista = Page();
-                CatalogoHandler accesoCatalago = new CatalogoHandler();
-                ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
             }
-            catch
-            {
-                vista = Redirect("~/Curso/ProponerCurso");
+            else {
+                vista= Redirect("~/Login/Login");
             }
             return vista;
         }

@@ -26,15 +26,20 @@ namespace PIBasesISGrupo1.Filters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-
-
-            string pagina = context.HttpContext.Request.Path.Value;
-            Miembro miembroSesionActual=Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
-
-            //context.Result = new RedirectResult("/Curso/ProponerCurso");
             
+             Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
+
+
+            //context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion");
+            //context.Result = new RedirectResult("~/Curso/ProponerCurso");
+
+
+
+            
+
+
             //throw new NotImplementedException();
-            //context.Result = new RedirectResult(pagina);
+
         }
     }
 
