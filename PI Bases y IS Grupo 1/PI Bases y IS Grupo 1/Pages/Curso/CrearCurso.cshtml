@@ -7,9 +7,32 @@
 
 
 <body>
- <h2 > CrearCurso</h2 >
+    <h2> CrearCurso</h2>
+    <input id="crearSeccion" type="button" class="primary-btn2 text-uppercase enroll rounded-0" value="Agregar sección" onclick="crearSeccion()">
+    
+    <div id="areaSecciones">
 
 
-       
+    </div>
+
+    <script>
+
+        function crearSeccion() {
+            var seccion = document.getElementById("areaSecciones");
+
+            var input = document.createElement("input");
+            var text = document.createTextNode("Ingrese el nombre de la sección");
+            input.setAttribute("name", "campo" + i);
+            input.setAttribute("size", "12");
+            input.className = "input";
+            input.id = ("seccion" + i);
+            seccion.appendChild(text);
+            seccion.appendChild(input);
+
+        }
+
+    </script>
+
+
 
 </body>
