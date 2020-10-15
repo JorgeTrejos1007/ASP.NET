@@ -13,7 +13,7 @@
 
     <label asp-for="@Model.encuesta.correo">Correo del autor de la encuesta</label><br>
     <span asp-validation-for="@Model.encuesta.correo" class="text-danger"></span><br />
-    <textarea rows="5" cols="125" asp-for="@Model.encuesta.correo"></textarea><br /><br />
+    <textarea rows="5" cols="125" type="email" asp-for="@Model.encuesta.correo"></textarea><br /><br />
 
 
 
@@ -21,13 +21,13 @@
     <span asp-validation-for="@Model.encuesta.topico" class="text-danger"></span><br />
     </br>
     @{
-        <select asp-for="@Model.encuesta.topico" size="@topicosYCategorias.Count">
+        <select class="mul-select" asp-for="@Model.encuesta.topico" size="@topicosYCategorias.Count">
             @foreach (var topicoYCategoria in topicosYCategorias)
             {
 
                 <option value="@topicoYCategoria.Item1">Topico:@topicoYCategoria.Item1 Categoria:@topicoYCategoria.Item2</option>
 
-                <br>
+                
             }
         </select>
     }

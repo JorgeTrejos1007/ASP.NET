@@ -18,6 +18,8 @@ namespace PIBasesISGrupo1.Pages.Encuestas
 
         public void OnGet(int id)
         {
+
+            
             ViewData["idEncuesta"] = id;
             try
             {
@@ -39,5 +41,18 @@ namespace PIBasesISGrupo1.Pages.Encuestas
                 ViewData["Mensaje"] = "Aun no hay respuestas";
             }
         }
+
+
+
+        public void OnPostExportarRespuestas(int id)
+        {
+            
+
+
+
+
+        }
+
+
     }
 }
