@@ -1,8 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+<!DOCTYPE html>
 <html>
 <head>
-   
- 
+
+
 
 
     <meta charset="utf-8" />
@@ -70,12 +71,24 @@
                                     <li class="nav-item">
                                         <a class="nav-link" href="/Curso/ProponerCurso">Proponer curso</a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Curso/AprobarCurso">Cursos Propuestos</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Curso/CursosAprobados">Cursos aprobados</a>
-                                    </li>
+                                    @{
+
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Curso/ProponerCurso">Proponer curso</a>
+                                        </li>
+
+                                        if (Context.Session.GetString("User") != null)
+                                        {
+
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/Curso/AprobarCurso">Cursos Propuestos</a>
+                                            </li>
+
+                                        }
+                                    }
+
+
                                     <li class="nav-item">
                                         <a class="nav-link" href="/Curso/CursosDisponibles">Cursos Disponibles</a>
                                     </li>
@@ -83,13 +96,29 @@
 
                                 </ul>
                             </li>
+                            @{
 
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Catalogos/EditarCatalogo">Catalago</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
-                            </li>
+
+                                if (Context.Session.GetString("User") != null)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="/Catalogos/EditarCatalogo">Catalago</a>
+                                    </li>
+                                }
+                                else
+                                {
+                                    <li class="nav-item">
+
+                                        <a class="nav-link" href="/Login/Login">Iniciar sesion</a>
+                                    </li>
+                                }
+
+                            }
+
                             <li class="nav-item">
                                 <a class="nav-link" href="/Miembros/CrearMiembro">Registrarme</a>
                             </li>
