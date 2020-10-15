@@ -5,8 +5,17 @@
 }
 
 <head>
-    <style> 
-        
+    <style>
+        #myStrong {
+            color: #fdc632;
+        }
+        #mihr {
+            border: 1px solid #002347;
+        }
+        #file {
+            background-color: #002347;
+            color: white;
+        }
     
     </style>
 </head>
@@ -18,73 +27,97 @@
         <form>
             <div class="form-group form-inline">
                 <div class="form-group col-lg-6 col-md-6 name">
-                    <input id="nombreSeccion" type="text" class="form-control" placeholder="Ingrese el nombre de la sección" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Enter Name'">
+                    <input id="nombreSeccion" type="text" class="form-control" placeholder="Ingrese el nombre de la sección" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Ingrese el nombre de la sección'">
 
                 </div>
                 <input id="crearSeccion" type="button" class="primary-btn2 text-uppercase enroll rounded-0" value="Agregar sección" onclick="mostrarSecciones()">
+                <input id="enviarSeccion" type="submit" class="primary-btn2 text-uppercase enroll rounded-0" value="Crear curso">
             </div>
         </form>
+
+
+
+        </br>
+
+
+        <div id="seccionesCreadas" class="content">
+            <ul id="listaSecciones" class="course_list"></ul>
+
+        </div>
+
+       
     </div>
-   
-    
-    </br>
-    <div id="areaSecciones">
+
+        <script>
+
+            //var nombreSeccion;
+
+            function crearSeccion() {
+
+                var seccion = document.getElementById("areaSecciones");
+                seccion.innerHTML = "";
+                var input = document.createElement("input");
+                var boton = document.createElement("input");
+               
+                var text = document.createTextNode("Ingrese el nombre de la sección ");
+               
+
+                input.setAttribute("name", "campo");
+                input.setAttribute("size", "12");
+                input.className = "input";
+                input.id = ("seccion");
+                boton.setAttribute("type", "button");
+                boton.setAttribute("onclick", "mostrarSecciones()");
+                boton.setAttribute("value", "Crear");
+                boton.setAttribute("class", "primary-btn2 text-uppercase enroll rounded-0");
+                seccion.appendChild(text);
+                seccion.appendChild(input);
+                seccion.appendChild(boton);
+                seccion.innerHTML += `</br> </br>`;
+                nombreSeccion = input.value;
+                //seccion.innerHTML+= `<input type="file" class="btn btn alert-info" multiple />`
+            }
+            function mostrarSecciones() {
+
+                var seccion = document.getElementById("listaSecciones");
+               
+                var li = document.createElement("li");
+                var div = document.createElement("div");
+                var a = document.createElement("a");
+                var parrafo = document.createElement("p");
+                var text = document.createTextNode(document.getElementById("nombreSeccion").value);
+                document.getElementById("nombreSeccion").value = "";
+                parrafo.appendChild(text);
+                div.id = ("fileList");
+                //a.setAttribute("class", "primary-btn text-uppercase");
+               // a.setAttribute("value", "Ver detalles");
+                //a.innerHTML = `<strong id="myStrong">Agregar material</strong>`;
+                li.setAttribute("class", "justify-content-between d-flex")
+                li.id=("seccion")
+                li.appendChild(parrafo);
+               // li.appendChild(a);
+               
+                li.innerHTML += `<input id="file" type="file" class="btn btn alert-info" multiple onchange="javascript:updateList()" />`
+                li.appendChild(div);
+                seccion.appendChild(li);
+                
+                seccion.innerHTML += `<hr id="mihr">`
+               
+
+            }
+            updateList = function () {
+                var input = document.getElementById('file');
+                var output = document.getElementById('fileList');
+                var children = "";
+                for (var i = 0; i < input.files.length; ++i) {
+                    children += '<li>' + input.files.item(i).name + '</li>';
+                }
+                output.innerHTML = '<ul>' + children + '</ul>';
+            }
+                     
 
 
-    </div>
-    <div id="seccionesCreadas" class="content">
-        <ul id="listaSecciones" class="course_list"></ul>
-
-    </div>
-
-    <script>
-
-        //var nombreSeccion;
-
-        function crearSeccion() {
-
-            var seccion = document.getElementById("areaSecciones");
-            seccion.innerHTML = "";
-            var input = document.createElement("input");
-            var boton = document.createElement("input");
-            var text = document.createTextNode("Ingrese el nombre de la sección ");
-            input.setAttribute("name", "campo");
-            input.setAttribute("size", "12");
-            input.className = "input";
-            input.id = ("seccion");
-            boton.setAttribute("type", "button");
-            boton.setAttribute("onclick", "mostrarSecciones()");
-            boton.setAttribute("value", "Crear");
-            boton.setAttribute("class", "primary-btn2 text-uppercase enroll rounded-0");
-            seccion.appendChild(text);
-            seccion.appendChild(input);
-            seccion.appendChild(boton);
-            seccion.innerHTML += `</br> </br>`;
-            nombreSeccion = input.value;
-            //seccion.innerHTML+= `<input type="file" class="btn btn alert-info" multiple />`
-        }
-        function mostrarSecciones() {
-            var seccion = document.getElementById("listaSecciones");
-            var li = document.createElement("li");
-            var a = document.createElement("a");
-            var parrafo = document.createElement("p");
-            var text = document.createTextNode(document.getElementById("nombreSeccion").value);
-            document.getElementById("nombreSeccion").value = "";
-            parrafo.appendChild(text);
-
-            a.setAttribute("class", "primary-btn text-uppercase");
-            a.setAttribute("value", "Ver detalles");
-            a.innerHTML = `<strong>Detalles</strong>`;
-            li.setAttribute("class", "justify-content-between d-flex")
-            li.appendChild(parrafo);
-            li.appendChild(a);
-            seccion.appendChild(li);
-
-        }
-                //<a class="primary-btn text-uppercase" href="#">View Details</a>
-
-
-    </script>
+        </script>
 
 
 

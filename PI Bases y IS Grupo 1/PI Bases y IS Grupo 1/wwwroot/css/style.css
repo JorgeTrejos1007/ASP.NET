@@ -3958,13 +3958,13 @@ h6 {
 ============================================================================================ */
 .primary-btn {
     display: inline-block;
-    background: #fdc632;
+    background: #002347;
     padding: 0px 48px;
     color: #002347;
     font-size: 13px;
     font-weight: 500;
     line-height: 50px;
-    border-radius: 5px;
+    border-radius: 15px;
     outline: none !important;
     text-align: center;
     text-transform: uppercase;
@@ -3976,8 +3976,8 @@ h6 {
 }
 
     .primary-btn:hover {
-        background: #002347;
-        color: #fdc632;
+        background: #2d4c6b;
+        color: #2d4c6b;
     }
 
 .primary-btn2 {
