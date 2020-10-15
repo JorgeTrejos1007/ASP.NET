@@ -120,7 +120,7 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
-        public List<string> obtenerTodosLosEmails()        {            List<string> miembrosEmail = new List<string>();            string consulta = "SELECT email FROM Usuario";            DataTable tablaResultado = crearTablaConsulta(consulta);            foreach (DataRow columna in tablaResultado.Rows)            {                miembrosEmail.Add(Convert.ToString(columna["email"]));            }            return miembrosEmail;        }
+        public List<string> obtenerTodosLosEmails()        {            List<string> miembrosEmail = new List<string>();            string consulta = "SELECT email FROM Usuario";            DataTable tablaResultado = crearTablaConsulta(consulta);            foreach (DataRow columna in tablaResultado.Rows)            {                miembrosEmail.Add(Convert.ToString(columna["email"]));            }            return miembrosEmail;        }
 
     }
 }
