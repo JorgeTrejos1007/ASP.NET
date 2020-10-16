@@ -27,6 +27,11 @@
             font-family: "Roboto";
             font-size: 16px;
         }
+        input[type="file"] {
+            max-width: 250px;
+            margin-right: 5px;
+            
+        }
         
         
     
@@ -60,7 +65,7 @@
                         <th scope="col">Nombre</th>
                         <th scope="col">Materiales</th>
                         <th scope="col">Nombre de Materiales</th>
-
+                        <th scope="col">Estado</th>
                     </tr>
                 </thead>
                 <tbody id="filaTabla">
@@ -90,22 +95,29 @@
                     var td1 = document.createElement("td");
                     var td2 = document.createElement("td");
                     var td3 = document.createElement("td");
+                    var td4 = document.createElement("td");
 
-                    var div = document.createElement("div");
+                    //var div = document.createElement("div");
+                    var ul = document.createElement("ul");
+                    ul.id = ("lista" + contador);
 
                     var parrafo = document.createElement("p");
                     var text = document.createTextNode(document.getElementById("nombreSeccion").value);
                     document.getElementById("nombreSeccion").value = "";
-                    parrafo.appendChild(text)
+                    parrafo.appendChild(text);
                     td1.appendChild(parrafo);
+                    td2.id = ("columna2" + contador);
+                    td4.id = ("columna4" + contador);
+                    td2.innerHTML = `<input id="file` + contador + `"type="file"  multiple onchange="javascript:updateList()" />`;
+                    //div.id = ("fileList" + contador);
+                    td4.innerHTML = `<input id="estado` + contador + `"type="button" class="primary-btn3 text-uppercase enroll rounded-0" value="Confirmar" onclick="confirmar()">`                 
 
-                    td2.innerHTML = `<input id="file` + contador + `"type="file" class="btn btn alert-info" multiple onchange="javascript:updateList()" />`;
-                    div.id = ("fileList" + contador);
                     contador++;
-
+                    td3.appendChild(ul);
                     tr.appendChild(td1);
                     tr.appendChild(td2);
-                    tr.appendChild(div);
+                    tr.appendChild(td3);
+                    tr.appendChild(td4);
                     fila.appendChild(tr);
                     seAgregoMaterial = false;
                 }
@@ -114,13 +126,22 @@
             }
             updateList = function () {
                 var input = document.getElementById('file'+(contador-1));
-                var output = document.getElementById('fileList'+(contador-1));
+                var output = document.getElementById('lista'+(contador-1));
                 var children = "";
                 for (var i = 0; i < input.files.length; ++i) {
                     children += '<li>' + input.files.item(i).name + '</li>';
                 }
-                output.innerHTML = '<ul>' + children + '</ul>';
+                output.innerHTML = children;
                 seAgregoMaterial = true;
+            }
+
+            function confirmar() {
+                
+                var r = confirm("Una vez acepte no podrá agregar materiales");
+                if (r == true && seAgregoMaterial) {
+                    document.getElementById("columna2" + (contador - 1)).innerHTML = "Materiales agregados";
+                    document.getElementById("columna4" + (contador - 1)).innerHTML = "Finalizada";
+                } 
             }
                      
 

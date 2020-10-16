@@ -4006,6 +4006,32 @@ h6 {
         color: #fdc632;
         border: 1px solid #002347;
     }
+.primary-btn3 {
+    display: inline-block;
+    background: #002347;
+    padding: 0px 48px;
+    color: #fdc632;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 30px;
+    border-radius: 15px !important;
+    border: 1px solid #002347;
+    outline: none !important;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    margin: 5px 10px 5px 10px;
+}
+
+    .primary-btn3:hover {
+        background: #183a60;
+        color: #fdc632;
+        border: 1px solid #002347;
+    }
 
 .white_bg_btn {
     background: #fff;
