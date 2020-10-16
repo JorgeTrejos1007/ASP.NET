@@ -91,7 +91,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
-            return Redirect("~/Curso/InscribirmeCursos");
+            return RedirectToAction("~/Curso/InscribirmeCursos") ;
         }
         public string obtenerCodigoDeCurso()
         {
