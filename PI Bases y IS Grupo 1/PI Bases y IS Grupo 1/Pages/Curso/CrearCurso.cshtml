@@ -15,7 +15,20 @@
         #file {
             background-color: #002347;
             color: white;
+            max-width: 300px;
         }
+        #myp {
+            max-width: 200px;
+        }
+        table {
+            table-layout: fixed;
+            width: 50%;
+            color: #002347;
+            font-family: "Roboto";
+            font-size: 16px;
+        }
+        
+        
     
     </style>
 </head>
@@ -41,7 +54,20 @@
 
 
         <div id="seccionesCreadas" class="content">
-            <ul id="listaSecciones" class="course_list"></ul>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Materiales</th>
+                        <th scope="col">Nombre Materiales</th>
+
+                    </tr>
+                </thead>
+                <tbody id="filaTabla">
+
+
+                </tbody>
+            </table>
 
         </div>
 
@@ -50,58 +76,34 @@
 
         <script>
 
-            //var nombreSeccion;
+          
 
-            function crearSeccion() {
-
-                var seccion = document.getElementById("areaSecciones");
-                seccion.innerHTML = "";
-                var input = document.createElement("input");
-                var boton = document.createElement("input");
-               
-                var text = document.createTextNode("Ingrese el nombre de la sección ");
-               
-
-                input.setAttribute("name", "campo");
-                input.setAttribute("size", "12");
-                input.className = "input";
-                input.id = ("seccion");
-                boton.setAttribute("type", "button");
-                boton.setAttribute("onclick", "mostrarSecciones()");
-                boton.setAttribute("value", "Crear");
-                boton.setAttribute("class", "primary-btn2 text-uppercase enroll rounded-0");
-                seccion.appendChild(text);
-                seccion.appendChild(input);
-                seccion.appendChild(boton);
-                seccion.innerHTML += `</br> </br>`;
-                nombreSeccion = input.value;
-                //seccion.innerHTML+= `<input type="file" class="btn btn alert-info" multiple />`
-            }
+            
             function mostrarSecciones() {
 
-                var seccion = document.getElementById("listaSecciones");
+                var fila = document.getElementById("filaTabla");
                
-                var li = document.createElement("li");
+                var tr = document.createElement("tr");
+                var td1 = document.createElement("td");
+                var td2 = document.createElement("td");
+                var td3 = document.createElement("td");
+                
                 var div = document.createElement("div");
-                var a = document.createElement("a");
+              
                 var parrafo = document.createElement("p");
                 var text = document.createTextNode(document.getElementById("nombreSeccion").value);
                 document.getElementById("nombreSeccion").value = "";
-                parrafo.appendChild(text);
-                div.id = ("fileList");
-                //a.setAttribute("class", "primary-btn text-uppercase");
-               // a.setAttribute("value", "Ver detalles");
-                //a.innerHTML = `<strong id="myStrong">Agregar material</strong>`;
-                li.setAttribute("class", "justify-content-between d-flex")
-                li.id=("seccion")
-                li.appendChild(parrafo);
-               // li.appendChild(a);
-               
-                li.innerHTML += `<input id="file" type="file" class="btn btn alert-info" multiple onchange="javascript:updateList()" />`
-                li.appendChild(div);
-                seccion.appendChild(li);
+                parrafo.appendChild(text)
+                td1.appendChild(parrafo);
                 
-                seccion.innerHTML += `<hr id="mihr">`
+                td2.innerHTML = `<input id="file" type="file" class="btn btn alert-info" multiple onchange="javascript:updateList()" />`;
+                div.id = ("fileList");
+              
+                tr.appendChild(td1);
+                tr.appendChild(td2);
+                tr.appendChild(div);
+                fila.appendChild(tr);
+                
                
 
             }
