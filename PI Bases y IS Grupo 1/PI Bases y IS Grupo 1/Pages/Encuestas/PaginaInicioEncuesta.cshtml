@@ -63,8 +63,8 @@
                             <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
                                 <button class="primary-btn2 text-uppercase enroll rounded-0">Compartir</button>
                             </form>
-                            <form asp-page-handler="ExportarRespuestas" method="post" asp-route-id="@item.id">
-                                <button class="primary-btn2 text-uppercase enroll rounded-0">ExportarRespuestas</button>
+                            <form asp-page-handler="ExportarRespuestas" method="post" asp-route-idEncuesta="@item.id">
+                                <button class="primary-btn2 text-uppercase enroll rounded-0">Exportar Respuestas</button>
                             </form>
 
                         </td>

@@ -23,21 +23,26 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         }
 
          public IActionResult OnPostCompartir(int id)        {
-                                    EncuestasHandler accesoDatos = new EncuestasHandler();                List<string> miembrosEmail = accesoDatos.obtenerTodosLosEmails();                EncuestaModel encuesta = accesoDatos.obtenerTuplaEncuesta(id);                MailMessage mail = new MailMessage();                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");                string url = "https://localhost:44326/Encuestas/RespuestasEncuesta/ResponderEncuesta?idEnc="+ id.ToString()+"&indexPregunta=0";                mail.From = new MailAddress("comunidad.practica.g1@gmail.com");                /*foreach (var email in miembrosEmail)                {                    mail.To.Add(email);                }*/                mail.To.Add("ronnyale0@hotmail.com");                mail.Subject = "Encuesta disponible: " + encuesta.nombreEncuesta;                mail.Body = "Hola te invitamos a responder la siguiente encuesta " + url                +", tiene una vigencia de "+encuesta.vigencia+" dias";                SmtpServer.Port = 587;                SmtpServer.Credentials = new System.Net.NetworkCredential("comunidad.practica.g1@gmail.com", "AdriancitoG1.");                SmtpServer.EnableSsl = true;                SmtpServer.Send(mail);                   return RedirectToAction("~/Encuestas/PaginaInicioEncuesta");
+                                    EncuestasHandler accesoDatos = new EncuestasHandler();                List<string> miembrosEmail = accesoDatos.obtenerTodosLosEmails();                EncuestaModel encuesta = accesoDatos.obtenerTuplaEncuesta(id);                MailMessage mail = new MailMessage();                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");                string url = "https://localhost:44326/Encuestas/RespuestasEncuesta/ResponderEncuesta?idEnc="+ id.ToString()+"&indexPregunta=0";                mail.From = new MailAddress("comunidad.practica.g1@gmail.com");                foreach (var email in miembrosEmail)                {                    mail.To.Add(email);                }                mail.Subject = "Encuesta disponible: " + encuesta.nombreEncuesta;                mail.Body = "Hola te invitamos a responder la siguiente encuesta " + url                +", tiene una vigencia de "+encuesta.vigencia+" dias";                SmtpServer.Port = 587;                SmtpServer.Credentials = new System.Net.NetworkCredential("comunidad.practica.g1@gmail.com", "AdriancitoG1.");                SmtpServer.EnableSsl = true;                SmtpServer.Send(mail);                   return RedirectToAction("~/Encuestas/PaginaInicioEncuesta");
 
         }
 
-        public IActionResult OnPostExportarRespuestas(int id)
+        public IActionResult OnPostExportarRespuestas(int idEncuesta)
         {
             PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
+            RespuestasHandler accesoDatosRespuesta = new RespuestasHandler();
             List<PreguntaModel> listaPreguntas;
-            listaPreguntas = accesoDatosPregunta.obtenerPreguntas(id);
+            listaPreguntas = accesoDatosPregunta.obtenerPreguntas(idEncuesta);
             var registroDeRespuestas = new XLWorkbook();
             var hojaDeRespuestas = registroDeRespuestas.Worksheets.Add("Respuestas");
-            int fila = 1;
+            int filaPregunta = 1;
+            int columnaPregunta= 1;
+            foreach (var pregunta in listaPreguntas) {
+                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;
+                columnaPregunta++;
+            }
 
-
-
+            var a = accesoDatosRespuesta.obtenerRespuestas(idEncuesta);
             /*//fila//columna
             int fila = 1;
             hojaDeRespuestas.Cell(fila, 1).Value = "ID";
