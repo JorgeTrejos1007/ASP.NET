@@ -6,8 +6,10 @@ using System.ComponentModel.DataAnnotations;
 
 namespace PIBasesISGrupo1.Models
 {
-    public class Materiales
+    public class MaterialModel
     {
+
+
 
         [Required(ErrorMessage = "Es necesario que ingreses el nombre del curso")]
         [Display(Name = "Ingrese el Nombre del curso")]

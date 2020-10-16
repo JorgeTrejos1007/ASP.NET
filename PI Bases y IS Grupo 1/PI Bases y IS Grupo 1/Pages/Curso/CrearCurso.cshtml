@@ -59,7 +59,7 @@
                     <tr>
                         <th scope="col">Nombre</th>
                         <th scope="col">Materiales</th>
-                        <th scope="col">Nombre Materiales</th>
+                        <th scope="col">Nombre de Materiales</th>
 
                     </tr>
                 </thead>
@@ -78,43 +78,49 @@
 
           
 
-            
+            var contador = 0;
+            var seAgregoMaterial = true;
             function mostrarSecciones() {
 
-                var fila = document.getElementById("filaTabla");
-               
-                var tr = document.createElement("tr");
-                var td1 = document.createElement("td");
-                var td2 = document.createElement("td");
-                var td3 = document.createElement("td");
                 
-                var div = document.createElement("div");
-              
-                var parrafo = document.createElement("p");
-                var text = document.createTextNode(document.getElementById("nombreSeccion").value);
-                document.getElementById("nombreSeccion").value = "";
-                parrafo.appendChild(text)
-                td1.appendChild(parrafo);
-                
-                td2.innerHTML = `<input id="file" type="file" class="btn btn alert-info" multiple onchange="javascript:updateList()" />`;
-                div.id = ("fileList");
-              
-                tr.appendChild(td1);
-                tr.appendChild(td2);
-                tr.appendChild(div);
-                fila.appendChild(tr);
-                
+                if (seAgregoMaterial) {
+                    var fila = document.getElementById("filaTabla");
+
+                    var tr = document.createElement("tr");
+                    var td1 = document.createElement("td");
+                    var td2 = document.createElement("td");
+                    var td3 = document.createElement("td");
+
+                    var div = document.createElement("div");
+
+                    var parrafo = document.createElement("p");
+                    var text = document.createTextNode(document.getElementById("nombreSeccion").value);
+                    document.getElementById("nombreSeccion").value = "";
+                    parrafo.appendChild(text)
+                    td1.appendChild(parrafo);
+
+                    td2.innerHTML = `<input id="file` + contador + `"type="file" class="btn btn alert-info" multiple onchange="javascript:updateList()" />`;
+                    div.id = ("fileList" + contador);
+                    contador++;
+
+                    tr.appendChild(td1);
+                    tr.appendChild(td2);
+                    tr.appendChild(div);
+                    fila.appendChild(tr);
+                    seAgregoMaterial = false;
+                }
                
 
             }
             updateList = function () {
-                var input = document.getElementById('file');
-                var output = document.getElementById('fileList');
+                var input = document.getElementById('file'+(contador-1));
+                var output = document.getElementById('fileList'+(contador-1));
                 var children = "";
                 for (var i = 0; i < input.files.length; ++i) {
                     children += '<li>' + input.files.item(i).name + '</li>';
                 }
                 output.innerHTML = '<ul>' + children + '</ul>';
+                seAgregoMaterial = true;
             }
                      
 

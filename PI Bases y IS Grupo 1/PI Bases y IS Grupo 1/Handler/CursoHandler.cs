@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using System.IO;
 using System.Web;
 using Microsoft.AspNetCore.Http;
+using PIBasesISGrupo1.Handler;
 
 namespace PIBasesISGrupo1.Handler
 {
@@ -255,12 +256,17 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
-        /*
-        public bool crearSeccion(){
-            string consulta = "INSERT into Seccion " +"" ;
-            
+        
+        public bool crearSeccion(SeccionModel seccion){
+            string consulta = "INSERT INTO Seccion(nombreSeccionPK,nombreCursoFK)"
+            + "VALUES (@nombreSeccion,@nombreCurso)";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", seccion.nombreCurso);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", seccion.nombreSeccion);
+
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);          
         }
-        */
+
 
     }
 }

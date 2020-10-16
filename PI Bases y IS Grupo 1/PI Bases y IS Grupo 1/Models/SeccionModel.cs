@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Models
 {
-    public class Seccion
+    public class SeccionModel
     {
         [Required(ErrorMessage = "Es necesario que ingreses el nombre de la sección")]
         [Display(Name = "Ingrese el Nombre del Seccion")]
