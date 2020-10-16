@@ -18,7 +18,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         [BindProperty]
         public Cursos curso { get; set; }
         [BindProperty]
-        public Miembro miembro { get; set; }
+        public Miembro participanteExterno { get; set; }
         public IActionResult OnGet(string nombreCurso)
         {
             IActionResult vista;
@@ -49,63 +49,21 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         public IActionResult OnPost()
         {
-
-            try
-            {
+            try {
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
-                MiembroHandler accesoDatos = new MiembroHandler();
                 if (miembroDeLaComunidad != null)
                 {
-                    if (accesoDatos.registrarEstudiante(miembroDeLaComunidad.email)) {
-                        TempData["mensaje"] = "Se ha logrado inscribir con exito";
-                        TempData["exitoAlEditar"] = true;
-                        accesoDatos.inscribirEstudianteACurso(miembroDeLaComunidad.email, curso.nombre);
-                    }
-                    else
-                    {
-                        TempData["mensaje"] = "Se ha ocurrido un error en el registro";
-                        TempData["exitoAlEditar"] = false;
-                    }
+                    var routeValues = new { estudiante = miembroDeLaComunidad, nombreCurso = curso.nombre, esMiembro = true };
+                    return base.RedirectToPage("PagarCurso", routeValues);
                 }
                 else
                 {
-
-                    string codigo = obtenerCodigoDeCurso();
-                    miembro.password = codigo;
-                    if (accesoDatos.crearEstudianteComoParticipanteExterno(miembro))
-                    {
-                        TempData["mensaje"] = "Se ha logrado inscribir con exito, este es su codigo para el Curso: "+codigo;
-                        TempData["exitoAlEditar"] = true;
-                        accesoDatos.registrarEstudiante(miembro.email);
-                        accesoDatos.inscribirEstudianteACurso(miembro.email, curso.nombre);
-                    }
-                    else
-                    {
-                        TempData["mensaje"] = "Se ha ocurrido un error en el registro";
-                        TempData["exitoAlEditar"] = false;
-                    }
+                    return RedirectToPage("PagarCurso", routeValues: new { estudiante = participanteExterno, nombreCurso = curso.nombre , esMiembro = true });
                 }
             }
-            catch
-            {
-
-                TempData["mensaje"] = "Ha ocurrido un error en el registro";
-                TempData["exitoAlEditar"] = false;
+            catch {
             }
-            return RedirectToAction("~/Curso/InscribirmeCursos") ;
-        }
-        public string obtenerCodigoDeCurso()
-        {
-            string codigo = "";
-            string []caracteres= {"a","b","c","d","e","f","g","h","i","j","k","l","m","n",".","_","-","?","!" };
-            Random random = new Random();
-            for (int caracter = 0; caracter < 4; ++caracter) {
-                int caracterAleatorio = random.Next(caracteres.Length);
-                codigo += caracteres[caracterAleatorio];
-            }
-            int randomNumber = random.Next(10000);
-            codigo += randomNumber.ToString();
-            return codigo;
+            return RedirectToAction("~/Curso/InscribirmeCurso");
         }
     }
 }
