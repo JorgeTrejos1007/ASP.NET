@@ -34,7 +34,7 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearEncuesta(EncuestaModel encuesta)
         {
-            string consulta = "INSERT INTO Encuestas(topicoFK, nombreEncuesta, autor, vigencia) "
+            string consulta = "INSERT INTO Encuesta(topicoFK, nombreEncuesta, autor, vigencia) "
             + "VALUES (@topico,@nombreEncuesta,@autor,@vigencia) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -53,7 +53,7 @@ namespace PIBasesISGrupo1.Handler
         public List<EncuestaModel> obtenerEncuestas()
         {
             List<EncuestaModel> encuestas = new List<EncuestaModel>();
-            string consulta = "SELECT * FROM Encuestas";
+            string consulta = "SELECT * FROM Encuesta";
             DataTable tablaResultado = crearTablaConsulta(consulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {
@@ -72,7 +72,7 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool modificarEncuesta(EncuestaModel encuesta)
         {
-            string consulta = "UPDATE Encuestas SET topicoFK=@topico, nombreEncuesta=@nombreEncuesta, autor=@autor, vigencia=@vigencia WHERE idEncuesta=@id"; 
+            string consulta = "UPDATE Encuesta SET topicoFK=@topico, nombreEncuesta=@nombreEncuesta, autor=@autor, vigencia=@vigencia WHERE idEncuesta=@id"; 
             
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -92,7 +92,7 @@ namespace PIBasesISGrupo1.Handler
         public EncuestaModel obtenerTuplaEncuesta(int id)
         {
             EncuestaModel encuesta =  new EncuestaModel();
-            string consulta = "SELECT * FROM Encuestas WHERE idEncuesta=@id";
+            string consulta = "SELECT * FROM Encuesta WHERE idEncuesta=@id";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@id", id);
@@ -110,7 +110,7 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool borrarEncuesta(int id) {
-            string consulta = "DELETE FROM Encuestas WHERE idEncuesta=@id";
+            string consulta = "DELETE FROM Encuesta WHERE idEncuesta=@id";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@id", id);
