@@ -32,6 +32,9 @@
                                 <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
                                 <input asp-for="@genero" value="@genero" readonly />
                                 <input asp-for="@email" value="@email" readonly />
+                                <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+                                <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
+                                <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
                             </div>
                             <div class="col-lg-12 text-center">
                                 <button class="primary-btn">Confirmar</button>

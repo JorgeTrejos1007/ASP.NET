@@ -210,9 +210,7 @@ namespace PIBasesISGrupo1.Handler
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
             return exito;
         }
-        private bool existeElUsuario() {
-            return 
-        }
+       
         private bool insertarHabilidadesMiembro(Miembro miembro) {
             string consultaHabilidades = "INSERT INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
             
