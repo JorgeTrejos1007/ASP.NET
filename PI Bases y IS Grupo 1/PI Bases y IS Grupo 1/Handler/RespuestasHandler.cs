@@ -34,14 +34,12 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearRespuesta(RespuestaModel respuesta)
         {
-            string consulta = "INSERT INTO Respuestas(nombre, idEncuestaFK, idPreguntaFK, respuesta) "
-            + "VALUES (@nombre,@encuestaID,@preguntaID,@respuesta) ";
+            string consulta = "INSERT INTO Respuesta(idEncuestaFK, idPreguntaFK, correoEncuestado, respuesta) "
+            + "VALUES (@encuestaID,@preguntaID,@correoEncuestado,@respuesta) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
-
-            //comandoParaConsulta.Parameters.AddWithValue("@id", respuesta.id);
-            comandoParaConsulta.Parameters.AddWithValue("@nombre", respuesta.nombre);
+            comandoParaConsulta.Parameters.AddWithValue("@correoEncuestado", respuesta.correoEncuestado);
             comandoParaConsulta.Parameters.AddWithValue("@encuestaID", respuesta.encuestaID);
             comandoParaConsulta.Parameters.AddWithValue("@preguntaID", respuesta.preguntaID);
             comandoParaConsulta.Parameters.AddWithValue("@respuesta", respuesta.respuesta);
@@ -55,9 +53,9 @@ namespace PIBasesISGrupo1.Handler
         public List<MostarRespuestaModel> obtenerRespuestas(int encuestaID)
         {
             List<MostarRespuestaModel> respuestas = new List<MostarRespuestaModel>();
-            string consulta = " SELECT Preguntas.pregunta, Respuestas.idPreguntaFK, Respuestas.nombre, Respuestas.respuesta " +
-                "FROM Preguntas JOIN Respuestas ON Preguntas.idEncuestaFK = Respuestas.idEncuestaFK AND Preguntas.idPregunta = Respuestas.idPreguntaFK " +
-                "WHERE Respuestas.idEncuestaFK=@encuestaID ORDER BY Respuestas.idPreguntaFK";
+            string consulta = " SELECT Pregunta.pregunta, Respuesta.idPreguntaFK, Respuesta.correoEncuestado, Respuesta.respuesta " +
+                "FROM Pregunta JOIN Respuesta ON Pregunta.idEncuestaFK = Respuesta.idEncuestaFK AND Pregunta.idPreguntaPK = Respuesta.idPreguntaFK " +
+                "WHERE Respuesta.idEncuestaFK=@encuestaID ORDER BY Respuesta.idPreguntaFK";
 
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -76,7 +74,7 @@ namespace PIBasesISGrupo1.Handler
                 {
                    
                     preguntaID = Convert.ToInt32(columna["idPreguntaFK"]),
-                    nombre = Convert.ToString(columna["nombre"]),
+                    correoEncuestado = Convert.ToString(columna["correoEncuestado"]),
                     respuesta = Convert.ToString(columna["respuesta"]),
                     pregunta = Convert.ToString(columna["pregunta"]),
                    
@@ -84,6 +82,32 @@ namespace PIBasesISGrupo1.Handler
 
             }
             return respuestas;
+        }
+
+        public int cantidadVecesElegidaUnaOpcion(int encuestaID, int preguntaID, string opcion)
+        {
+            if (opcion !="") {
+                int cantidadRespuestaOpcion = 0;
+                string consulta = "SELECT COUNT(respuesta) AS [cantidad] FROM Respuesta WHERE respuesta = @opcion AND idPreguntaFK = @preguntaID AND idEncuestaFK = @encuestaID";
+                SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+                SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+
+                comandoParaConsulta.Parameters.AddWithValue("@encuestaID", encuestaID);
+                comandoParaConsulta.Parameters.AddWithValue("@preguntaID", preguntaID);
+                comandoParaConsulta.Parameters.AddWithValue("@opcion", opcion);
+
+
+                conexion.Open();
+                SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+                lectorDeDatos.Read();
+                cantidadRespuestaOpcion = (int)lectorDeDatos["cantidad"];
+                conexion.Close();
+                return cantidadRespuestaOpcion;
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

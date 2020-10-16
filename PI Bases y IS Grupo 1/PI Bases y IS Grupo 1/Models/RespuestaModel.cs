@@ -13,7 +13,7 @@ namespace PIBasesISGrupo1.Models
 
         public int id { get; set; }
 
-        public string nombre { get; set; }
+        public string correoEncuestado { get; set; }
 
         public string respuesta { get; set; }
 
