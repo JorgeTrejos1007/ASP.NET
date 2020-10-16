@@ -12,67 +12,69 @@
     var email = (string)ViewData["email"];
 }
 
-<h2>Inscribirme en un Curso</h2>
-<div class="col-lg-4 offset-lg-1">
-    <form class="form_area" method="post" enctype="multipart/form-data">
-        @if (@mensaje != null)
-        {
-            if ((bool)TempData["exitoAlEditar"])
-            {
-                <div class="alert-success">
-                    <h3> @mensaje </h3>
-                </div>
-            }
-            else
-            {
-                <div class="alert-danger">
-                    <h3> @mensaje </h3>
-                </div>
-            }
-        }
-        @{if (esMiembro)
-            {
-                <label asp-for="@curso">Nombre del curso</label><br>
-                <input asp-for="@curso" value="@curso" readonly /><br /><br />
+ 
+    <div class="comment-form">
+         <div class="col-lg-4 offset-lg-1">
+              <div class="register_form">
+                <h3>Incribirme  a un Curso</h3>
+                <form class="form_area"
+                      id="myForm"
+                      method="post"
+                      enctype="multipart/form-data">
+                    @if (esMiembro)
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 form_group">
 
-                <label asp-for="@nombre">Nombre: </label><br>
-                <input asp-for="@nombre" value="@nombre" readonly /><br /><br />
+                                <input asp-for="@curso" value="@curso" /><br /><br />
+                                <input asp-for="@nombre" value="@nombre" readonly /><br /><br />
+                                <input asp-for="@primerApellido" value="@primerApellido" readonly /><br /><br />
+                                <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
+                                <input asp-for="@genero" value="@genero" readonly />
+                                <input asp-for="@email" value="@email" readonly />
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <button class="primary-btn">Confirmar</button>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div class="col-lg-12 form_group">
 
-                <label asp-for="@primerApellido">Primer apellido: </label><br>
-                <input asp-for="@primerApellido" value="@primerApellido" readonly /><br /><br />
+                                <input asp-for="@curso" value="@curso" /><br /><br />
 
-                <label asp-for="@segundoApellido">Segundo apellido: </label><br>
-                <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
+                                <input asp-for="@Model.miembro.nombre"
+                                       placeholder="tu nombre"
+                                       required=""
+                                       type="text" />
+                                <div class="flex-lg-column">
+                                    <input asp-for="@Model.miembro.primerApellido"
+                                           placeholder="Tu primer apellido"
+                                           required=""
+                                           type="text" />
+                                    <input asp-for="@Model.miembro.segundoApellido"
+                                           placeholder="Tu segundo apellido"
+                                           type="text" />
+                                </div>
+                                <input asp-for="@Model.miembro.email"
+                                       placeholder="Tu email"
+                                       type="email"
+                                       required="" />
+                                <input asp-for="@Model.miembro.genero"
+                                       placeholder="Tu genero"
+                                       required=""
+                                       type="text" />
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <button class="primary-btn">Confirmar</button>
+                            </div>
+                        </div>
+                    }
+                </form>
 
-                <label asp-for="@genero">Genero: </label><br>
-                <input asp-for="@genero" value="@genero" readonly /><br /><br />
-
-                <label asp-for="@email">Email: </label><br>
-                <input asp-for="@email" value="@email" readonly /><br /><br />
-            }
-            else
-            {
-                <label asp-for="@curso">Nombre del curso</label><br>
-                <input asp-for="@curso" value="@curso" /><br /><br />
-
-                <label asp-for="@Model.miembro.nombre">Nombre: </label><br>
-                <input asp-for="@Model.miembro.nombre" /><br /><br />
-
-                <label asp-for="@Model.miembro.primerApellido">Primer apellido: </label><br>
-                <input asp-for="@Model.miembro.primerApellido" /><br /><br />
-
-                <label asp-for="@Model.miembro.segundoApellido">Segundo apellido: </label><br>
-                <input asp-for="@Model.miembro.segundoApellido" /><br /><br />
-
-                <label asp-for="@Model.miembro.genero">Genero: </label><br>
-                <input asp-for="@Model.miembro.genero" /><br /><br />
-
-                <label asp-for="@Model.miembro.email">Email: </label><br>
-                <input asp-for="@Model.miembro.email" /><br /><br />
-            }
-        }
-
-        <input type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
-        <input type="submit" value=" Enviar" class="btn btn-success" />
-    </form>
-</div>
+              </div>
+            </div>
+ 
+    </div>
