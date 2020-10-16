@@ -46,26 +46,7 @@ namespace PIBasesISGrupo1.Pages.Encuestas
 
 
 
-        public IActionResult OnPostExportarRespuestas(int id)
-        {
-            var registroDeRespuestas = new XLWorkbook();
-            var hojaDeRespuestas = registroDeRespuestas.Worksheets.Add("Respuestas");
-            //fila//columna
-            int fila = 1;
-            hojaDeRespuestas.Cell(fila, 1).Value = "ID";
-            hojaDeRespuestas.Cell(fila, 2).Value = "Nombre";
-
-            fila = fila+1;
-            hojaDeRespuestas.Cell(fila, 1).Value = "0";
-            hojaDeRespuestas.Cell(fila, 2).Value = "Ronny";
-
-            var stream = new MemoryStream();
-            registroDeRespuestas.SaveAs(stream);
-            var content = stream.ToArray();
-            string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-
-            return File(content, excelContentType,"Respuestas.xlsx");
-        }
+       
 
 
     }
