@@ -17,7 +17,7 @@
                 <h3>Tópico</h3>
             </th>
             <th>
-                <h3>Autor</h3>
+                <h3>Correo</h3>
             </th>
             <th>
                 <h3>Vigencia</h3>
@@ -38,7 +38,7 @@
                         @Html.DisplayFor(modelItem => Model.encuesta.topico)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => Model.encuesta.autor)
+                        @Html.DisplayFor(modelItem => Model.encuesta.correo)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => Model.encuesta.vigencia) días
@@ -57,11 +57,13 @@
     if (Model.preguntaActual != null)
     {
 <form method="post">
+
+
     <b>Pregunta: </b>@Html.DisplayFor(modelItem => Model.preguntaActual.pregunta)<br>
     
     <input type="hidden" asp-for="@Model.respuesta.encuestaID" value="@Model.preguntaActual.encuestaID" />
     <input type="hidden" asp-for="@Model.respuesta.preguntaID" value="@Model.preguntaActual.preguntaID" />
-    <input type="hidden" asp-for="@Model.respuesta.nombre" value="Anonimo" />
+    <input type="hidden" asp-for="@Model.respuesta.correoEncuestado" value="Anonimo" />
 
     <input type="hidden" asp-for="@Model.preguntaActual.encuestaID" value="@Model.preguntaActual.encuestaID" />
     
