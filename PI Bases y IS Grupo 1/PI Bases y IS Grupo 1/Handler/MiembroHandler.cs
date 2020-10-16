@@ -170,6 +170,28 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
+        public bool crearEstudianteComoParticipanteExterno(Miembro participanteExterno) {
+            bool exito= false;
+            string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password) "
+               + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password)";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            if (String.IsNullOrEmpty(participanteExterno.segundoApellido))
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@segundoApellido", participanteExterno.segundoApellido);
+            }
+            comandoParaConsulta.Parameters.AddWithValue("@genero", participanteExterno.genero);
+            comandoParaConsulta.Parameters.AddWithValue("@nombre", participanteExterno.nombre);
+            comandoParaConsulta.Parameters.AddWithValue("@primerApellido", participanteExterno.primerApellido);
+            comandoParaConsulta.Parameters.AddWithValue("@email", participanteExterno.email);
+            comandoParaConsulta.Parameters.AddWithValue("@password", participanteExterno.password);
+            exito= baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            return exito;
+
+        }
         public bool registrarEstudiante(string correoEstudiante) {
             string consulta = "INSERT INTO Estudiante(emailEstudianteFK) "
                 + "VALUES (@email) ";

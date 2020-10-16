@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
+
     public class InscribirmeCursoModel : PageModel
     {
         [BindProperty]
@@ -55,7 +57,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 if (miembroDeLaComunidad != null)
                 {
                     if (accesoDatos.registrarEstudiante(miembroDeLaComunidad.email)) {
-                        TempData["mensaje"] = "Se ha logrado registar con exito";
+                        TempData["mensaje"] = "Se ha logrado inscribir con exito";
                         TempData["exitoAlEditar"] = true;
                         accesoDatos.inscribirEstudianteACurso(miembroDeLaComunidad.email, curso.nombre);
                     }
@@ -68,9 +70,10 @@ namespace PIBasesISGrupo1.Pages.Curso
                 else
                 {
                     
-                    if (accesoDatos.crearMiembro(miembro))
+                    if (accesoDatos.crearEstudianteComoParticipanteExterno(miembro))
                     {
-                        TempData["mensaje"] = "Se ha logrado registar con exito";
+                        string codigo = obtenerCodigoDeCurso();
+                        TempData["mensaje"] = "Se ha logrado inscribir con exito, este es su codigo para el Curso: "+codigo;
                         TempData["exitoAlEditar"] = true;
                         accesoDatos.registrarEstudiante(miembro.email);
                         accesoDatos.inscribirEstudianteACurso(miembro.email, curso.nombre);
@@ -88,7 +91,20 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
-            return Redirect("~/Curso/CursosDisponibles");
+            return Redirect("~/Curso/InscribirmeCursos");
+        }
+        public string obtenerCodigoDeCurso()
+        {
+            string codigo = "";
+            string []caracteres= {"a","b","c","d","e","f","g","h","i","j","k","l","m","n",".","_","-","?","!" };
+            Random random = new Random();
+            for (int caracter = 0; caracter < 4; ++caracter) {
+                int caracterAleatorio = random.Next(caracteres.Length);
+                codigo += caracteres[caracterAleatorio];
+            }
+            int randomNumber = random.Next(10000);
+            codigo += randomNumber.ToString();
+            return codigo;
         }
     }
 }
