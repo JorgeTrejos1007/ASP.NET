@@ -32,6 +32,10 @@
                                 <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
                                 <input asp-for="@genero" value="@genero" readonly />
                                 <input asp-for="@email" value="@email" readonly />
+                                <input type="radio" name="my-input" id="yes">
+                                <label for="yes">Masculino</label>
+                                <input type="radio" name="my-input" id="no">
+                                <label for="no">Femenino</label>
                                 <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
                                 <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
                                 <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
@@ -43,37 +47,41 @@
                     }
                     else
                     {
-                        <div class="row">
-                            <div class="col-lg-12 form_group">
+                         
+                        <div class="col-lg-12 form_group">
 
+                            <div class="row">
                                 <input asp-for="@curso" value="@curso" /><br /><br />
 
                                 <input asp-for="@Model.miembro.nombre"
                                        placeholder="tu nombre"
                                        required=""
                                        type="text" />
-                                <div class="flex-lg-column">
-                                    <input asp-for="@Model.miembro.primerApellido"
-                                           placeholder="Tu primer apellido"
-                                           required=""
-                                           type="text" />
-                                    <input asp-for="@Model.miembro.segundoApellido"
-                                           placeholder="Tu segundo apellido"
-                                           type="text" />
-                                </div>
+
+
+                                <input asp-for="@Model.miembro.primerApellido"
+                                       placeholder="Tu primer apellido"
+                                       required=""
+                                       type="text" />
+                                <input asp-for="@Model.miembro.segundoApellido"
+                                       placeholder="Tu segundo apellido"
+                                       type="text" />
+                             
+
                                 <input asp-for="@Model.miembro.email"
                                        placeholder="Tu email"
                                        type="email"
                                        required="" />
-                                <input asp-for="@Model.miembro.genero"
-                                       placeholder="Tu genero"
-                                       required=""
-                                       type="text" />
+
+                             </div>
+                            <div class="card-columns">
+                                 
+                             </div>
                             </div>
                             <div class="col-lg-12 text-center">
                                 <button class="primary-btn">Confirmar</button>
                             </div>
-                        </div>
+                         
                     }
                 </form>
 
