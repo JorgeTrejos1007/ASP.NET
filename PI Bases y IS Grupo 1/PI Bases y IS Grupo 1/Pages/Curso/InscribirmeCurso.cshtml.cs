@@ -69,10 +69,11 @@ namespace PIBasesISGrupo1.Pages.Curso
                 }
                 else
                 {
-                    
+
+                    string codigo = obtenerCodigoDeCurso();
+                    miembro.password = codigo;
                     if (accesoDatos.crearEstudianteComoParticipanteExterno(miembro))
                     {
-                        string codigo = obtenerCodigoDeCurso();
                         TempData["mensaje"] = "Se ha logrado inscribir con exito, este es su codigo para el Curso: "+codigo;
                         TempData["exitoAlEditar"] = true;
                         accesoDatos.registrarEstudiante(miembro.email);
@@ -88,7 +89,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             catch
             {
 
-                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                TempData["mensaje"] = "Ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
             return RedirectToAction("~/Curso/InscribirmeCursos") ;

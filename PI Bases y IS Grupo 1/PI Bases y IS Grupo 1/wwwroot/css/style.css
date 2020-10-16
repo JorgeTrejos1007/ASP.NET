@@ -277,7 +277,7 @@ button:focus {
 
             .header_area .navbar .nav .nav-item .nav-link {
                 font: 500 15px/80px "Rubik", sans-serif;
-                text-transform: capitalize;
+                text-trans?area: capitalize;
                 color: #fff;
                 padding: 0px;
                 display: inline-block;

@@ -13,7 +13,7 @@
 }
 
 <h2>Inscribirme en un Curso</h2>
-<form method="post" enctype="multipart/form-data">
+<form class="form_area" method="post" enctype="multipart/form-data">
     @if (@mensaje != null)
     {
         if ((bool)TempData["exitoAlEditar"])
@@ -74,9 +74,4 @@
     <input type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
     <input type="submit" value=" Enviar" class="btn btn-success" />
 </form>
-
-<scripts>
-
-    @section scripts{
-        <partial name="_ValidationScriptsPartial" />
-    }
+ 
