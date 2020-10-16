@@ -97,7 +97,7 @@
                     var td3 = document.createElement("td");
                     var td4 = document.createElement("td");
 
-                    //var div = document.createElement("div");
+                    
                     var ul = document.createElement("ul");
                     ul.id = ("lista" + contador);
 
@@ -109,7 +109,7 @@
                     td2.id = ("columna2" + contador);
                     td4.id = ("columna4" + contador);
                     td2.innerHTML = `<input id="file` + contador + `"type="file"  multiple onchange="javascript:updateList()" />`;
-                    //div.id = ("fileList" + contador);
+                   
                     td4.innerHTML = `<input id="estado` + contador + `"type="button" class="primary-btn3 text-uppercase enroll rounded-0" value="Confirmar" onclick="confirmar()">`                 
 
                     contador++;
@@ -136,12 +136,16 @@
             }
 
             function confirmar() {
+                if (seAgregoMaterial) {
+                    var r = confirm("Una vez acepte no podrá agregar materiales");
+                    if (r == true) {
+                        document.getElementById("columna2" + (contador - 1)).innerHTML = "Materiales agregados";
+                        document.getElementById("columna4" + (contador - 1)).innerHTML = "Finalizada";
+                    }
+                } else {
+                    alert("Debe agregar materiales para poder confirmar");
+                }
                 
-                var r = confirm("Una vez acepte no podrá agregar materiales");
-                if (r == true && seAgregoMaterial) {
-                    document.getElementById("columna2" + (contador - 1)).innerHTML = "Materiales agregados";
-                    document.getElementById("columna4" + (contador - 1)).innerHTML = "Finalizada";
-                } 
             }
                      
 
