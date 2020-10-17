@@ -17,14 +17,11 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         [BindProperty]
         public IFormFile comprobante { get; set; }
-        private Miembro estudiante { get; set; }
-        public IActionResult OnGet(bool esMiembro)
+        [BindProperty]
+        public Miembro estudiante { get; set; }
+        public IActionResult OnGet()
         {
-             
-           
-            ViewData["esMiembro"] = esMiembro;
-            
-            
+            ViewData["esMiembro"] = TempData["esMiembro"];
             return Page();
         }
         [HttpPost]
@@ -37,15 +34,18 @@ namespace PIBasesISGrupo1.Pages.Curso
                     MiembroHandler accesoDatos = new MiembroHandler();
                     if (esMiembro)
                     {
-                        if (accesoDatos.registrarEstudiante(email))
+                        accesoDatos.registrarEstudiante(email);
+                        if (accesoDatos.inscribirEstudianteACurso(email, nombreCurso) )
                         {
-                            TempData["mensaje"] = "Se ha logrado inscribir con exito";
+                            TempData["mensaje"] = "Inscripcion Exitosa";
                             TempData["exitoAlEditar"] = true;
-                            accesoDatos.inscribirEstudianteACurso(email, nombreCurso);
+                             
+
+
                         }
                         else
                         {
-                            TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                            TempData["mensaje"] = "Usted ya esta Inscrito a este Curso";
                             TempData["exitoAlEditar"] = false;
                         }
                         return RedirectToAction("~/Curso/InscribirmeCursos");
@@ -54,23 +54,23 @@ namespace PIBasesISGrupo1.Pages.Curso
                     {
 
                         string codigo = obtenerCodigoDeCurso();
-                        estudiante.password = codigo;
-                        estudiante.nombre = nombre;
+                        estudiante.password = new String(codigo);
+                        estudiante.nombre = new String(nombre);
                         estudiante.primerApellido = primerApellido;
                         estudiante.segundoApellido = segundoApellido;
                         estudiante.email = email;
                         estudiante.genero = genero;
-
-                        if (accesoDatos.crearEstudianteComoParticipanteExterno(estudiante))
+                        if (accesoDatos.crearEstudianteComoParticipanteExterno(estudiante)) {
+                            accesoDatos.registrarEstudiante(email);
+                        }
+                        if (accesoDatos.inscribirEstudianteACurso(estudiante.email, nombreCurso))
                         {
-                            TempData["mensaje"] = "Se ha logrado inscribir con exito, este es su codigo para el Curso: " + codigo;
+                            TempData["mensaje"] = "Inscripcion Exitosa, este es su codigo para el Curso: " + codigo;
                             TempData["exitoAlEditar"] = true;
-                            bool exito=  accesoDatos.registrarEstudiante(estudiante.email);
-                            accesoDatos.inscribirEstudianteACurso(estudiante.email, nombreCurso);
                         }
                         else
                         {
-                            TempData["mensaje"] = "Ha ocurrido un error en el registro";
+                            TempData["mensaje"] = "Usted ya esta Inscrito a este Curso";
                             TempData["exitoAlEditar"] = false;
                         }
                     }

@@ -29,7 +29,11 @@ namespace PIBasesISGrupo1.Pages.Curso
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null) {
 
-                    ViewData["miembroDeLaComunidad"] = miembroDeLaComunidad;
+                    ViewData["nombre"] = miembroDeLaComunidad.nombre;
+                    ViewData["primerApellido"] = miembroDeLaComunidad.primerApellido;
+                    ViewData["segundoApellido"] = miembroDeLaComunidad.segundoApellido;
+                    ViewData["genero"] = miembroDeLaComunidad.genero;
+                    ViewData["email"] = miembroDeLaComunidad.email;
                     ViewData["esMiembro"] = true;
                 }
                 else {
@@ -45,28 +49,30 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         public virtual Microsoft.AspNetCore.Mvc.RedirectToPageResult OnPost()
         {
+
+            TempData["esMiembro"] = true;
+            TempData["nombreCurso"] = curso.nombre;
             try {
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null)
                 {
-                    TempData["estudiante"] = miembroDeLaComunidad;
-                    var routeValues = new { estudiante = miembroDeLaComunidad, nombreCurso = curso.nombre, esMiembro = true };
-                    return base.RedirectToPage("PagarCurso", routeValues);
+                    TempData["email"] = miembroDeLaComunidad.email;
+
                 }
                 else {
-                    TempData["nombreCurso"] = curso.nombre;
                     TempData["nombre"]= participanteExterno.nombre;
                     TempData["primerApellido"] = participanteExterno.primerApellido;
                     TempData["segundoApellido"] = participanteExterno.segundoApellido;
                     TempData["email"] = participanteExterno.email;
                     TempData["genero"] = participanteExterno.genero;
-                     
+                    TempData["esMiembro"]= false;
+
                 }
                
             }
             catch {
             }
-            return RedirectToPage("PagarCurso", routeValues: new { esMiembro = true }); ;
+            return RedirectToPage("PagarCurso");  
         }
     }
 }

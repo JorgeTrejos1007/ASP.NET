@@ -5,7 +5,12 @@
     var mensaje = (string)TempData["mensaje"];
     var esMiembro = (bool)ViewData["esMiembro"];
     var curso = (string)ViewData["nombreCurso"];
-    var miembroDeLaComunidad = (PIBasesISGrupo1.Models.Miembro)ViewData["miembroDeLaComunidad"];
+    var nombre = (string)ViewData["nombre"];
+    var primerApellido = (string)ViewData["primerApellido"];
+    var segundoApellido = (string)ViewData["segundoApellido"];
+    var genero = (string)ViewData["genero"];
+    var email = (string)ViewData["email"];
+
 }
 
  
@@ -13,6 +18,10 @@
          <div class="col-lg-4 offset-lg-1">
               <div class="register_form">
                 <h3>Incribirme  a un Curso</h3>
+                <form class="form_area"
+                      id="myForm"
+                      method="post"
+                      enctype="multipart/form-data">
                     @if (esMiembro)
                     {
                         <div class="row">
@@ -20,20 +29,21 @@
                                 <div class="row">
 
                                     <input asp-for="@curso" value="@curso" /><br /><br />
-                                    <input asp-for="@miembroDeLaComunidad.nombre" value="@miembroDeLaComunidad.nombre" readonly /><br /><br />
-                                    <input asp-for="@miembroDeLaComunidad.primerApellido" value="@miembroDeLaComunidad.primerApellido" readonly /><br /><br />
-                                    <input asp-for="@miembroDeLaComunidad.segundoApellido" value="@miembroDeLaComunidad.segundoApellido" readonly /><br /><br />
-                                    <input asp-for="@miembroDeLaComunidad.genero" value="@miembroDeLaComunidad.genero" readonly />
-                                    <input asp-for="@miembroDeLaComunidad.email" value="@miembroDeLaComunidad.email" readonly />
-                                    <input type="hidden" asp-for="@Model.curso" value="@curso" />
+                                    <input asp-for="@nombre" value="@nombre" readonly /><br /><br />
+                                    <input asp-for="@primerApellido" value="@primerApellido" readonly /><br /><br />
+                                    <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
+                                    <input asp-for="@email" value="@email" readonly />
+                                    <input type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
+                                    <input asp-for="@email" value="@genero" readonly />
+                                    
                                 </div>
                                 <div class="card-columns">
-                                    <input type="radio" asp-for="@Model.participanteExterno.genero" value="Femenino" readonly />Femenino<br />
-                                    <input type="radio" asp-for="@Model.participanteExterno.genero" value="Masculino" readonly />Masculino<br />
-                                    <input type="radio" asp-for="@Model.participanteExterno.genero" value="Otro" readonly />Otro<br />
+                                    <input asp-for="@Model.participanteExterno.genero" value="@genero" type="radio" readonly />Femenino<br />
+                                    <input asp-for="@Model.participanteExterno.genero" value="@genero" type="radio" readonly />Masculino<br />
+                                    <input asp-for="@Model.participanteExterno.genero" value="@genero" type="radio" readonly />Otro<br />
                                 </div>
                                 <div class="col-lg-12 text-center">
-                                    <a asp-page="./PagarCurso" asp-route-estudiante="@miembroDeLaComunidad" asp-route-nombreCurso="@curso" asp-route-esMiembro="@esMiembro" class="primary-btn"> Confirmar </a>
+                                    <button class="primary-btn">Confirmar</button>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +75,7 @@
                                        placeholder="Tu email"
                                        type="email"
                                        required="" />
-                                <input  type="hidden" asp-for="@Model.curso" value="@curso" />
+                                <input  type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
 
                              </div>
                             <div class="card-columns">
@@ -75,10 +85,12 @@
                             </div>
                             </div>
                             <div class="col-lg-12 text-center">
-                                <a asp-page="./PagarCurso" asp-route-estudiante="@Model.participanteExterno" asp-route-nombreCurso="@curso" asp-route-esMiembro="@esMiembro" class="primary-btn"> Confirmar </a>
+                                <button class="primary-btn">Confirmar</button>
                             </div>
                          
                     }
+                </form>
+
               </div>
             </div>
  
