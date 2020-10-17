@@ -24,7 +24,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             //ViewData["archivos"] = archivos;
 
         }
-        public void OnPostPatito() {
+        public void OnPost() {
 
         }
     }

@@ -2,9 +2,9 @@
 @model PIBasesISGrupo1.Pages.Curso.CrearCursoModel
 @{
     ViewData["Title"] = "CrearCurso";
-   // var materiales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["materiales"];
-    //var archivos = (List<Microsoft.AspNetCore.Http.IFormFile>)ViewData["materiales"];
-    
+    // var materiales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["materiales"];
+    var archivos = (List<Microsoft.AspNetCore.Http.IFormFile>)ViewData["materiales"];
+
 }
 
 <head>
@@ -42,6 +42,7 @@
 </head>
 
 <body>
+
     <h2> Cree un curso: @ViewData["nombreCurso"]</h2>
     <div class="comment-form">
         <h4>Inserte nuevas secciones para el curso </h4>
@@ -71,33 +72,29 @@
                         <th scope="col">Estado</th>
                     </tr>
                 </thead>
-                <tbody id="filaTabla">
-
-
-                </tbody>
+                <tbody id="filaTabla"></tbody>
             </table>
-            
+
         </div>
 
-       
+
     </div>
     <div id="formEnviar">
-        
+
         @{
-           
+
+
+
         }
 
     </div>
 
+
+    <form method="post" enctype="multipart/form-data">
         <script>
-
-          
-
             var contador = 0;
             var seAgregoMaterial = true;
             function mostrarSecciones() {
-
-                
                 if (seAgregoMaterial) {
                     var fila = document.getElementById("filaTabla");
 
@@ -107,7 +104,6 @@
                     var td3 = document.createElement("td");
                     var td4 = document.createElement("td");
 
-                    
                     var ul = document.createElement("ul");
                     ul.id = ("lista" + contador);
 
@@ -118,10 +114,14 @@
                     td1.appendChild(parrafo);
                     td2.id = ("columna2" + contador);
                     td4.id = ("columna4" + contador);
-                    td2.innerHTML = `<input id="file` + contador + `"type="file" asp-for="@Model.archivos" multiple onchange="javascript:updateList()" />`;
-                   
+                    @{ 
+
+                    }
+                    td2.innerHTML = `< input id = "file` + contador + `"type = "file" asp-for= "@Model.archivos" multiple onchange = "javascript:updateList()" />`;
+                 
+                    
+
                     td4.innerHTML = `<input id="estado` + contador + `"type="submit" class="primary-btn3 text-uppercase enroll rounded-0" value="Confirmar"  onclick="confirmar()"/>`;
-                  
 
                     contador++;
                     td3.appendChild(ul);
@@ -132,7 +132,7 @@
                     fila.appendChild(tr);
                     seAgregoMaterial = false;
                 }
-               
+
 
             }
             updateList = function () {
@@ -152,21 +152,21 @@
                     if (r == true) {
                         document.getElementById("columna2" + (contador - 1)).innerHTML = "Materiales agregados";
                         document.getElementById("columna4" + (contador - 1)).innerHTML = "Finalizada";
-                        enviarSeccion() 
-();
+                        enviarSeccion();
+
                     }
                 } else {
                     alert("Debe agregar materiales para poder confirmar");
                 }
-                
+
             }
             function enviarSeccion() {
-                
-            }       
 
-
+            }
         </script>
+        <button class="primary-btn2 text-uppercase enroll rounded-0">Funciona</button>
 
+    </form>
 
 
 
