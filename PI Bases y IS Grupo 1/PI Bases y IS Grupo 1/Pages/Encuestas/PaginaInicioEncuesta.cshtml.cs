@@ -31,14 +31,17 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         {
             PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
             RespuestasHandler accesoDatosRespuesta = new RespuestasHandler();
-            List<PreguntaModel> listaPreguntas;
-            listaPreguntas = accesoDatosPregunta.obtenerPreguntas(idEncuesta);
+
+            List<PreguntaModel> listaPreguntas = accesoDatosPregunta.obtenerPreguntas(idEncuesta); ;
+            List<MostarRespuestaModel> respuestasDeEncuestados = accesoDatosRespuesta.obtenerRespuestas(idEncuesta);
+
             var registroDeRespuestas = new XLWorkbook();
             var hojaDeRespuestas = registroDeRespuestas.Worksheets.Add("Respuestas");
+
             int filaPregunta = 1;
             int columnaPregunta= 1;
+
             hojaDeRespuestas.Cell(1, 1).Value = "Nombre";
-            List<MostarRespuestaModel> respuestasDeEncuestados = accesoDatosRespuesta.obtenerRespuestas(idEncuesta);
 
             foreach (var pregunta in listaPreguntas) {
                 columnaPregunta++;
@@ -48,7 +51,7 @@ namespace PIBasesISGrupo1.Pages.Encuestas
             int filaRespuesta = 2;
             columnaPregunta = 1;
             string preguntaActual = " ";
-            int conseguirNombres = 1;
+            int filaNombres = 1;
 
             foreach (var respuestaEncuestado in respuestasDeEncuestados)
             {
@@ -65,20 +68,19 @@ namespace PIBasesISGrupo1.Pages.Encuestas
                     hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
                 }
 
-                conseguirNombres = conseguirNombres + 1;
+                filaNombres = filaNombres + 1;
 
                 if (columnaPregunta == 2)
                 {
-                    hojaDeRespuestas.Cell(conseguirNombres, 1).Value = respuestaEncuestado.correoEncuestado;
+                    hojaDeRespuestas.Cell(filaNombres, 1).Value = respuestaEncuestado.correoEncuestado;
                 }           
             }
 
-            var stream = new MemoryStream();
-            registroDeRespuestas.SaveAs(stream);
-            var content = stream.ToArray();
-            string excelContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+            var datosEnMemoria = new MemoryStream();
+            registroDeRespuestas.SaveAs(datosEnMemoria);
+            var contenido = datosEnMemoria.ToArray();
 
-            return File(content, excelContentType, "Respuestas.xlsx");
+            return File(contenido, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Respuestas.xlsx");
         }
 
 
