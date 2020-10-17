@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using Microsoft.AspNetCore.Http;
-
+using Newtonsoft.Json;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
@@ -47,23 +47,30 @@ namespace PIBasesISGrupo1.Pages.Curso
             return vista;
         }
 
-        public IActionResult OnPost()
+        public virtual Microsoft.AspNetCore.Mvc.RedirectToPageResult OnPost()
         {
             try {
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null)
                 {
+                    TempData["estudiante"] = miembroDeLaComunidad;
                     var routeValues = new { estudiante = miembroDeLaComunidad, nombreCurso = curso.nombre, esMiembro = true };
                     return base.RedirectToPage("PagarCurso", routeValues);
                 }
-                else
-                {
-                    return RedirectToPage("PagarCurso", routeValues: new { estudiante = participanteExterno, nombreCurso = curso.nombre , esMiembro = true });
+                else {
+                    TempData["nombreCurso"] = curso.nombre;
+                    TempData["nombre"]= participanteExterno.nombre;
+                    TempData["primerApellido"] = participanteExterno.primerApellido;
+                    TempData["segundoApellido"] = participanteExterno.segundoApellido;
+                    TempData["email"] = participanteExterno.email;
+                    TempData["genero"] = participanteExterno.genero;
+                     
                 }
+               
             }
             catch {
             }
-            return RedirectToAction("~/Curso/InscribirmeCurso");
+            return RedirectToPage("PagarCurso", routeValues: new { esMiembro = true }); ;
         }
     }
 }

@@ -2,6 +2,13 @@
 @model PIBasesISGrupo1.Pages.Curso.PagarCursoModel
 @{
     ViewData["Title"] = "PagarCurso";
+    var nombre = (string)TempData["nombre"];
+    var primerApellido = (string)TempData["primerApellido"];
+    var segundoApellido = (string)TempData["segundoApellido"];
+    var email = (string)TempData["email"];
+    var genero = (string)TempData["genero"];
+    var nombreDeCurso = (string)TempData["nombreCurso"];
+     
 }
 
 <h2>Pagar Curso</h2>
@@ -12,6 +19,6 @@
       enctype="multipart/form-data">
     <strong>Subir comprobante:</strong> <input asp-for="@Model.comprobante" type="file" class="btn btn alert-info" />
     <div class="col-lg-12 text-center">
-        <button class="primary-btn"  asp-route-estudiante="@ViewData["estudiante"]" asp-route-nombreCurso="@ViewData["nombreCurso"]" asp-route-esMiembro="@ViewData["esMiembro"]" asp-page-handler="AñadirEstudiante">Confirmar</button>
+        <button class="primary-btn"  asp-route-nombre="@nombre" asp-route-primerApellido="@primerApellido" asp-route-segundoApellido="@segundoApellido" asp-route-email="@email" asp-route-genero="@genero" asp-route-nombreCurso="@nombreDeCurso" asp-route-esMiembro="@ViewData["esMiembro"]" asp-page-handler="AñadirEstudiante">Confirmar</button>
     </div>
 </form>

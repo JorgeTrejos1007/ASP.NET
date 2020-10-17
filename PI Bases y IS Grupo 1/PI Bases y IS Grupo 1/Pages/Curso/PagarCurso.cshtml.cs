@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using Microsoft.AspNetCore.Http;
-
+using Newtonsoft.Json;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
@@ -17,16 +17,18 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         [BindProperty]
         public IFormFile comprobante { get; set; }
-
-        public IActionResult OnGet(Miembro estudiante, string nombreCurso, bool esMiembro)
+        private Miembro estudiante { get; set; }
+        public IActionResult OnGet(bool esMiembro)
         {
-            ViewData["estudiante"] = estudiante;
-            ViewData["nombreCurso"] = nombreCurso;
+             
+           
             ViewData["esMiembro"] = esMiembro;
+            
+            
             return Page();
         }
-
-        public IActionResult OnPostAñadirEstudiante (Miembro estudiante, string nombreCurso, bool esMiembro)
+        [HttpPost]
+        public IActionResult OnPostAñadirEstudiante(string nombre,string primerApellido,   string segundoApellido, string email,string genero , string nombreCurso, bool esMiembro)
         {
             try
             {
@@ -35,11 +37,11 @@ namespace PIBasesISGrupo1.Pages.Curso
                     MiembroHandler accesoDatos = new MiembroHandler();
                     if (esMiembro)
                     {
-                        if (accesoDatos.registrarEstudiante(estudiante.email))
+                        if (accesoDatos.registrarEstudiante(email))
                         {
                             TempData["mensaje"] = "Se ha logrado inscribir con exito";
                             TempData["exitoAlEditar"] = true;
-                            accesoDatos.inscribirEstudianteACurso(estudiante.email, nombreCurso);
+                            accesoDatos.inscribirEstudianteACurso(email, nombreCurso);
                         }
                         else
                         {
@@ -53,16 +55,22 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                         string codigo = obtenerCodigoDeCurso();
                         estudiante.password = codigo;
+                        estudiante.nombre = nombre;
+                        estudiante.primerApellido = primerApellido;
+                        estudiante.segundoApellido = segundoApellido;
+                        estudiante.email = email;
+                        estudiante.genero = genero;
+
                         if (accesoDatos.crearEstudianteComoParticipanteExterno(estudiante))
                         {
                             TempData["mensaje"] = "Se ha logrado inscribir con exito, este es su codigo para el Curso: " + codigo;
                             TempData["exitoAlEditar"] = true;
-                            accesoDatos.registrarEstudiante(estudiante.email);
+                            bool exito=  accesoDatos.registrarEstudiante(estudiante.email);
                             accesoDatos.inscribirEstudianteACurso(estudiante.email, nombreCurso);
                         }
                         else
                         {
-                            TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                            TempData["mensaje"] = "Ha ocurrido un error en el registro";
                             TempData["exitoAlEditar"] = false;
                         }
                     }
