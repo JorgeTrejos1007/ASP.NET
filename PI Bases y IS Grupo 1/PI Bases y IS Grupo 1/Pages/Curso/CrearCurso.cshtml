@@ -2,6 +2,9 @@
 @model PIBasesISGrupo1.Pages.Curso.CrearCursoModel
 @{
     ViewData["Title"] = "CrearCurso";
+   // var materiales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["materiales"];
+    //var archivos = (List<Microsoft.AspNetCore.Http.IFormFile>)ViewData["materiales"];
+    
 }
 
 <head>
@@ -39,7 +42,7 @@
 </head>
 
 <body>
-    <h2> Cree un curso</h2>
+    <h2> Cree un curso: @ViewData["nombreCurso"]</h2>
     <div class="comment-form">
         <h4>Inserte nuevas secciones para el curso </h4>
         <form>
@@ -73,10 +76,17 @@
 
                 </tbody>
             </table>
-
+            
         </div>
 
        
+    </div>
+    <div id="formEnviar">
+        
+        @{
+           
+        }
+
     </div>
 
         <script>
@@ -108,9 +118,10 @@
                     td1.appendChild(parrafo);
                     td2.id = ("columna2" + contador);
                     td4.id = ("columna4" + contador);
-                    td2.innerHTML = `<input id="file` + contador + `"type="file"  multiple onchange="javascript:updateList()" />`;
+                    td2.innerHTML = `<input id="file` + contador + `"type="file" asp-for="@Model.archivos" multiple onchange="javascript:updateList()" />`;
                    
-                    td4.innerHTML = `<input id="estado` + contador + `"type="button" class="primary-btn3 text-uppercase enroll rounded-0" value="Confirmar" onclick="confirmar()">`                 
+                    td4.innerHTML = `<input id="estado` + contador + `"type="submit" class="primary-btn3 text-uppercase enroll rounded-0" value="Confirmar"  onclick="confirmar()"/>`;
+                  
 
                     contador++;
                     td3.appendChild(ul);
@@ -141,13 +152,17 @@
                     if (r == true) {
                         document.getElementById("columna2" + (contador - 1)).innerHTML = "Materiales agregados";
                         document.getElementById("columna4" + (contador - 1)).innerHTML = "Finalizada";
+                        enviarSeccion() 
+();
                     }
                 } else {
                     alert("Debe agregar materiales para poder confirmar");
                 }
                 
             }
-                     
+            function enviarSeccion() {
+                
+            }       
 
 
         </script>

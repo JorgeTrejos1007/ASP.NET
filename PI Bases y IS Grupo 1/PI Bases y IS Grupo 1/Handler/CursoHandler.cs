@@ -266,7 +266,23 @@ namespace PIBasesISGrupo1.Handler
 
             return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);          
         }
+        public void agregarMaterial(List<MaterialModel> materiales)
+        {
 
+            for (int i = 0; i < materiales.Count; i++)
+            {
+                string consulta = "INSERT INTO Material(nombreMaterialPK,nombreSeccionFK,nombreCursoFK, material, tipoArchivo)"
+                + "VALUES (@nombreMaterial,@nombreSeccion,@nombreCurso,@material,@tipoMaterial)";
+                SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", materiales[i].nombreDeCurso);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", materiales[i].nombreDeSeccion);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreMaterial", materiales[i].nombreMaterial);
+                comandoParaConsulta.Parameters.AddWithValue("@material", obtenerBytes(materiales[i].archivo));
+                comandoParaConsulta.Parameters.AddWithValue("@tipoMaterial", materiales[i].archivo.ContentType);
+                bool exito=baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+
+        }
 
     }
 }
