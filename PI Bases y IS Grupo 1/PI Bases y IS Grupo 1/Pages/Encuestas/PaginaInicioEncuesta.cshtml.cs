@@ -37,40 +37,41 @@ namespace PIBasesISGrupo1.Pages.Encuestas
             var hojaDeRespuestas = registroDeRespuestas.Worksheets.Add("Respuestas");
             int filaPregunta = 1;
             int columnaPregunta= 1;
-            hojaDeRespuestas.Cell(1, 1).Value = "Correo";
+            hojaDeRespuestas.Cell(1, 1).Value = "Nombre";
             List<MostarRespuestaModel> respuestasDeEncuestados = accesoDatosRespuesta.obtenerRespuestas(idEncuesta);
+
             foreach (var pregunta in listaPreguntas) {
                 columnaPregunta++;
-                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;
-                
+                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;              
             }
-
-       
 
             int filaRespuesta = 2;
             columnaPregunta = 1;
             string preguntaActual = " ";
+            int conseguirNombres = 1;
+
             foreach (var respuestaEncuestado in respuestasDeEncuestados)
             {
-
                 if (preguntaActual == respuestaEncuestado.pregunta)
                 {
                     filaRespuesta = filaRespuesta + 1;
                     hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
-                    
                 }
-                else {
+                else
+                {
                     preguntaActual = respuestaEncuestado.pregunta;
                     filaRespuesta = 2;
                     columnaPregunta = columnaPregunta + 1;
                     hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
-                    
                 }
-                
-            }
 
-        
-           
+                conseguirNombres = conseguirNombres + 1;
+
+                if (columnaPregunta == 2)
+                {
+                    hojaDeRespuestas.Cell(conseguirNombres, 1).Value = respuestaEncuestado.correoEncuestado;
+                }           
+            }
 
             var stream = new MemoryStream();
             registroDeRespuestas.SaveAs(stream);

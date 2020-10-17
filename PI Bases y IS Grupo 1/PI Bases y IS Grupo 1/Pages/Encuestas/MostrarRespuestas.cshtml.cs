@@ -43,11 +43,5 @@ namespace PIBasesISGrupo1.Pages.Encuestas
                 ViewData["Mensaje"] = "Aun no hay respuestas";
             }
         }
-
-
-
-       
-
-
     }
 }
