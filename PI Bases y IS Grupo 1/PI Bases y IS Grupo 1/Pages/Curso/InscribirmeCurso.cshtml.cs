@@ -29,11 +29,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null) {
 
-                    ViewData["nombre"] = miembroDeLaComunidad.nombre;
-                    ViewData["primerApellido"] = miembroDeLaComunidad.primerApellido;
-                    ViewData["segundoApellido"] = miembroDeLaComunidad.segundoApellido;
-                    ViewData["genero"] = miembroDeLaComunidad.genero;
-                    ViewData["email"] = miembroDeLaComunidad.email;
+                    ViewData["miembroDeLaComunidad"] = miembroDeLaComunidad;
                     ViewData["esMiembro"] = true;
                 }
                 else {

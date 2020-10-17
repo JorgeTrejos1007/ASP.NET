@@ -5,11 +5,7 @@
     var mensaje = (string)TempData["mensaje"];
     var esMiembro = (bool)ViewData["esMiembro"];
     var curso = (string)ViewData["nombreCurso"];
-    var nombre = (string)ViewData["nombre"];
-    var primerApellido = (string)ViewData["primerApellido"];
-    var segundoApellido = (string)ViewData["segundoApellido"];
-    var genero = (string)ViewData["genero"];
-    var email = (string)ViewData["email"];
+    var miembroDeLaComunidad = (PIBasesISGrupo1.Models.Miembro)ViewData["miembroDeLaComunidad"];
 }
 
  
@@ -17,10 +13,6 @@
          <div class="col-lg-4 offset-lg-1">
               <div class="register_form">
                 <h3>Incribirme  a un Curso</h3>
-                <form class="form_area"
-                      id="myForm"
-                      method="post"
-                      enctype="multipart/form-data">
                     @if (esMiembro)
                     {
                         <div class="row">
@@ -28,11 +20,11 @@
                                 <div class="row">
 
                                     <input asp-for="@curso" value="@curso" /><br /><br />
-                                    <input asp-for="@nombre" value="@nombre" readonly /><br /><br />
-                                    <input asp-for="@primerApellido" value="@primerApellido" readonly /><br /><br />
-                                    <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
-                                    <input asp-for="@genero" value="@genero" readonly />
-                                    <input asp-for="@email" value="@email" readonly />
+                                    <input asp-for="@miembroDeLaComunidad.nombre" value="@miembroDeLaComunidad.nombre" readonly /><br /><br />
+                                    <input asp-for="@miembroDeLaComunidad.primerApellido" value="@miembroDeLaComunidad.primerApellido" readonly /><br /><br />
+                                    <input asp-for="@miembroDeLaComunidad.segundoApellido" value="@miembroDeLaComunidad.segundoApellido" readonly /><br /><br />
+                                    <input asp-for="@miembroDeLaComunidad.genero" value="@miembroDeLaComunidad.genero" readonly />
+                                    <input asp-for="@miembroDeLaComunidad.email" value="@miembroDeLaComunidad.email" readonly />
                                     <input type="hidden" asp-for="@Model.curso" value="@curso" />
                                 </div>
                                 <div class="card-columns">
@@ -41,7 +33,7 @@
                                     <input type="radio" asp-for="@Model.participanteExterno.genero" value="Otro" readonly />Otro<br />
                                 </div>
                                 <div class="col-lg-12 text-center">
-                                    <button class="primary-btn">Confirmar</button>
+                                    <a asp-page="./PagarCurso" asp-route-estudiante="@miembroDeLaComunidad" asp-route-nombreCurso="@curso" asp-route-esMiembro="@esMiembro" class="primary-btn"> Confirmar </a>
                                 </div>
                             </div>
                         </div>
@@ -83,12 +75,10 @@
                             </div>
                             </div>
                             <div class="col-lg-12 text-center">
-                                <button class="primary-btn">Confirmar</button>
+                                <a asp-page="./PagarCurso" asp-route-estudiante="@Model.participanteExterno" asp-route-nombreCurso="@curso" asp-route-esMiembro="@esMiembro" class="primary-btn"> Confirmar </a>
                             </div>
                          
                     }
-                </form>
-
               </div>
             </div>
  
