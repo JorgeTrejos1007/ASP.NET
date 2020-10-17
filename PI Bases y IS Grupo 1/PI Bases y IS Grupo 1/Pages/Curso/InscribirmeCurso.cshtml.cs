@@ -29,11 +29,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null) {
 
-                    ViewData["nombre"] = miembroDeLaComunidad.nombre;
-                    ViewData["primerApellido"] = miembroDeLaComunidad.primerApellido;
-                    ViewData["segundoApellido"] = miembroDeLaComunidad.segundoApellido;
-                    ViewData["genero"] = miembroDeLaComunidad.genero;
-                    ViewData["email"] = miembroDeLaComunidad.email;
+                    ViewData["miembroDeLaComunidad"] = miembroDeLaComunidad;
                     ViewData["esMiembro"] = true;
                 }
                 else {
@@ -45,25 +41,6 @@ namespace PIBasesISGrupo1.Pages.Curso
                 vista = Redirect("~/Curso/InscribirmeCurso");
             }
             return vista;
-        }
-
-        public IActionResult OnPost()
-        {
-            try {
-                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
-                if (miembroDeLaComunidad != null)
-                {
-                    var routeValues = new { estudiante = miembroDeLaComunidad, nombreCurso = curso.nombre, esMiembro = true };
-                    return base.RedirectToPage("PagarCurso", routeValues);
-                }
-                else
-                {
-                    return RedirectToPage("PagarCurso", routeValues: new { estudiante = participanteExterno, nombreCurso = curso.nombre , esMiembro = true });
-                }
-            }
-            catch {
-            }
-            return RedirectToAction("~/Curso/InscribirmeCurso");
         }
     }
 }

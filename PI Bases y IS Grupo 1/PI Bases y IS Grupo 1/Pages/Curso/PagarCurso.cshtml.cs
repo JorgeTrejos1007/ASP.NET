@@ -18,12 +18,11 @@ namespace PIBasesISGrupo1.Pages.Curso
         [BindProperty]
         public IFormFile comprobante { get; set; }
 
-        public IActionResult OnGet(Miembro estudiante, string nombreCurso, bool esMiembro)
+        public void OnGet(Miembro estudiante, string nombreCurso, bool esMiembro)
         {
             ViewData["estudiante"] = estudiante;
             ViewData["nombreCurso"] = nombreCurso;
             ViewData["esMiembro"] = esMiembro;
-            return Page();
         }
 
         public IActionResult OnPostAñadirEstudiante (Miembro estudiante, string nombreCurso, bool esMiembro)
