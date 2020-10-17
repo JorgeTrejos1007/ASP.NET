@@ -27,16 +27,16 @@
                     @{
                         if (@miembro.byteArrayImage != null)
                         {
-                            <img class="member_img" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" asp-append-version="true" />
+                            <img id="imagenMiembro" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" asp-append-version="true" />
                         }
                         else
                         {
-                            <img class="member_img" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                            <img id="imagenMiembro" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
                         }
                     }
                 </div>
                 <div class="col-lg-8">
-                    <div class="testi_text">
+                    <div class="testi_text"  id="textoMiembro">
 
                         @{
                             if (@miembro.segundoApellido != null)
