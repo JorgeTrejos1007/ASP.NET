@@ -31,11 +31,14 @@ namespace PIBasesISGrupo1.Filters
 
 
             //context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion");
-            //context.Result = new RedirectResult("~/Curso/ProponerCurso");
+            if (1!= nivelDePermisoDeVista) {
+                context.Result = new RedirectResult("~/Index");
+            }
 
 
 
-            
+
+
 
 
             //throw new NotImplementedException();
