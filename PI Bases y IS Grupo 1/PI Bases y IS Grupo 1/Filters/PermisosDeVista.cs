@@ -15,11 +15,14 @@ namespace PIBasesISGrupo1.Filters
     [AttributeUsage(AttributeTargets.Class,AllowMultiple = false)]
     public class PermisosDeVista : AuthorizeAttribute, IAuthorizationFilter 
     {
-        private int nivelDePermisoDeVista;
         
-        public PermisosDeVista(int nivel)
+        private string[] rolesPerimitidos;
+        public PermisosDeVista(params string[] roles)
         {
-            nivelDePermisoDeVista = nivel;
+
+            rolesPerimitidos = roles;
+
+            //nivelDePermisoDeVista = nivel;
 
 
         }
@@ -31,8 +34,8 @@ namespace PIBasesISGrupo1.Filters
 
 
             //context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion");
-            if (1!= nivelDePermisoDeVista) {
-                context.Result = new RedirectResult("~/Index");
+            if (rolesPerimitidos.Contains(miembroSesionActual.tipoDeUsuario)==false) {
+                context.Result = new RedirectResult("~/Error/PermisosInsuficientes");
             }
 
 
