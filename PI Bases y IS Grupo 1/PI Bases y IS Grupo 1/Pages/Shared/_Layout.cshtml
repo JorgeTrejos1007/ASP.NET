@@ -85,13 +85,13 @@
                             </li>
 
                             @{
-                     
-                               
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
+                                </li>
+
                                 if (Context.Session.GetString("User") != null)
                                 {
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
-                                    </li>
+
 
                                     <li class="nav-item">
                                         <a class="nav-link" href="/Catalogos/EditarCatalogo">Catalago</a>
