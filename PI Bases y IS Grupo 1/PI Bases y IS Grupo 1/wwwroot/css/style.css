@@ -179,7 +179,7 @@ button:focus {
 ============================================================================================ */
 .main_title {
     text-align: center;
-    margin-bottom: 85px;
+    margin-bottom: 40px;
 }
 
 @media (max-width: 991px) {
