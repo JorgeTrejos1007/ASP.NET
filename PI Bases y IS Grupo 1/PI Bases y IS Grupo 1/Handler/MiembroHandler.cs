@@ -15,6 +15,8 @@ namespace PIBasesISGrupo1.Handler
 {
     public class MiembroHandler
     {
+        BaseDeDatosHandler baseDatos = new BaseDeDatosHandler();
+
         private ConexionModel conexionBD;
         private SqlConnection conexion;
         public MiembroHandler()
@@ -40,6 +42,7 @@ namespace PIBasesISGrupo1.Handler
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario";
             DataTable tablaMiembro = crearTablaConsulta(consulta);
+
             
             foreach (DataRow columna in tablaMiembro.Rows)
             {
@@ -64,6 +67,32 @@ namespace PIBasesISGrupo1.Handler
 
             }
             return miembros;
+        }
+
+        public Miembro obtenerDatosDeUnMiembro(string email) {
+            Miembro miembro = new Miembro();
+            string consulta = "SELECT * FROM Usuario WHERE email=@email";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+        
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            conexion.Open();
+
+            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+            lectorDeDatos.Read();
+            miembro.nombre = (string)lectorDeDatos["nombre"];
+            miembro.primerApellido = (string)lectorDeDatos["primerApellido"];
+            miembro.segundoApellido = (string)lectorDeDatos["segundoApellido"];
+            miembro.genero = (string)lectorDeDatos["genero"];
+            miembro.pais = (string)lectorDeDatos["pais"];
+            miembro.tipoArchivo = (string)lectorDeDatos["tipoArchivo"];
+            //miembro.byteArrayImage = (byte[])(lectorDeDatos.IsDBNull(["archivoImagen"])) ? null : (byte[])["archivoImagen"],
+            conexion.Close();
+            miembro.idiomas = obtenerIdiomas(email);
+            miembro.habilidades = obtenerHabilidades(email);
+           
+            
+
+            return miembro;
         }
 
         private string[] obtenerIdiomas(string email) {

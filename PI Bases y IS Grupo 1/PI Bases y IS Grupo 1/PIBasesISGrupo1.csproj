@@ -9,6 +9,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\core\bootstrap.min.js" />
+    <None Include="wwwroot\js\core\jquery.3.2.1.min.js" />
+    <None Include="wwwroot\js\core\plugins\bootstrap-datepicker.js" />
+    <None Include="wwwroot\js\core\plugins\bootstrap-switch.js" />
+    <None Include="wwwroot\js\core\plugins\jquery.sharrre.js" />
+    <None Include="wwwroot\js\core\plugins\nouislider.min.js" />
+    <None Include="wwwroot\js\core\popper.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Page Include="Images\imagenGenerica.jpeg" />
   </ItemGroup>
 
