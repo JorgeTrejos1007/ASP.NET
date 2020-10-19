@@ -50,6 +50,15 @@ body {
     width: 200px;
 }
 
+
+.member_img-perfil {
+    height: 200px;
+    width: 200px;
+    margin-right: 100px;
+    border-radius:10px;
+}
+
+
 /*----------------------------------------------------*/
 
 /*Cursos */
