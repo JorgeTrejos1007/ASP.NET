@@ -10,9 +10,11 @@ using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using PIBasesISGrupo1.Filters;
+
 namespace PIBasesISGrupo1.Pages.Curso
 {
-
+    [PermisosDeVista("Miembro de Nucleo")]
     public class AprobarCursoModel : PageModel
     {
     

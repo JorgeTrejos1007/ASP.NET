@@ -56,11 +56,38 @@ namespace PIBasesISGrupo1.Handler
 
         public bool ejecutarComandoParaConsulta(SqlCommand ComandoParaConsulta) {
             conexion.Open();
-            bool exito = ComandoParaConsulta.ExecuteNonQuery() >= 1;
+            bool exito = true;
+            try
+            {
+                exito = ComandoParaConsulta.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                exito = false;
+            }
             conexion.Close();
             return exito;
         }
 
 
+        public int saberSiExisteTupla(SqlCommand ComandoParaConsulta)
+        {
+            conexion.Open();
+            int existe = 0;
+            try
+            {
+                existe = (int)ComandoParaConsulta.ExecuteScalar();
+            }
+            catch
+            {
+                existe = 0;
+            }
+            conexion.Close();
+            return existe;
+        }
+
     }
+
+
 }
+

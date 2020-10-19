@@ -9,9 +9,11 @@ using PIBasesISGrupo1.Models;
 using System.Net.Mail;
 using ClosedXML.Excel;
 using System.IO;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Encuestas
 {
+    [PermisosDeVista("Miembro de Nucleo","Coordinador")]
     public class PaginaInicioEncuestaModel : PageModel
     {
 

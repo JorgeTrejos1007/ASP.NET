@@ -29,23 +29,18 @@ namespace PIBasesISGrupo1.Filters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            
-             Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
-
-
-            //context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion");
-            if (rolesPerimitidos.Contains(miembroSesionActual.tipoDeUsuario)==false) {
-                context.Result = new RedirectResult("~/Error/PermisosInsuficientes");
+            try
+            {
+                Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
+                if (rolesPerimitidos.Contains(miembroSesionActual.tipoDeUsuario) == false)
+                {
+                    context.Result = new RedirectResult("~/Error");
+                }
             }
+            catch {
+                context.Result = new RedirectResult("~/Login/Login");
 
-
-
-
-
-
-
-            //throw new NotImplementedException();
-
+            }
         }
     }
 

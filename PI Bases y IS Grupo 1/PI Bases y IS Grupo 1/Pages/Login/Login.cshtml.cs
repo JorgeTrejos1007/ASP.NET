@@ -38,15 +38,14 @@ namespace PIBasesISGrupo1.Pages.Login
         {
             
             MiembroHandler accesoDatos = new MiembroHandler();
-            Miembro datosDelmiembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
-            IActionResult vista;
-            
-            if (datosDelmiembro != null)
-            {
+            LoginHandler login = new LoginHandler();
 
+            IActionResult vista;
+            if (login.validarUsuario(email.Trim(), password.Trim()))
+            {
+                Miembro datosDelmiembro = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
                 Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro);
 
-                //var datos = Sesion.GetObjectFromJson<Miembro>(HttpContext.Session,"User");
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelmiembro.email));
                 identity.AddClaim(new Claim(ClaimTypes.Name, datosDelmiembro.nombre));

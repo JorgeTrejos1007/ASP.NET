@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using Microsoft.AspNetCore.Http;
-
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
+   
     public class InscribirmeCursoModel : PageModel
     {
         [BindProperty]
