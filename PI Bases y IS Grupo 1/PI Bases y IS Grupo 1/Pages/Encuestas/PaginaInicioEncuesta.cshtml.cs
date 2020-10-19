@@ -41,45 +41,34 @@ namespace PIBasesISGrupo1.Pages.Encuestas
             int filaPregunta = 1;
             int columnaPregunta= 1;
 
-            hojaDeRespuestas.Cell(1, 1).Value = "Nombre";
-
-            foreach (var pregunta in listaPreguntas) {
+            foreach (var pregunta in listaPreguntas) {   
+                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;
                 columnaPregunta++;
-                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;              
             }
 
             int filaRespuesta = 2;
-            columnaPregunta = 1;
+            columnaPregunta = 0;
             string preguntaActual = " ";
-            int filaNombres = 1;
 
             foreach (var respuestaEncuestado in respuestasDeEncuestados)
             {
                 if (preguntaActual == respuestaEncuestado.pregunta)
                 {
                     filaRespuesta = filaRespuesta + 1;
-                    hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
                 }
                 else
                 {
                     preguntaActual = respuestaEncuestado.pregunta;
                     filaRespuesta = 2;
                     columnaPregunta = columnaPregunta + 1;
-                    hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
+                    
                 }
-
-                filaNombres = filaNombres + 1;
-
-                if (columnaPregunta == 2)
-                {
-                    hojaDeRespuestas.Cell(filaNombres, 1).Value = respuestaEncuestado.correoEncuestado;
-                }           
+                hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
             }
 
             var datosEnMemoria = new MemoryStream();
             registroDeRespuestas.SaveAs(datosEnMemoria);
             var contenido = datosEnMemoria.ToArray();
-
             return File(contenido, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Respuestas.xlsx");
         }
 
