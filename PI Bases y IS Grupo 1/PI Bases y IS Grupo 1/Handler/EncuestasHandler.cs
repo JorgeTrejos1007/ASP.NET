@@ -34,15 +34,15 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearEncuesta(EncuestaModel encuesta)
         {
-            string consulta = "INSERT INTO Encuestas(topicoFK, nombreEncuesta, autor, vigencia) "
-            + "VALUES (@topico,@nombreEncuesta,@autor,@vigencia) ";
+            string consulta = "INSERT INTO Encuesta(emailMiembroDeNucleoFK, topicoFK, nombreEncuesta, vigencia) "
+            + "VALUES (@correo,@topico,@nombreEncuesta,@vigencia) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
             
             comandoParaConsulta.Parameters.AddWithValue("@topico", encuesta.topico);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEncuesta", encuesta.nombreEncuesta);
-            comandoParaConsulta.Parameters.AddWithValue("@autor", encuesta.autor);
+            comandoParaConsulta.Parameters.AddWithValue("@correo", encuesta.correo);
             comandoParaConsulta.Parameters.AddWithValue("@vigencia", encuesta.vigencia);
 
             conexion.Open();
@@ -60,10 +60,10 @@ namespace PIBasesISGrupo1.Handler
                 encuestas.Add(
                 new EncuestaModel
                 {
-                    id = Convert.ToInt32(columna["idEncuesta"]),
+                    id = Convert.ToInt32(columna["idEncuestaPK"]),
                     topico = Convert.ToString(columna["topicoFK"]),
                     nombreEncuesta = Convert.ToString(columna["nombreEncuesta"]),
-                    autor = Convert.ToString(columna["autor"]),
+                    correo = Convert.ToString(columna["emailMiembroDeNucleoFK"]),
                     vigencia = Convert.ToInt32(columna["vigencia"])
                 });
 
@@ -72,7 +72,7 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool modificarEncuesta(EncuestaModel encuesta)
         {
-            string consulta = "UPDATE Encuestas SET topicoFK=@topico, nombreEncuesta=@nombreEncuesta, autor=@autor, vigencia=@vigencia WHERE idEncuesta=@id"; 
+            string consulta = "UPDATE Encuesta SET topicoFK=@topico, nombreEncuesta=@nombreEncuesta, emailMiembroDeNucleoFK=@emailMiembroDeNucleoFK, vigencia=@vigencia WHERE idEncuestaPK=@id"; 
             
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -80,7 +80,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@id", encuesta.id);
             comandoParaConsulta.Parameters.AddWithValue("@topico", encuesta.topico);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEncuesta", encuesta.nombreEncuesta);
-            comandoParaConsulta.Parameters.AddWithValue("@autor", encuesta.autor);
+            comandoParaConsulta.Parameters.AddWithValue("@emailMiembroDeNucleoFK", encuesta.correo);
             comandoParaConsulta.Parameters.AddWithValue("@vigencia", encuesta.vigencia);
 
             conexion.Open();
@@ -92,7 +92,7 @@ namespace PIBasesISGrupo1.Handler
         public EncuestaModel obtenerTuplaEncuesta(int id)
         {
             EncuestaModel encuesta =  new EncuestaModel();
-            string consulta = "SELECT * FROM Encuestas WHERE idEncuesta=@id";
+            string consulta = "SELECT * FROM Encuesta WHERE idEncuestaPK=@id";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@id", id);
@@ -103,14 +103,14 @@ namespace PIBasesISGrupo1.Handler
             encuesta.id = id;
             encuesta.topico = (string)lectorDeDatos["topicoFK"];
             encuesta.nombreEncuesta = (string)lectorDeDatos["nombreEncuesta"];
-            encuesta.autor = (string)lectorDeDatos["autor"];
+            encuesta.correo = (string)lectorDeDatos["emailMiembroDeNucleoFK"];
             encuesta.vigencia = (int)lectorDeDatos["vigencia"];
             conexion.Close();
             return encuesta;
         }
 
         public bool borrarEncuesta(int id) {
-            string consulta = "DELETE FROM Encuestas WHERE idEncuesta=@id";
+            string consulta = "DELETE FROM Encuesta WHERE idEncuestaPK=@id";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@id", id);
@@ -120,7 +120,7 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
-        public List<string> obtenerTodosLosEmails()        {            List<string> miembrosEmail = new List<string>();            string consulta = "SELECT email FROM Usuario";            DataTable tablaResultado = crearTablaConsulta(consulta);            foreach (DataRow columna in tablaResultado.Rows)            {                miembrosEmail.Add(Convert.ToString(columna["email"]));            }            return miembrosEmail;        }
+        public List<string> obtenerTodosLosEmails()        {            List<string> miembrosEmail = new List<string>();            string consulta = "SELECT email FROM Usuario";            DataTable tablaResultado = crearTablaConsulta(consulta);            foreach (DataRow columna in tablaResultado.Rows)            {                miembrosEmail.Add(Convert.ToString(columna["email"]));            }            return miembrosEmail;        }
 
     }
 }

@@ -6,6 +6,8 @@
     var mensaje = (string)TempData["mensaje"];
 }
 
+
+
 <h2>ProponerCurso</h2>
 <form method="post" enctype="multipart/form-data">
 
@@ -60,7 +62,7 @@
         <br>
         <strong>Favor elegir los Topicos:</strong>
         <br>
-        <select asp-for="@Model.curso.topicos" multiple size="@topicosYCategorias.Count">
+        <select class="mul-select" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
             @foreach (var topicoYCategoria in topicosYCategorias)
             {
 
@@ -71,6 +73,7 @@
 
         </select>
     }
+
     <br>
     <br>
     <br>

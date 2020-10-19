@@ -2,49 +2,51 @@
 @model PIBasesISGrupo1.Pages.Encuestas.MostrarRespuestasModel
 @{
     ViewData["Title"] = "MostrarRespuestas";
-    var respuestas=(List<PIBasesISGrupo1.Models.MostarRespuestaModel>)ViewData["respuestas"];
+    var listaConteoRespuestasPorOpcion = (List<int>)ViewData["listaConteoRespuestasPorOpcion"];
 }
 
 <a asp-page="PaginaInicioEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <h3>Respuestas</h3>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @{
-            if (respuestas.Count !=0)
-            {
-                var index = respuestas[0].preguntaID;
-                <td>
-                    <b><h4>Pregunta: </h4></b><h4>@respuestas[0].pregunta</h4>
-                </td>
-                foreach (var item in @respuestas)
+<h2>Ver respuestas</h2>
+<div class="encuestas-container">
+    @{
+
+        foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
+        {
+        <div class="encuestas__elements">
+
+            @{
+                <h4>Pregunta:</h4>
+                @Html.DisplayFor(modelItem => item.pregunta);
+                <h5>Opcion 1:</h5>
+                <p>
+                    @Html.DisplayFor(modelItem => item.opcion1) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                </p>
+                listaConteoRespuestasPorOpcion.RemoveAt(0);
+                <h5>Opcion 2:</h5>
+                <p>
+                    @Html.DisplayFor(modelItem => item.opcion2) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                </p>
+                listaConteoRespuestasPorOpcion.RemoveAt(0);
+                if (listaConteoRespuestasPorOpcion[0] >= 0)
                 {
-                    <tr>
-                        <td>
-                            @if (index != item.preguntaID)
-                            {
-                                index = item.preguntaID;
-
-                                <b><h4>Pregunta: </h4></b><h4>@Html.DisplayFor(modelItem => item.pregunta)</h4>
-
-
-                            }
-
-                            <b>Nombre: </b>@Html.DisplayFor(modelItem => item.nombre)<br>
-                            <b>Respuesta: </b>@Html.DisplayFor(modelItem => item.respuesta)<br>
-                        </td>
-
-
-
-                    </tr>
+                    <h5>Opcion 3:</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.opcion3) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                    </p>
+                    listaConteoRespuestasPorOpcion.RemoveAt(0);
+                }
+                if (listaConteoRespuestasPorOpcion[0] >= 0)
+                {
+                    <h5>Opcion 4:</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.opcion4) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                    </p>
+                    listaConteoRespuestasPorOpcion.RemoveAt(0);
                 }
             }
+       
+        </div>
         }
-        </tbody>
-    </table>
+    }
+</div>

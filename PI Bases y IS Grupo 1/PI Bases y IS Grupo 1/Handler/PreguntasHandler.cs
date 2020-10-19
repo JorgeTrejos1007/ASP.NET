@@ -35,7 +35,7 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearPregunta(PreguntaModel pregunta)
         {
-            string consulta = "INSERT INTO Preguntas(idEncuestaFK, pregunta, opcion1, opcion2, opcion3, opcion4) "
+            string consulta = "INSERT INTO Pregunta(idEncuestaFK, pregunta, opcion1, opcion2, opcion3, opcion4) "
             + "VALUES (@idEncuestaFK,@pregunta,@opcion1,@opcion2, @opcion3, @opcion4) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -70,7 +70,7 @@ namespace PIBasesISGrupo1.Handler
         public List<PreguntaModel> obtenerPreguntas(int encuestaID)
         {
             List<PreguntaModel> preguntas = new List<PreguntaModel>();
-            string consulta = "SELECT * FROM Preguntas WHERE idEncuestaFK=@encuestaID";
+            string consulta = "SELECT * FROM Pregunta WHERE idEncuestaFK=@encuestaID";
           
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -88,7 +88,7 @@ namespace PIBasesISGrupo1.Handler
                 new PreguntaModel
                 {
                     encuestaID = Convert.ToInt32(columna["idEncuestaFK"]),
-                    preguntaID = Convert.ToInt32(columna["idPregunta"]),
+                    preguntaID = Convert.ToInt32(columna["idPreguntaPK"]),
                     pregunta = Convert.ToString(columna["pregunta"]),
                     opcion1 = Convert.ToString(columna["opcion1"]),
                     opcion2 = Convert.ToString(columna["opcion2"]),
@@ -102,7 +102,7 @@ namespace PIBasesISGrupo1.Handler
 
         public bool borrarPregunta(int idEncuesta, int idPregunta)
         {
-            string consulta = "DELETE FROM Preguntas WHERE idPregunta=@idPreg AND idEncuestaFK=@idEnc";
+            string consulta = "DELETE FROM Pregunta WHERE idPreguntaPK=@idPreg AND idEncuestaFK=@idEnc";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@idPreg", idPregunta);
@@ -117,7 +117,7 @@ namespace PIBasesISGrupo1.Handler
         public PreguntaModel obtenerTuplaPregunta(int idEncuesta, int idPregunta)
         {
             PreguntaModel pregunta = new PreguntaModel();
-            string consulta = "SELECT * FROM Preguntas WHERE idEncuestaFK=@idEncuesta AND idPregunta=@idPregunta ";
+            string consulta = "SELECT * FROM Pregunta WHERE idEncuestaFK=@idEncuesta AND idPreguntaPK=@idPregunta ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@idEncuesta", idEncuesta);
@@ -127,7 +127,7 @@ namespace PIBasesISGrupo1.Handler
             SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
             lectorDeDatos.Read();
             pregunta.encuestaID = (int)lectorDeDatos["idEncuestaFK"];
-            pregunta.preguntaID = (int)lectorDeDatos["idPregunta"];
+            pregunta.preguntaID = (int)lectorDeDatos["idPreguntaPK"];
             pregunta.pregunta = (string)lectorDeDatos["pregunta"];
             pregunta.opcion1 = (string)lectorDeDatos["opcion1"];
             pregunta.opcion2 = (string)lectorDeDatos["opcion2"];
@@ -152,7 +152,7 @@ namespace PIBasesISGrupo1.Handler
 
         public bool modificarPregunta(PreguntaModel pregunta)
         {
-            string consulta = "UPDATE Preguntas SET pregunta=@pregunta, opcion1=@opcion1, opcion2=@opcion2, opcion3=@opcion3, opcion4=@opcion4 WHERE idEncuestaFK=@idEncuesta AND idPregunta=@idPregunta";
+            string consulta = "UPDATE Pregunta SET pregunta=@pregunta, opcion1=@opcion1, opcion2=@opcion2, opcion3=@opcion3, opcion4=@opcion4 WHERE idEncuestaFK=@idEncuesta AND idPreguntaPK=@idPregunta";
 
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
