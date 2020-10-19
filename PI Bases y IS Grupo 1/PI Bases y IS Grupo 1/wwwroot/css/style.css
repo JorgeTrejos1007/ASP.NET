@@ -1,10 +1,11 @@
-@File: Default Styles
-@Author: SPONDON IT
-Author E-mail: info@spondonit.com
-
-This file contains the styling for the actual theme, this
-is the file you need to edit to change the look of the
-theme.
+/*----------------------------------------------------
+@File: Default Styles 
+@Author: SPONDON IT 
+Author E-mail: info@spondonit.com 
+    
+This file contains the styling for the actual theme, this 
+is the file you need to edit to change the look of the 
+theme. 
 ---------------------------------------------------- */
 /*=====================================================================
 @Template Name: Medicare Medical
@@ -179,7 +180,7 @@ button:focus {
 ============================================================================================ */
 .main_title {
     text-align: center;
-    margin-bottom: 40px;
+    margin-bottom: 85px;
 }
 
 @media (max-width: 991px) {
@@ -1499,33 +1500,6 @@ button:focus {
 .testi_item:hover {
     box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
 }
-
-#textoMiembro {
-    height: 100px;
-    margin-top: -50px;
-    margin-left: -155px;
-}
-
-#imagenMiembro {
-    height: 100px;
-    width: 100px;
-    top: -24px;
-    position: relative;
-    /*margin-left: auto;
-    margin-right: auto;
-    
-    */
-}
-
-
-#cuadroPorPersonaDesplegarMiembros {
-    height: 150px;
-    width: 100%;
-    margin-bottom: 20px;
-    background-color: lightsteelblue;
-    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
-}
-
 
 /* End Testimonial Area css
 ============================================================================================ */
@@ -4594,6 +4568,26 @@ h6 {
     }
 }
 
+#textoMiembro {
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -155px;
+}
+
+#imagenMiembro {
+    height: 100px;
+    width: 100px;
+    top: -24px;
+    position: relative;
+}
+
+#cuadroPorPersonaDesplegarMiembros {
+    height: 150px;
+    width: 100%;
+    margin-bottom: 20px;
+    background-color: lightsteelblue;
+    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
+}
 
 /*---------------------------------------------------- */
 
