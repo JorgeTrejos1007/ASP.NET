@@ -4571,18 +4571,24 @@ h6 {
 #imagenMiembro {
     height: 100px;
     width: 100px;
+    margin-top: 10px;
 }
 
 #cuadroDePerfil {
     flex: 1 0 21%; /* explanation below */
     margin: 5px;
-    height: 100px;
-    align-content:center;
+    height: 175px;
+    text-align: center;
+    background-color: #f9f9f9;
 }
 
 #filaDePersonas {
     width:100%;
     margin-bottom:40px;
+}
+
+#nombrePersona {
+    margin-top:20px;
 }
 
 /*---------------------------------------------------- */
