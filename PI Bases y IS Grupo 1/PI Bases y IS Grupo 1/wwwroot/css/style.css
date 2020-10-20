@@ -4568,25 +4568,21 @@ h6 {
     }
 }
 
-#textoMiembro {
-    height: 100px;
-    margin-top: -50px;
-    margin-left: -155px;
-}
-
 #imagenMiembro {
     height: 100px;
     width: 100px;
-    top: -24px;
-    position: relative;
 }
 
-#cuadroPorPersonaDesplegarMiembros {
-    height: 150px;
-    width: 100%;
-    margin-bottom: 20px;
-    background-color: lightsteelblue;
-    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
+#cuadroDePerfil {
+    flex: 1 0 21%; /* explanation below */
+    margin: 5px;
+    height: 100px;
+    align-content:center;
+}
+
+#filaDePersonas {
+    width:100%;
+    margin-bottom:40px;
 }
 
 /*---------------------------------------------------- */
