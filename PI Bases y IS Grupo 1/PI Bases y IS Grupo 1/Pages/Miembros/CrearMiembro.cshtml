@@ -12,113 +12,113 @@
 }
  
 <div class="comment-form">
-    <input   placeholder="Codigo de un Curso"
-           required=""
-           type="text" />
-    <button class="primary-btn">Autocompletar</button>
-    <div class="col-lg-4 offset-lg-1">
-        <div class="register_form">
-            <h3>Registrarme</h3>
-            <form class="form_area"
-                  id="myForm"
-                  method="post"
-                  enctype="multipart/form-data">
+        <form  asp-page-handler="ParticipanteExterno" class="form_area" id="myForm" method="post" enctype="multipart/form-data">
+        <input asp-for="@Model.codigoDeCurso" placeholder="Codigo de un Curso" required="" type="text" />
+        <button class="primary-btn">Autocompletar</button>
+        </form>
+        <div class="col-lg-4 offset-lg-1">
+            <div class="register_form">
+                <h3>Registrarme</h3>
+                <form class="form_area"
+                      id="myForm"
+                      method="post"
+                      enctype="multipart/form-data">
 
-                @if (@mensaje != null)
-                {
-                    if ((bool)TempData["exitoAlEditar"])
+                    @if (@mensaje != null)
                     {
-                        <div class="alert-success">
+                        if ((bool)TempData["exitoAlEditar"])
+                        {
+                            <div class="alert-success">
 
-                            <h3> @mensaje </h3>
+                                <h3> @mensaje </h3>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="alert-danger">
+
+                                <h3> @mensaje </h3>
+                            </div>
+                        }
+                    }
+                    <div class="card-columns">
+                        <div>
+                            <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+                            </br>
+                            <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" />
                         </div>
-                    }
-                    else
-                    {
-                        <div class="alert-danger">
+                        <div>
+                            <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                            </br>
+                            <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" />
 
-                            <h3> @mensaje </h3>
                         </div>
-                    }
-                }
-                <div class="card-columns">
-                    <div>
-                        <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
-                        </br>
-                        <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" />
+                        <div>
+                            <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                            </br>
+                            <strong>Segundo apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" />
+                        </div>
                     </div>
                     <div>
-                        <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
                         </br>
-                        <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" />
+                        <strong>Genero:</strong>
+                        </br>
+                        <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
+                        <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
 
                     </div>
                     <div>
-                        <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                        <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
                         </br>
-                        <strong>Segundo apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" />
+                        <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" />
                     </div>
-                </div>
-                <div>
-                    <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+                    <div>
+                        <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
+                        </br>
+                        <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" />
+                    </div>
+                    <div>
+                        <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+                        </br>
+                        <strong>Email:</strong> <input asp-for="@Model.miembro.email" />
+                    </div>
+                    <div>
+                        <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
+                        </br>
+                        <strong>Contraseña:</strong> <input asp-for="@Model.miembro.password" , type="password" />
+                    </div>
                     </br>
-                    <strong>Genero:</strong>
+                    <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
                     </br>
-                    <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
-                    <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
+                    <p>
+                        <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
+                    </p> <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
+                        @foreach (var idioma in idiomas)
+                        {
 
-                </div>
-                <div>
-                    <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
-                    </br>
-                    <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" />
-                </div>
-                <div>
-                    <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
-                    </br>
-                    <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" />
-                </div>
-                <div>
-                    <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
-                    </br>
-                    <strong>Email:</strong> <input asp-for="@Model.miembro.email" />
-                </div>
-                <div>
-                    <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
-                    </br>
-                    <strong>Contraseña:</strong> <input asp-for="@Model.miembro.password" , type="password" />
-                </div>
-                </br>
-                <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
-                </br>
-                <p>
-                    <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
-                </p> <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
-                    @foreach (var idioma in idiomas)
-                    {
+                            <option value="@idioma">@idioma</option>
 
-                        <option value="@idioma">@idioma</option>
+                            <br>
+                        }
+                    </select></br>
 
-                        <br>
-                    }
-                </select></br>
+                    <p>
+                        <strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
+                    </p> <select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
+                        @foreach (var habilidad in habilidades)
+                        {
 
-                <p>
-                    <strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
-                </p> <select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
-                    @foreach (var habilidad in habilidades)
-                    {
+                            <option value="@habilidad">@habilidad</option>
 
-                        <option value="@habilidad">@habilidad</option>
+                            <br>
+                        }
+                    </select></br>
+                    <input type="submit" value=" Enviar" class="btn btn-success" />
 
-                        <br>
-                    }
-                </select></br>
-                <input type="submit" value=" Enviar" class="btn btn-success" />
-
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
 
 
 

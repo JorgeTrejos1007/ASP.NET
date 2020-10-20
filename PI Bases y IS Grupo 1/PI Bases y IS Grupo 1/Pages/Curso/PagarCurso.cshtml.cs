@@ -93,7 +93,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 int caracterAleatorio = random.Next(caracteres.Length);
                 codigo += caracteres[caracterAleatorio];
             }
-            int randomNumber = random.Next(10000);
+            int randomNumber = random.Next(1000000);
             codigo += randomNumber.ToString();
             return codigo;
         }

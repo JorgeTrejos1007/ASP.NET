@@ -17,6 +17,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public Miembro miembro { get; set; }
         [BindProperty]
         public IFormFile archivoImagen { get; set; }
+        [BindProperty]
+        public string codigoDeCurso { get; set; }
+        MiembroHandler accesoDatos = new MiembroHandler();
         public string [] idiomas= new string[73]
                   { "Azeri", "Afrikaans", "Albanes", "Aleman", "Alsaciano",
                         "Anglosajon", "Arabe", "Aragones", "Armenio", "Asturiano", "Aymara", "Bengali", "Bielorruso",
@@ -59,7 +62,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
             try
             {
-                MiembroHandler accesoDatos = new MiembroHandler();
+                 
                 if (accesoDatos.crearMiembro(miembro))
                 {
 
@@ -79,6 +82,41 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
             }
             catch {
+
+                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                TempData["exitoAlEditar"] = false;
+            }
+            return RedirectToAction("~/Miembros/CrearMiembro");
+
+
+
+        }
+        public IActionResult OnPostParticipanteExterno( )
+        {
+
+            try
+            {
+                 
+                if (accesoDatos.crearMiembro(miembro))
+                {
+
+
+                    TempData["mensaje"] = "Se ha logrado registar con exito";
+                    TempData["exitoAlEditar"] = true;
+                    if (archivoImagen != null)
+                    {
+                        accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                    }
+                }
+                else
+                {
+                    TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                    TempData["exitoAlEditar"] = false;
+                }
+
+            }
+            catch
+            {
 
                 TempData["mensaje"] = "Se ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
