@@ -4572,6 +4572,7 @@ h6 {
     height: 100px;
     width: 100px;
     margin-top: 10px;
+    border-radius: 0px;
 }
 
 #cuadroDePerfil {
@@ -4580,6 +4581,7 @@ h6 {
     height: 175px;
     text-align: center;
     background-color: #f9f9f9;
+
 }
 
 #filaDePersonas {
@@ -4590,6 +4592,10 @@ h6 {
 #nombrePersona {
     margin-top:20px;
 }
+
+#cuadroDePerfil:hover {
+    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
+
 
 /*---------------------------------------------------- */
 
