@@ -26,7 +26,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
                 vista = Page();
                 ViewData["nombreCurso"] = nombreCurso;
-                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
+                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session,"Miembro");
                 if (miembroDeLaComunidad != null) {
 
                     ViewData["nombre"] = miembroDeLaComunidad.nombre;
@@ -53,7 +53,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["esMiembro"] = true;
             TempData["nombreCurso"] = curso.nombre;
             try {
-                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
+                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session,"Miembro");
                 if (miembroDeLaComunidad != null)
                 {
                     TempData["nombre"] = miembroDeLaComunidad.nombre;

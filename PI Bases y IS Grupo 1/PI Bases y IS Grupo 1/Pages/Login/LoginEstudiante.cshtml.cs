@@ -10,6 +10,9 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PIBasesISGrupo1.Pages.Login
 {
@@ -26,6 +29,35 @@ namespace PIBasesISGrupo1.Pages.Login
         public void OnGet()
         {
 
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+
+            MiembroHandler accesoDatos = new MiembroHandler();
+            LoginHandler login = new LoginHandler();
+
+            IActionResult vista;
+            if (login.validarEstudiante(email.Trim(), password.Trim()))
+            {
+                Miembro datosDelEstudiante = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
+                Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelEstudiante, "Estudiante");
+
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelEstudiante.email));
+                identity.AddClaim(new Claim(ClaimTypes.Name, datosDelEstudiante.nombre));
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+                vista = Redirect("/Index");
+
+            }
+            else
+            {
+                TempData["mensaje"] = "Correo o contraseña incorrecta";
+                vista = Page();
+            }
+
+            return vista;
         }
     }
 }

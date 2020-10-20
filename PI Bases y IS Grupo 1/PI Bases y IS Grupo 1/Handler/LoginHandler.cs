@@ -15,17 +15,27 @@ namespace PIBasesISGrupo1.Handler
             baseDeDatos = new BaseDeDatosHandler();
         }
 
-        public bool validarUsuario(string email,string password) {
-            bool usuarioValido = false;
-            //string consulta = "SELECT COUNT(*) FROM Usuario WHERE email like @email AND password like @password";
-            string consulta = "SELECT count(1) FROM Usuario WHERE email=@email AND password=@password";
-
+        public bool validarMiembro(string email, string password)
+        {
+            bool MiembroValido = false;
+            string consulta = "SELECT count(1) FROM Usuario WHERE email=@email AND password=@password AND pais IS NOT NULL";
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@email", email);
             comandoParaConsulta.Parameters.AddWithValue("@password", password);
-            usuarioValido=baseDeDatos.saberSiExisteTupla(comandoParaConsulta)>0;
+            MiembroValido = baseDeDatos.saberSiExisteTupla(comandoParaConsulta) > 0;
+            return MiembroValido;
 
-            return usuarioValido;
+        }
+
+        public bool validarEstudiante(string email, string password)
+        {
+            bool validarEstudiante = false;
+            string consulta = "SELECT count(1) FROM Usuario WHERE email=@email AND password=@password AND pais IS NULL";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            comandoParaConsulta.Parameters.AddWithValue("@password", password);
+            validarEstudiante = baseDeDatos.saberSiExisteTupla(comandoParaConsulta) > 0;
+            return validarEstudiante;
 
         }
 

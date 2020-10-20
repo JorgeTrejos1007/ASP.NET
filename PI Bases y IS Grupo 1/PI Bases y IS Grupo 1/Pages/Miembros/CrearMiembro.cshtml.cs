@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -19,7 +21,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IFormFile archivoImagen { get; set; }
         [BindProperty]
         public string codigoDeCurso { get; set; }
+        
         MiembroHandler accesoDatos = new MiembroHandler();
+        
         public string [] idiomas= new string[73]
                   { "Azeri", "Afrikaans", "Albanes", "Aleman", "Alsaciano",
                         "Anglosajon", "Arabe", "Aragones", "Armenio", "Asturiano", "Aymara", "Bengali", "Bielorruso",
@@ -41,6 +45,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         public IActionResult OnGet()
         {
+            ViewData["Estudiante"] = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
             IActionResult vista;
             try
             {
@@ -59,14 +64,10 @@ namespace PIBasesISGrupo1.Pages.Miembros
         
         public IActionResult OnPost()
         {
-
             try
             {
-                 
                 if (accesoDatos.crearMiembro(miembro))
                 {
-
-
                     TempData["mensaje"] = "Se ha logrado registar con exito";
                     TempData["exitoAlEditar"] = true;
                     if (archivoImagen != null)
@@ -91,40 +92,6 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
 
         }
-        public IActionResult OnPostParticipanteExterno( )
-        {
-
-            try
-            {
-                 
-                if (accesoDatos.crearMiembro(miembro))
-                {
-
-
-                    TempData["mensaje"] = "Se ha logrado registar con exito";
-                    TempData["exitoAlEditar"] = true;
-                    if (archivoImagen != null)
-                    {
-                        accesoDatos.actualizarImagen(miembro.email, archivoImagen);
-                    }
-                }
-                else
-                {
-                    TempData["mensaje"] = "Se ha ocurrido un error en el registro";
-                    TempData["exitoAlEditar"] = false;
-                }
-
-            }
-            catch
-            {
-
-                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
-                TempData["exitoAlEditar"] = false;
-            }
-            return RedirectToAction("~/Miembros/CrearMiembro");
-
-
-
-        }
+       
     }
 }

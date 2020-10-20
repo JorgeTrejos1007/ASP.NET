@@ -31,7 +31,7 @@ namespace PIBasesISGrupo1.Filters
         {
             try
             {
-                Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
+                Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session, "Miembro");
                 if (rolesPerimitidos.Contains(miembroSesionActual.tipoDeUsuario) == false)
                 {
                     context.Result = new RedirectResult("~/Error");

@@ -9,15 +9,15 @@ namespace PIBasesISGrupo1.Models
 {
     public static class Sesion
     {
-        public static void guardarDatosDeSesion(this ISession sesionActual, object datosDelmiembro)
+        public static void guardarDatosDeSesion(this ISession sesionActual, object datosDelmiembro, string usuario)
         {
 
-            sesionActual.SetString("User", JsonConvert.SerializeObject(datosDelmiembro));
+            sesionActual.SetString(usuario, JsonConvert.SerializeObject(datosDelmiembro));
         }
 
-         public static Miembro obtenerDatosDeSesion(this ISession sesionActual)
+         public static Miembro obtenerDatosDeSesion(this ISession sesionActual, string usuario)
         {
-            var datosDelmiembro = sesionActual.GetString("User");
+            var datosDelmiembro = sesionActual.GetString(usuario);
             
             return datosDelmiembro == null ? default(Miembro) : JsonConvert.DeserializeObject<Miembro>(datosDelmiembro);
         }

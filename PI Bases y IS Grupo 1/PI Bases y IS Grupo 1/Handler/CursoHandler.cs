@@ -159,8 +159,9 @@ namespace PIBasesISGrupo1.Handler
             else{
                 comandosParaLaBusqueda= crearConsultaParaBusquedaDeCurso(false, busqueda);
             }
-            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comandosParaLaBusqueda.Item1);
-            DataTable tableTopicos = baseDeDatos.crearTablaConsulta(comandosParaLaBusqueda.Item2);
+
+            DataTable tablaCurso = crearTablaConsulta(comandosParaLaBusqueda.Item1);
+            DataTable tableTopicos = crearTablaConsulta(comandosParaLaBusqueda.Item2);
             Cursos cursoTemporal;
             Miembro educadorTemporal;
             List<Tuple<string, string>> catalogo;

@@ -30,9 +30,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
            
             IActionResult vista;
-            Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(HttpContext.Session);
-            if (miembroSesionActual != null)
-            {
+           
                 try
                 {
                     vista = Page();
@@ -44,10 +42,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                     vista = Redirect("~/Curso/ProponerCurso");
                 }
 
-            }
-            else {
-                vista= Redirect("~/Login/Login");
-            }
+          
             return vista;
         }
         public IActionResult OnPost()

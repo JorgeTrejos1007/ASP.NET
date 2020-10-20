@@ -41,10 +41,10 @@ namespace PIBasesISGrupo1.Pages.Login
             LoginHandler login = new LoginHandler();
 
             IActionResult vista;
-            if (login.validarUsuario(email.Trim(), password.Trim()))
+            if (login.validarMiembro(email.Trim(), password.Trim()))
             {
                 Miembro datosDelmiembro = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
-                Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro);
+                Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro,"Miembro");
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelmiembro.email));
