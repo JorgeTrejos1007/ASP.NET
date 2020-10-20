@@ -21,7 +21,5 @@ namespace PIBasesISGrupo1.Pages.Miembros
             ViewData["email"] = email;
             miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
         }
-
-    }
-    
+    }    
 }

@@ -19,8 +19,6 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public void OnGet()
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-           
-          
             ViewData["Miembros"] = accesoDatos.obtenerTodosLosMiembros();
         }
     }

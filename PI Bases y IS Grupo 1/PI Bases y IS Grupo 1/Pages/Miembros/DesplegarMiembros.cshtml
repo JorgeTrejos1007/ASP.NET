@@ -20,30 +20,33 @@
 
 <div class="member-container">
     @{var miembro = (List<PIBasesISGrupo1.Models.Miembro>)ViewData["Miembros"];
-        for (int i = 0; i < miembro.Count(); i=i+4) {
-            <div class = "row" id="filaDePersonas">
+        for (int i = 0; i < miembro.Count(); i = i + 4)
+        {
+            <div class="row" id="filaDePersonas">
                 @for (int j = i; j < i + 4; j++)
                 {
-                    <div id="cuadroDePerfil">
-                        @{ 
-                            if (miembro[j].byteArrayImage != null)
-                            {
-                            <img id="imagenMiembro" src="data:@miembro[j].tipoArchivo;base64,@(Convert.ToBase64String(@miembro[j].byteArrayImage))" asp-append-version="true" />
+                    <a id="botonParaPerfil" asp-page="./MostrarPerfilMiembro" asp-route-email="@miembro[j].email">
+                        <div id="cuadroDePerfil">
+                            @{
+                                if (miembro[j].byteArrayImage != null)
+                                {
+                                    <img id="imagenMiembro" src="data:@miembro[j].tipoArchivo;base64,@(Convert.ToBase64String(@miembro[j].byteArrayImage))" asp-append-version="true" />
+                                }
+                                else
+                                {
+                                    <img id="imagenMiembro" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                                }
+                                if (@miembro[j].segundoApellido != null)
+                                {
+                                    <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido @miembro[j].segundoApellido</h4>
+                                }
+                                else
+                                {
+                                    <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido</h4>
+                                }
                             }
-                            else
-                            {
-                            <img id="imagenMiembro" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
-                            }
-                            if (@miembro[j].segundoApellido != null)
-                            {
-                                <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido @miembro[j].segundoApellido</h4>
-                            }
-                            else
-                            {
-                                <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido</h4>
-                            }
-                        }
-                    </div>
+                        </div>
+                    </a>
                 }
             </div>
         }
