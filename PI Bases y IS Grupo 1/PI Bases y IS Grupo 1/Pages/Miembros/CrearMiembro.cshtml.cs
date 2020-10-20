@@ -45,7 +45,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         public IActionResult OnGet()
         {
-            ViewData["Estudiante"] = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
+            ViewData["estudiante"] = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
             IActionResult vista;
             try
             {
