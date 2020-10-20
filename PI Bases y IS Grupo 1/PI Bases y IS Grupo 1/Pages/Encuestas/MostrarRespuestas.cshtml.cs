@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
-
+using System.Text;
+using ClosedXML.Excel;
+using System.IO;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Encuestas
 {
+    [PermisosDeVista("Miembro de Nucleo", "Coordinador")]
     public class MostrarRespuestasModel : PageModel
     {
 
@@ -18,6 +22,8 @@ namespace PIBasesISGrupo1.Pages.Encuestas
 
         public void OnGet(int id)
         {
+
+            
             ViewData["idEncuesta"] = id;
             try
             {

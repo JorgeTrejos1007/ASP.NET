@@ -55,15 +55,17 @@
                         <td>
 
 
-                            <a asp-page="./EditarEncuesta"  asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0">Editar</a>
-                            <a asp-page="./ListaPreguntas"  asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Preguntas </a>
-                            <a asp-page="./BorrarEncuesta"  asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Borrar </a>
-                            <a asp-page="./MostrarRespuestas"  asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Ver respuestas </a>
-                            
+                            <a asp-page="./EditarEncuesta" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0">Editar</a>
+                            <a asp-page="./ListaPreguntas" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Preguntas </a>
+                            <a asp-page="./BorrarEncuesta" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Borrar </a>
+                            <a asp-page="./MostrarRespuestas" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Ver respuestas </a>
+
                             <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
                                 <button class="primary-btn2 text-uppercase enroll rounded-0">Compartir</button>
                             </form>
-
+                            <form asp-page-handler="ExportarRespuestas" method="post" asp-route-idEncuesta="@item.id">
+                                <button class="primary-btn2 text-uppercase enroll rounded-0">Exportar Respuestas</button>
+                            </form>
 
                         </td>
                     </tr>

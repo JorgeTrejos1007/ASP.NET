@@ -55,7 +55,7 @@ namespace PIBasesISGrupo1.Handler
             List<MostarRespuestaModel> respuestas = new List<MostarRespuestaModel>();
             string consulta = " SELECT Pregunta.pregunta, Respuesta.idPreguntaFK, Respuesta.correoEncuestado, Respuesta.respuesta " +
                 "FROM Pregunta JOIN Respuesta ON Pregunta.idEncuestaFK = Respuesta.idEncuestaFK AND Pregunta.idPreguntaPK = Respuesta.idPreguntaFK " +
-                "WHERE Respuesta.idEncuestaFK=@encuestaID ORDER BY Respuesta.idPreguntaFK";
+                "WHERE Respuesta.idEncuestaFK=@encuestaID ORDER BY Respuesta.idPreguntaFK, Respuesta.correoEncuestado";
 
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);

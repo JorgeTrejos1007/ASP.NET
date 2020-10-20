@@ -10,6 +10,9 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PIBasesISGrupo1.Pages.Login
 {
@@ -31,19 +34,23 @@ namespace PIBasesISGrupo1.Pages.Login
 
         }
 
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
             
             MiembroHandler accesoDatos = new MiembroHandler();
-            Miembro datosDelmiembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
-            IActionResult vista;
-            
-            if (datosDelmiembro != null)
-            {
+            LoginHandler login = new LoginHandler();
 
+            IActionResult vista;
+            if (login.validarUsuario(email.Trim(), password.Trim()))
+            {
+                Miembro datosDelmiembro = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
                 Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro);
 
-                //var datos = Sesion.GetObjectFromJson<Miembro>(HttpContext.Session,"User");
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelmiembro.email));
+                identity.AddClaim(new Claim(ClaimTypes.Name, datosDelmiembro.nombre));
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
                 vista = Redirect("/Index");
                 
