@@ -15,6 +15,8 @@ namespace PIBasesISGrupo1.Handler
 {
     public class MiembroHandler
     {
+        BaseDeDatosHandler baseDatos = new BaseDeDatosHandler();
+
         private ConexionModel conexionBD;
         private SqlConnection conexion;
         public MiembroHandler()
@@ -40,6 +42,7 @@ namespace PIBasesISGrupo1.Handler
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario";
             DataTable tablaMiembro = crearTablaConsulta(consulta);
+
             
             foreach (DataRow columna in tablaMiembro.Rows)
             {
@@ -64,6 +67,38 @@ namespace PIBasesISGrupo1.Handler
 
             }
             return miembros;
+        }
+
+        public Miembro obtenerDatosDeUnMiembro(string email) {
+            Miembro miembro = new Miembro();
+            string consulta = "SELECT * FROM Usuario WHERE email=@email";
+
+            SqlCommand comandoParaConsulta = baseDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            DataTable tablaMiembro = baseDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in tablaMiembro.Rows)
+            {
+
+
+
+                miembro.genero = Convert.ToString(columna["genero"]);
+                    miembro.nombre = Convert.ToString(columna["nombre"]);
+                miembro.primerApellido = Convert.ToString(columna["primerApellido"]);
+                miembro.segundoApellido = Convert.ToString(columna["segundoApellido"]);
+                miembro.email = Convert.ToString(columna["email"]);
+                miembro.password = Convert.ToString(columna["password"]);
+                miembro.pais = Convert.ToString(columna["pais"]);
+                miembro.hobbies = Convert.ToString(columna["hobbies"]);
+                miembro.tipoArchivo = Convert.ToString(columna["tipoArchivo"]);
+                miembro.byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"];
+                miembro.idiomas = obtenerIdiomas(Convert.ToString(columna["email"]));
+                miembro.habilidades = obtenerHabilidades(Convert.ToString(columna["email"]));
+                miembro.tipoDeUsuario = Convert.ToString(columna["tipoDeUsuario"]);
+
+
+            }
+            return miembro;
         }
 
         private string[] obtenerIdiomas(string email) {
