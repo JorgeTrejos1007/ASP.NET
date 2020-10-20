@@ -48,34 +48,38 @@
                 <input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly /><br /><br />
                 <strong>Segundo Apellido:</strong>
                 <input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly /><br /><br />
-                <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly />
-                @if (estudiante.genero == "Femenino")
-                {
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
-                    <label asp-for="@Model.miembro.genero">Femenino</label><br>
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
-                    <label asp-for="@Model.miembro.genero">Masculino</label><br>
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
-                    <label asp-for="@Model.miembro.genero">Otro</label><br>
-                }
-                else if (estudiante.genero == "Masculino")
-                {
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
-                    <label asp-for="@Model.miembro.genero">Femenino</label><br>
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
-                    <label asp-for="@Model.miembro.genero">Masculino</label><br>
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
-                    <label asp-for="@Model.miembro.genero">Otro</label><br>
-                }
-                else
-                {
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
-                    <label asp-for="@Model.miembro.genero">Femenino</label><br>
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
-                    <label asp-for="@Model.miembro.genero">Masculino</label><br>
-                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
-                    <label asp-for="@Model.miembro.genero">Otro</label><br>
-                }
+                <strong>Email:</strong>
+                <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly /><br>
+                <br>
+                <div>
+                    @if (estudiante.genero == "Femenino")
+                    {
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
+                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                    }
+                    else if (estudiante.genero == "Masculino")
+                    {
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
+                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
+                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                    }
+                </div>
 
 
             }
