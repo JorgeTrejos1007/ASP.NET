@@ -15,11 +15,11 @@ namespace PIBasesISGrupo1.Pages.Miembros
             [BindProperty]
         public Miembro miembro { get; set; }
 
-        public void OnGet()
+        public void OnGet(string email)
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-
-            miembro = accesoDatos.obtenerDatosDeUnMiembro("rojas3099@gmail.com");
+            ViewData["email"] = email;
+            miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
         }
 
     }

@@ -4,7 +4,14 @@
     ViewData["Title"] = "MostrarPerfilMiembro";
 }
 <html>
-<h2>Perfil</h2>
+<br>
+<h2>
+    @Model.miembro.nombre @Model.miembro.primerApellido
+    @if (@Model.miembro.segundoApellido != null)
+    {
+        @Model.miembro.segundoApellido
+    }
+</h2>
 
 
 <body id="top">
@@ -13,6 +20,7 @@
         <div class="testi_item">
             <div class="row">
                 <div class="col-lg-4 col-md-6">
+                    <br>
                     @{
                         if (@Model.miembro.byteArrayImage != null)
                         {
@@ -26,15 +34,6 @@
                 </div>
                 <div class="col-lg-8">
                     <div class="testi_text">
-                        <div class="row mt-3">
-                            <h3 class="widget_title">
-                                @Model.miembro.nombre @Model.miembro.primerApellido
-                                @if (@Model.miembro.segundoApellido != null)
-                                {
-                                    @Model.miembro.segundoApellido
-                                }
-                            </h3>                           
-                        </div>
                         <div class="row mt-3">
                             <div class="col-sm-4"><h3 class="widget_title">Correo</h3></div>
                             <div class="col-sm-8">@Model.miembro.email</div>
