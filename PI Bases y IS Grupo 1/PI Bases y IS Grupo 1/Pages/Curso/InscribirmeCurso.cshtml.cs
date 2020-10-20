@@ -56,8 +56,11 @@ namespace PIBasesISGrupo1.Pages.Curso
                 Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session);
                 if (miembroDeLaComunidad != null)
                 {
+                    TempData["nombre"] = miembroDeLaComunidad.nombre;
+                    TempData["primerApellido"] = miembroDeLaComunidad.primerApellido;
+                    TempData["segundoApellido"] = miembroDeLaComunidad.segundoApellido;
                     TempData["email"] = miembroDeLaComunidad.email;
-
+                    TempData["genero"] = miembroDeLaComunidad.genero;
                 }
                 else {
                     TempData["nombre"]= participanteExterno.nombre;
