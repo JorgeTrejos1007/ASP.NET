@@ -3,10 +3,13 @@
 @{
 
     var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosDisponibles"];
+    var usuarioEnSesion = true;
+    var cursosMatriculados = (List<string>)ViewData["cursosMatriculados"];
+    if (cursosMatriculados == null)
+    {
+        usuarioEnSesion = false;
+    }
 
-    List<string> cursosMatriculados = (List<string>)ViewData["cursosMatriculados"];
-
-    
 }
 
 
@@ -26,65 +29,79 @@
 
         @foreach (var infoCursos in listaDeCursos)
         {
+            var mostrar = true;
             var curso = infoCursos.Item1;
             var educador = infoCursos.Item2;
-            <div class="col-lg-4 right-contents">
-                <ul>
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Curso</p>
-                            <span class="or">@curso.nombre</span>
+
+            if (usuarioEnSesion && cursosMatriculados.Contains(curso.nombre) == true)
+            {
+               
+                mostrar = false;
+            }
+
+            if (mostrar==true) {
+                 <div class="col-lg-4 right-contents">
+                    <ul>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Curso</p>
+                                <span class="or">@curso.nombre</span>
 
 
-                        </a>
-                    </li>
+                            </a>
+                        </li>
 
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Email</p>
-                            <span class="or">@curso.emailDelEducador</span>
-
-
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Educador</p>
-                            <span class="or">@educador.nombre @educador.primerApellido </span>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Email</p>
+                                <span class="or">@curso.emailDelEducador</span>
 
 
-                        </a>
-                    </li>
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Precio </p>
-                            <span>$@curso.precio</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Topicos</p>
-                            <br>
-                            @{
-                                var topicos = "";
+                            </a>
+                        </li>
 
-                                @foreach (var infoTopicos in infoCursos.Item3)
-                                {
-                                    topicos = topicos + " " + infoTopicos.Item1;
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Educador</p>
+                                <span class="or">@educador.nombre @educador.primerApellido </span>
 
 
+                            </a>
+                        </li>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Precio </p>
+                                <span>$@curso.precio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Topicos</p>
+                                <br>
+                                @{
+                                    var topicos = "";
+
+                                    @foreach (var infoTopicos in infoCursos.Item3)
+                                    {
+                                        topicos = topicos + " " + infoTopicos.Item1;
+
+
+                                    }
                                 }
-                            }
-                            <span class="or"> @topicos </span>
+                                <span class="or"> @topicos </span>
 
-                        </a>
-                    </li>
-                </ul>
-                <a asp-page="InscribirmeCurso" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Inscribirme</a>
-            </div>
-        }
-    }
+                            </a>
+                        </li>
+                    </ul>
+                    <a asp-page="InscribirmeCurso" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Inscribirme</a>
+                </div>
+
+
+            }
+
+         }
+  
+     }
     else
     {
         <tr>

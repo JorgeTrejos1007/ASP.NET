@@ -18,10 +18,10 @@ namespace PIBasesISGrupo1.Pages.Curso
         public IActionResult OnGet()
         {
             IActionResult vista;
-
-            if (User.Identity.Name != null)
+            Miembro usuarioEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+            if (usuarioEnSesion != null)
             {
-               Miembro usuarioEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+               
 
                 ViewData["MisCursos"] = cursoHandler.obtenerMisCursosMatriculados(usuarioEnSesion.email);
 
