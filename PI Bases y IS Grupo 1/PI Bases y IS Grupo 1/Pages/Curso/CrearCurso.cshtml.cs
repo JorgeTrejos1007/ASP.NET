@@ -20,7 +20,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["nombreCurso"] = nombreCurso; 
             foreach(var item in Secciones)
             {
-                accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion);
+                item.listaMateriales=accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion);
             }
         }
 

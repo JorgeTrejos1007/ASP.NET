@@ -38,7 +38,7 @@ namespace PIBasesISGrupo1.Models
         public string emailDelMiembroDeNucleo { get; set; }
 
         public string tipoDocInformativo { get; set; }
-        //public  List<Materiales> { get; set; }
+        
 
     }
 }
