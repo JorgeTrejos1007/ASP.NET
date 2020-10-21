@@ -12,33 +12,36 @@
 @{
     if (seccionCreada == false)
     {
-        <h2>Crear Seccion</h2>
-        <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a> <br>
+            <h2>Crear Seccion</h2>
+            <div class="curso-material">
+                <form method="post">
+                    <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
+                    <input asp-for="@Model.seccion.nombreSeccion" />
+                    <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />
 
-        <form method="post">
-            <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
-            <input asp-for="@Model.seccion.nombreSeccion" />
-            <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />
-            <input type="submit" value="Crear seccion" asp-page-handler="CrearSeccion" />
-        </form>
+                    <input type="submit" value="Crear seccion" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="CrearSeccion" />
+                </form>
+                <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:86%">Volver</a> <br>
+
+            </div>
     }
     else
     {
         <h2>Agregando material a: @nombreSeccion </h2>
-
-        <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn2 text-uppercase enroll rounded-0">Terminar</a> <br>
-        <form method="post" enctype="multipart/form-data">
-            <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
-            <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />
-            <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
-            <input asp-for="@Model.material.nombreMaterial" /><br />
-            <label asp-for="@Model.archivo">Seleccione el material que desea agregar</label>
-            <input asp-for="@Model.archivo" type="file" /><br />
-            <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn2 text-uppercase enroll rounded-0" />
-        </form>
-
-        }
+        <div class="curso-material">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
+                <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />
+                <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
+                <input asp-for="@Model.material.nombreMaterial" /><br />
+                <label asp-for="@Model.archivo">Seleccione el material que desea agregar</label>
+                <input asp-for="@Model.archivo" type="file" /><br />
+                <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn__reverse text-uppercase enroll rounded-0" />
+            </form>
+            <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:85%">Terminar</a> <br>
+        </div>
     }
+}
 
 
 
