@@ -29,8 +29,8 @@ namespace PIBasesISGrupo1.Models
         [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombreDeCurso {get; set;}
 
-        //public byte[] byteArrayMaterial { get; set; }
-        public IFormFile archivo { get; set; }
-        //public string tipoArchivo { get; set; }
+        public byte[] archivo { get; set; }
+
+        public string tipoArchivo { get; set; }
     }
 }

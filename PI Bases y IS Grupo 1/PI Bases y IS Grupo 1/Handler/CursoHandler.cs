@@ -266,7 +266,7 @@ namespace PIBasesISGrupo1.Handler
 
             return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);          
         }
-        public bool agregarMaterial(MaterialModel material)
+        public bool agregarMaterial(MaterialModel material, IFormFile archivo)
         {
                 string consulta = "INSERT INTO Material(nombreMaterialPK,nombreSeccionFK,nombreCursoFK, material, tipoArchivo)"
                 + "VALUES (@nombreMaterial,@nombreSeccion,@nombreCurso,@material,@tipoMaterial)";
@@ -274,8 +274,8 @@ namespace PIBasesISGrupo1.Handler
                 comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", material.nombreDeCurso);
                 comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", material.nombreDeSeccion);
                 comandoParaConsulta.Parameters.AddWithValue("@nombreMaterial", material.nombreMaterial);
-                comandoParaConsulta.Parameters.AddWithValue("@material", obtenerBytes(material.archivo));
-                comandoParaConsulta.Parameters.AddWithValue("@tipoMaterial", material.archivo.ContentType);
+                comandoParaConsulta.Parameters.AddWithValue("@material", obtenerBytes(archivo));
+                comandoParaConsulta.Parameters.AddWithValue("@tipoMaterial", archivo.ContentType);
 
             return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
             
@@ -309,10 +309,11 @@ namespace PIBasesISGrupo1.Handler
                 materiales.Add(
                 new MaterialModel
                 {
-                    archivo = (IFormFile)columna["material"],
+                    archivo = (byte[])columna["material"],
                     nombreDeCurso = Convert.ToString(columna["nombreCursoFK"]),
                     nombreDeSeccion = Convert.ToString(columna["nombreSeccionFK"]),
                     nombreMaterial =Convert.ToString(columna["nombreMaterialPK"]),
+                    tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
                 });
 
             }
