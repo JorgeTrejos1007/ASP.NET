@@ -39,9 +39,6 @@ namespace PIBasesISGrupo1.Pages.Curso
                         {
                             TempData["mensaje"] = "Inscripcion Exitosa";
                             TempData["exitoAlEditar"] = true;
-                             
-
-
                         }
                         else
                         {
@@ -53,19 +50,23 @@ namespace PIBasesISGrupo1.Pages.Curso
                     else
                     {
 
-                        string codigo = obtenerCodigoDeCurso();
+                        string codigo = ""+obtenerCodigoTemporal();
                         estudiante.password = new String(codigo);
                         estudiante.nombre = new String(nombre);
                         estudiante.primerApellido = primerApellido;
                         estudiante.segundoApellido = segundoApellido;
                         estudiante.email = email;
                         estudiante.genero = genero;
-                        if (accesoDatos.crearEstudianteComoParticipanteExterno(estudiante)) {
+                        bool estudianteRegistrado = accesoDatos.crearEstudianteComoParticipanteExterno(estudiante);
+                        if (estudianteRegistrado) {
                             accesoDatos.registrarEstudiante(email);
                         }
                         if (accesoDatos.inscribirEstudianteACurso(estudiante.email, nombreCurso))
                         {
-                            TempData["mensaje"] = "Inscripcion Exitosa, este es su codigo para el Curso: " + codigo;
+                            if(estudianteRegistrado)
+                                TempData["mensaje"] = "Inscripcion Exitosa, esta es tu contraseña Temporal " + codigo;
+                            else
+                                TempData["mensaje"] = "Inscripcion Exitosa" ;
                             TempData["exitoAlEditar"] = true;
                         }
                         else
@@ -83,7 +84,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             return RedirectToAction("~/Curso/PagarCurso");
         }
 
-        public string obtenerCodigoDeCurso()
+        public string obtenerCodigoTemporal()
         {
             string codigo = "";
             string[] caracteres = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", ".", "_", "-", "?", "!" };

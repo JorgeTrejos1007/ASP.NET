@@ -41,15 +41,14 @@
         @{
             if (esEstudiante)
             {
-
-                <strong>Nombre:</strong>
-                <input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly /><br /><br />
-                <strong>Primer Apellido:</strong>
-                <input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly /><br /><br />
-                <strong>Segundo Apellido:</strong>
-                <input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly /><br /><br />
-                <strong>Email:</strong>
-                <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly /><br>
+                <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span><br>
+                <strong>Nombre:</strong><input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly /><br /><br />
+                <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span><br />
+                <strong>Primer Apellido:</strong><input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly /><br /><br />
+                <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span><br />
+                <strong>Segundo Apellido:</strong><input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly /><br /><br />
+                <span asp-validation-for="@Model.miembro.email" class="text-danger"></span><br/>
+                <strong>Email:</strong><input asp-for="@Model.miembro.email" value="@estudiante.email" readonly /><br>
                 <br>
                 <div>
                     @if (estudiante.genero == "Femenino")
@@ -165,7 +164,7 @@
                 <br>
             }
         </select></br>
-        <input type="submit" value=" Enviar" class="btn btn-success" />
+        <input type="submit" asp-route-esEstudiante="@esEstudiante" value=" Enviar" class="btn btn-success" />
 
     </form>
 </div>
