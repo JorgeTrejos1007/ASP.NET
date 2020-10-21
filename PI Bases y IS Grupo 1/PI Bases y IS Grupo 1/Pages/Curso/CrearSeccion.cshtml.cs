@@ -14,6 +14,7 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public SeccionModel seccion { set; get; }
+
         [BindProperty]
         public MaterialModel material { set; get; }
 

@@ -28,9 +28,11 @@
 
         <a asp-page="CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn2 text-uppercase enroll rounded-0">Terminar</a> <br>
         <form method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
+            <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />
             <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
             <input asp-for="@Model.material.nombreMaterial" /><br />
-            <label asp-for="@Model.material.archivo">Seleccione el material que desea agregar</label>
+            <label asp-for="@Model.archivo">Seleccione el material que desea agregar</label>
             <input asp-for="@Model.archivo" type="file" /><br />
             <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn2 text-uppercase enroll rounded-0" />
         </form>

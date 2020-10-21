@@ -160,8 +160,8 @@ namespace PIBasesISGrupo1.Handler
             else{
                 comandosParaLaBusqueda= crearConsultaParaBusquedaDeCurso(false, busqueda);
             }
-            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comandosParaLaBusqueda.Item1);
-            DataTable tableTopicos = baseDeDatos.crearTablaConsulta(comandosParaLaBusqueda.Item2);
+            DataTable tablaCurso = crearTablaConsulta(comandosParaLaBusqueda.Item1);
+            DataTable tableTopicos = crearTablaConsulta(comandosParaLaBusqueda.Item2);
             Cursos cursoTemporal;
             Miembro educadorTemporal;
             List<Tuple<string, string>> catalogo;
@@ -302,8 +302,10 @@ namespace PIBasesISGrupo1.Handler
         public List<MaterialModel> obtenerMaterialDeUnaSeccion(string seccion)
         {
             List<MaterialModel> materiales = new List<MaterialModel>();
-            string consulta = "SELECT * FROM Materiales WHERE nombreSeccionFK = @seccion";
-            DataTable tablaResultado = crearTablaConsulta(consulta);
+            string consulta = "SELECT * FROM Material WHERE nombreSeccionFK = @seccion";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@seccion", seccion);
+            DataTable tablaResultado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {
                 materiales.Add(
