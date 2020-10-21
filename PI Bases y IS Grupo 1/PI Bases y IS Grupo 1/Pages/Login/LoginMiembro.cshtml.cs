@@ -45,14 +45,15 @@ namespace PIBasesISGrupo1.Pages.Login
             {
                 Miembro datosDelmiembro = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
                 Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro,"Miembro");
-
                 
+
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelmiembro.email));
-                identity.AddClaim(new Claim(ClaimTypes.Name, datosDelmiembro.nombre));
+                identity.AddClaim(new Claim(ClaimTypes.Name, "Miembro"));
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
+                
                 vista = Redirect("/Index");
                 
             }

@@ -44,7 +44,7 @@ namespace PIBasesISGrupo1.Pages.Login
 
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
                 identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelEstudiante.email));
-                identity.AddClaim(new Claim(ClaimTypes.Name, datosDelEstudiante.nombre));
+                identity.AddClaim(new Claim(ClaimTypes.Name, "Estudiante"));
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
 
