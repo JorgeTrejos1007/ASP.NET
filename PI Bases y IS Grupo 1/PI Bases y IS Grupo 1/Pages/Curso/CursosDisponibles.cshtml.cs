@@ -15,6 +15,18 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
 
             ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosDisponibles();
+
+            if (User.Identity.Name != null)
+            {
+                Miembro usuarioEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+
+                ViewData["cursosMatriculados"] = cursoHandler.obtenerMisCursosMatriculados(usuarioEnSesion.email);
+
+            }
+
+
+
+
         }
         [HttpPost]
         public void OnPost(string searching)

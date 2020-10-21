@@ -5,3 +5,40 @@
 
 
 }
+
+
+
+<div class="cursos-container">
+    @{ 
+
+        if (listaDeCursos != null)
+        {
+            foreach (string curso in listaDeCursos)
+            {
+
+                
+                <div class="col-lg-4 right-contents">
+                    <ul>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Curso</p>
+                                <span class="or">@curso</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            }
+
+        }
+
+    }
+</div>
+
+
+
+
+
+
+
+
+

@@ -25,6 +25,7 @@ namespace PIBasesISGrupo1.Models
         public static void cerrarSesion(this ISession sesionActual)
         {
             sesionActual.Clear();
+            
         }
     }
 }

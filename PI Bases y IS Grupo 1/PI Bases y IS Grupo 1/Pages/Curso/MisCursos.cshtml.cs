@@ -13,7 +13,7 @@ namespace PIBasesISGrupo1.Pages.Curso
 {
     public class MisCursosModel : PageModel
     {
-        private CursoHandler accesoCursos= new CursoHandler();
+        private CursoHandler cursoHandler = new CursoHandler();
 
         public IActionResult OnGet()
         {
@@ -23,7 +23,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
                Miembro usuarioEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
 
-                ViewData["MisCursos"] = accesoCursos.obtenerMisCursosMatriculados(usuarioEnSesion.email);
+                ViewData["MisCursos"] = cursoHandler.obtenerMisCursosMatriculados(usuarioEnSesion.email);
 
 
 
@@ -37,6 +37,16 @@ namespace PIBasesISGrupo1.Pages.Curso
 
             return vista;
 
+        }
+
+        public IActionResult OnPost()
+        {
+
+
+
+
+
+            return Redirect("/Index");
         }
     }
 }
