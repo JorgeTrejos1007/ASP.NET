@@ -15,7 +15,5 @@ namespace PIBasesISGrupo1.Models
         public string nombreSeccion {get; set;}
 
         public string nombreCurso { get; set; }
-
-
     }
 }

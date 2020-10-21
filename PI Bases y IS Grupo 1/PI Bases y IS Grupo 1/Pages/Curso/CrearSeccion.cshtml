@@ -1,0 +1,41 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.CrearSeccionModel
+@{
+    ViewData["Title"] = "CrearSeccion";
+    var nombreCurso = (string)ViewData["nombreCurso"];
+    var seccionCreada = (bool)ViewData["seccionCreada"];
+    var nombreSeccion = (string)ViewData["nombreSeccion"];
+}
+
+@{
+    if(seccionCreada == false)
+    {
+        <h2>Crear Seccion</h2>
+
+        <form method="post">
+            <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
+            <input asp-for="@Model.seccion.nombreSeccion" />
+            <input type="submit" value="Crear seccion" asp-page-handler="CrearSeccion" />
+        </form>
+    }
+    else
+    {
+        <div id="seccion-materials">
+            <h2>@nombreSeccion</h2>
+            <button onclick="añadirMaterial()">Añadir material</button>
+        </div>
+    }
+}
+
+<form method="post" id="demo" style="display:none">
+    <label>Funciono la ptm ---------------------------------------------------</label>
+</form>
+
+
+<script>
+    function añadirMaterial() {
+        var materiales = document.getElementById("seccion-materials");
+        var copia = document.getElementById("demo").cloneNode(true);
+        materiales.appendChild(copia);
+    }
+</script>

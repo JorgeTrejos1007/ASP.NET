@@ -11,21 +11,10 @@ namespace PIBasesISGrupo1.Pages.Curso
 {
     public class CrearCursoModel : PageModel
     {
-        [BindProperty]
-        public List<MaterialModel> materiales { set; get; }
-        [BindProperty]
-        public MaterialModel material { set; get; }
-        [BindProperty]
-        public List<IFormFile> archivos { get; set; }
-        public void OnGet( string nombreCurso)
+        public void OnGet(string nombreCurso)
         {
             ViewData["nombreCurso"] = nombreCurso;
-            //ViewData["materiales"] = materiales;
-            //ViewData["archivos"] = archivos;
-
         }
-        public void OnPost() {
 
-        }
     }
 }
