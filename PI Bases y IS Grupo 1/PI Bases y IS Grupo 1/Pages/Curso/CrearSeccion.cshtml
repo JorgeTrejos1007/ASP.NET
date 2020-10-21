@@ -27,29 +27,15 @@
         <h2>Agregando material a: @nombreSeccion </h2>
 
         <a asp-page="CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn2 text-uppercase enroll rounded-0">Terminar</a> <br>
+        <form method="post">
+            <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
+            <input asp-for="@Model.material.nombreMaterial" /><br />
+            <label asp-for="@Model.material.archivo">Seleccione el material que desea agregar</label>
+            <input asp-for="@Model.material.archivo" type="file" /><br />
+            <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn2 text-uppercase enroll rounded-0" />
+        </form>
 
-        <div id="seccion-materials">
-
-            <button onclick="añadirMaterial()">Añadir material</button>
-        </div>
     }
-}
-<div style="display:none">
-    <form method="post" id="material">
-        <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
-        <input asp-for="@Model.material.nombreMaterial" /></br>
-        <label asp-for="@Model.material.archivo">Seleccione el material que desea agregar</label>
-        <input asp-for="@Model.material.nombreMaterial" type="file" /></br>
-        <input type="submit" value="Agregar" asp-page-handler="OnPostAgregarMaterial" />
-    </form>
-</div>
 
 
 
-<script>
-    function añadirMaterial() {
-        var materiales = document.getElementById("seccion-materials");
-        var copia = document.getElementById("material").cloneNode(true);
-        materiales.appendChild(copia);
-    }
-</script>

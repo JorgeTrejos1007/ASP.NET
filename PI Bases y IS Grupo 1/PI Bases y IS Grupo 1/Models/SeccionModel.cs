@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations; //Para las librerias de Required y Display. Para hacer binding de las propiedades del modelo vista
 
@@ -15,5 +17,7 @@ namespace PIBasesISGrupo1.Models
         public string nombreSeccion {get; set;}
 
         public string nombreCurso { get; set; }
+
+        public List<MaterialModel> listaMateriales { get; set; }
     }
 }

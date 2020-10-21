@@ -18,9 +18,6 @@ namespace PIBasesISGrupo1.Pages.Curso
         public MaterialModel material { set; get; }
 
         [BindProperty]
-        public List<MaterialModel> materiales { set; get; }
-
-        [BindProperty]
         public List<IFormFile> archivos { get; set; }
 
         public void OnGet(string nombreCurso)
@@ -46,7 +43,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         }
         public void OnPostAgregarMaterial()
         {
-
+            CursoHandler accesoDatos = new CursoHandler();
         }
     }
 }

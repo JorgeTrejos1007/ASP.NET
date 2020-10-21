@@ -266,22 +266,19 @@ namespace PIBasesISGrupo1.Handler
 
             return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);          
         }
-        public void agregarMaterial(List<MaterialModel> materiales)
+        public bool agregarMaterial(MaterialModel material)
         {
-
-            for (int i = 0; i < materiales.Count; i++)
-            {
                 string consulta = "INSERT INTO Material(nombreMaterialPK,nombreSeccionFK,nombreCursoFK, material, tipoArchivo)"
                 + "VALUES (@nombreMaterial,@nombreSeccion,@nombreCurso,@material,@tipoMaterial)";
                 SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
-                comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", materiales[i].nombreDeCurso);
-                comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", materiales[i].nombreDeSeccion);
-                comandoParaConsulta.Parameters.AddWithValue("@nombreMaterial", materiales[i].nombreMaterial);
-                comandoParaConsulta.Parameters.AddWithValue("@material", obtenerBytes(materiales[i].archivo));
-                comandoParaConsulta.Parameters.AddWithValue("@tipoMaterial", materiales[i].archivo.ContentType);
-                bool exito=baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
-            }
+                comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", material.nombreDeCurso);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", material.nombreDeSeccion);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreMaterial", material.nombreMaterial);
+                comandoParaConsulta.Parameters.AddWithValue("@material", obtenerBytes(material.archivo));
+                comandoParaConsulta.Parameters.AddWithValue("@tipoMaterial", material.archivo.ContentType);
 
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            
         }
 
         public List<SeccionModel> obtenerSecciones()
@@ -302,6 +299,24 @@ namespace PIBasesISGrupo1.Handler
             }
             return secciones;
         }
+        public List<MaterialModel> obtenerMaterialDeUnaSeccion(string seccion)
+        {
+            List<MaterialModel> materiales = new List<MaterialModel>();
+            string consulta = "SELECT * FROM Materiales WHERE nombreSeccionFK = @seccion";
+            DataTable tablaResultado = crearTablaConsulta(consulta);
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                materiales.Add(
+                new MaterialModel
+                {
+                    archivo = (IFormFile)columna["material"],
+                    nombreDeCurso = Convert.ToString(columna["nombreCursoFK"]),
+                    nombreDeSeccion = Convert.ToString(columna["nombreSeccionFK"]),
+                    nombreMaterial =Convert.ToString(columna["nombreMaterialPK"]),
+                });
 
-    }
+            }
+            return materiales;
+        }
+    } 
 }
