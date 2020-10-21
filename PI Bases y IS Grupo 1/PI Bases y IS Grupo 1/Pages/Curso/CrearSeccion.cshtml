@@ -26,7 +26,7 @@
     {
         <h2>Agregando material a: @nombreSeccion </h2>
 
-        <a asp-page="CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn2 text-uppercase enroll rounded-0">Terminar</a> <br>
+        <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn2 text-uppercase enroll rounded-0">Terminar</a> <br>
         <form method="post" enctype="multipart/form-data">
             <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
             <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />

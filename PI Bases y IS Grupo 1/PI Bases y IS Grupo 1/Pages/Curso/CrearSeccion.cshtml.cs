@@ -42,10 +42,14 @@ namespace PIBasesISGrupo1.Pages.Curso
             accesoDatos.crearSeccion(seccion);
             return RedirectToPage("CrearSeccion","SeccionCreada");
         }
-        public void OnPostAgregarMaterial()
+        public IActionResult OnPostAgregarMaterial()
         {
+            TempData["seccionCreada"] = true;
+            TempData["nombreSeccion"] = material.nombreDeSeccion;
+            TempData["nombreCurso"] = material.nombreDeCurso;
             CursoHandler accesoDatos = new CursoHandler();
             accesoDatos.agregarMaterial(material, archivo);
+            return RedirectToPage("CrearSeccion", "SeccionCreada");
         }
     }
 }
