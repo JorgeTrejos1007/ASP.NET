@@ -78,26 +78,22 @@
 
                         <div class="row">
                             <input asp-for="@curso" value="@curso" readonly /><br /><br />
-
+                            <span asp-validation-for="@Model.participanteExterno.nombre" class="text-danger"></span>
                             <input asp-for="@Model.participanteExterno.nombre"
                                    placeholder="tu nombre"
                                    required=""
                                    type="text" />
-
-
+                            <span asp-validation-for="@Model.participanteExterno.primerApellido" class="text-danger"></span>
                             <input asp-for="@Model.participanteExterno.primerApellido"
                                    placeholder="Tu primer apellido"
                                    required=""
                                    type="text" />
+                            <span asp-validation-for="@Model.participanteExterno.segundoApellido" class="text-danger"></span>
                             <input asp-for="@Model.participanteExterno.segundoApellido"
                                    placeholder="Tu segundo apellido"
                                    type="text" />
-
-
-                            <input asp-for="@Model.participanteExterno.email"
-                                   placeholder="Tu email"
-                                   type="email"
-                                   required="" />
+                            <span asp-validation-for="@Model.participanteExterno.email" class="text-danger"></span>
+                            <input asp-for="@Model.participanteExterno.email" placeholder="Tu email" type="email" required="" />
                             <input type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
 
                         </div>
@@ -118,3 +114,9 @@
     </div>
 
 </div>
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
