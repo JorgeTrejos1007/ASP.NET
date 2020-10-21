@@ -98,9 +98,6 @@ namespace PIBasesISGrupo1.Handler
             }
             return miembro;
         }
-
-
-
         private string[] obtenerIdiomas(string email) {
             List<string> idiomas= new List<string>();
          
@@ -118,9 +115,6 @@ namespace PIBasesISGrupo1.Handler
 
             return idiomas.ToArray();
         }
-
-
-
         private string[] obtenerHabilidades(string email)
         {
             List<string> habilidades = new List<string>();
@@ -139,11 +133,6 @@ namespace PIBasesISGrupo1.Handler
 
             return habilidades.ToArray();
         }
-
-
-
-
-
 
         private byte[] obtenerBytes(IFormFile archivo)
         {
@@ -201,6 +190,39 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
+
+        public bool resgistrarEstudianteALaComunidad(Miembro estudianteNoRegistrado){
+            string consulta = "UPDATE Usuario SET password=@password, pais=@pais, hobbies=@hobbies"
+                 + "WHERE email=@email";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@password", estudianteNoRegistrado.password);
+            comandoParaConsulta.Parameters.AddWithValue("@pais", estudianteNoRegistrado.pais);
+            if (String.IsNullOrEmpty(estudianteNoRegistrado.hobbies))
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@hobbies", DBNull.Value);
+            }
+            else
+            {
+                comandoParaConsulta.Parameters.AddWithValue("@hobbies", estudianteNoRegistrado.hobbies);
+            }
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+
+            if (estudianteNoRegistrado.habilidades != null)
+            {
+                exito = insertarHabilidadesMiembro(estudianteNoRegistrado);
+            }
+
+            if (estudianteNoRegistrado.idiomas != null)
+            {
+                exito = insertarIdiomasMiembro(estudianteNoRegistrado);
+            }
+
+            conexion.Close();
+
+
+            return true;
+        }
+
         public bool crearEstudianteComoParticipanteExterno(Miembro participanteExterno) {
             bool exito= false;
             string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password) "
@@ -223,6 +245,7 @@ namespace PIBasesISGrupo1.Handler
             return exito;
 
         }
+
         public bool registrarEstudiante(string correoEstudiante) {
             string consulta = "INSERT INTO Estudiante(emailEstudianteFK) "
                 + "VALUES (@email) ";
@@ -232,6 +255,7 @@ namespace PIBasesISGrupo1.Handler
 
             return exito;
         }
+
         public bool inscribirEstudianteACurso(string emailEstudiante, string nombreDeCurso) {
             string consulta = "INSERT INTO Inscribirse(emailEstudianteFK,nombreCursoFK) "
                 + "VALUES (@emailEstudiante,@nombreDeCurso)";
@@ -248,11 +272,11 @@ namespace PIBasesISGrupo1.Handler
             bool exito=false;
             for (int habilidad = 0; habilidad < miembro.habilidades.Length; habilidad++)
             {
-                SqlCommand comandoParaConsultaHabilidades = new SqlCommand(consultaHabilidades, conexion);
+                SqlCommand comandoParaConsultaHabilidades = baseDeDatos.crearComandoParaConsulta(consultaHabilidades);
                 SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsultaHabilidades);
                 comandoParaConsultaHabilidades.Parameters.AddWithValue("@email", miembro.email);
                 comandoParaConsultaHabilidades.Parameters.AddWithValue("@habilidad", miembro.habilidades[habilidad]);
-                exito = comandoParaConsultaHabilidades.ExecuteNonQuery() >= 1;
+                exito =     baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsultaHabilidades);
             }
             return exito;
         }
@@ -264,11 +288,11 @@ namespace PIBasesISGrupo1.Handler
             bool exito = false;
             for (int idioma = 0; idioma < miembro.idiomas.Length; idioma++)
             {
-                SqlCommand comandoParaConsultaIdiomas = new SqlCommand(consultaIdiomas, conexion);
+                SqlCommand comandoParaConsultaIdiomas = baseDeDatos.crearComandoParaConsulta(consultaIdiomas);
                 SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsultaIdiomas);
                 comandoParaConsultaIdiomas.Parameters.AddWithValue("@email", miembro.email);
                 comandoParaConsultaIdiomas.Parameters.AddWithValue("@idioma", miembro.idiomas[idioma]);
-                exito = comandoParaConsultaIdiomas.ExecuteNonQuery() >= 1;
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsultaIdiomas );
             }
             return exito;
         }

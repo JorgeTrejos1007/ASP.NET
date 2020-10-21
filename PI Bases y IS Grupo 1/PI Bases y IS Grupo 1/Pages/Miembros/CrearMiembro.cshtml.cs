@@ -21,8 +21,8 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IFormFile archivoImagen { get; set; }
         [BindProperty]
         public string codigoDeCurso { get; set; }
-        
-        MiembroHandler accesoDatos = new MiembroHandler();
+        private bool esEstudiante { get; set; }
+    MiembroHandler accesoDatos = new MiembroHandler();
         
         public string [] idiomas= new string[73]
                   { "Azeri", "Afrikaans", "Albanes", "Aleman", "Alsaciano",
@@ -46,6 +46,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IActionResult OnGet()
         {
             ViewData["estudiante"] = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
+            if (ViewData["estudiante"] != null) {
+                esEstudiante = true;
+            }
             IActionResult vista;
             try
             {
@@ -66,25 +69,18 @@ namespace PIBasesISGrupo1.Pages.Miembros
         {
             try
             {
-                if (accesoDatos.crearMiembro(miembro))
-                {
-                    TempData["mensaje"] = "Se ha logrado registar con exito";
-                    TempData["exitoAlEditar"] = true;
-                    if (archivoImagen != null)
-                    {
-                        accesoDatos.actualizarImagen(miembro.email, archivoImagen);
-                    }
+                if (esEstudiante) {
+                    intentarRegistrarEstudiante();
                 }
-                else
-                {
-                    TempData["mensaje"] = "Se ha ocurrido un error en el registro";
-                    TempData["exitoAlEditar"] = false;
+                else {
+                    intentarRegistrarParticipanteExterno();
+                     
                 }
 
             }
             catch {
 
-                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                TempData["mensaje"] = " Ha ocurrido un error en el registro";
                 TempData["exitoAlEditar"] = false;
             }
             return RedirectToAction("~/Miembros/CrearMiembro");
@@ -92,6 +88,44 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
 
         }
+        private void intentarRegistrarEstudiante()
+        {
+            if (accesoDatos.resgistrarEstudianteALaComunidad(miembro))
+            {
+                TempData["mensaje"] = "Se ha logrado registar con exito";
+                TempData["exitoAlEditar"] = true;
+                if (archivoImagen != null)
+                {
+                    accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                }
+            }
+            else
+            {
+                TempData["mensaje"] = "Ha ocurrido un error en el registro";
+                TempData["exitoAlEditar"] = false;
+            }
+
+
+        }
+        private void intentarRegistrarParticipanteExterno() {
+            if (accesoDatos.crearMiembro(miembro))
+            {
+                TempData["mensaje"] = "Se ha logrado registar con exito";
+                TempData["exitoAlEditar"] = true;
+                if (archivoImagen != null)
+                {
+                    accesoDatos.actualizarImagen(miembro.email, archivoImagen);
+                }
+            }
+            else
+            {
+                TempData["mensaje"] = "Se ha ocurrido un error en el registro";
+                TempData["exitoAlEditar"] = false;
+            }
+           
+
+        }
+         
        
     }
 }
