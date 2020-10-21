@@ -284,5 +284,24 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
+        public List<SeccionModel> obtenerSecciones()
+        {
+            List<SeccionModel> secciones = new List<SeccionModel>();
+            string consulta = "SELECT * FROM Seccion";
+            DataTable tablaResultado = crearTablaConsulta(consulta);
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                secciones.Add(
+                new SeccionModel
+                {
+                    nombreCurso = Convert.ToString(columna["nombreCursoFK"]),
+                    nombreSeccion = Convert.ToString(columna["nombreSeccionPK"]),
+                    
+                });
+
+            }
+            return secciones;
+        }
+
     }
 }

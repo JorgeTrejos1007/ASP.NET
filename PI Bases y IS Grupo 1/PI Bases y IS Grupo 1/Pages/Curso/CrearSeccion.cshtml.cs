@@ -14,6 +14,8 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public SeccionModel seccion { set; get; }
+        [BindProperty]
+        public MaterialModel material { set; get; }
 
         [BindProperty]
         public List<MaterialModel> materiales { set; get; }
@@ -23,7 +25,7 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         public void OnGet(string nombreCurso)
         {
-            TempData["nombreCurso"] = "Algebra";
+            TempData["nombreCurso"] = nombreCurso;
             ViewData["seccionCreada"] = false;
         }
 
@@ -37,7 +39,14 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             TempData["seccionCreada"] = true;
             TempData["nombreSeccion"] = seccion.nombreSeccion;
+            TempData["nombreCurso"] = seccion.nombreCurso;
+            CursoHandler accesoDatos = new CursoHandler();
+            accesoDatos.crearSeccion(seccion);
             return RedirectToPage("CrearSeccion","SeccionCreada");
+        }
+        public void OnPostAgregarMaterial()
+        {
+
         }
     }
 }

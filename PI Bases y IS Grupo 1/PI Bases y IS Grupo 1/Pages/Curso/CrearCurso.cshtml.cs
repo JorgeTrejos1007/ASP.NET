@@ -11,8 +11,12 @@ namespace PIBasesISGrupo1.Pages.Curso
 {
     public class CrearCursoModel : PageModel
     {
+        [BindProperty]
+        public List<SeccionModel> Secciones { get; set; }
         public void OnGet(string nombreCurso)
         {
+            CursoHandler accesoDatos = new CursoHandler();
+            Secciones = accesoDatos.obtenerSecciones();
             ViewData["nombreCurso"] = nombreCurso;
         }
 
