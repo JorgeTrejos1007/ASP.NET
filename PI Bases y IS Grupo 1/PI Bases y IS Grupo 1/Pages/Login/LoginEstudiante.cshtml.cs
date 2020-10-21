@@ -41,13 +41,11 @@ namespace PIBasesISGrupo1.Pages.Login
             {
                 Miembro datosDelEstudiante = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
                 Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelEstudiante, "Estudiante");
-
                 var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, datosDelEstudiante.email));
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "Sesion"));
                 identity.AddClaim(new Claim(ClaimTypes.Name, "Estudiante"));
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
                 vista = Redirect("/Index");
 
             }

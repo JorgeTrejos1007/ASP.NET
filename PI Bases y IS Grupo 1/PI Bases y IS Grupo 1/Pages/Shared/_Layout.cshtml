@@ -80,6 +80,15 @@
                                             </li>
 
                                         }
+                                        if (Context.Session.GetString("Estudiante") != null || Context.Session.GetString("Miembro") != null)
+                                        {
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/Curso/MisCursos">Mis cursos</a>
+                                            </li>
+
+
+                                        }
                                     }
 
 

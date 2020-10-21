@@ -256,12 +256,13 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
-        /*
-        public bool crearSeccion(){
-            string consulta = "INSERT into Seccion " +"" ;
-            
-        }
-        */
+
+        public List<string> obtenerMisCursosMatriculados(string emailDelUsuario)
+        {            List<string> cursos = new List<string>();            string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");            return cursos;        }
+
+
 
     }
 }

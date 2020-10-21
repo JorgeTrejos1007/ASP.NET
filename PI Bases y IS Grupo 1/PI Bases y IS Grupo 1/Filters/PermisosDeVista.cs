@@ -22,7 +22,7 @@ namespace PIBasesISGrupo1.Filters
 
             rolesPerimitidos = roles;
 
-            //nivelDePermisoDeVista = nivel;
+            
 
 
         }
