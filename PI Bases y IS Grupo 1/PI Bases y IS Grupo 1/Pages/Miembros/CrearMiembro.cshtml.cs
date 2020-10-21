@@ -21,8 +21,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IFormFile archivoImagen { get; set; }
         [BindProperty]
         public string codigoDeCurso { get; set; }
-        private bool esEstudiante { get; set; }
-    MiembroHandler accesoDatos = new MiembroHandler();
+     MiembroHandler accesoDatos = new MiembroHandler();
         
         public string [] idiomas= new string[73]
                   { "Azeri", "Afrikaans", "Albanes", "Aleman", "Alsaciano",
@@ -46,9 +45,6 @@ namespace PIBasesISGrupo1.Pages.Miembros
         public IActionResult OnGet()
         {
             ViewData["estudiante"] = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
-            if (ViewData["estudiante"] != null) {
-                esEstudiante = true;
-            }
             IActionResult vista;
             try
             {
@@ -65,7 +61,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
           
     }
         
-        public IActionResult OnPost()
+        public IActionResult OnPost(bool esEstudiante)
         {
             try
             {
