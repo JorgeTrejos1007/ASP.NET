@@ -68,7 +68,11 @@ namespace PIBasesISGrupo1.Handler
             }
             return miembros;
         }
+        
 
+
+
+  
         public Miembro obtenerDatosDeUnMiembro(string email) {
             Miembro miembro = new Miembro();
             string consulta = "SELECT * FROM Usuario WHERE email=@email";
@@ -120,6 +124,57 @@ namespace PIBasesISGrupo1.Handler
         }
 
 
+        public string creeConsultaIdiomaWhereDinamico(string[] idiomas)
+        {
+            string consulta = "SELECT Usuario.email, Idiomas.idioma " + " FROM Usuario JOIN Idiomas " + " ON Usuario.email = Idiomas.email WHERE ";
+            for (int index = 0; index < idiomas.Length; index++)
+            {
+                if (index < idiomas.Length - 1)
+                {
+                    consulta += "Idiomas.idioma =@" + idiomas[index] + " OR ";
+                }
+                else
+                {
+                    consulta += "Idiomas.idioma =@" + idiomas[index];
+                }
+            }
+            return consulta;
+        }
+
+        /*
+        public List<Tuple<string, string>> obtenerTuplaDeIdiomasYcorreosSimilares(string[] idiomas)
+        {
+            List<Tuple<string, string>> coincidencias = new List<Tuple<string, string>>();
+            string consultaCoincidencias = creeConsultaIdiomaWhereDinamico(idiomas);
+            DataTable tablaCurso = crearTablaConsulta(consultaCoincidencias);
+
+            Miembro educadorTemporal;
+            foreach (DataRow columna in tablaCurso.Rows)
+            {
+                cursoTemporal = new Cursos
+                {
+                    nombre = Convert.ToString(columna["nombreCurso"]),
+                    estado = Convert.ToString(columna["estado"]),
+                    precio = Convert.ToDouble(columna["precio"]),
+                    emailDelEducador = Convert.ToString(columna["emailEducador"]),
+                    byteArrayDocument = (byte[])columna["documento"],
+                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
+                };
+                educadorTemporal = new Miembro
+                {
+                    nombre = Convert.ToString(columna["nombreEducador"]),
+                    primerApellido = Convert.ToString(columna["primerApellido"]),
+                    segundoApellido = Convert.ToString(columna["segundoApellido"])
+
+                };
+                cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
+
+
+            }
+            return cursos;
+        }
+        */
+        */
 
         private string[] obtenerHabilidades(string email)
         {
@@ -356,3 +411,4 @@ namespace PIBasesISGrupo1.Handler
 
     }
 }
+ 
