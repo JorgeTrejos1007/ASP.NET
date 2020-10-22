@@ -6,20 +6,19 @@
 }
 
 
-<h2>@nombreCurso</h2>
-<p>
-    <a asp-page="CrearSeccion" asp-route-nombreCurso="@nombreCurso" class="primary-btn2 text-uppercase enroll rounded-0">Crear Seccion</a>
-    <a asp-page="./CursosDisponibles" class="primary-btn2 text-uppercase enroll rounded-0">Terminar</a>
-</p>
-
+<div class="curso-material">
+    <h2 style="display:inline-block;">@nombreCurso</h2>
+    <a asp-page="CrearSeccion" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:60px;">Crear Seccion</a>
+    <a asp-page="./CursosAprobados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
+</div>
 @{
     if (@Model.Secciones != null)
     {
         foreach (var item in @Model.Secciones)
         {
-            <br>
+            <br />
             <button class="accordion">@item.nombreSeccion</button>
-         
+
             <div class="panel">
 
                 @{ foreach (var material in item.listaMateriales)
@@ -34,10 +33,11 @@
                 }
 
             </div>
-           
+
         }
     }
 }
+<a asp-page="./CursosDisponibles" class="primary-btn2 text-uppercase enroll rounded-0">Terminar de crear Curso</a>
 
 <script>
     var acc = document.getElementsByClassName("accordion");

@@ -12,10 +12,11 @@ namespace PIBasesISGrupo1.Models
     public class SeccionModel
     {
         [Required(ErrorMessage = "Es necesario que ingreses el nombre de la sección")]
-        [Display(Name = "Ingrese el Nombre del Seccion")]
-        [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [RegularExpression(@"^[a-z|A-Z|0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombreSeccion {get; set;}
 
+        [Required(ErrorMessage = "Es necesario que ingreses el nombre del curso")]
+        [RegularExpression(@"^[a-z|A-Z|0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombreCurso { get; set; }
 
         public List<MaterialModel> listaMateriales { get; set; }

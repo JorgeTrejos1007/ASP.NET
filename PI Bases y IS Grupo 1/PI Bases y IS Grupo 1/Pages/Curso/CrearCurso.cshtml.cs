@@ -13,15 +13,24 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
-        public void OnGet(string nombreCurso)
+        public IActionResult OnGet(string nombreCurso)
         {
-            CursoHandler accesoDatos = new CursoHandler(); 
-            Secciones = accesoDatos.obtenerSecciones();
-            ViewData["nombreCurso"] = nombreCurso; 
-            foreach(var item in Secciones)
+            try
             {
-                item.listaMateriales=accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion);
+                CursoHandler accesoDatos = new CursoHandler();
+                Secciones = accesoDatos.obtenerSecciones();
+                ViewData["nombreCurso"] = nombreCurso;
+                foreach (var item in Secciones)
+                {
+                    item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion);
+                }
+                return Page();
             }
+            catch
+            {
+                return RedirectToPage("CursosAprobados");
+            }
+      
         }
 
     }

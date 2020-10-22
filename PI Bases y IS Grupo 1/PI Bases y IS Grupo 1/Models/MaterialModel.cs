@@ -16,19 +16,20 @@ namespace PIBasesISGrupo1.Models
     public class MaterialModel
     {
 
+        [Required(ErrorMessage = "Es necesario que ingreses el nombre del material")]
+        [RegularExpression(@"^[a-z|A-Z|0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombreMaterial { get; set; }
 
-        [Required(ErrorMessage = "Es necesario que ingreses el nombre del curso")]
-        [Display(Name = "Ingrese el Nombre del curso")]
-        [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [Required(ErrorMessage = "Es necesario que ingreses el nombre de la seccion")]
+        [RegularExpression(@"^[a-z|A-Z|0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombreDeSeccion {get; set;}
 
 
-        [Required(ErrorMessage = "Es necesario que ingreses el nombre del material")]
-        [Display(Name = "Ingrese el Nombre del material")]
-        [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
+        [Required(ErrorMessage = "Es necesario que ingreses el nombre del curso")]
+        [RegularExpression(@"^[a-z|A-Z|0-9\s]+$", ErrorMessage = "Por favor ingrese solo letras")]
         public string nombreDeCurso {get; set;}
 
+        [Required(ErrorMessage = "Es necesario que ingreses un archivo")]
         public byte[] archivo { get; set; }
 
         public string tipoArchivo { get; set; }
