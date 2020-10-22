@@ -7,19 +7,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
+
 namespace PIBasesISGrupo1.Pages.Curso
 {
-    public class CrearCursoModel : PageModel
+    public class CursoCreadoModel : PageModel
     {
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
-        public IActionResult OnGet(string nombreCurso)
+        public IActionResult OnGet(String nombreCurso)
         {
             try
             {
                 CursoHandler accesoDatos = new CursoHandler();
                 Secciones = accesoDatos.obtenerSecciones();
                 ViewData["nombreCurso"] = nombreCurso;
+                
                 foreach (var item in Secciones)
                 {
                     item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion);
@@ -28,18 +30,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
             catch
             {
-                return RedirectToPage("CursosAprobados");
+                return RedirectToPage("CursosCreados");
             }
-      
+
         }
-
-        public IActionResult OnPost(string nombreCurso)
-        {
-            CursoHandler accesoDatos = new CursoHandler();
-            bool exito = accesoDatos.crearCurso(nombreCurso);
-
-            return RedirectToPage("CursosAprobados");
-        }
-
     }
 }

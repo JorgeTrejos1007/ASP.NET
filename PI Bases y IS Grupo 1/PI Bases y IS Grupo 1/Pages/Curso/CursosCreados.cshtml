@@ -1,0 +1,105 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.CursosCreadosModel
+@{
+    ViewData["Title"] = "CursosCreados";
+    var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosCreados"];
+}
+
+<h2>CursosCreados</h2>
+
+<head>
+    <style>
+        .center {
+            text-align: center;
+        }
+
+        .pagination {
+            display: inline-block;
+        }
+
+            .pagination a {
+                color: black;
+                float: left;
+                padding: 8px 16px;
+                text-decoration: none;
+                transition: background-color .3s;
+                border: 1px solid #ddd;
+                margin: 0 4px;
+            }
+
+                .pagination a.active {
+                    background-color: #4CAF50;
+                    color: white;
+                    border: 1px solid #4CAF50;
+                }
+
+                .pagination a:hover:not(.active) {
+                    background-color: #ddd;
+                }
+    </style>
+</head>
+
+
+<div class="cursos-container">
+    @if (listaDeCursos.Count > 0)
+    {
+
+        @foreach (var infoCursos in listaDeCursos)
+        {
+            var curso = infoCursos.Item1;
+            var educador = infoCursos.Item2;
+            <div class="col-lg-4 right-contents">
+                <ul>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Curso</p>
+                            <span class="or">@curso.nombre</span>
+
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Educador</p>
+                            <span class="or">@educador.nombre @educador.primerApellido </span>
+
+
+                        </a>
+                    </li>
+              
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Topicos</p>
+                            <br>
+                            @{
+                                var topicos = "";
+
+                                @foreach (var infoTopicos in infoCursos.Item3)
+                                {
+                                    topicos = topicos + " " + infoTopicos.Item1;
+
+
+                                }
+                            }
+                            <span class="or"> @topicos </span>
+
+                        </a>
+                    </li>
+                </ul>
+                <a asp-page="./CursoCreado" asp-route-curso="(PIBasesISGrupo1.Models.Cursos)@curso" button class="primary-btn2 text-uppercase enroll rounded-0">Ver</a>
+
+            </div>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3" style=" color:red">
+                No se encontraron Coincidencias
+            </td>
+        </tr>
+
+    }
+    </br>
+</div>
