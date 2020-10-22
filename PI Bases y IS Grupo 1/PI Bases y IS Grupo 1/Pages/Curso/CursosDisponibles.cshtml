@@ -6,78 +6,130 @@
 }
 
 
+<header>
+    <style>
 
-<h2>Cursos Disponibles</h2>
-@using (Html.BeginForm( ))
-{
-    @Html.TextBox("searching")<input type="submit" value=" Buscar Curso" placeholder="Nombre, instructor, precio"/>
+        .cajita {
+            display: flex;
+            margin: 10px;
+            padding: 20px;
+            border: 1px solid #002347;
+        }
 
-}
 
- 
+        hr.new5 {
+            height: 1px;
+            background-color: #002347;
+        }
+
+        .centrar {
+            text-align: center;
+        }
+    </style>
+
+</header>
+
+<br>
+<br>
+<div class="row justify-content-center">
+
+    <div class="main_title">
+        <h2 class="mb-3">Cursos disponibles</h2>
+    </div>
+
+</div>
+
+<!--
+<div class="blog_right_sidebar">
+    <div class="search_widget">
+        <div class="input-group">
+            @using (Html.BeginForm())
+            {
+                @Html.TextBox("searching")<input type="submit" class="form-control" value=" Buscar Curso" placeholder="Nombre, instructor, precio" />
+
+            }
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="ti-search"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+-->
+
+<div class="blog_right_sidebar">
+    <div class="search_widget">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Buscar curso">
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="ti-search"></i></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+
 <div class="cursos-container">
     @if (listaDeCursos.Count > 0)
     {
 
         @foreach (var infoCursos in listaDeCursos)
         {
+
             var curso = infoCursos.Item1;
             var educador = infoCursos.Item2;
-    <div class="col-lg-4 right-contents">
-        <ul>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Curso</p>
-                    <span class="or">@curso.nombre</span>
+
+            <div class="cajita col-lg-12">
+                <div class="col-lg-12 right-contents">
+                    <hr class="new5">
+                    <h3 class="title_color align-content-lg-center centrar">@curso.nombre</h3>
+                    <hr class="new5">
+                    <ul>
+
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Email</p>
+                                <span class="or">@curso.emailDelEducador</span>
 
 
-                </a>
-            </li>
+                            </a>
+                        </li>
 
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Email</p>
-                    <span class="or">@curso.emailDelEducador</span>
-
-
-                </a>
-            </li>
-
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Educador</p>
-                    <span class="or">@educador.nombre @educador.primerApellido </span>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Educador</p>
+                                <span class="or">@educador.nombre @educador.primerApellido </span>
 
 
-                </a>
-            </li>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Precio </p>
-                    <span>$@curso.precio</span>
-                </a>
-            </li>
-            <li>
-                <a class="justify-content-between d-flex" href="#">
-                    <p>Topicos</p>
-                    <br>
-                    @{
-                        var topicos = "";
+                            </a>
+                        </li>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Precio </p>
+                                <span>$@curso.precio</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Topicos</p>
+                                <br>
+                                @{
+                                    var topicos = "";
 
-                        @foreach (var infoTopicos in infoCursos.Item3)
-                        {
-                            topicos = topicos + " " + infoTopicos.Item1;
+                                    @foreach (var infoTopicos in infoCursos.Item3)
+                                    {
+                                        topicos = topicos + " " + infoTopicos.Item1;
 
 
-                        }
-                    }
-                    <span class="or"> @topicos </span>
+                                    }
+                                }
+                                <span class="or"> @topicos </span>
 
-                </a>
-            </li>
-        </ul>
-        <a asp-page="InscribirmeCurso" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Inscribirme</a>
-    </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <a asp-page="InscribirmeCurso" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Inscribirme</a>
+                </div>
+            </div>
         }
     }
     else

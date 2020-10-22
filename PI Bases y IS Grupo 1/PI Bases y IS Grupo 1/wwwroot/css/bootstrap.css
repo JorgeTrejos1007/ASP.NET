@@ -456,8 +456,8 @@ h6 {
 hr {
     margin-top: 1rem;
     margin-bottom: 1rem;
-    border: 0;
-    border-top: 1px solid rgba(0, 0, 0, .1)
+    border: 4px;
+    border-top: 8px #002347;
 }
 
 .small,
@@ -658,6 +658,7 @@ pre code {
 .col-lg-10,
 .col-lg-11,
 .col-lg-12,
+.col-lg-15
 .col-lg-2,
 .col-lg-3,
 .col-lg-4,
@@ -5199,7 +5200,8 @@ input[type=submit].btn-block {
     border-color: #bee5eb
 }
 
-.alert-info hr {
+.alert-info 
+{
     border-top-color: #abdde5
 }
 
