@@ -263,8 +263,7 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", seccion.nombreCurso);
             comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", seccion.nombreSeccion);
-
-            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);          
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta); ;          
         }
         public bool agregarMaterial(MaterialModel material, IFormFile archivo)
         {
