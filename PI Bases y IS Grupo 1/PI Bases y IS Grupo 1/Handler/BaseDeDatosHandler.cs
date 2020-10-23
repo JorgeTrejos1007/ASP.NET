@@ -23,10 +23,9 @@ namespace PIBasesISGrupo1.Handler
             conexion = conexionBD.Connection();
         }
 
-        public DataTable crearTablaConsulta(string consulta)
+        public DataTable crearTablaConsulta(SqlCommand comandoParaConsulta)
         {
 
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
             conexion.Open();
@@ -34,6 +33,7 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return consultaFormatoTabla;
         }
+
 
         public SqlCommand crearComandoParaConsulta(string consulta)
         {
@@ -56,11 +56,20 @@ namespace PIBasesISGrupo1.Handler
 
         public bool ejecutarComandoParaConsulta(SqlCommand ComandoParaConsulta) {
             conexion.Open();
-            bool exito = ComandoParaConsulta.ExecuteNonQuery() >= 1;
+            bool exito = true;
+            try
+            {
+                exito = ComandoParaConsulta.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                exito = false;
+            }
             conexion.Close();
             return exito;
+
         }
-        
+
 
 
     }

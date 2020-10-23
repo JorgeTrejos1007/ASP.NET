@@ -2,14 +2,60 @@
 @model PIBasesISGrupo1.Pages.Curso.CrearCursoModel
 @{
     ViewData["Title"] = "CrearCurso";
+    var nombreCurso = (string)ViewData["nombreCurso"];
 }
 
 
+<div class="curso-material">
+    <h2 style="display:inline-block;">@nombreCurso</h2>
+    <a asp-page="CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:60px;">Crear Seccion</a>
+    <a asp-page="./CursosAprobados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
+</div>
+@{
+    if (@Model.Secciones != null)
+    {
+        foreach (var item in @Model.Secciones)
+        {
+            <br />
+            <button class="accordion">@item.nombreSeccion</button>
 
-<body>
- <h2 > CrearCurso</h2 >
+            <div class="panel">
+
+                @{ foreach (var material in item.listaMateriales)
+                    {
+                        <p>
+                            <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                <span class="or">@material.nombreMaterial</span>
+                            </a>
+                            <br>
+                        </p>
+                    }
+                }
+
+            </div>
+
+        }
+    }
+}
+<form method="post" asp-route-nombreCurso="@nombreCurso">
+    <button class="primary-btn2 text-uppercase enroll rounded-0">Terminar de crear Curso</button>
+</form>
 
 
-       
 
-</body>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>

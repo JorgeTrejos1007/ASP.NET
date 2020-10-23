@@ -1,0 +1,72 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.CursosCreadosModel
+@{
+    ViewData["Title"] = "CursosCreados";
+    var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosCreados"];
+}
+
+<h2>CursosCreados</h2>
+
+<div class="cursos-container">
+    @if (listaDeCursos.Count > 0)
+    {
+
+        @foreach (var infoCursos in listaDeCursos)
+        {
+            var curso = infoCursos.Item1;
+            var educador = infoCursos.Item2;
+            <div class="col-lg-4 right-contents">
+                <ul>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Curso</p>
+                            <span class="or">@curso.nombre</span>
+
+
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Educador</p>
+                            <span class="or">@educador.nombre @educador.primerApellido </span>
+
+
+                        </a>
+                    </li>
+              
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <p>Topicos</p>
+                            <br>
+                            @{
+                                var topicos = "";
+
+                                @foreach (var infoTopicos in infoCursos.Item3)
+                                {
+                                    topicos = topicos + " " + infoTopicos.Item1;
+
+
+                                }
+                            }
+                            <span class="or"> @topicos </span>
+
+                        </a>
+                    </li>
+                </ul>
+                <a asp-page="./CursoCreado" asp-route-nombreCurso="@curso.nombre" button class="primary-btn2 text-uppercase enroll rounded-0">Ver</a>
+
+            </div>
+        }
+    }
+    else
+    {
+        <tr>
+            <td colspan="3" style=" color:red">
+                No se encontraron Coincidencias
+            </td>
+        </tr>
+
+    }
+    </br>
+</div>
