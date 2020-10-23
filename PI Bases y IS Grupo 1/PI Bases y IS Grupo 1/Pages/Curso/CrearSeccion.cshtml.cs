@@ -25,11 +25,13 @@ namespace PIBasesISGrupo1.Pages.Curso
         [Required(ErrorMessage = "Es necesario que ingrese un archivo")]
         public IFormFile archivo { get; set; }
 
-        public IActionResult OnGet(string nombreCurso)
+        public IActionResult OnGet(string nombreCurso, string nombrePaginaCurso)
         {
             try{
                 TempData["nombreCurso"] = nombreCurso;
                 ViewData["seccionCreada"] = false;
+                ViewData["nombrePaginaCurso"] = nombrePaginaCurso;
+                TempData["nombrePaginaCurso"] = nombrePaginaCurso;
                 return Page();
             }
             catch
@@ -43,7 +45,9 @@ namespace PIBasesISGrupo1.Pages.Curso
         {    
             ViewData["nombreCurso"] = TempData["nombreCurso"];
             ViewData["seccionCreada"] = TempData["seccionCreada"];
-            ViewData["nombreSeccion"] = TempData["nombreSeccion"];        
+            ViewData["nombreSeccion"] = TempData["nombreSeccion"];
+            ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
+            TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
         }
 
         public void OnGetMaterialAgregado()
@@ -51,9 +55,11 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["nombreCurso"] = TempData["nombreCurso"];
             ViewData["seccionCreada"] = TempData["seccionCreada"];
             ViewData["nombreSeccion"] = TempData["nombreSeccion"];
+            ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
+            TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
             CursoHandler accesoDatos = new CursoHandler();
             string nombreSeccion = (string)ViewData["nombreSeccion"];
-            ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion);
+            ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion, (string)ViewData["nombreCurso"]);
         }
         public IActionResult OnPostCrearSeccion()
         {

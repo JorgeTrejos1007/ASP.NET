@@ -281,11 +281,13 @@ namespace PIBasesISGrupo1.Handler
             
         }
 
-        public List<SeccionModel> obtenerSecciones()
+        public List<SeccionModel> obtenerSecciones(string nombreCurso)
         {
             List<SeccionModel> secciones = new List<SeccionModel>();
-            string consulta = "SELECT * FROM Seccion";
-            DataTable tablaResultado = crearTablaConsulta(consulta);
+            string consulta = "SELECT * FROM Seccion WHERE nombreCursoFK = @nombreCurso";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            DataTable tablaResultado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {
                 secciones.Add(
@@ -299,12 +301,14 @@ namespace PIBasesISGrupo1.Handler
             }
             return secciones;
         }
-        public List<MaterialModel> obtenerMaterialDeUnaSeccion(string seccion)
+        public List<MaterialModel> obtenerMaterialDeUnaSeccion(string nombreSeccion, string nombreCurso)
         {
             List<MaterialModel> materiales = new List<MaterialModel>();
-            string consulta = "SELECT * FROM Material WHERE nombreSeccionFK = @seccion";
+            string consulta = "SELECT * FROM Material WHERE nombreSeccionFK = @nombreSeccion AND nombreCursoFK = @nombreCurso";
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
-            comandoParaConsulta.Parameters.AddWithValue("@seccion", seccion);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+
             DataTable tablaResultado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {

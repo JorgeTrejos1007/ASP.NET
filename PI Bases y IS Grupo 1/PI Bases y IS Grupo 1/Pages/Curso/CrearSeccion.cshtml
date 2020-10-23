@@ -7,6 +7,7 @@
     var seccionCreada = (bool)ViewData["seccionCreada"];
     var nombreSeccion = (string)ViewData["nombreSeccion"];
     var listaMateriales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["listaMateriales"];
+    var nombrePaginaCurso = (string)ViewData["nombrePaginaCurso"];
 
 }
 
@@ -24,7 +25,7 @@
 
                 <input type="submit" value="Crear seccion" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="CrearSeccion" />
             </form>
-            <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
+            <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
 
         </div>
     }
@@ -66,7 +67,7 @@
                 }
             }
 
-            <a asp-page="./CrearCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0">Terminar de agregar material</a> <br>
+            <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0">Terminar de agregar material</a> <br>
         </div>
     }
 }

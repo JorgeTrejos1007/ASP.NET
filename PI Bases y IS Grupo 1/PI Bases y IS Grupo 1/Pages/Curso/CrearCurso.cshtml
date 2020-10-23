@@ -8,7 +8,7 @@
 
 <div class="curso-material">
     <h2 style="display:inline-block;">@nombreCurso</h2>
-    <a asp-page="CrearSeccion" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:60px;">Crear Seccion</a>
+    <a asp-page="CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:60px;">Crear Seccion</a>
     <a asp-page="./CursosAprobados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
 </div>
 @{

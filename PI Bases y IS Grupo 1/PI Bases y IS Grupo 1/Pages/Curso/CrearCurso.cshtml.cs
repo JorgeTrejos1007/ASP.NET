@@ -18,11 +18,11 @@ namespace PIBasesISGrupo1.Pages.Curso
             try
             {
                 CursoHandler accesoDatos = new CursoHandler();
-                Secciones = accesoDatos.obtenerSecciones();
+                Secciones = accesoDatos.obtenerSecciones(nombreCurso);
                 ViewData["nombreCurso"] = nombreCurso;
                 foreach (var item in Secciones)
                 {
-                    item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion);
+                    item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion,nombreCurso);
                 }
                 return Page();
             }

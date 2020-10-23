@@ -23,7 +23,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["nombreSeccion"] = nombreSeccion;
             CursoHandler accesoDatos = new CursoHandler();
            
-            ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion);
+            ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion,nombreCurso);
         }
         public IActionResult OnPostBorrarMaterial()
         {
