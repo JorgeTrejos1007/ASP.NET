@@ -16,6 +16,7 @@ namespace PIBasesISGrupo1.Pages.Logout
             IActionResult vista;
 
             Sesion.cerrarSesion(HttpContext.Session);
+         
 
             vista = Redirect("/Index");
 

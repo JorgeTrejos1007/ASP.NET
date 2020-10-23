@@ -1,1 +1,1 @@
-﻿SELECT * FROM Usuario WHERE email='stevegc112016@gmail.com';
+﻿SELECT * FROM Curso

@@ -15,6 +15,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
 
             ViewData["CursosDisponibles"] = cursoHandler.obtenerCursosDisponibles();
+
             Miembro usuarioEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
             if (usuarioEnSesion != null)
             {

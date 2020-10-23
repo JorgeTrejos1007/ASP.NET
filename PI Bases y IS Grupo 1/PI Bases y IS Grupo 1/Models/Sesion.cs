@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Newtonsoft.Json;
 
 namespace PIBasesISGrupo1.Models
@@ -25,7 +28,7 @@ namespace PIBasesISGrupo1.Models
         public static void cerrarSesion(this ISession sesionActual)
         {
             sesionActual.Clear();
-            
+           
         }
     }
 }
