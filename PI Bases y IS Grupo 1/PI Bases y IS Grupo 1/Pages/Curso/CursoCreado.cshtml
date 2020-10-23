@@ -2,7 +2,7 @@
 @model PIBasesISGrupo1.Pages.Curso.CursoCreadoModel
 @{
     ViewData["Title"] = "CursoCreado";
-    var nombreCurso = (PIBasesISGrupo1.Models.Cursos)ViewData["nombreCurso"];
+    var nombreCurso = (String)ViewData["nombreCurso"];
 }
 
 
@@ -33,6 +33,7 @@
                         </p>
                     }
                 }
+                <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Editar</a>
 
             </div>
 

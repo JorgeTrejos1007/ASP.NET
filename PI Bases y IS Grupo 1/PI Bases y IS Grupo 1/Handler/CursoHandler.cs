@@ -321,6 +321,22 @@ namespace PIBasesISGrupo1.Handler
             }
             return materiales;
         }
+
+        public bool borrarMaterial(MaterialModel material )
+        {
+
+            string consulta = "DELETE FROM Material " + "WHERE nombreCursoFK=@nombreCurso AND nombreSeccionFK=@nombreSeccion AND nombreMaterialPK=@nombreMaterial";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", material.nombreDeCurso);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", material.nombreDeSeccion);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreMaterial", material.nombreMaterial);
+            conexion.Open();
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            conexion.Close();
+            return exito;
+        }
+
         public bool crearCurso(string nombreCurso)
         {
 
