@@ -96,7 +96,7 @@ h6 {
     font-family: "Rubik", sans-serif;
     font-weight: 500;
     color: #002347;
-    
+    text-align:center;
 }
 
 .list {
@@ -221,7 +221,7 @@ button:focus {
     font-size: 36px;
     line-height: 30px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 @media (max-width: 575px) {
