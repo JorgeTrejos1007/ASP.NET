@@ -288,24 +288,32 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        public List<Tuple<string, string, byte[]>> obtenerMisCursosMatriculados(string emailDelUsuario)
-        {            List<Tuple<string, string, byte[]>> cursos = new List<Tuple<string, string, byte[]>>();            
+        public List<Tuple<string, Miembro>> obtenerMisCursosMatriculados(string emailDelUsuario)
+        {
+            List<Tuple<string, Miembro>>cursos = new List<Tuple<string, Miembro>>();
+            
             string consulta = "SELECT I.nombreCursoFK,E.tipoArchivo AS tipo,E.archivoImagen AS imagen " +
             ", E.nombre AS nombre FROM Inscribirse I JOIN Curso C ON I.nombreCursoFK = C.nombre JOIN Usuario E " +
             "ON C.emailEducadorFK = E.email"
             +" WHERE I.emailEstudianteFK =@emailDelUsuario;";
-            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);
             DataTable tablaCursoInscrito = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            Miembro educador;
             foreach (DataRow columna in tablaCursoInscrito.Rows)
             {
                 string nombreDelCurso = Convert.ToString(columna["nombreCursoFK"]);
-                string tipoArchivo = Convert.ToString(columna["tipo"]);
-                byte[] archivoImagen = (byte[])columna["imagen"];
-                cursos.Add(new Tuple<string, string, byte[]>(nombreDelCurso, tipoArchivo, archivoImagen));
+                educador = new Miembro { nombre = Convert.ToString(columna["nombre"]),
+                   tipoArchivo= Convert.ToString(columna["tipo"]),
+                   byteArrayImage= (byte[])columna["imagen"]
+                };
+                cursos.Add(new Tuple<string, Miembro>(nombreDelCurso,educador));
             }
 
 
-           return cursos;        }
+           return cursos;
+
+        }
 
 
 
