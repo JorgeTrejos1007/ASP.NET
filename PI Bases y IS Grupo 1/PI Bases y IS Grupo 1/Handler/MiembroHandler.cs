@@ -174,8 +174,7 @@ namespace PIBasesISGrupo1.Handler
             return cursos;
         }
         */
-        */
-
+        
         private string[] obtenerHabilidades(string email)
         {
             List<string> habilidades = new List<string>();
