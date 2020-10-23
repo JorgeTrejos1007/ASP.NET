@@ -16,6 +16,8 @@ namespace PIBasesISGrupo1.Pages.Curso
     public class ModificarSeccionModel : PageModel
     {
         [BindProperty]
+        public SeccionModel seccion { get; set; }
+        [BindProperty]
         public MaterialModel material { get; set; }
         public void OnGet(String nombreCurso, String nombreSeccion)
         {
@@ -30,6 +32,13 @@ namespace PIBasesISGrupo1.Pages.Curso
             CursoHandler accesodatos = new CursoHandler();
             accesodatos.borrarMaterial(material);
             return RedirectToPage("ModificarSeccion", new { nombreCurso = material.nombreDeCurso, nombreSeccion=material.nombreDeSeccion });
+        }
+
+        public IActionResult OnPostBorrarSeccion()
+        {
+            CursoHandler accesodatos = new CursoHandler();
+            accesodatos.borrarSeccion(seccion);
+            return RedirectToPage("CursoCreado" , new{nombreCurso = seccion.nombreCurso});
         }
     }
 }

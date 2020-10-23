@@ -327,19 +327,33 @@ namespace PIBasesISGrupo1.Handler
 
         public bool borrarMaterial(MaterialModel material )
         {
-
             string consulta = "DELETE FROM Material " + "WHERE nombreCursoFK=@nombreCurso AND nombreSeccionFK=@nombreSeccion AND nombreMaterialPK=@nombreMaterial";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", material.nombreDeCurso);
             comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", material.nombreDeSeccion);
             comandoParaConsulta.Parameters.AddWithValue("@nombreMaterial", material.nombreMaterial);
-            conexion.Open();
-            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
-            conexion.Close();
-            return exito;
+
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
 
+        public bool borrarSeccion(SeccionModel seccion)
+        {
+            string consulta = "DELETE FROM Seccion " + "WHERE nombreCursoFK=@nombreCurso AND nombreSeccionPK=@nombreSeccion";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", seccion.nombreCurso);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", seccion.nombreSeccion);
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+        }
+
+        public bool modificarSeccion(SeccionModel seccionNueva, string nombreSeccionAntiguo)
+        {
+            string consulta = "UPDATE Seccion SET nombreSeccionPK = @nombreSeccion " + "WHERE nombreCursoFK=@nombreCurso AND nombreSeccionPK=@nombreSeccionAntiguo";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", seccionNueva.nombreCurso);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", seccionNueva.nombreSeccion);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccionAntiguo", nombreSeccionAntiguo);
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+        }
         public bool crearCurso(string nombreCurso)
         {
 

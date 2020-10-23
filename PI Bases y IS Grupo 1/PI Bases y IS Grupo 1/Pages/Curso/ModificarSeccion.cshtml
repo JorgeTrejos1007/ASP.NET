@@ -10,11 +10,19 @@
 <h2>ModificarSeccion</h2>
 
 
-    <a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
-    <a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Agregar material</a>
-    
+<a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
+<a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Agregar material</a>
+<a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Modificar nombre de la seccion</a>
 
-<br/>
+
+<form method="post">
+    <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
+    <input type="hidden" asp-for="@Model.seccion.nombreSeccion" value="@nombreSeccion" />
+    <input type="submit" value="Borrar Seccion"  class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="BorrarSeccion" />
+</form>
+
+
+<br />
 
 <table class="table">
     <thead>
@@ -33,7 +41,7 @@
                     <tr>
                         <td>
                             @item.nombreMaterial
-                            
+
                         </td>
                         <td>
                             <form method="post">
@@ -42,7 +50,7 @@
                                 <input type="hidden" asp-for="@Model.material.nombreMaterial" value="@item.nombreMaterial" />
                                 <input type="submit" value="Borrar" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="BorrarMaterial" />
                             </form>
-                            
+
                         </td>
                     </tr>
                 }
