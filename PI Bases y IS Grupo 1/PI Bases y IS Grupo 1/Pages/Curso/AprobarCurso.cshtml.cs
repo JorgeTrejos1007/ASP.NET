@@ -25,9 +25,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             
             ViewData["CursosPropuestos"] = cursoHandler.obtenerCursosPropuestos();
         }
-        public IActionResult OnPost(string id)
+        public IActionResult OnPost(string id,string emailDelQueLoPropuso)
         {
-            bool exito = cursoHandler.aprobarCurso(id);
+            bool exito = cursoHandler.aprobarCurso(id, emailDelQueLoPropuso);
 
             return RedirectToPage("AprobarCurso");
         }

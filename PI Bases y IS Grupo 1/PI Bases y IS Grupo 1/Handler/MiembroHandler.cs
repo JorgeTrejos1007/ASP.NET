@@ -146,8 +146,9 @@ namespace PIBasesISGrupo1.Handler
         public bool crearMiembro(Miembro miembro)
         {
             string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password, pais, hobbies) "
-                + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password,@pais,@hobbies) ";
-            
+                + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password,@pais,@hobbies) ;";
+            string consultaParaInsertarEnMiembros= "INSERT INTO Miembro(emailMiembroFK)"
+                +"VALUES (@email);";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@genero", miembro.genero);
@@ -173,8 +174,6 @@ namespace PIBasesISGrupo1.Handler
             {
                 comandoParaConsulta.Parameters.AddWithValue("@hobbies", miembro.hobbies);
             }
-
-           
             conexion.Open();
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             
@@ -186,8 +185,10 @@ namespace PIBasesISGrupo1.Handler
             {
                 exito = insertarIdiomasMiembro(miembro);
             }
-
             conexion.Close();
+            SqlCommand comandoParaInsertarEnTablaDeMiembros = baseDeDatos.crearComandoParaConsulta(consultaParaInsertarEnMiembros);
+            comandoParaInsertarEnTablaDeMiembros.Parameters.AddWithValue("@email", miembro.email);
+            exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
             return exito;
         }
 
@@ -265,7 +266,16 @@ namespace PIBasesISGrupo1.Handler
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
             return exito;
         }
-       
+
+        public bool crearEducador(string emailEducador)
+        {
+            string consulta = "INSERT INT Educador(emailEducadorFK) VALUES(@email);";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@email", emailEducador);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
+            return exito;
+        }
+
         private bool insertarHabilidadesMiembro(Miembro miembro) {
             string consultaHabilidades = "INSERT INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
             
@@ -416,6 +426,7 @@ namespace PIBasesISGrupo1.Handler
             return paisesMiembros;
             conexion.Close();
         }
+         
 
 
     }
