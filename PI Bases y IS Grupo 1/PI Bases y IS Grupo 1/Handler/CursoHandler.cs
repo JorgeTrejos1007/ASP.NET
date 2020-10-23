@@ -288,13 +288,24 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        public List<string> obtenerMisCursosMatriculados(string emailDelUsuario)
-        {            List<string> cursos = new List<string>();            //string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";
+        public List<Tuple<string, string, byte[]>> obtenerMisCursosMatriculados(string emailDelUsuario)
+        {            List<Tuple<string, string, byte[]>> cursos = new List<Tuple<string, string, byte[]>>();            
             string consulta = "SELECT I.nombreCursoFK,E.tipoArchivo AS tipo,E.archivoImagen AS imagen " +
-            "FROM Inscribirse I JOIN Curso C ON I.nombreCursoFK = C.nombre JOIN Usuario E ON C.emailEducadorFK = E.email"
-            + " WHERE I.emailEstudianteFK =@emailDelUsuario;";
+            ", E.nombre AS nombre FROM Inscribirse I JOIN Curso C ON I.nombreCursoFK = C.nombre JOIN Usuario E " +
+            "ON C.emailEducadorFK = E.email"
+            +" WHERE I.emailEstudianteFK =@emailDelUsuario;";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);
+            DataTable tablaCursoInscrito = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columna in tablaCursoInscrito.Rows)
+            {
+                string nombreDelCurso = Convert.ToString(columna["nombreCursoFK"]);
+                string tipoArchivo = Convert.ToString(columna["tipo"]);
+                byte[] archivoImagen = (byte[])columna["imagen"];
+                cursos.Add(new Tuple<string, string, byte[]>(nombreDelCurso, tipoArchivo, archivoImagen));
+            }
 
-            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");            return cursos;        }
+
+           return cursos;        }
 
 
 
