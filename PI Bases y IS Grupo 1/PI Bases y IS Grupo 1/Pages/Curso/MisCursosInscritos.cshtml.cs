@@ -12,7 +12,7 @@ using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
-    [PermisosDeVista("Miembro", "Miembro de Nucleo", "Educador", "Coordinador")]
+    
     public class MisCursosModel : PageModel
     {
         private CursoHandler cursoHandler = new CursoHandler();

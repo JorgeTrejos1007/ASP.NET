@@ -22,8 +22,8 @@ namespace PIBasesISGrupo1.Filters
 
             rolesPerimitidos = roles;
 
-            
 
+            
 
         }
 
@@ -38,8 +38,7 @@ namespace PIBasesISGrupo1.Filters
                 }
             }
             catch {
-                context.Result = new RedirectResult("~/Login/Login");
-
+                context.Result = new RedirectResult("~/Login/LoginMiembro");
             }
         }
     }
