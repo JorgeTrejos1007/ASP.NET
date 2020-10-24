@@ -489,12 +489,12 @@ namespace PIBasesISGrupo1.Handler
             lectorDeDatosEducador.Read();
             educador.nombre = Convert.ToString(lectorDeDatosEducador["nombreEducador"]);
             educador.primerApellido = Convert.ToString(lectorDeDatosEducador["primerApellido"]);
-            educador.segundoApellido = Convert.ToString(lectorDeDatosEducador["segundoApellido"]);   
+            educador.segundoApellido = Convert.ToString(lectorDeDatosEducador["segundoApellido"]);
             conexion.Close();
 
             SqlCommand comandoParaConsultaTopicos = baseDeDatos.crearComandoParaConsulta(consultaTopicos);
             comandoParaConsultaTopicos.Parameters.AddWithValue("@nombreCurso", nombreCurso);
-            DataTable tableTopicos = baseDeDatos.crearTablaConsulta(comandoParaConsultaTopicos);         
+            DataTable tableTopicos = baseDeDatos.crearTablaConsulta(comandoParaConsultaTopicos);
             catalogo = new List<Tuple<string, string>>();
             foreach (DataRow columnaTopicos in tableTopicos.Rows)
             {
@@ -502,8 +502,12 @@ namespace PIBasesISGrupo1.Handler
                 {
                     catalogo.Add(new Tuple<string, string>(Convert.ToString(columnaTopicos["topico"]), Convert.ToString(columnaTopicos["category"])));
                 }
+            }
+            Tuple<Cursos, Miembro, List<Tuple<string, string>>> cursos = new Tuple<Cursos, Miembro, List<Tuple<string, string>>>(curso, educador, catalogo);
+            return cursos;
+        }
 
-        public List<Tuple<string, Miembro>> obtenerMisCursosMatriculados(string emailDelUsuario)
+            public List<Tuple<string, Miembro>> obtenerMisCursosMatriculados(string emailDelUsuario)
         {
             List<Tuple<string, Miembro>>cursos = new List<Tuple<string, Miembro>>();
             
