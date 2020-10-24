@@ -214,6 +214,7 @@ namespace PIBasesISGrupo1.Handler
                 exito = insertarIdiomasMiembro(estudianteNoRegistrado);
             }
             exito = registrarEnLaTablaDeMiembros(estudianteNoRegistrado.email);
+            return exito;
         }
         private bool registrarEnLaTablaDeMiembros(string email) {
             string consultaParaInsertarEnMiembros = "INSERT INTO Miembro(emailMiembroFK)"
