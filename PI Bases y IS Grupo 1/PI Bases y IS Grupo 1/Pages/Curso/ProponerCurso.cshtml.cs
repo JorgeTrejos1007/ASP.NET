@@ -11,11 +11,15 @@ using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
+
 using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
-    //[PermisosDeVista(nivel: 2)]
+    [PermisosDeVista("Miembro", "Miembro de Nucleo", "Educador","Coordinador")]
     public class ProponerCursoModel : PageModel
     {
         [BindProperty]
@@ -29,10 +33,9 @@ namespace PIBasesISGrupo1.Pages.Curso
         public IActionResult OnGet()
         {
            
+
             IActionResult vista;
-            Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(HttpContext.Session);
-            if (miembroSesionActual != null)
-            {
+           
                 try
                 {
                     vista = Page();
@@ -44,10 +47,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                     vista = Redirect("~/Curso/ProponerCurso");
                 }
 
-            }
-            else {
-                vista= Redirect("~/Login/Login");
-            }
+          
             return vista;
         }
         public IActionResult OnPost()

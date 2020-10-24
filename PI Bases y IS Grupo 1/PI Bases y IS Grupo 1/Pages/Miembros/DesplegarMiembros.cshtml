@@ -19,74 +19,39 @@
 </div>
 
 <div class="member-container">
-    @foreach (var miembro in (List<PIBasesISGrupo1.Models.Miembro>)ViewData["Miembros"])
-    {
-        <div class="member_list">
-            <p>
-                @{
-                    if (@miembro.byteArrayImage != null)
-                    {
-                        <img class="member_img" src="data:@miembro.tipoArchivo;base64,@(Convert.ToBase64String(@miembro.byteArrayImage))" asp-append-version="true" />
-                    }
-                    else
-                    {
-                        <img class="member_img" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
-                    }
-                }
-                <br />
-                <br />
-                <h4 class="title_color">Nombre Completo:</h4> @miembro.nombre @miembro.primerApellido
-                @if (@miembro.segundoApellido != null)
+    @{var miembro = (List<PIBasesISGrupo1.Models.Miembro>)ViewData["Miembros"];
+        int i = 0;
+        for (i = 0; i < miembro.Count(); i = i + 4)
+        {
+            <div class="row" id="filaDePersonas">
+                @for (int j = i; j < i + 4; j++)
                 {
-                    @miembro.segundoApellido
-                }
-                <br />
-                <br />
-                <h4 class="title_color">Tipo de usuario: </h4>@miembro.tipoDeUsuario<br />
-                <br />
-                <h4 class="title_color">
-                    Genero:
-                </h4> @miembro.genero<br />
-                <br />
-                <h4 class="title_color">Pais:</h4> @miembro.pais<br />
-                <br />
-                <h4 class="title_color">Hobbies:</h4> @miembro.hobbies<br />
-                <br />
-                <h4 class="title_color">Email:</h4> @miembro.email<br />
-
-
-                <br />
-                @{
-                    if (@miembro.idiomas != null)
-                    {
-                        <h4 class="title_color">
-                            Idiomas:
-                        </h4>
-                        @foreach (var idioma in @miembro.idiomas)
-                        {
-                            @idioma<br />
-
-                        }
+                    if (j < miembro.Count()) { 
+                        <a id="botonParaPerfil" asp-page="./MostrarPerfilMiembro" asp-route-email="@miembro[j].email">
+                            <div id="cuadroDePerfil">
+                                @{
+                                    if (miembro[j].byteArrayImage != null)
+                                    {
+                                        <img id="imagenMiembro" src="data:@miembro[j].tipoArchivo;base64,@(Convert.ToBase64String(@miembro[j].byteArrayImage))" asp-append-version="true" />
+                                    }
+                                    else
+                                    {
+                                        <img id="imagenMiembro" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                                    }
+                                    if (@miembro[j].segundoApellido != null)
+                                    {
+                                        <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido @miembro[j].segundoApellido</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido</h4>
+                                    }
+                                }
+                            </div>
+                    </a>
                     }
-                    <br />
-                    if (@miembro.habilidades != null)
-                    {
-                        <h4 class="title_color">
-                            Habilidades:
-                        </h4>
-                        @foreach (var habilidad in @miembro.habilidades)
-                        {
-                            @habilidad <br />
-
-                        }
-                    }
-
-                }
-
-
-
-
-            </p>
-        </div>
+                 }
+            </div>
+        }
     }
 </div>

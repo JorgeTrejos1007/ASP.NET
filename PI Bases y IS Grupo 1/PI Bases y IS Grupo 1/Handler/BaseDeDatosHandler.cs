@@ -14,6 +14,7 @@ namespace PIBasesISGrupo1.Handler
 
     public class BaseDeDatosHandler
     {
+
         private ConexionModel conexionBD;
         private SqlConnection conexion;
 
@@ -25,7 +26,7 @@ namespace PIBasesISGrupo1.Handler
 
         public DataTable crearTablaConsulta(SqlCommand comandoParaConsulta)
         {
-
+        
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             DataTable consultaFormatoTabla = new DataTable();
             conexion.Open();
@@ -33,7 +34,6 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return consultaFormatoTabla;
         }
-
 
         public SqlCommand crearComandoParaConsulta(string consulta)
         {
@@ -67,10 +67,27 @@ namespace PIBasesISGrupo1.Handler
             }
             conexion.Close();
             return exito;
-
         }
 
 
+        public int saberSiExisteTupla(SqlCommand ComandoParaConsulta)
+        {
+            conexion.Open();
+            int existe = 0;
+            try
+            {
+                existe = (int)ComandoParaConsulta.ExecuteScalar();
+            }
+            catch
+            {
+                existe = 0;
+            }
+            conexion.Close();
+            return existe;
+        }
 
     }
+
+
 }
+

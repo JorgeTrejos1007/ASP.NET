@@ -48,7 +48,7 @@ namespace PIBasesISGrupo1.Handler
             bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
             if (curso.topicos.Length > 0)
             {
-               exito= insertarRelacionConTopico(curso); 
+                exito = insertarRelacionConTopico(curso);
             }
             conexion.Close();
             return exito;
@@ -67,7 +67,7 @@ namespace PIBasesISGrupo1.Handler
             return exito;
 
         }
-        public List<Tuple<Cursos,Miembro>> obtenerCursosPropuestos()
+        public List<Tuple<Cursos, Miembro>> obtenerCursosPropuestos()
         {
             List<Tuple<Cursos, Miembro>> cursos = new List<Tuple<Cursos, Miembro>>();
             string consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
@@ -78,27 +78,51 @@ namespace PIBasesISGrupo1.Handler
             Miembro educadorTemporal;
             foreach (DataRow columna in tablaCurso.Rows)
             {
-                cursoTemporal= new Cursos
+                cursoTemporal = new Cursos
                 {
                     nombre = Convert.ToString(columna["nombreCurso"]),
                     estado = Convert.ToString(columna["estado"]),
-                    precio=Convert.ToDouble(columna["precio"]),
+                    precio = Convert.ToDouble(columna["precio"]),
                     emailDelEducador = Convert.ToString(columna["emailEducador"]),
-                    byteArrayDocument = (byte [])columna["documento"],
+                    byteArrayDocument = (byte[])columna["documento"],
                     tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
                 };
                 educadorTemporal = new Miembro
                 {
-                    nombre = Convert.ToString(columna["nombreEducador"]), 
+                    nombre = Convert.ToString(columna["nombreEducador"]),
                     primerApellido = Convert.ToString(columna["primerApellido"]),
                     segundoApellido = Convert.ToString(columna["segundoApellido"])
 
                 };
                 cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
 
-            
+
             }
             return cursos;
+        }
+
+        public List<Cursos>obtenerMisCursosPropuestos(string correoMiembro){
+            List<Cursos> misCursosPropuestos = new List<Cursos>();
+            string consulta = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio" +
+            " FROM Curso C " + "WHERE emailEducadorFK=@correoMiembro AND estado!='Creado'";
+
+            SqlCommand ComandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            ComandoParaConsulta.Parameters.AddWithValue("@correoMiembro", correoMiembro);
+            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(ComandoParaConsulta);
+
+            Cursos cursoTemporal;
+            foreach (DataRow columna in tablaCurso.Rows)
+            {
+                cursoTemporal = new Cursos
+                {
+                    nombre = Convert.ToString(columna["nombreCurso"]),
+                    estado = Convert.ToString(columna["estado"]),
+                    precio = Convert.ToDouble(columna["precio"])
+                  
+                };
+                misCursosPropuestos.Add(cursoTemporal);
+            }
+            return misCursosPropuestos;
         }
 
         public List<Tuple<Cursos, Miembro,List<Tuple<string,string>>>> obtenerCursosDisponibles()
@@ -106,11 +130,11 @@ namespace PIBasesISGrupo1.Handler
             List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>> cursos = new List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>>();
             string consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
                 " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
-            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='Aprobado'";
+            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='Creado'";
             string consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
             " FROM Curso Cu Join  Contiene C ON Cu.nombre = C.nombreCursoFK" +
             " JOIN Topico T ON C.nombreTopicoFK = T.nombreTopicoPK JOIN Categoria Cat ON Cat.nombreCategoriaPK = T.nombreCategoriaFK" +
-            " WHERE Cu.estado = 'Aprobado'; ";
+            " WHERE Cu.estado = 'Creado'; ";
             DataTable tablaCurso = crearTablaConsulta(consultaCategorias);
             DataTable tableTopicos = crearTablaConsulta(consultaTopicos);
             Cursos cursoTemporal;
@@ -153,15 +177,16 @@ namespace PIBasesISGrupo1.Handler
         public List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>> buscarCursos(bool opcionDeBusqueda,string busqueda)
         {
             List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>> cursos = new List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>>();
-            Tuple<string, string> comandosParaLaBusqueda;
+            Tuple<SqlCommand, SqlCommand> comandosParaLaBusqueda;
             if (opcionDeBusqueda == true) {
                 comandosParaLaBusqueda = crearConsultaParaBusquedaDeCurso(true, busqueda);
             }
             else{
                 comandosParaLaBusqueda= crearConsultaParaBusquedaDeCurso(false, busqueda);
             }
-            DataTable tablaCurso = crearTablaConsulta(comandosParaLaBusqueda.Item1);
-            DataTable tableTopicos = crearTablaConsulta(comandosParaLaBusqueda.Item2);
+
+            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comandosParaLaBusqueda.Item1);
+            DataTable tableTopicos = baseDeDatos.crearTablaConsulta(comandosParaLaBusqueda.Item2);
             Cursos cursoTemporal;
             Miembro educadorTemporal;
             List<Tuple<string, string>> catalogo;
@@ -211,7 +236,7 @@ namespace PIBasesISGrupo1.Handler
             return consultaFormatoTabla;
         }
 
-        public Tuple<string, string> crearConsultaParaBusquedaDeCurso(bool opcionDeBusqueda, string busqueda)
+        public Tuple<SqlCommand, SqlCommand> crearConsultaParaBusquedaDeCurso(bool opcionDeBusqueda, string busqueda)
         {
             string consultaCategorias;
             string consultaTopicos;
@@ -220,11 +245,11 @@ namespace PIBasesISGrupo1.Handler
             {
                 consultaCategorias = "SELECT C.nombre AS nombreCurso,C.estado AS estado,C.precio AS precio," +
                 " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
-                "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='Aprobado' and precio = " + busqueda + ";";
+                "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " + "WHERE estado='Creado' and precio like @busqueda; ";
                 consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
                " FROM Curso Cu Join  Contiene C ON Cu.nombre = C.nombreCursoFK" +
                " JOIN Topico T ON C.nombreTopicoFK = T.nombreTopicoPK JOIN Categoria Cat ON Cat.nombreCategoriaPK = T.nombreCategoriaFK" +
-               " WHERE Cu.estado = 'Aprobado' and Cu.precio = " + busqueda + "; ";
+               " WHERE Cu.estado = 'Creado' and Cu.precio like @busqueda; ";
 
             }
             //si se va a buscar por nombre o instructor
@@ -235,14 +260,21 @@ namespace PIBasesISGrupo1.Handler
                "C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS " +
                "primerApellido,E.segundoApellido AS segundoApellido " +
                "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.email " +
-               "WHERE estado='Aprobado' and (C.nombre = '" + busqueda + "' or E.nombre = '" + busqueda + "'); ";
+               "WHERE estado='Creado' and (C.nombre like @busqueda or E.nombre like @busqueda); ";
                 consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
                  " FROM Curso Cu JOIN Usuario  E ON Cu.emailEducadorFK = E.email JOIN Contiene C ON Cu.nombre = C.nombreCursoFK" +
                  " JOIN Topico T ON C.nombreTopicoFK = T.nombreTopicoPK JOIN Categoria Cat ON Cat.nombreCategoriaPK = T.nombreCategoriaFK" +
-                 " WHERE Cu.estado = 'Aprobado'   and (Cu.nombre = '" + busqueda + "' or E.nombre = '" + busqueda + "'); ";
+                 " WHERE Cu.estado = 'Creado'   and (Cu.nombre like @busqueda or E.nombre like @busqueda); ";
 
             }
-            return new Tuple<string, string>(consultaCategorias, consultaTopicos);
+            SqlCommand consultaCategoriasParametrizada = baseDeDatos.crearComandoParaConsulta(consultaCategorias);
+            consultaCategoriasParametrizada.Parameters.AddWithValue("@busqueda","%"+busqueda+"%");
+            SqlCommand consultaTopicosParametrizada = baseDeDatos.crearComandoParaConsulta(consultaTopicos);
+            consultaTopicosParametrizada.Parameters.AddWithValue("@busqueda", "%"+ busqueda+"%");
+
+
+
+            return new Tuple<SqlCommand, SqlCommand>(consultaCategoriasParametrizada, consultaTopicosParametrizada);
         }
         public bool aprobarCurso(string nombreCurso)
         {
@@ -399,8 +431,34 @@ namespace PIBasesISGrupo1.Handler
                 cursos.Add(new Tuple<Cursos, Miembro, List<Tuple<string, string>>>(cursoTemporal, educadorTemporal, catalogo));
 
 
+        public List<Tuple<string, Miembro>> obtenerMisCursosMatriculados(string emailDelUsuario)
+        {
+            List<Tuple<string, Miembro>>cursos = new List<Tuple<string, Miembro>>();
+            
+            string consulta = "SELECT I.nombreCursoFK,E.tipoArchivo AS tipo,E.archivoImagen AS imagen " +
+            ", E.nombre AS nombre FROM Inscribirse I JOIN Curso C ON I.nombreCursoFK = C.nombre JOIN Usuario E " +
+            "ON C.emailEducadorFK = E.email"
+            +" WHERE I.emailEstudianteFK =@emailDelUsuario;";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);
+            DataTable tablaCursoInscrito = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            Miembro educador;
+            foreach (DataRow columna in tablaCursoInscrito.Rows)
+            {
+                string nombreDelCurso = Convert.ToString(columna["nombreCursoFK"]);
+                educador = new Miembro { nombre = Convert.ToString(columna["nombre"]),
+                   tipoArchivo= Convert.ToString(columna["tipo"]),
+                   byteArrayImage= (byte[])columna["imagen"]
+                };
+                cursos.Add(new Tuple<string, Miembro>(nombreDelCurso,educador));
             }
-            return cursos;
+
+
+           return cursos ;
+
         }
-    } 
+
+
+
+    }
 }

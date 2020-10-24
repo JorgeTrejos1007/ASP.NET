@@ -15,31 +15,31 @@ namespace PIBasesISGrupo1.Filters
     [AttributeUsage(AttributeTargets.Class,AllowMultiple = false)]
     public class PermisosDeVista : AuthorizeAttribute, IAuthorizationFilter 
     {
-        private int nivelDePermisoDeVista;
         
-        public PermisosDeVista(int nivel)
+        private string[] rolesPerimitidos;
+        public PermisosDeVista(params string[] roles)
         {
-            nivelDePermisoDeVista = nivel;
 
+            rolesPerimitidos = roles;
+
+
+            
 
         }
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            
-             Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session);
-
-
-            //context.Result = new RedirectResult("~/Error/UnauthorizedOperation?operacion");
-            //context.Result = new RedirectResult("~/Curso/ProponerCurso");
-
-
-
-            
-
-
-            //throw new NotImplementedException();
-
+            try
+            {
+                Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session, "Miembro");
+                if (rolesPerimitidos.Contains(miembroSesionActual.tipoDeUsuario) == false)
+                {
+                    context.Result = new RedirectResult("~/Error");
+                }
+            }
+            catch {
+                context.Result = new RedirectResult("~/Login/LoginMiembro");
+            }
         }
     }
 

@@ -1,0 +1,52 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.MisCursosPropuestosModel
+@{
+    ViewData["Title"] = "Mis Cursos Propuestos";
+    var listaDeCursos = (List<PIBasesISGrupo1.Models.Cursos>)ViewData["MisCursosPropuestos"];
+
+}
+<h2>Mis Cursos Propuestos</h2>
+<div class="cursos-container">
+    @foreach (var curso in listaDeCursos)
+    {
+
+        <div class="col-lg-4 right-contents">
+            <ul>
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Curso</p>
+                        <span class="or">@curso.nombre</span>
+
+
+                    </a>
+                </li>
+
+
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Estado</p>
+                        <span class="or">@curso.estado</span>
+
+
+                    </a>
+                </li>
+
+
+
+                <li>
+                    <a class="justify-content-between d-flex" href="#">
+                        <p>Precio </p>
+                        <span>$@curso.precio</span>
+                    </a>
+                </li>
+
+
+
+            </ul>
+
+           
+        </div>
+
+    }
+</div>
+

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,7 +41,13 @@ namespace PIBasesISGrupo1
             services.AddSession();
             services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-           services.AddAuthentication();
+            services.AddAuthentication(options =>
+             {
+                 options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                 options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+                 options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+             }).AddCookie(options => { options.LoginPath = "/Login"; });
+
 
 
         }

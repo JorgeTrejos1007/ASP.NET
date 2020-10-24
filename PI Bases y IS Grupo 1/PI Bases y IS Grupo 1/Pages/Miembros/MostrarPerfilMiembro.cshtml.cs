@@ -6,20 +6,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
-using Microsoft.Extensions.Configuration;
-
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
-    public class DesplegarMiembrosModel : PageModel
+    public class MostrarPerfilMiembroModel : PageModel
     {
-        [BindProperty]
-        public Miembro Miembro { get; set; }
-        
-        public void OnGet()
+       
+            [BindProperty]
+        public Miembro miembro { get; set; }
+
+        public void OnGet(string email)
         {
             MiembroHandler accesoDatos = new MiembroHandler();
-            ViewData["Miembros"] = accesoDatos.obtenerTodosLosMiembros();
+            ViewData["email"] = email;
+            miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
         }
-    }
+    }    
 }

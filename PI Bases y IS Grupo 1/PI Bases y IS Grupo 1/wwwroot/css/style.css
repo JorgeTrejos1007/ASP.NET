@@ -1,11 +1,11 @@
 /*----------------------------------------------------
-@File: Default Styles
-@Author: SPONDON IT
-Author E-mail: info@spondonit.com
-
-This file contains the styling for the actual theme, this
-is the file you need to edit to change the look of the
-theme.
+@File: Default Styles 
+@Author: SPONDON IT 
+Author E-mail: info@spondonit.com 
+    
+This file contains the styling for the actual theme, this 
+is the file you need to edit to change the look of the 
+theme. 
 ---------------------------------------------------- */
 /*=====================================================================
 @Template Name: Medicare Medical
@@ -76,6 +76,17 @@ body {
     height: 200px;
     width: 200px;
 }
+
+
+.member_img-perfil {
+    height: 200px;
+    width: 200px;
+    margin-right: 100px;
+    border-radius:10px;
+}
+
+
+
 
 /*----------------------------------------------------*/
 
@@ -350,7 +361,7 @@ button:focus {
 
             .header_area .navbar .nav .nav-item .nav-link {
                 font: 500 15px/80px "Rubik", sans-serif;
-                text-transform: capitalize;
+                text-trans?area: capitalize;
                 color: #fff;
                 padding: 0px;
                 display: inline-block;
@@ -1595,6 +1606,7 @@ button:focus {
 .testi_item:hover {
     box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
 }
+
 
 /* End Testimonial Area css
 ============================================================================================ */
@@ -4055,11 +4067,11 @@ h6 {
     display: inline-block;
     background: #002347;
     padding: 0px 48px;
-    color: #002347;
+    color: #ffffff;
     font-size: 13px;
     font-weight: 500;
     line-height: 50px;
-    border-radius: 15px;
+    border-radius: 5px;
     outline: none !important;
     text-align: center;
     text-transform: uppercase;
@@ -4071,8 +4083,8 @@ h6 {
 }
 
     .primary-btn:hover {
-        background: #2d4c6b;
-        color: #2d4c6b;
+        background: #002347;
+        color: #B2FFFF;
     }
 
 .primary-btn2 {
@@ -4687,6 +4699,34 @@ h6 {
         text-align: left;
         margin-top: 20px;
     }
+}
+
+#imagenMiembro {
+    height: 100px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 0px;
+}
+
+#filaDePersonas {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+#nombrePersona {
+    margin-top: 20px;
+}
+
+#botonParaPerfil {
+    flex: 1 0 21%;
+    margin: 5px;
+    height: 175px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+#botonParaPerfil:hover {
+    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
 }
 
 /*---------------------------------------------------- */

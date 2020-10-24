@@ -10,11 +10,15 @@ using System.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Session;
 using System.ComponentModel.DataAnnotations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 namespace PIBasesISGrupo1.Pages.Login
 {
-    public class LoginModel : PageModel
+    public class LoginEstudianteModel : PageModel
     {
+
         [BindProperty]
         [Required(ErrorMessage = "Es necesario que ingreses tu correo")]
         public string email { get; set; }
@@ -22,35 +26,33 @@ namespace PIBasesISGrupo1.Pages.Login
         [BindProperty]
         [Required(ErrorMessage = "Es necesario que ingreses tu contraseña")]
         public string password { get; set; }
-
         public void OnGet()
         {
-            
-
-
 
         }
-
-        public IActionResult OnPost()
+        public async Task<IActionResult> OnPostAsync()
         {
-            
+
             MiembroHandler accesoDatos = new MiembroHandler();
-            Miembro datosDelmiembro = accesoDatos.obtenerTodosLosMiembros().Find(smodel => smodel.email == email.Trim() && smodel.password== password.Trim());
+            LoginHandler login = new LoginHandler();
+
             IActionResult vista;
-            
-            if (datosDelmiembro != null)
+            if (login.validarEstudiante(email.Trim(), password.Trim()))
             {
-
-                Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelmiembro);
-
-                //var datos = Sesion.GetObjectFromJson<Miembro>(HttpContext.Session,"User");
-
+                Miembro datosDelEstudiante = accesoDatos.obtenerDatosDeUnMiembro(email.Trim());
+                Sesion.guardarDatosDeSesion(HttpContext.Session, datosDelEstudiante, "Estudiante");
+                var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
+                identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, "Sesion"));
+                identity.AddClaim(new Claim(ClaimTypes.Name, "Estudiante"));
+                var principal = new ClaimsPrincipal(identity);
+                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
                 vista = Redirect("/Index");
-                
+
             }
-            else {
+            else
+            {
                 TempData["mensaje"] = "Correo o contraseña incorrecta";
-                vista= Page();
+                vista = Page();
             }
 
             return vista;

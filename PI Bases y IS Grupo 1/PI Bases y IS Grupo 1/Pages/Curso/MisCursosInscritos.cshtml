@@ -1,0 +1,54 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.MisCursosModel
+@{
+    var listaDeCursos = (List<Tuple<string, string, byte[]>>)ViewData["MisCursos"];
+
+
+}
+
+
+
+<div class="cursos-container">
+    @{
+        if (listaDeCursos != null)
+        {
+            for (int i = 0; i < listaDeCursos.Count(); i = i + 1)
+            {
+                 <div class="row" id="filaDePersonas">
+                     @for (int j = i; j < i + 1; j++)
+                     {
+                            
+                         <a id="botonParaPerfil">
+                             @if (j < listaDeCursos.Count())
+                              {
+                             <div id="cuadroDePerfil">
+
+
+                                 <img id="imagenMiembro" src="data:@listaDeCursos[j].Item2;base64,@(Convert.ToBase64String(listaDeCursos[j].Item3))" asp-append-version="true" />
+
+                                 <span class="flaticon-student"></span>
+                                 <h4 id="nombrePersona">@listaDeCursos[j].Item1</h4>
+
+
+
+
+
+                             </div>
+
+                              }
+                         </a>
+                      }
+                 </div>
+            }
+        }
+    }
+</div>
+
+
+
+
+
+
+
+
+

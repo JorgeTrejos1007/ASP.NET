@@ -1,22 +1,23 @@
 ﻿@page
-@model PIBasesISGrupo1.Pages.Login.LoginModel
+@model PIBasesISGrupo1.Pages.Login.LoginEstudianteModel
 @{
-    ViewData["Title"] = "Iniciar sesión";
+    ViewData["Title"] = "LoginEstudiante";
     var mensaje = (string)TempData["mensaje"];
 }
-<h2>Iniciar sesión</h2>
+
+<h2>Ingresar como Estudiante</h2>
 <div class="row">
-  
+
     <form method="post">
 
         @if (@mensaje != null)
         {
-            
+
             <div class="alert-danger">
 
                 <h3> @mensaje </h3>
             </div>
-            
+
         }
 
 
@@ -25,7 +26,7 @@
             <span asp-validation-for="@Model.email" class="text-danger"></span>
             </br>
             <label>Correo</label>
-            
+
             <input asp-for="@Model.email" type="email" />
         </div>
         <div class="form-group">
@@ -46,4 +47,6 @@
     @section scripts{
         <partial name="_ValidationScriptsPartial" />
     }
+
+ 
 
