@@ -32,11 +32,19 @@ namespace PIBasesISGrupo1.Pages.Curso
                 ViewData["seccionCreada"] = false;
                 ViewData["nombrePaginaCurso"] = nombrePaginaCurso;
                 TempData["nombrePaginaCurso"] = nombrePaginaCurso;
+                if (TempData["ocurrioError"]!=null)
+                {
+                    ViewData["mensajeError"] = "Esta seccion ya esta en el curso";
+                }
+                else
+                {
+                    ViewData["mensajeError"] = "";
+                }
                 return Page();
             }
             catch
             {
-                return RedirectToPage("CursosAprobados");
+                return RedirectToPage(nombrePaginaCurso);
             }
             
         }
@@ -73,8 +81,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
             else
             {
-                ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
-                vista = RedirectToPage((string)ViewData["nombrePaginaCurso"]);
+                TempData["ocurrioError"] = true;
+                string nombrePaginaCursoTemp = (string)TempData["nombrePaginaCurso"];
+                vista = RedirectToPage("CrearSeccion", new {nombreCurso = seccion.nombreCurso, nombrePaginaCurso = nombrePaginaCursoTemp });
             }
             return vista;
         }

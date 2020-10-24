@@ -8,7 +8,7 @@
     var nombreSeccion = (string)ViewData["nombreSeccion"];
     var listaMateriales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["listaMateriales"];
     var nombrePaginaCurso = (string)ViewData["nombrePaginaCurso"];
-
+    var mensajeError = (string)ViewData["mensajeError"];
 }
 
 
@@ -19,6 +19,10 @@
         <div class="curso-material">
             <form method="post">
                 <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
+                @if (mensajeError != "")
+                {
+                 <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>            
+                }
                 <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
                 <input asp-for="@Model.seccion.nombreSeccion" />
                 <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />

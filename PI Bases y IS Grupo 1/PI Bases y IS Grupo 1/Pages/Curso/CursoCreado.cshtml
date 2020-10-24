@@ -9,7 +9,8 @@
 <div class="curso-material">
     <h2 style="display:inline-block;">@nombreCurso</h2>
     <a asp-page="./CursosCreados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
-    <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="primary-btn__reverse text-uppercase enroll rounded-0">Crear seccion</a> <br> 
+    <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="primary-btn__reverse text-uppercase enroll rounded-0">Crear seccion</a> <br>
+    <a asp-page="./ModificarInformacionCurso" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">Modificar la informacion del curso</a> <br>
     <!--<a href="data:curso.tipoDocInformativo;base64,(Convert.ToBase64String(curso.byteArrayDocument))" download="curso.nombre .pdf">
         <span class="or">Descargar documento descriptivo del curso</span>
     </a>-->

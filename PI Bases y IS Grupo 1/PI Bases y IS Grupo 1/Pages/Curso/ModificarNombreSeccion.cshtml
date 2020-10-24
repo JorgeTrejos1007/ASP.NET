@@ -1,0 +1,26 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.ModificarNombreSeccionModel
+@{
+    ViewData["Title"] = "ModificarNombreSeccion";
+    var nombreCurso = (string)ViewData["nombreCurso"];
+    var nombreSeccion = (string)ViewData["nombreSeccion"];
+    var mensajeError = (string)ViewData["mensajeError"];
+}
+
+<h2>Modificar Seccion</h2>
+<div class="curso-material">
+    <form method="post">
+        <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
+        @if (mensajeError != "")
+        {
+            <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>
+        }
+        <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
+        <input asp-for="@Model.seccion.nombreSeccion" />
+        <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
+
+        <input type="submit" value="Modificar seccion" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="ModificarSeccion" />
+    </form>
+    <a asp-page="ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
+
+</div>
