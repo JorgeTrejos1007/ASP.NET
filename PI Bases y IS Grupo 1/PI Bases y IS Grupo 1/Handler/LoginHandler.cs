@@ -18,7 +18,7 @@ namespace PIBasesISGrupo1.Handler
         public bool validarMiembro(string email, string password)
         {
             bool MiembroValido = false;
-            string consulta = "SELECT count(1) FROM Usuario WHERE email=@email AND password=@password AND pais IS NOT NULL";
+            string consulta = "SELECT count(1) FROM Usuario WHERE emailPK=@email AND password=@password AND pais IS NOT NULL";
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@email", email);
             comandoParaConsulta.Parameters.AddWithValue("@password", password);
@@ -30,7 +30,7 @@ namespace PIBasesISGrupo1.Handler
         public bool validarEstudiante(string email, string password)
         {
             bool validarEstudiante = false;
-            string consulta = "SELECT count(1) FROM Usuario WHERE email=@email AND password=@password AND pais IS NULL";
+            string consulta = "SELECT count(1) FROM Usuario WHERE emailPK=@email AND password=@password AND pais IS NULL";
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@email", email);
             comandoParaConsulta.Parameters.AddWithValue("@password", password);

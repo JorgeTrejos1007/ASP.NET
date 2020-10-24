@@ -20,8 +20,13 @@ namespace PIBasesISGrupo1.Models
 
          public static Miembro obtenerDatosDeSesion(this ISession sesionActual, string usuario)
         {
-            var datosDelmiembro = sesionActual.GetString(usuario);
-            
+            var datosDelmiembro = " ";
+            if (usuario != null)
+            {
+
+                datosDelmiembro = sesionActual.GetString(usuario);
+            }
+
             return datosDelmiembro == null ? default(Miembro) : JsonConvert.DeserializeObject<Miembro>(datosDelmiembro);
         }
 
