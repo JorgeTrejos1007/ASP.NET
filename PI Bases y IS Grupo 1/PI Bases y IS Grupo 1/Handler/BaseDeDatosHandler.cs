@@ -57,6 +57,7 @@ namespace PIBasesISGrupo1.Handler
         public bool ejecutarComandoParaConsulta(SqlCommand ComandoParaConsulta) {
             conexion.Open();
             bool exito = true;
+           
             try
             {
                 exito = ComandoParaConsulta.ExecuteNonQuery() >= 1;

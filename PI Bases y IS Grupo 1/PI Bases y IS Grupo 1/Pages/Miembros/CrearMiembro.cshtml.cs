@@ -63,6 +63,15 @@ namespace PIBasesISGrupo1.Pages.Miembros
         
         public IActionResult OnPost(bool esEstudiante)
         {
+            if (esEstudiante)
+            {
+                intentarRegistrarEstudiante();
+            }
+            else
+            {
+                intentarRegistrarParticipanteExterno();
+
+            }
             try
             {
                 if (esEstudiante) {
