@@ -280,7 +280,7 @@ namespace PIBasesISGrupo1.Handler
         public bool aprobarCurso(string nombreCurso,string emailDelQueLoPropuso)
         {
             string consulta = "UPDATE Curso " + "SET estado='Aprobado' " + "WHERE nombre=@nombreCurso";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
             bool exitoAlInsertarEducador = miembrosHandler.crearEducador(emailDelQueLoPropuso);
