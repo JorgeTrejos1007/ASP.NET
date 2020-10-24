@@ -33,32 +33,44 @@ body {
 
 /*Encuestas*/
 
-.encuestas-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap-reverse;
-    border: 3px solid #002347;
-}
-
 .encuestas__elements {
     display: flex;
     flex-direction: column;
-    margin-right: 10%;
+    background: rgba(204,204,204,0.3);
+}
+
+    .encuestas__elements h4 {
+        background: #002347;
+        font-size: 22px;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+    }
+
+.encuestas__resultadoss {
+    display: inline-block;
+    background: green !important;
+}
+
+.encuestas__barraResultado {
+    background: #002347;
+    color: #fff;
 }
 
 .encuestas__elements h5 {
-        color: #f8b600;
+    display: inline-block;
+    color: #f8b600;
 }
 
-.encuestas__title{
+.encuestas__title {
     background: rgba(204,204,204,0.3);
-    text-align:center;
+    text-align: center;
 }
 
 .encuestas__table th {
     background: rgba(204,204,204,0.3);
-
 }
+
 .encuestas__buttons {
     display: flex;
     flex-direction: row;
