@@ -18,11 +18,13 @@ namespace PIBasesISGrupo1.Handler
         private ConexionModel conexionBD;
         private SqlConnection conexion;
         private BaseDeDatosHandler baseDeDatos;
+        private MiembroHandler miembrosHandler;
         public CursoHandler()
         {
             conexionBD = new ConexionModel();
             conexion = conexionBD.Connection();
             baseDeDatos = new BaseDeDatosHandler();
+            miembrosHandler = new MiembroHandler();
         }
 
         private byte[] obtenerBytes(IFormFile archivo)
@@ -37,7 +39,7 @@ namespace PIBasesISGrupo1.Handler
         public bool proponerCurso(Cursos curso, IFormFile archivo)
         {
             string consulta = "INSERT INTO Curso(nombre,emailEducadorFK,documentoInformativo,tipoDocumentoInformativo,precio)"
-          + "VALUES (@nombreCurso,@emailEducador,@documentoInformativo,@tipoDocumentoInformativo,@precio)";
+             + "VALUES (@nombreCurso,@emailEducador,@documentoInformativo,@tipoDocumentoInformativo,@precio)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", curso.nombre);
@@ -281,16 +283,14 @@ namespace PIBasesISGrupo1.Handler
 
             return new Tuple<SqlCommand, SqlCommand>(consultaCategoriasParametrizada, consultaTopicosParametrizada);
         }
-        public bool aprobarCurso(string nombreCurso)
+        public bool aprobarCurso(string nombreCurso,string emailDelQueLoPropuso)
         {
 
             string consulta = "UPDATE Curso " + "SET estado='Aprobado' " + "WHERE nombre=@nombreCurso";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
-            conexion.Open();
-            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
-            conexion.Close();
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            bool exitoAlInsertarEducador = miembrosHandler.crearEducador(emailDelQueLoPropuso);
             return exito;
         }
 
