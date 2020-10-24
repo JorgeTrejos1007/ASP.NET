@@ -429,6 +429,9 @@ namespace PIBasesISGrupo1.Handler
                 };
 
                 cursos.Add(new Tuple<Cursos, Miembro, List<Tuple<string, string>>>(cursoTemporal, educadorTemporal, catalogo));
+            }
+            return cursos;
+        }
 
 
         public List<Tuple<string, Miembro>> obtenerMisCursosMatriculados(string emailDelUsuario)
