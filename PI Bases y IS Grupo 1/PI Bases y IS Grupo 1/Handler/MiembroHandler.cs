@@ -115,32 +115,6 @@ namespace PIBasesISGrupo1.Handler
 
             return idiomas.ToArray();
         }
-            Miembro educadorTemporal;
-            foreach (DataRow columna in tablaCurso.Rows)
-            {
-                cursoTemporal = new Cursos
-                {
-                    nombre = Convert.ToString(columna["nombreCurso"]),
-                    estado = Convert.ToString(columna["estado"]),
-                    precio = Convert.ToDouble(columna["precio"]),
-                    emailDelEducador = Convert.ToString(columna["emailEducador"]),
-                    byteArrayDocument = (byte[])columna["documento"],
-                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
-                };
-                educadorTemporal = new Miembro
-                {
-                    nombre = Convert.ToString(columna["nombreEducador"]),
-                    primerApellido = Convert.ToString(columna["primerApellido"]),
-                    segundoApellido = Convert.ToString(columna["segundoApellido"])
-
-                };
-                cursos.Add(new Tuple<Cursos, Miembro>(cursoTemporal, educadorTemporal));
-
-
-            }
-            return cursos;
-        }
-        */
         
         private string[] obtenerHabilidades(string email)
         {
