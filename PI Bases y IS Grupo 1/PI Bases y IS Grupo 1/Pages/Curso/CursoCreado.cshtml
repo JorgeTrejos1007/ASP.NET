@@ -5,12 +5,28 @@
     var nombreCurso = (String)ViewData["nombreCurso"];
 }
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<div class="curso-material"style="display:flex;">
+    <div style="margin-bottom: 10px;margin-left:10px;">
+        <h2 ><strong>@nombreCurso</strong></h2>
+    </div>
+    <div style="margin-top: 20px; margin-left:10px; display:inline-block;">
+        <a asp-page="./ModificarInformacionCurso" asp-route-nombreCurso="@nombreCurso" class="btn btn-info">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
 
-<div class="curso-material">
-    <h2 style="display:inline-block;">@nombreCurso</h2>
-    <a asp-page="./CursosCreados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
-    <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="primary-btn__reverse text-uppercase enroll rounded-0">Crear seccion</a> <br>
-    <a asp-page="./ModificarInformacionCurso" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">Modificar la informacion del curso</a> <br>
+        <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="btn btn-info">
+            <span class="glyphicon glyphicon-plus-sign"></span> Agregar seccion
+        </a>
+    </div>
+
+
+
     <!--<a href="data:curso.tipoDocInformativo;base64,(Convert.ToBase64String(curso.byteArrayDocument))" download="curso.nombre .pdf">
         <span class="or">Descargar documento descriptivo del curso</span>
     </a>-->
@@ -35,20 +51,27 @@
                         </p>
                     }
                 }
-                <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Editar</a>
+                        <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">
+                            <span class="glyphicon glyphicon-cog"></span> Editar
+                        </a>
 
             </div>
-
+                          
         }
-    }
+                    }
 }
+<div>
+    <a asp-page="./CursosCreados" class="btn btn-info" style="margin-left:92%">
+        <span class="glyphicon glyphicon-arrow-left"></span> Volver
+    </a>
+</div>
 
 <div>
     <hr>
-    <h4>Comparte tu participación en este curso en redes sociales</h4>
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
-     data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:" 
-     data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
+    <h4 style="margin-right:55%; display:inline-block;">Comparte tu participación en este curso en redes sociales</h4>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+       data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:"
+       data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
 
