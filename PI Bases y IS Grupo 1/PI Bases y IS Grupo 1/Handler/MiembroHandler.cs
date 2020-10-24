@@ -54,14 +54,14 @@ namespace PIBasesISGrupo1.Handler
                     nombre = Convert.ToString(columna["nombre"]),
                     primerApellido = Convert.ToString(columna["primerApellido"]),
                     segundoApellido = Convert.ToString(columna["segundoApellido"]),
-                    email = Convert.ToString(columna["email"]),
+                    email = Convert.ToString(columna["emailPK"]),
                     password = Convert.ToString(columna["password"]),
                     pais = Convert.ToString(columna["pais"]),
                     hobbies = Convert.ToString(columna["hobbies"]),
                     tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
                     byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"],
-                    idiomas = obtenerIdiomas(Convert.ToString(columna["email"])),
-                    habilidades = obtenerHabilidades(Convert.ToString(columna["email"])),
+                    idiomas = obtenerIdiomas(Convert.ToString(columna["emailPK"])),
+                    habilidades = obtenerHabilidades(Convert.ToString(columna["emailPK"])),
                     tipoDeUsuario=Convert.ToString(columna["tipoDeUsuario"])
                 });
 
@@ -72,7 +72,7 @@ namespace PIBasesISGrupo1.Handler
         public Miembro obtenerDatosDeUnMiembro(string email)
         {
             Miembro miembro = new Miembro();
-            string consulta = "SELECT * FROM Usuario WHERE email=@email";
+            string consulta = "SELECT * FROM Usuario WHERE emailPK=@email";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@email", email);
@@ -84,14 +84,14 @@ namespace PIBasesISGrupo1.Handler
                 miembro.nombre = Convert.ToString(columna["nombre"]);
                 miembro.primerApellido = Convert.ToString(columna["primerApellido"]);
                 miembro.segundoApellido = Convert.ToString(columna["segundoApellido"]);
-                miembro.email = Convert.ToString(columna["email"]);
+                miembro.email = Convert.ToString(columna["emailPK"]);
                 miembro.password = Convert.ToString(columna["password"]);
                 miembro.pais = Convert.ToString(columna["pais"]);
                 miembro.hobbies = Convert.ToString(columna["hobbies"]);
                 miembro.tipoArchivo = Convert.ToString(columna["tipoArchivo"]);
                 miembro.byteArrayImage = Convert.IsDBNull(columna["archivoImagen"]) ? null : (byte[])columna["archivoImagen"];
-                miembro.idiomas = obtenerIdiomas(Convert.ToString(columna["email"]));
-                miembro.habilidades = obtenerHabilidades(Convert.ToString(columna["email"]));
+                miembro.idiomas = obtenerIdiomas(Convert.ToString(columna["emailPK"]));
+                miembro.habilidades = obtenerHabilidades(Convert.ToString(columna["emailPK"]));
                 miembro.tipoDeUsuario = Convert.ToString(columna["tipoDeUsuario"]);
 
 
@@ -101,7 +101,7 @@ namespace PIBasesISGrupo1.Handler
         private string[] obtenerIdiomas(string email) {
             List<string> idiomas= new List<string>();
          
-            string consultaIdioma = "SELECT idioma FROM Idiomas " + "WHERE email=@email";
+            string consultaIdioma = "SELECT idiomaPK FROM Idiomas " + "WHERE emailFK=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consultaIdioma, conexion);
             comandoParaConsulta.Parameters.AddWithValue("@email", email);
             conexion.Open();
@@ -109,7 +109,7 @@ namespace PIBasesISGrupo1.Handler
             while (lectorColumna.Read())
             {
 
-                idiomas.Add(lectorColumna["idioma"].ToString());
+                idiomas.Add(lectorColumna["idiomaPK"].ToString());
             }
             conexion.Close();
 
@@ -120,7 +120,7 @@ namespace PIBasesISGrupo1.Handler
         {
             List<string> habilidades = new List<string>();
 
-            string consultaIdioma = "SELECT habilidad FROM Habilidades " + "WHERE email=@email";
+            string consultaIdioma = "SELECT habilidadPK FROM Habilidades " + "WHERE emailFK=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consultaIdioma, conexion);
             comandoParaConsulta.Parameters.AddWithValue("@email", email);
             conexion.Open();
@@ -128,7 +128,7 @@ namespace PIBasesISGrupo1.Handler
             while (lectorColumna.Read())
             {
 
-                habilidades.Add(lectorColumna["habilidad"].ToString());
+                habilidades.Add(lectorColumna["habilidadPK"].ToString());
             }
             conexion.Close();
 
@@ -146,7 +146,7 @@ namespace PIBasesISGrupo1.Handler
 
         public bool crearMiembro(Miembro miembro)
         {
-            string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password, pais, hobbies) "
+            string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, emailPK, password, pais, hobbies) "
                 + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password,@pais,@hobbies) ;";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -194,7 +194,7 @@ namespace PIBasesISGrupo1.Handler
             if (exitoAlregistrarme==true)
             {
                 string consulta = "UPDATE Usuario SET password=@password, pais=@pais, hobbies=@hobbies"
-                 + " WHERE email=@email";
+                 + " WHERE emailPK=@email";
                 SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
                 comandoParaConsulta.Parameters.AddWithValue("@password", estudianteNoRegistrado.password);
                 comandoParaConsulta.Parameters.AddWithValue("@pais", estudianteNoRegistrado.pais);
@@ -235,7 +235,7 @@ namespace PIBasesISGrupo1.Handler
         }
         public bool crearEstudianteComoParticipanteExterno(Miembro participanteExterno) {
             bool exito= false;
-            string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, email, password) "
+            string consulta = "INSERT INTO Usuario(genero, nombre, primerApellido, segundoApellido, emailPK, password) "
                + "VALUES (@genero,@nombre,@primerApellido,@segundoApellido,@email,@password)";
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             if (String.IsNullOrEmpty(participanteExterno.segundoApellido))
@@ -286,7 +286,7 @@ namespace PIBasesISGrupo1.Handler
         }
 
         private bool insertarHabilidadesMiembro(Miembro miembro) {
-            string consultaHabilidades = "INSERT INTO Habilidades(email, habilidad) Values(@email,@habilidad) ";
+            string consultaHabilidades = "INSERT INTO Habilidades(emailFK, habilidadPK) Values(@email,@habilidad) ";
             
             bool exito=false;
             for (int habilidad = 0; habilidad < miembro.habilidades.Length; habilidad++)
@@ -302,7 +302,7 @@ namespace PIBasesISGrupo1.Handler
 
         private bool insertarIdiomasMiembro(Miembro miembro)
         {
-            string consultaIdiomas = "INSERT INTO Idiomas(email, idioma) Values(@email,@idioma) ";
+            string consultaIdiomas = "INSERT INTO Idiomas(emailFK, idiomaPK) Values(@email,@idioma) ";
           
             bool exito = false;
             for (int idioma = 0; idioma < miembro.idiomas.Length; idioma++)
@@ -318,7 +318,7 @@ namespace PIBasesISGrupo1.Handler
 
         public bool eliminarIdiomasMiembro(string email, string[]idiomasBorrar)
         {
-            string consultaIdiomas = "DELETE FROM Idiomas WHERE email=@email and idioma=@idioma";
+            string consultaIdiomas = "DELETE FROM Idiomas WHERE emailFK=@email and idioma=@idioma";
 
             bool exito = false;
             conexion.Open();
@@ -337,7 +337,7 @@ namespace PIBasesISGrupo1.Handler
         public bool eliminarHabilidesMiembro(string email, string[] habilidadesBorrar )
         {
             
-            string consultaHabilidades = "DELETE FROM Habilidades WHERE email=@email and habilidad=@habilidad";
+            string consultaHabilidades = "DELETE FROM Habilidades WHERE emailFK=@email and habilidad=@habilidad";
             conexion.Open();
             bool exito = false;
             for (int habilidad = 0; habilidad < habilidadesBorrar.Length; habilidad++)
@@ -358,7 +358,7 @@ namespace PIBasesISGrupo1.Handler
         {
             string consulta = "UPDATE Usuario SET genero=@genero, nombre=@nombre, primerApellido=@primerApellido, " +
                 "segundoApellido=@segundoApellido, password=@password, pais=@pais, hobbies=@hobbies " 
-                 + "WHERE email=@email";
+                 + "WHERE emailPK=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@genero", miembro.genero);
@@ -400,7 +400,7 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool actualizarImagen(string email, IFormFile archivoImagen) {
-            string consulta = "UPDATE Usuario SET archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo " + "WHERE email=@email";
+            string consulta = "UPDATE Usuario SET archivoImagen=@archivoImagen, tipoArchivo=@tipoArchivo " + "WHERE emailPK=@email";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(archivoImagen));
