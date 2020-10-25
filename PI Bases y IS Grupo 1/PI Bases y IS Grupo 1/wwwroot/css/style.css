@@ -38,28 +38,98 @@ body {
 
 /*Encuestas*/
 
-.encuestas-container {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap-reverse;
-    border: 3px solid #002347;
-}
-
 .encuestas__elements {
     display: flex;
     flex-direction: column;
-    margin-right: 10%;
+    background: rgba(204,204,204,0.3);
 }
+
+    .encuestas__elements h4 {
+        background: #002347;
+        font-size: 22px;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+    }
+
+.encuestas__results {
+    display: inline-block;
+    height: 30px;
+    width: 30%;
+    background: #777777;
+    border: none;
+    border-radius: 50px;
+}
+
+.encuestas__progressBar {
+    line-height: 30px;
+    width: 1;
+    text-align: center;
+    color: #fff;
+    height: 30px;
+    background: rgba(56,164,255,.5);
+    border: none;
+    border-radius: 50px;
+}
+
+.encuestas__option {
+    display: flex;
+    flex-direction: row;
+}
+
+    .encuestas__option h5 {
+        margin-right: 30px;
+    }
 
 .encuestas__elements h5 {
-        color: #f8b600;
+    color: #f8b600;
 }
 
+.encuestas__title {
+    background: rgba(204,204,204,0.3);
+    text-align: center;
+}
+
+.encuestas__table th {
+    background: rgba(204,204,204,0.3);
+}
+
+.encuestas__buttons {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
 #cuadro-mis-cursos {
     position: relative;
     margin-top:3%;
 }
 
+.primary-btn-encuestas {
+    display: inline-block;
+    padding: 0 20px;
+    background: transparent;
+    color: #002347;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 48px;
+    border-radius: 15px !important;
+    border: 1px solid #002347;
+    outline: none;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    margin: 5px 10px 5px 10px;
+}
+
+    .primary-btn-encuestas:hover {
+        background: #183a60;
+        color: #fdc632;
+        border: 1px solid #002347;
+    }
 /*-------------------------------------------*/
 /*Miembros*/
 .member-container {
