@@ -17,19 +17,19 @@
                     @for (int j = i; j < i + 1; j++)
                     {
 
-                    <a asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j]" button class="primary-btn2 text-uppercase enroll rounded-0">Ver</a>
-                            @if (j < listaDeCursos.Count())
-                            {
-                                <div id="cuadro-mis-cursos">
+                        <a id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j]" >
+                                @if (j < listaDeCursos.Count())
+                                {
+                                    <div id="cuadro-mis-cursos">
 
-                                    <span class="flaticon-student"></span>
-                                    <h4 id="nombrePersona">@listaDeCursos[j]</h4>
+                                        <span class="flaticon-student"></span>
+                                        <h4 id="nombrePersona">@listaDeCursos[j]</h4>
 
 
-                                </div>
+                                    </div>
 
-                            }
-                        </a>
+                                }
+                         </a>
                     }
                 </div>
             }
