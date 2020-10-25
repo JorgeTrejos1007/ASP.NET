@@ -13,34 +13,36 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 
-<div class="curso-material" style=" margin-bottom: 15px;">
-    <div style=" margin-left:10px; margin-bottom: 20px;">
-        <h2><strong>Editando el nombre de la sección: @nombreSeccion</strong></h2>
+<div style="margin-left:200px; margin-right:200px;">
+    <div class="curso-material" style=" margin-bottom: 15px;">
+        <div style=" margin-left:10px; margin-bottom: 20px;">
+            <h2><strong>Editando el nombre de la sección: @nombreSeccion</strong></h2>
+        </div>
     </div>
-</div>
-<div class="curso-material">
-    <div style="display:inline-block ; margin-bottom:20px; margin-left:26%;">
-        <form method="post">
-            <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
-            @if (mensajeError != "")
-            {
-                <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>
-            }
-            <label asp-for="@Model.seccion.nombreSeccion" style="font-size:18px">Ingrese el nombre de la seccion:</label>
-            <input asp-for="@Model.seccion.nombreSeccion" />
-            <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
+    <div class="curso-material">
+        <div style="display:inline-block ; margin-bottom:20px; margin-left:26%;">
+            <form method="post">
+                <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
+                @if (mensajeError != "")
+                {
+                    <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>
+                }
+                <label asp-for="@Model.seccion.nombreSeccion" style="font-size:18px">Ingrese el nombre de la seccion:</label>
+                <input asp-for="@Model.seccion.nombreSeccion" />
+                <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
 
-            <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="ModificarSeccion">
-                <span class="glyphicon glyphicon-ok-sign"></span> Cambiar
-            </button>
+                <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="ModificarSeccion">
+                    <span class="glyphicon glyphicon-ok-sign"></span> Cambiar
+                </button>
 
 
-        </form>
+            </form>
 
+        </div>
     </div>
-</div>
-<div style="margin-left:87%">
-    <a asp-page="ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
-        <span class="glyphicon glyphicon-arrow-left"></span> Volver
-    </a> <br>
+    <div style="margin-left:87%">
+        <a asp-page="ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
+            <span class="glyphicon glyphicon-arrow-left"></span> Volver
+        </a> <br>
+    </div>
 </div>

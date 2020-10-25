@@ -116,7 +116,7 @@ body {
     font-size: 25px;
     outline: none;
     transition: 0.4s;
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 
     .active, .accordion:hover {
@@ -129,8 +129,8 @@ body {
     display: none;
     background-color: #ccc;
     border: 1px solid #ccc;
+    border-color: red;
     border-radius: 15px;
-    overflow: hidden;
 }
 /*------------------------------------------*/
 
