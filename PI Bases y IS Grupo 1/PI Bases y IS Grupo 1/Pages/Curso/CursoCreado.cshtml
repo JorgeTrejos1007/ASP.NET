@@ -27,57 +27,48 @@
         </div>
     </div>
     
-    <div >
+    <div style="display:block">
         @{
-            if (@Model.Secciones != null)
+            @if (@Model.Secciones != null)
             {
                 foreach (var item in @Model.Secciones)
                 {
-                    
+
                     <br />
-                    <button class="accordion" >@item.nombreSeccion</button>
+                   
+                        
+                        <button style="margin-bottom:10px;" class="accordion">@item.nombreSeccion</button>
 
-                    <div class="panel" style="background-color:#ccc;">
+                        <div class="panel">
 
-                        @{ foreach (var material in item.listaMateriales)
-                            {
-                                <p>
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                        <span class="or">@material.nombreMaterial</span>
-                                    </a>
-                                    <br>
-                                </p>
+                            @{ foreach (var material in item.listaMateriales)
+                                {
+                                    <p>
+                                        <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                            <span class="or">@material.nombreMaterial</span>
+                                        </a>
+                                    </p>
+                                }
+                            }
+                            <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">
+                                <span class="glyphicon glyphicon-cog"></span> Editar
+                            </a>
+
+                        </div>
+                       
+                           
+                        
+                        
+
                             }
                         }
-                        <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">
-                            <span class="glyphicon glyphicon-cog"></span> Editar
-                        </a>
-
-                    </div>
-                    
-
-                }
-            }
-        }
-    </div>
-    <div>
-        <a asp-page="./CursosCreados" class="btn btn-info" style="margin-left:92%">
-            <span class="glyphicon glyphicon-arrow-left"></span> Volver
-        </a>
-    </div>
-
-    <div>
-        <hr>
-        <div style="display:inline-block; margin-right:55%;">
-            <h4>Comparte tu participación en este curso en redes sociales</h4>
-        </div>
-        <div>
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-               data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:"
-               data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
-    </div>
+                    }
+                        </div>
+<div>
+    <a asp-page="./CursosCreados" class="btn btn-info" style="margin-left:92%">
+        <span class="glyphicon glyphicon-arrow-left"></span> Volver
+    </a>
+</div>
 </div>
     <script>
         var acc = document.getElementsByClassName("accordion");
