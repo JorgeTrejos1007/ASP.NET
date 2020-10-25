@@ -7,71 +7,84 @@
 
 
 <div>
-    <h1>Modal</h1>
+
     <input type="button" class="btn-info" id="ver" value="Abrir modal" />
+
     <div id="vtn-modal" class="modal">
-        <div class="modal-content center">
-            <div class="login-form">
-                <span class="close">&times;</span>
-                <img class="logo-2" src="~/img/logo.png" alt="" />
+        <div class="modal-dialog" role="document">
+            <div class="modal-content center">
+                <div class="modal-header">
 
+                    <img class="logo-2" src="~/img/logo.png" alt="" />
 
-                <form method="post">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <h1 class="modal-title">Iniciar Sesion</h1>
+                    <div class="login-form">
+                        <form method="post">
+                            @if (@mensaje != null)
+                            {
 
-                    @if (@mensaje != null)
-                    {
+                                <div class="alert-danger">
 
-                        <div class="alert-danger">
+                                    <h3> @mensaje </h3>
+                                </div>
 
-                            <h3> @mensaje </h3>
-                        </div>
+                            }
 
-                    }
-                    <div class="wrap-input100 validate-input">
-                        <div class="input100">
                             <span asp-validation-for="@Model.email" class="text-danger"></span>
-                            </br>
-
+                            <br>
                             <div class="input-group-icon mt-10">
                                 <div class="icon"><i class="ti-email" aria-hidden="true"></i></div>
                                 <input asp-for="@Model.email" type="email" name="email" placeholder="Correo" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Correo electrónico'"
                                        required class="single-input">
                             </div>
-                        </div>
+
+                            <div class="form-group">
+                                <span asp-validation-for="@Model.password" class="text-danger"></span>
+                                <br>
+                                <div class="input-group-icon mt-10">
+                                    <div class="icon"><i class="ti-key" aria-hidden="true"></i></div>
+                                    <input asp-for="@Model.password" type="password" name="password" placeholder="Contraseña" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contraseña'"
+                                           required class="single-input">
+                                </div>
+
+                            </div>
+
+                            <div class="center">
+                                <button class="primary-btn" text-uppercase enroll rounded-0">Iniciar sesión</button>
+
+                            </div>
+
+
+
+
+                            <br>
+                            <hr class="new5">
+                            <div class="text-align-left">
+                                <p>¿Aún no tienes cuenta? <a href="~/Miembros/CrearMiembro">Regístrate</a></p>
+                            </div>
+
+
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <span asp-validation-for="@Model.password" class="text-danger"></span>
-                        </br>
-                        <div class="input-group-icon mt-10">
-                            <div class="icon"><i class="ti-key" aria-hidden="true"></i></div>
-                            <input asp-for="@Model.password" type="password" name="password" placeholder="Contraseña" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Contraseña'"
-                                   required class="single-input">
-                        </div>
+                </div>
 
-                    </div>
-
-
-
-                    <button class="primary-btn" text-uppercase enroll rounded-0">Iniciar sesión</button>
-                   
-                    <br>
-                    <hr class="new5">
-                    <div class="text-align-left">
-                    <p>¿Aún no tienes cuenta? <a href="~/Miembros/CrearMiembro">Regístrate</a></p>
-                    <div/>                
-</form>
-            </div> 
+            </div>
         </div>
-            </div> 
+    </div>
+
+
 </div>
 
-<script src="~/js/ventanaModal.js"></script>
-<link rel="stylesheet" type="text/css" href="~/css/ventanaModal.css" />
 <scripts>
 
 
     @section scripts{
         <partial name="_ValidationScriptsPartial" />
     }
+
 </scripts>
-    
