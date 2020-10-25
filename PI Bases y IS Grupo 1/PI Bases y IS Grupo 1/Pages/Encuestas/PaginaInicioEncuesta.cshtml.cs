@@ -20,8 +20,9 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         public List<EncuestaModel> Encuesta { get; set; }
         public void OnGet()
         {
-            EncuestasHandler accesoDatos = new EncuestasHandler();
-            ViewData["Encuestas"] = accesoDatos.obtenerEncuestas();
+            var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+             EncuestasHandler accesoDatos = new EncuestasHandler();
+            ViewData["Encuestas"] = accesoDatos.obtenerEncuestas(miembroEnSesion.email);
         }
 
          public IActionResult OnPostCompartir(int id)
