@@ -463,7 +463,7 @@ namespace PIBasesISGrupo1.Handler
             List<Tuple<string, string>> catalogo;
             string consultaCursos = "SELECT C.nombrePK AS nombreCurso,C.estado AS estado,C.precio AS precio," +
                 " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
-            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.emailPK " + "WHERE estado='Creado' AND C.nombre = @nombreCurso";
+            "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.emailPK " + "WHERE estado='Creado' AND C.nombrePK = @nombreCurso";
             string consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
             " FROM Curso Cu Join  Contiene C ON Cu.nombrePK = C.nombreCursoFK" +
             " JOIN Topico T ON C.nombreTopicoFK = T.nombreTopicoPK JOIN Categoria Cat ON Cat.nombreCategoriaPK = T.nombreCategoriaFK" +

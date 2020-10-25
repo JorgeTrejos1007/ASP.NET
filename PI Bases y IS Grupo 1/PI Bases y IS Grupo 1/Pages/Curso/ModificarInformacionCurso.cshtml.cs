@@ -19,6 +19,8 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             CursoHandler accesodatos = new CursoHandler();
             ViewData["informacionCurso"]= accesodatos.obtenerInformacionCurso(nombreCurso);
+            CatalogoHandler accesoCatalago = new CatalogoHandler();
+            ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
         }
 
         public void OnPostModificarCurso()
