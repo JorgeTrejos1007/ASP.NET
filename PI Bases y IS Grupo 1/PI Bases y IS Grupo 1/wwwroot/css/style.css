@@ -57,11 +57,12 @@ body {
 }
 
 .encuestas__progressBar {
-    width: 50%;
-    text-align: right;
+    line-height: 30px;
+    width: 1;
+    text-align: center;
     color: #fff;
     height: 30px;
-    background-color: green;
+    background: rgba(56,164,255,.5);
     border: none;
     border-radius: 50px;
 }
@@ -70,10 +71,11 @@ body {
     display: flex;
     flex-direction: row;
 }
-.encuestas__option h5{
-    margin-right:30px;
-}
-  
+
+    .encuestas__option h5 {
+        margin-right: 30px;
+    }
+
 .encuestas__elements h5 {
     color: #f8b600;
 }
