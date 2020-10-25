@@ -6,29 +6,52 @@
     var nombreSeccion = (String)ViewData["nombreSeccion"];
     var listaMateriales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["listaMateriales"];
 }
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 
-<h2>ModificarSeccion</h2>
+<div class="curso-material" style="display:flex;">
+    <div style="margin-bottom: 10px;margin-left:10px;">
+        <h2><strong>Modificar seccion: @nombreSeccion</strong></h2>
+    </div>
+
+    <div style="margin-top: 20px; margin-left:10px; display:inline-block;">
+        <a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="btn btn-info">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </a>
+        <form method="post" style="display:inline-block;">
+            <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
+            <input type="hidden" asp-for="@Model.seccion.nombreSeccion" value="@nombreSeccion" />
+
+            <button type="submit" class="btn btn-info" asp-page-handler="BorrarSeccion">
+                <span class="glyphicon glyphicon-trash"></span>
+            </button>
+
+        </form>
+
+        
+    </div>
+</div>
 
 
-<a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
-<a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Agregar material</a>
-<a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Modificar nombre de la seccion</a>
 
-
-<form method="post">
-    <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
-    <input type="hidden" asp-for="@Model.seccion.nombreSeccion" value="@nombreSeccion" />
-    <input type="submit" value="Borrar Seccion"  class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="BorrarSeccion" />
-</form>
 
 
 <br />
-
+<div>
 <table class="table">
     <thead>
-        <tr>
-            <th>
-                <h3>Nombre material</h3>
+        <tr >
+            <th >
+                <h3 style="display:flex;"><strong>Nombre material</strong></h3>
+            </th>
+            <th >
+                <a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="btn btn-info">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Agregar material
+                </a>
             </th>
         </tr>
     </thead>
@@ -38,17 +61,21 @@
             {
                 foreach (var item in listaMateriales)
                 {
-                    <tr>
+                    <tr >
                         <td>
-                            @item.nombreMaterial
-
-                        </td>
-                        <td>
-                            <form method="post">
+                            <h4 style="display:flex;">@item.nombreMaterial</h4>
+</td>
+                        <td style="margin-left:50%">
+                            <form  method="post">
                                 <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCurso" />
                                 <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
                                 <input type="hidden" asp-for="@Model.material.nombreMaterial" value="@item.nombreMaterial" />
-                                <input type="submit" value="Borrar" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="BorrarMaterial" />
+                                
+
+                                <button  type="submit" class="btn btn-info" asp-page-handler="BorrarMaterial">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                </button>
+
                             </form>
 
                         </td>
@@ -58,3 +85,12 @@
         }
     </tbody>
 </table>
+</div>
+<div class="curso-material">
+   
+    <a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="btn btn-info" style="margin-left:56%; margin-bottom:3px; margin-top:3px;">
+        <span class="glyphicon glyphicon-ok"></span> Terminar
+    </a>
+</div>
+
+    <!--<a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>-->

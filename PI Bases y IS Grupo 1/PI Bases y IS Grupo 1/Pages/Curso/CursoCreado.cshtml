@@ -68,26 +68,30 @@
 
 <div>
     <hr>
-    <h4 style="margin-right:55%; display:inline-block;">Comparte tu participación en este curso en redes sociales</h4>
-    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
-       data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:"
-       data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
-    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
+    <div style="display:inline-block; margin-right:55%;" >
+        <h4  >Comparte tu participación en este curso en redes sociales</h4>
+    </div>
+    <div>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+           data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:"
+           data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    </div>
+ </div>
 
-<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        });
-    }
-</script>
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
