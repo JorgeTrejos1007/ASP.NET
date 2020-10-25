@@ -55,7 +55,10 @@ body {
         color: #f8b600;
 }
 
-
+#cuadro-mis-cursos {
+    position: relative;
+    margin-top:3%;
+}
 
 /*-------------------------------------------*/
 /*Miembros*/
@@ -98,6 +101,8 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin-left:%;
+    margin-right:10%;
 }
 
 /*----------------------------------------------------*/
@@ -4753,6 +4758,15 @@ hr.new5 {
     width: 100%;
     margin-bottom: 40px;
 }
+
+#filaDeCursosInscritos {
+    width: 100%;
+    margin-bottom: 1%;
+    padding: 10px 6px 10px 5px;
+    position: relative;
+    left: 100px;
+}
+
 
 #nombrePersona {
     margin-top: 20px;
