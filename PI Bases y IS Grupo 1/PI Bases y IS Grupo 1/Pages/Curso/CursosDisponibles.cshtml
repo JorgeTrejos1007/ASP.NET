@@ -12,103 +12,153 @@
 
 }
 
-
-
-<h2>Cursos Disponibles</h2>
-@using (Html.BeginForm( ))
+@using (Html.BeginForm())
 {
-    @Html.TextBox("searching")<input type="submit" value=" Buscar Curso" placeholder="Nombre, instructor, precio"/>
+    @Html.TextBox("searching")<input type="submit" value=" Buscar Curso" placeholder="Nombre, instructor, precio" />
 
 }
 
- 
-<div class="cursos-container">
 
-    @if (listaDeCursos.Count > 0)
-    {
+<header>
+    <style>
 
-        @foreach (var infoCursos in listaDeCursos)
+
+        .cajita {
+            width: 1200px;
+            margin-bottom: 20px;
+            margin-left: 30px;
+            margin-right: 20px;
+            padding-right: 20px;
+            padding-left: 20px;
+            //padding-top: 10px;
+            padding-bottom: 15px;
+            border: 1px solid #002347;
+            background-color: white;
+        }
+
+        .cajota {
+            zoom:80%;
+            width: 1500px;
+            background: #f1f9ff;
+            padding: 10%;
+            margin-left: 10px;
+            margin: auto;
+        }
+
+        hr.new5 {
+            height: 1px;
+            background-color: #002347;
+        }
+
+        .centrar {
+            text-align: center;
+        }
+
+        .col-lg-12-courses {
+            //-ms-flex: 0 0 100%;
+            //flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+
+        .cursos-container-2 {
+            //display: flex;
+            padding: 70px;
+            flex-direction: row;
+            flex-wrap: wrap;
+        }
+
+        container {
+            max-width: 1140px;
+        }
+    </style>
+</header>
+<br>
+<br>
+
+
+<div class="cajota">
+    <div class="row justify-content-center">
+        <div class="main_title">
+            <h2 class="mb-3">Cursos disponibles</h2>
+        </div>
+    </div>
+    <div class="blog_right_sidebar">
+        <div class="search_widget">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Buscar curso">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"><i class="ti-search"></i></button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="cursos-container-2">
+        @if (listaDeCursos.Count > 0)
         {
-            var mostrar = true;
-            var curso = infoCursos.Item1;
-            var educador = infoCursos.Item2;
 
-            if (usuarioEnSesion && cursosMatriculados.Contains(curso.nombre) == true)
+            @foreach (var infoCursos in listaDeCursos)
             {
-               
-                mostrar = false;
-            }
 
-            if (mostrar==true) {
-                 <div class="col-lg-4 right-contents">
-                    <ul>
-                        <li>
-                            <a class="justify-content-between d-flex" href="#">
-                                <p>Curso</p>
-                                <span class="or">@curso.nombre</span>
+                var curso = infoCursos.Item1;
+                var educador = infoCursos.Item2;
 
+                <div class="cajita col-lg-12">
+                    <div class="col-lg-12 right-contents">
+                        <h3 class="title_color align-content-lg-center centrar">@curso.nombre</h3>
+                        <hr class="new5">
+                        <ul>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Email</p>
+                                    <span class="or">@curso.emailDelEducador</span>
 
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Educador</p>
+                                    <span class="or">@educador.nombre @educador.primerApellido </span>
 
-                        <li>
-                            <a class="justify-content-between d-flex" href="#">
-                                <p>Email</p>
-                                <span class="or">@curso.emailDelEducador</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Precio </p>
+                                    <span>$@curso.precio</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex" href="#">
+                                    <p>Topicos</p>
+                                    <br>
+                                    @{
+                                        var topicos = "";
 
-
-                            </a>
-                        </li>
-
-                        <li>
-                            <a class="justify-content-between d-flex" href="#">
-                                <p>Educador</p>
-                                <span class="or">@educador.nombre @educador.primerApellido </span>
-
-
-                            </a>
-                        </li>
-                        <li>
-                            <a class="justify-content-between d-flex" href="#">
-                                <p>Precio </p>
-                                <span>$@curso.precio</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="justify-content-between d-flex" href="#">
-                                <p>Topicos</p>
-                                <br>
-                                @{
-                                    var topicos = "";
-
-                                    @foreach (var infoTopicos in infoCursos.Item3)
-                                    {
-                                        topicos = topicos + " " + infoTopicos.Item1;
+                                        @foreach (var infoTopicos in infoCursos.Item3)
+                                        {
+                                            topicos = topicos + " " + infoTopicos.Item1;
 
 
+                                        }
                                     }
-                                }
-                                <span class="or"> @topicos </span>
-
-                            </a>
-                        </li>
-                    </ul>
-                    <a asp-page="InscribirmeCurso" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Inscribirme</a>
+                                    <span class="or"> @topicos </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <a asp-page="InscribirmeCurso" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Inscribirme</a>
+                    </div>
                 </div>
-
-
             }
-
-         }
-  
-     }
-    else
-    {
-        <tr>
-            <td colspan="3" style=" color:red">
-                No se encontraron Coincidencias
-            </td>
-        </tr>
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" style=" color:red">
+                    No se encontraron Coincidencias
+                </td>
+            </tr>
 
         }
     </div>
