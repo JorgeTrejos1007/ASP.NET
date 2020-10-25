@@ -41,7 +41,8 @@ namespace PIBasesISGrupo1.Handler
         public List<Miembro> obtenerTodosLosMiembros()
         {
             List<Miembro> miembros = new List<Miembro>();
-            string consulta = "SELECT * FROM Usuario";
+            string consulta = "SELECT * FROM Usuario U " +
+            " WHERE EXISTS(SELECT emailMiembroFK FROM Miembro M WHERE M.emailMiembroFK= U.emailPK); ";
             DataTable tablaMiembro = crearTablaConsulta(consulta);
             
             foreach (DataRow columna in tablaMiembro.Rows)
