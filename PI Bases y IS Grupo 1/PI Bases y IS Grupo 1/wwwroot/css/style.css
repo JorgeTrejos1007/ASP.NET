@@ -47,18 +47,34 @@ body {
         padding: 5px 0;
     }
 
-.encuestas__resultadoss {
+.encuestas__results {
     display: inline-block;
-    background: green !important;
+    height: 30px;
+    width: 30%;
+    background: #777777;
+    border: none;
+    border-radius: 50px;
 }
 
-.encuestas__barraResultado {
-    background: #002347;
+.encuestas__progressBar {
+    width: 50%;
+    text-align: right;
     color: #fff;
+    height: 30px;
+    background-color: green;
+    border: none;
+    border-radius: 50px;
 }
 
+.encuestas__option {
+    display: flex;
+    flex-direction: row;
+}
+.encuestas__option h5{
+    margin-right:30px;
+}
+  
 .encuestas__elements h5 {
-    display: inline-block;
     color: #f8b600;
 }
 

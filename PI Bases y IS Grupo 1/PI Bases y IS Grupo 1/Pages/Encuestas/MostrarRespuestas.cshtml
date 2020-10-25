@@ -5,66 +5,71 @@
     var listaConteoRespuestasPorOpcion = (List<int>)ViewData["listaConteoRespuestasPorOpcion"];
 }
 
-
 <div class="encuestas__title">
     <h2>Ver respuestas</h2>
 </div>
 <a asp-page="PaginaInicioEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
 <br />
 <br />
-    @{
+@{
 
-        foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
-        {
-<div class="encuestas__elements">
+    foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
+    {
+        <div class="encuestas__elements">
 
-    @{
-        <h4>@Html.DisplayFor(modelItem => item.pregunta)</h4>
-        <h5>Opcion 1:</h5>
-        <div class="encuestas__resultados">
-            <div class="encuestas__barraResultado" style="width:0%">0%</div>
+            @{
+                <h4>@Html.DisplayFor(modelItem => item.pregunta)</h4>
+                <div class="encuestas__option">
+                    <h5>Opcion 1:</h5>
+
+                    <div class="encuestas__results">
+                        <div class="encuestas__progressBar" id="opcion1">
+                        </div>
+                    </div>
+                </div>
+                <p>
+                    @Html.DisplayFor(modelItem => item.opcion1) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                </p>
+                listaConteoRespuestasPorOpcion.RemoveAt(0);
+                <h5>Opcion 2:</h5>
+                <p>
+                    @Html.DisplayFor(modelItem => item.opcion2) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                </p>
+                listaConteoRespuestasPorOpcion.RemoveAt(0);
+                if (listaConteoRespuestasPorOpcion[0] >= 0)
+                {
+                    <h5>Opcion 3:</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.opcion3) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                    </p>
+                    listaConteoRespuestasPorOpcion.RemoveAt(0);
+                }
+                if (listaConteoRespuestasPorOpcion[0] >= 0)
+                {
+                    <h5>Opcion 4:</h5>
+                    <p>
+                        @Html.DisplayFor(modelItem => item.opcion4) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
+                    </p>
+                    listaConteoRespuestasPorOpcion.RemoveAt(0);
+                }
+            }
+
         </div>
-        <p>
-            @Html.DisplayFor(modelItem => item.opcion1) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-        </p>
-        listaConteoRespuestasPorOpcion.RemoveAt(0);
-        <h5>Opcion 2:</h5>
-        <p>
-            @Html.DisplayFor(modelItem => item.opcion2) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-        </p>
-        listaConteoRespuestasPorOpcion.RemoveAt(0);
-        if (listaConteoRespuestasPorOpcion[0] >= 0)
-        {
-            <h5>Opcion 3:</h5>
-            <p>
-                @Html.DisplayFor(modelItem => item.opcion3) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-            </p>
-            listaConteoRespuestasPorOpcion.RemoveAt(0);
-        }
-        if (listaConteoRespuestasPorOpcion[0] >= 0)
-        {
-            <h5>Opcion 4:</h5>
-            <p>
-                @Html.DisplayFor(modelItem => item.opcion4) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-            </p>
-            listaConteoRespuestasPorOpcion.RemoveAt(0);
-        }
     }
-
-</div>
-        }
-    }
-
+}
 <script>
-    var elem = document.getElementById("myBar");
-    var width = 20;
-    var id = setInterval(frame, 10);
-    function frame() {
-        if (width >= 100) {
-            clearInterval(id);
-        } else {
-            width++;
-            elem.style.width = width + '%';
-            elem.innerHTML = width * 1 + '%';
+    function animacionResultados() {
+        var elem = document.getElementById("opcion1");
+        var width = 1;
+        var id = setInterval(frame, 30);
+        function frame() {
+            if (width >= 100) {
+                clearInterval(id);
+            } else {
+                width++;
+                elem.style.width = width + "%";
+                //elem.innerHTML = cantidadRespuestas;
+            }
         }
+    }
 </script>
