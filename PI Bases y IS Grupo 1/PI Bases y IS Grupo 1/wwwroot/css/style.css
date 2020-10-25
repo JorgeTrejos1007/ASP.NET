@@ -4093,9 +4093,10 @@ h6 {
 
 .primary-btn2 {
     display: inline-block;
-    background: transparent;
+    background: #183a60;
+    color: #fdc632;
+    border: 1px solid #002347;
     padding: 0px 48px;
-    color: #002347;
     font-size: 13px;
     font-weight: 500;
     line-height: 48px;
@@ -4113,6 +4114,42 @@ h6 {
 }
 
     .primary-btn2:hover {
+        background: #002347;
+        color: #fdc632;
+        border: 1px solid #002347;
+    }
+hr.new5 {
+    height: 1px;
+    background-color: #002347;
+}
+
+.text-align-left {
+    text-align:left;
+}
+
+.primary-btn-comunidad {
+    display: inline-block;
+    background: #183a60;
+    color: #fdc632;
+    border: 1px solid #002347;
+    padding: 0px 48px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 48px;
+    border-radius: 15px !important;
+    border: 1px solid #002347;
+    outline: none !important;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    margin: 5px 10px 5px 10px;
+}
+
+    .primary-btn-comunidad:hover {
         background: #183a60;
         color: #fdc632;
         border: 1px solid #002347;
