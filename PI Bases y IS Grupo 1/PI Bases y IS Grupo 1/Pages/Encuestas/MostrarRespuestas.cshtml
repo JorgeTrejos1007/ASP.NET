@@ -42,7 +42,7 @@
     @{
         <h4>@Html.DisplayFor(modelItem => item.pregunta)</h4>
         <div class="encuestas__option">
-            <h5>Opcion 1:</h5>
+            <h5 style="color:#002347;">Opcion 1:</h5>
 
             <div class="encuestas__results">
                 <div class="encuestas__progressBar" id="@numeroOpcion">
@@ -58,7 +58,7 @@
         numeroOpcion++;
 
         <div class="encuestas__option">
-            <h5>Opcion 2:</h5>
+            <h5 style="color:#002347;">Opcion 2:</h5>
 
             <div class="encuestas__results">
                 <div class="encuestas__progressBar" id="@numeroOpcion">
@@ -76,7 +76,7 @@
         if (listaConteoRespuestasPorOpcion[numeroOpcion] >= 0)
         {
             <div class="encuestas__option">
-                <h5>Opcion 3:</h5>
+                <h5 style="color:#002347;">Opcion 3:</h5>
 
                 <div class="encuestas__results">
                     <div class="encuestas__progressBar" id="@numeroOpcion">
@@ -94,7 +94,7 @@
         if (listaConteoRespuestasPorOpcion[numeroOpcion] >= 0)
         {
             <div class="encuestas__option">
-                <h5>Opcion 4:</h5>
+                <h5 style="color:#002347;">Opcion 4:</h5>
 
                 <div class="encuestas__results">
                     <div class="encuestas__progressBar" id="@numeroOpcion">
