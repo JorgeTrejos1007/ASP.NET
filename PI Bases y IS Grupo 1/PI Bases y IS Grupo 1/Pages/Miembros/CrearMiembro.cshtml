@@ -139,10 +139,7 @@
         </br>
         <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
         </br>
-        <p>
-            <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
-        </p>
-        <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
+       <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
             @foreach (var idioma in idiomas)
             {
 
@@ -151,10 +148,6 @@
                 <br>
             }
         </select></br>
-
-        <p>
-            <strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
-        </p>
         <select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
             @foreach (var habilidad in habilidades)
             {
