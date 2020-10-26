@@ -8,7 +8,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <div style="margin-left:200px; margin-right:200px;">
@@ -27,7 +27,7 @@
         </div>
     </div>
     
-    <div style="display:block">
+    <div style="margin-bottom:20px;">
         @{
             @if (@Model.Secciones != null)
             {
@@ -35,54 +35,50 @@
                 {
 
                     <br />
-                   
-                        
-                        <button style="margin-bottom:10px;" class="accordion">@item.nombreSeccion</button>
 
-                        <div class="panel">
+                    <button  style="margin-bottom:10px;" class="accordion">@item.nombreSeccion</button>
 
-                            @{ foreach (var material in item.listaMateriales)
-                                {
-                                    <p>
-                                        <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                            <span class="or">@material.nombreMaterial</span>
-                                        </a>
-                                    </p>
-                                }
-                            }
-                            <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">
-                                <span class="glyphicon glyphicon-cog"></span> Editar
-                            </a>
+                    <div class="panel">
 
-                        </div>
-                       
-                           
-                        
-                        
-
+                        @{ foreach (var material in item.listaMateriales)
+                            {
+                                <p>
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                        <span class="or">@material.nombreMaterial</span>
+                                    </a>
+                                </p>
                             }
                         }
-                    }
-                        </div>
-<div>
-    <a asp-page="./CursosCreados" class="btn btn-info" style="margin-left:92%">
-        <span class="glyphicon glyphicon-arrow-left"></span> Volver
-    </a>
-</div>
-</div>
-    <script>
-        var acc = document.getElementsByClassName("accordion");
-        var i;
+                        <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">
+                            <span class="glyphicon glyphicon-cog"></span> Editar
+                        </a>
 
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
-                } else {
-                    panel.style.display = "block";
+                    </div>
+
                 }
-            });
+            }
         }
-    </script>
+    </div>
+        <br />               
+    <div>
+        <a asp-page="./CursosCreados" class="btn btn-info" style="margin-left:92%">
+            <span class="glyphicon glyphicon-arrow-left"></span> Volver
+        </a>
+    </div>
+</div>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
