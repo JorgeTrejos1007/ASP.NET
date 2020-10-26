@@ -27,7 +27,9 @@ namespace PIBasesISGrupo1.Pages.Encuestas
             ViewData["idEncuesta"] = id;
             try
             {
+                var listaConteoRespuestasPorPregunta = new List<int>();
                 var listaConteoRespuestasPorOpcion = new List<int>();
+                var sumaRespuestasPorOpcion = 0;
                 PreguntasHandler accesoDatosPregunta = new PreguntasHandler();
                 RespuestasHandler accesoDatosRespuesta = new RespuestasHandler();
                 listaPreguntas = accesoDatosPregunta.obtenerPreguntas(id);
@@ -38,6 +40,24 @@ namespace PIBasesISGrupo1.Pages.Encuestas
                     listaConteoRespuestasPorOpcion.Add(accesoDatosRespuesta.cantidadVecesElegidaUnaOpcion(item.encuestaID, item.preguntaID, item.opcion3));
                     listaConteoRespuestasPorOpcion.Add(accesoDatosRespuesta.cantidadVecesElegidaUnaOpcion(item.encuestaID, item.preguntaID, item.opcion4));
                 }
+                /*forea(listaConteoRespuestasPorOpcion.Count / 4); i++)
+                {
+                }*/
+
+                for (int i = 0; listaConteoRespuestasPorOpcion.Count > i; i=i+4)
+                {
+                    sumaRespuestasPorOpcion = listaConteoRespuestasPorOpcion[i];
+                    sumaRespuestasPorOpcion += listaConteoRespuestasPorOpcion[i+1];
+                    if (listaConteoRespuestasPorOpcion[i + 2] >=0 ) {
+                        sumaRespuestasPorOpcion += listaConteoRespuestasPorOpcion[i + 2];
+                    }
+                    if(listaConteoRespuestasPorOpcion[i+3] >= 0)
+                    {
+                        sumaRespuestasPorOpcion += listaConteoRespuestasPorOpcion[i + 3];
+                    }
+                    listaConteoRespuestasPorPregunta.Add(sumaRespuestasPorOpcion);
+                }
+                ViewData["listaConteoRespuestasPorPregunta"] = listaConteoRespuestasPorPregunta;
                 ViewData["listaConteoRespuestasPorOpcion"] = listaConteoRespuestasPorOpcion;
             }
        

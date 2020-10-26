@@ -2,71 +2,38 @@
 @model PIBasesISGrupo1.Pages.Curso.CursosCreadosModel
 @{
     ViewData["Title"] = "CursosCreados";
-    var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosCreados"];
+    var listaDeCursos = (List<string>)ViewData["CursosCreados"];
 }
 
-<h2>CursosCreados</h2>
-
+<h2>Cursos Creados</h2>
+<h2>Mis cursos</h2>
 <div class="cursos-container">
-    @if (listaDeCursos.Count > 0)
-    {
-
-        @foreach (var infoCursos in listaDeCursos)
+    @{
+        if (listaDeCursos != null)
         {
-            var curso = infoCursos.Item1;
-            var educador = infoCursos.Item2;
-            <div class="col-lg-4 right-contents">
-                <ul>
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Curso</p>
-                            <span class="or">@curso.nombre</span>
+            for (int i = 0; i < listaDeCursos.Count(); i = i + 1)
+            {
+                <div class="row" id="filaDeCursosInscritos">
+                    @for (int j = i; j < i + 1; j++)
+                    {
 
-
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Educador</p>
-                            <span class="or">@educador.nombre @educador.primerApellido </span>
-
-
-                        </a>
-                    </li>
-              
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <p>Topicos</p>
-                            <br>
-                            @{
-                                var topicos = "";
-
-                                @foreach (var infoTopicos in infoCursos.Item3)
+                        <a id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j]" >
+                                @if (j < listaDeCursos.Count())
                                 {
-                                    topicos = topicos + " " + infoTopicos.Item1;
+                                    <div id="cuadro-mis-cursos">
 
+                                        <span class="flaticon-student"></span>
+                                        <h4 id="nombrePersona">@listaDeCursos[j]</h4>
+
+
+                                    </div>
 
                                 }
-                            }
-                            <span class="or"> @topicos </span>
-
-                        </a>
-                    </li>
-                </ul>
-                <a asp-page="./CursoCreado" asp-route-nombreCurso="@curso.nombre" button class="primary-btn2 text-uppercase enroll rounded-0">Ver</a>
-
-            </div>
+                         </a>
+                    }
+                </div>
+            }
         }
     }
-    else
-    {
-        <tr>
-            <td colspan="3" style=" color:red">
-                No se encontraron Coincidencias
-            </td>
-        </tr>
-
-    }
-    </br>
 </div>
+ 

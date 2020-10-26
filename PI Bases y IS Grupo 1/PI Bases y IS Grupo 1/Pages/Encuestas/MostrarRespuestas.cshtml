@@ -3,50 +3,115 @@
 @{
     ViewData["Title"] = "MostrarRespuestas";
     var listaConteoRespuestasPorOpcion = (List<int>)ViewData["listaConteoRespuestasPorOpcion"];
+    var listaConteoRespuestasPorPregunta = (List<int>)ViewData["listaConteoRespuestasPorPregunta"];
 }
-
-<a asp-page="PaginaInicioEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
-
-<h2>Ver respuestas</h2>
-<div class="encuestas-container">
-    @{
-
-        foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
-        {
-        <div class="encuestas__elements">
-
-            @{
-                <h4>Pregunta:</h4>
-                @Html.DisplayFor(modelItem => item.pregunta);
-                <h5>Opcion 1:</h5>
-                <p>
-                    @Html.DisplayFor(modelItem => item.opcion1) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-                </p>
-                listaConteoRespuestasPorOpcion.RemoveAt(0);
-                <h5>Opcion 2:</h5>
-                <p>
-                    @Html.DisplayFor(modelItem => item.opcion2) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-                </p>
-                listaConteoRespuestasPorOpcion.RemoveAt(0);
-                if (listaConteoRespuestasPorOpcion[0] >= 0)
-                {
-                    <h5>Opcion 3:</h5>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.opcion3) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-                    </p>
-                    listaConteoRespuestasPorOpcion.RemoveAt(0);
-                }
-                if (listaConteoRespuestasPorOpcion[0] >= 0)
-                {
-                    <h5>Opcion 4:</h5>
-                    <p>
-                        @Html.DisplayFor(modelItem => item.opcion4) Cantidad: @Html.DisplayFor(modelItem => listaConteoRespuestasPorOpcion[0])
-                    </p>
-                    listaConteoRespuestasPorOpcion.RemoveAt(0);
-                }
+<script>
+    function animacionResultados(cantidadRespuestasPorPregunta, cantidadRespuestasDeLaOpcion, nombreOpcion) {
+        var elem = document.getElementById(nombreOpcion);
+        var width = 1;
+        var id = setInterval(frame, 1);
+        function frame() {
+            if (width >= (cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) {
+                clearInterval(id);
+            } else {
+                width++;
+                elem.style.width = width + "%";
+                elem.innerHTML = parseInt((cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) + "% (" + cantidadRespuestasDeLaOpcion + ")";
             }
-       
-        </div>
+        }
+        if (cantidadRespuestasDeLaOpcion == 0) {
+            elem.style.background = "#777777";
+            elem.innerHTML = parseInt((cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) + "% (" + cantidadRespuestasDeLaOpcion + ")";
         }
     }
+</script>
+
+<div class="encuestas__title">
+    <h2>Ver respuestas</h2>
 </div>
+<a asp-page="PaginaInicioEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
+<br />
+<br />
+@{
+    int numeroPregunta = 0;
+    int numeroOpcion = 0;
+    foreach (var item in (List<PIBasesISGrupo1.Models.PreguntaModel>)Model.listaPreguntas)
+    {
+<div class="encuestas__elements">
+
+    @{
+        <h4>@Html.DisplayFor(modelItem => item.pregunta)</h4>
+        <div class="encuestas__option">
+            <h5>Opcion 1:</h5>
+
+            <div class="encuestas__results">
+                <div class="encuestas__progressBar" id="@numeroOpcion">
+                </div>
+            </div>
+        </div>
+        <script>
+                    animacionResultados(@listaConteoRespuestasPorPregunta[numeroPregunta],@listaConteoRespuestasPorOpcion[numeroOpcion],@numeroOpcion);
+        </script>
+        <p>
+            @Html.DisplayFor(modelItem => item.opcion1)
+        </p>
+        numeroOpcion++;
+
+        <div class="encuestas__option">
+            <h5>Opcion 2:</h5>
+
+            <div class="encuestas__results">
+                <div class="encuestas__progressBar" id="@numeroOpcion">
+                </div>
+            </div>
+        </div>
+        <script>
+                    animacionResultados(@listaConteoRespuestasPorPregunta[numeroPregunta],@listaConteoRespuestasPorOpcion[numeroOpcion],@numeroOpcion);
+        </script>
+        <p>
+            @Html.DisplayFor(modelItem => item.opcion2)
+        </p>
+        numeroOpcion++;
+
+        if (listaConteoRespuestasPorOpcion[numeroOpcion] >= 0)
+        {
+            <div class="encuestas__option">
+                <h5>Opcion 3:</h5>
+
+                <div class="encuestas__results">
+                    <div class="encuestas__progressBar" id="@numeroOpcion">
+                    </div>
+                </div>
+            </div>
+            <script>
+                    animacionResultados(@listaConteoRespuestasPorPregunta[numeroPregunta],@listaConteoRespuestasPorOpcion[numeroOpcion],@numeroOpcion);
+            </script>
+            <p>
+                @Html.DisplayFor(modelItem => item.opcion3) 
+            </p>
+        }
+        numeroOpcion++;
+        if (listaConteoRespuestasPorOpcion[numeroOpcion] >= 0)
+        {
+            <div class="encuestas__option">
+                <h5>Opcion 4:</h5>
+
+                <div class="encuestas__results">
+                    <div class="encuestas__progressBar" id="@numeroOpcion">
+                    </div>
+                </div>
+            </div>
+            <script>
+                    animacionResultados(@listaConteoRespuestasPorPregunta[numeroPregunta],@listaConteoRespuestasPorOpcion[numeroOpcion],@numeroOpcion);
+            </script>
+            <p>
+                @Html.DisplayFor(modelItem => item.opcion4) 
+            </p>
+        }
+        numeroOpcion++;
+        numeroPregunta++;
+    }
+
+</div>
+                }
+}

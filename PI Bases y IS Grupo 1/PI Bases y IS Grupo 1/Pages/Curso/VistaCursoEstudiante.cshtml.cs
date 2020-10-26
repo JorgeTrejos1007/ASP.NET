@@ -30,7 +30,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
             catch
             {
-                return RedirectToPage("CursosCreados");
+                return RedirectToPage("/Index");
             }
 
         }
