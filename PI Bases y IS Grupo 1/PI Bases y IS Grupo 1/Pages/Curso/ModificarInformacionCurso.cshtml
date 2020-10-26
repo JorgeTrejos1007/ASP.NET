@@ -25,42 +25,36 @@
         @if (informacionCurso != null)
         {
 
-            var curso = informacionCurso.Item1;
+            Model.curso = informacionCurso.Item1;
             var educador = informacionCurso.Item2;
             <div class="col-lg-4 right-contents">
                 <ul>
                     <li>
                         <a class="justify-content-between d-flex" href="#">
                             <form method="post">
-                                <label asp-for="@curso.nombre">Curso</label>
-                                <input asp-for="@curso.nombre" />
+                                <label asp-for="@Model.curso.nombre">Curso</label>
+                                <input asp-for="@Model.curso.nombre" />
                                 <br />
-                                <label asp-for="@curso.precio">Precio</label>
-                                <input asp-for="@curso.precio" />
-                                <h3>Topicos: </h3>
+                                <label asp-for="@Model.curso.precio">Precio</label>
+                                <input asp-for="@Model.curso.precio" />
+                                <h3 style="display:flex;">Topicos: </h3>
                                 <br>
-                                @{
-                                    var topicos = "";
 
-                                    @foreach (var infoTopicos in informacionCurso.Item3)
+                                <select class="mul-select" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
+                                    @foreach (var topicoYCategoria in informacionCurso.Item3)
                                     {
-                                        topicos = topicos + " " + infoTopicos.Item1;
-
-
+                                    <option  value="@topicoYCategoria.Item1" selected="selected">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
                                     }
-                                }
-                                <span class="or"> @topicos </span>
 
-                                <!--<select class="mul-select" asp-for="curso.topicos" multiple="multiple" size="topicosYCategorias.Count">
-                                    foreach (var topicoYCategoria in topicosYCategorias)
+                                    @foreach (var topicoYCategoria in topicosYCategorias)
                                     {
 
-                                        <option value="topicoYCategoria.Item1">TOPICO:topicoYCategoria.Item1 - CATEGORIA:topicoYCategoria.Item2</option>
+                                        <option value="@topicoYCategoria.Item1">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
 
                                         <br>
                                     }
 
-                                </select>-->
+                                </select>
 
                                 <input type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" />
                             </form>
