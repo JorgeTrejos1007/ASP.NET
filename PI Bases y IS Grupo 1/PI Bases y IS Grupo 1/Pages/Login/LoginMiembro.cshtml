@@ -4,18 +4,24 @@
     ViewData["Title"] = "Iniciar sesión";
     var mensaje = (string)TempData["mensaje"];
 }
+<style type="text/css">
+    body {
+        background-image: url("/img/login-estudiante.jpg");
+        background-size: 100%;
+    }
 
 
+</style>
 
-
-    <div class="login-background-student"  >
+<body>
+    <div  class="login-background-student">
         <div class="modal-dialog" role="document">
             <div class="modal-content center">
                 <div class="modal-header">
 
                     <img class="logo-2" src="~/img/logo.png" alt="" />
 
-                   
+
                 </div>
                 <div class="modal-body">
                     <h1 class="modal-title">Ingresar como Miembro</h1>
@@ -50,7 +56,7 @@
 
                             </div>
 
-                            <div class="center">
+                            <div >
                                 <button class="primary-btn" text-uppercase enroll rounded-0">Iniciar sesión</button>
 
                             </div>
@@ -72,9 +78,7 @@
             </div>
         </div>
     </div>
-  
-
-
+</body>
 
 
 <scripts>
