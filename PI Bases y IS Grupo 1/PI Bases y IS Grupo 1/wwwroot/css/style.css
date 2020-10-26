@@ -4733,6 +4733,55 @@ h6 {
     box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
 }
 
+.cajita-cursos {
+    height:50%;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-left: 30px;
+    margin-right: 20px;
+    padding-right: 20px;
+    padding-left: 20px;
+    padding-top: 1%;
+    padding-bottom: 15px;
+    border: 1px solid #002347;
+    background-color: white;
+}
+
+.cajota-cursos {
+    zoom: 90%;
+    width: 100%;
+    background: #f1f9ff;
+    padding: 10%;
+    padding-top:1%;
+    //margin-left: 10px;
+    //margin: auto;
+    margin:0%;
+}
+
+hr.new5 {
+    height: 1px;
+    background-color: #002347;
+}
+
+.centrar {
+    text-align: center;
+}
+
+.col-lg-12-courses {
+    //-ms-flex: 0 0 100%;
+    //flex: 0 0 100%;
+    max-width: 100%;
+}
+
+
+.cursos-container-2 {
+    //display: flex;
+    padding: 70px;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+
 /*---------------------------------------------------- */
 
 /*# sourceMappingURL=style.css.map */
