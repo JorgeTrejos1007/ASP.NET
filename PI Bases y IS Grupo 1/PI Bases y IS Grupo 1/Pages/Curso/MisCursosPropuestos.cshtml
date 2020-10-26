@@ -5,48 +5,43 @@
     var listaDeCursos = (List<PIBasesISGrupo1.Models.Cursos>)ViewData["MisCursosPropuestos"];
 
 }
-<h2>Mis Cursos Propuestos</h2>
-<div class="cursos-container">
-    @foreach (var curso in listaDeCursos)
-    {
 
-        <div class="col-lg-4 right-contents">
-            <ul>
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Curso</p>
-                        <span class="or">@curso.nombre</span>
+<div class="cajota-cursos">
+    <div class="row justify-content-center">
+
+        <h1 class="mb-3">Mis cursos propuestos</h1>
+
+    </div>
 
 
-                    </a>
-                </li>
+    <div class="cursos-container-2">
+        @if (listaDeCursos.Count > 0)
+        {
 
+            @foreach (var curso in listaDeCursos)
+            {
 
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Estado</p>
-                        <span class="or">@curso.estado</span>
-
-
-                    </a>
-                </li>
-
-
-
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Precio </p>
-                        <span>$@curso.precio</span>
-                    </a>
-                </li>
-
-
-
-            </ul>
-
-           
-        </div>
-
-    }
+                <div class="cajita-cursos col-lg-12">
+                    <div class="col-lg-12 right-contents">
+                        <h4 class="title_color align-content-lg-center centrar">@curso.nombre</h4>
+                        <hr class="new5">
+                        <ul>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>Estado</p>
+                                    <span class="or">@curso.estado</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="justify-content-between d-flex">
+                                    <p>Precio </p>
+                                    <span>$@curso.precio</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+             }
+         }
+    </div>
 </div>
-

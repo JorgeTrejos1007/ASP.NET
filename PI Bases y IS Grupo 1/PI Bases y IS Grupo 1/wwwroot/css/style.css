@@ -4737,7 +4737,7 @@ h6 {
     height:50%;
     width: 100%;
     margin-bottom: 20px;
-    margin-left: 30px;
+    margin-left: 20px;
     margin-right: 20px;
     padding-right: 20px;
     padding-left: 20px;
@@ -4748,6 +4748,7 @@ h6 {
 }
 
 .cajota-cursos {
+    align-content:center;
     zoom: 90%;
     width: 100%;
     background: #f1f9ff;

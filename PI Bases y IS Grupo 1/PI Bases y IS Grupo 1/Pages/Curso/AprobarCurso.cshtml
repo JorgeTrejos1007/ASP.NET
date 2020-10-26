@@ -5,65 +5,66 @@
     var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro>>)ViewData["CursosPropuestos"];
 
 }
-<h2>Cursos Propuestos</h2>
-<div class="cursos-container">
-    @foreach (var infoCursos in listaDeCursos)
-    {
+<div class="cajota-cursos">
+    <div class="row justify-content-center">
 
-        var curso = infoCursos.Item1;
-        var educador = infoCursos.Item2;
-        <div class="col-lg-4 right-contents">
-            <ul>
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Curso</p>
-                        <span class="or">@curso.nombre</span>
+        <h1 class="mb-3">Cursos propuestos</h1>
 
+    </div>
 
-                    </a>
-                </li>
+    <div class="cursos-container-2">
+        @foreach (var infoCursos in listaDeCursos)
+        {
 
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Email</p>
-                        <span class="or">@curso.emailDelEducador</span>
+            var curso = infoCursos.Item1;
+            var educador = infoCursos.Item2;
+            <div class="cajita-cursos col-lg-12">
+                <div class="col-lg-12 right-contents">
+                    <h4 class="title_color align-content-lg-center centrar">@curso.nombre</h4>
+                    <hr class="new5">
 
-
-                    </a>
-                </li>
-
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Educador</p>
-                        <span class="or">@educador.nombre @educador.primerApellido </span>
+                    <ul>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Educador</p>
+                                <span class="or">@educador.nombre @educador.primerApellido </span>
 
 
-                    </a>
-                </li>
-
-                <li>
-
-                    <a href="data:@curso.tipoDocInformativo;base64,@(Convert.ToBase64String(curso.byteArrayDocument))" download="@curso.nombre .pdf">
-                        <span class="or">Descargar documento descriptivo del curso</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a class="justify-content-between d-flex" href="#">
-                        <p>Precio </p>
-                        <span>$@curso.precio</span>
-                    </a>
-                </li>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Email</p>
+                                <span class="or">@curso.emailDelEducador</span>
 
 
+                            </a>
+                        </li>
 
-            </ul>
+                        <li>
 
-            <form method="post" asp-route-id="@curso.nombre" asp-route-emailDelQueLoPropuso="@curso.emailDelEducador">
-                <button class="primary-btn2 text-uppercase enroll rounded-0">Aprobar</button>
-            </form>
-        </div>
+                            <a href="data:@curso.tipoDocInformativo;base64,@(Convert.ToBase64String(curso.byteArrayDocument))" download="@curso.nombre .pdf">
+                                <span class="or">Descargar documento descriptivo del curso</span>
+                            </a>
+                        </li>
 
-    }
+                        <li>
+                            <a class="justify-content-between d-flex" href="#">
+                                <p>Precio </p>
+                                <span>$@curso.precio</span>
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+
+                    <form method="post" asp-route-id="@curso.nombre" asp-route-emailDelQueLoPropuso="@curso.emailDelEducador">
+                        <button class="primary-btn2 text-uppercase enroll rounded-0">Aprobar</button>
+                    </form>
+                </div>
+            </div>
+
+        }
+    </div>
 </div>
-
