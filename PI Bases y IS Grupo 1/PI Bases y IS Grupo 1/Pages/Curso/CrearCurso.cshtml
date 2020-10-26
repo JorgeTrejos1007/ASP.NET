@@ -5,57 +5,88 @@
     var nombreCurso = (string)ViewData["nombreCurso"];
 }
 
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 
-<div class="curso-material">
-    <h2 style="display:inline-block;">@nombreCurso</h2>
-    <a asp-page="CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:60px;">Crear Seccion</a>
-    <a asp-page="./CursosAprobados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
-</div>
-@{
-    if (@Model.Secciones != null)
-    {
-        foreach (var item in @Model.Secciones)
-        {
-            <br />
-            <button class="accordion">@item.nombreSeccion</button>
-
-            <div class="panel">
-
-                @{ foreach (var material in item.listaMateriales)
-                    {
-                        <p>
-                            <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                <span class="or">@material.nombreMaterial</span>
-                            </a>
-                            <br>
-                        </p>
-                    }
-                }
-
+<div style="margin-left:200px; margin-right:200px;">
+    <div class="curso-material">
+        <div style="margin-left:35%;display:flex;">
+            <div style="margin-bottom: 10px;margin-left:10px;">
+                <h2><strong>@nombreCurso</strong></h2>
             </div>
+            <div style="margin-top: 20px; margin-left:10px; display:inline-block;">
+                <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="btn btn-info">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Agregar seccion
+                </a>
+            </div>
+        </div>
+    </div>
+   
+    <div style="margin-bottom:20px;">
+        <div style=" margin-bottom: 5px;margin-left:10px; display:flex;">
+            <h3 style="color:#032c56;"><strong>Secciones: </strong></h3>
+        </div>
+        @{
+            if (@Model.Secciones != null)
+            {
+                foreach (var item in @Model.Secciones)
+                {
+                   
+                    <button class="accordion">@item.nombreSeccion</button>
 
-        }
-    }
-}
-<form method="post" asp-route-nombreCurso="@nombreCurso">
-    <button class="primary-btn2 text-uppercase enroll rounded-0">Terminar de crear Curso</button>
-</form>
+                    <div class="panel">
 
+                        @{ foreach (var material in item.listaMateriales)
+                            {
+                                <p>
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                        <span class="or">@material.nombreMaterial</span>
+                                    </a>
+                                    <br>
+                                </p>
+                            }
+                        }
 
+                    </div>
 
-<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
-
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
+                }
             }
-        });
-    }
-</script>
+        }
+    </div>
+
+    <div class="curso-material">
+        <div style="margin-left:74%; display:inline-flex;">
+            <a  asp-page="./CursosCreados" class="btn btn-info" style="margin-right:3px;">
+                <span class="glyphicon glyphicon-arrow-left"></span> Volver
+            </a>
+            <form method="post" asp-route-nombreCurso="@nombreCurso">
+                <button class="btn btn-info">
+                    <span class="glyphicon glyphicon-ok"></span> Terminar de crear Curso
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
+
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
