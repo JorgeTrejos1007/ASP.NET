@@ -13,12 +13,13 @@ namespace PIBasesISGrupo1.Pages
         
         public void OnGet()
         {
+            /*
             NoticiaHandler accesoNoticias = new NoticiaHandler();
             ViewData["Noticias"] = accesoNoticias.obtenerTodasLasNoticias();
             MiembroHandler accesoDatos = new MiembroHandler();
             ViewData["TotalMiembros"] = accesoDatos.obtenerNumeroDeMiembros();
             ViewData["PaisesMiembro"] = accesoDatos.obtenerPaisesMiembro();
-
+            */
         }
     }
 }
