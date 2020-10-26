@@ -5,33 +5,21 @@
     var mensaje = (string)TempData["mensaje"];
 }
 
-<script>
-    function prueba() {
 
-        var elem = document.getElementById('vtn-modal');
-        elem.style.display = "block";
-
-
-    }
-</script>
 
 <div>
 
-    <input type="button" class="btn-info" id="ver" value="Abrir modal" />
-
-    <div id="vtn-modal" class="modal">
+    <div  >
         <div class="modal-dialog" role="document">
             <div class="modal-content center">
                 <div class="modal-header">
 
                     <img class="logo-2" src="~/img/logo.png" alt="" />
 
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                   
                 </div>
                 <div class="modal-body">
-                    <h1 class="modal-title">Iniciar Sesion</h1>
+                    <h1 class="modal-title">Ingresar como Miembro</h1>
                     <div class="login-form">
                         <form method="post">
                             @if (@mensaje != null)
@@ -85,9 +73,7 @@
             </div>
         </div>
     </div>
-    <script>
-        prueba();
-    </script>
+  
 
 
 </div>
