@@ -4,13 +4,26 @@
     ViewData["Title"] = "ModificarInformacionCurso";
     var informacionCurso = (Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>)ViewData["informacionCurso"];
     var topicosYCategorias = (List<Tuple<string, string>>)ViewData["TopicosYCategorias"];
+    var nombreCurso= (string)ViewData["nombreCurso"];
 }
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<h2>Modificar la informacion del curso</h2>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 
-<div class="cursos-container">
-    @if (informacionCurso != null)
-    {
+<div style="margin-left:200px; margin-right:200px;">
+    <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
+        <div style=" margin-left:27%; margin-bottom: 15px; margin-top:10px;">
+            <h2><strong>Editando la informacion del curso</strong></h2>
+        </div>
+    </div>
+
+
+    <div class="cursos-container">
+        @if (informacionCurso != null)
+        {
 
             var curso = informacionCurso.Item1;
             var educador = informacionCurso.Item2;
@@ -22,9 +35,9 @@
                                 <label asp-for="@curso.nombre">Curso</label>
                                 <input asp-for="@curso.nombre" />
                                 <br />
-                                <label asp-for="@curso.precio">Curso</label>
+                                <label asp-for="@curso.precio">Precio</label>
                                 <input asp-for="@curso.precio" />
-                                <p>Topicos</p>
+                                <h3>Topicos: </h3>
                                 <br>
                                 @{
                                     var topicos = "";
@@ -38,36 +51,44 @@
                                 }
                                 <span class="or"> @topicos </span>
 
-                                <select class="mul-select" asp-for="@curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
-                                    @foreach (var topicoYCategoria in topicosYCategorias)
+                                <!--<select class="mul-select" asp-for="curso.topicos" multiple="multiple" size="topicosYCategorias.Count">
+                                    foreach (var topicoYCategoria in topicosYCategorias)
                                     {
 
-                                        <option value="@topicoYCategoria.Item1">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
+                                        <option value="topicoYCategoria.Item1">TOPICO:topicoYCategoria.Item1 - CATEGORIA:topicoYCategoria.Item2</option>
 
                                         <br>
                                     }
 
-                                </select>
+                                </select>-->
 
                                 <input type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" />
                             </form>
                         </a>
                     </li>
                 </ul>
-                <a asp-page="./CursoCreado" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
+
 
             </div>
-        
-    }
-    else
-    {
-        <tr>
-            <td colspan="3" style=" color:red">
-                No se encontraron Coincidencias
-            </td>
-        </tr>
 
-    }
-    </br>
-</div>
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" style=" color:red">
+                    No se encontraron Coincidencias
+                </td>
+            </tr>
 
+        }
+        </br>
+    </div>
+    <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
+        <div style="margin-left:92%">
+            <a asp-page="./CursoCreado" asp-route-nombreCurso="@nombreCurso" class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left"></span> Volver
+            </a> <br>
+        </div>
+    </div>
+
+    </div>
