@@ -3,112 +3,174 @@
 @{
     ViewData["Title"] = "CrearMiembro";
     var mensaje = (string)TempData["mensaje"];
-}
-<h2>Registrarme</h2>
-<form method="post" enctype="multipart/form-data">
-    @if (@mensaje != null)
+    var idiomas = (string[])ViewData["idiomas"];
+    var habilidades = (string[])ViewData["habilidades"];
+    var esEstudiante = true;
+    var estudiante = (PIBasesISGrupo1.Models.Miembro)ViewData["estudiante"];
+    if (estudiante == null)
     {
-        if ((bool)TempData["exitoAlEditar"])
-        {
-            <div class="alert-success">
-
-                <h3> @mensaje </h3>
-            </div>
-        }
-        else
-        {
-            <div class="alert-danger">
-
-                <h3> @mensaje </h3>
-            </div>
-        }
+        esEstudiante = false;
     }
-    <div>
-        <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
-        </br>
-        <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" />
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
-        </br>
-        <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" />
-
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
-        </br>
-        <strong>Segundo apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" />
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
-        </br>
-        <strong>Genero:</strong>
-        </br>
-        <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino<br />
-        <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino<br />
-
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
-        </br>
-        <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" />
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
-        </br>
-        <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" />
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
-        </br>
-        <strong>Email:</strong> <input asp-for="@Model.miembro.email" />
-    </div>
-    <div>
-        <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
-        </br>
-        <strong>Contraseña:</strong> <input asp-for="@Model.miembro.password", type="password"/>
-    </div>
-    </br>
-    <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
-    </br>
-    <p>
-        <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
-    </p> <select asp-for="@Model.miembro.idiomas" multiple size="11">
-        <option value="Arabe">Arabe</option>
-        <option value="Aleman">Aleman</option>
-        <option value="Bengali">Bengali</option>
-        <option value="Español">Español</option>
-        <option value="Frances">Frances</option>
-        <option value="Hindi">Hindi</option>
-        <option value="Ingles">Ingles</option>
-        <option value="Mandarin">Mandarin</option>
-        <option value="Panyabí">Panyabí</option>
-        <option value="Portugues">Portugues</option>
-        <option value="Ruso">Ruso</option>
-    </select></br>
-    <p><strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
-    </p> <select asp-for="@Model.miembro.habilidades" multiple size="15">
-        <option value="Empatia">Empatía</option>
-        <option value="Saber escuchar">Saber escuchar</option>
-        <option value="Liderazgo">Liderazgo</option>
-        <option value="Flexibilidad">Flexibilidad</option>
-        <option value="Optimismo">Optimismo</option>
-        <option value="Confianza">Confianza</option>
-        <option value="Optimismo">Optimismo</option>
-        <option value="Confianza">Confianza</option>
-        <option value="Comunicacion">Comunicacion</option>
-        <option value="Convencimiento">Convencimiento</option>
-        <option value="Esfuerzo">Esfuerzo</option>
-        <option value="Dedicacion">Dedicacion</option>
-        <option value="Comprension">Comprension</option>
-        <option value="Asertividad">Asertividad</option>
-        <option value="Credibilidad">Credibilidad</option>
-    </select></br>
-    <input type="submit" value=" Enviar" class="btn btn-success" />
-
-</form>
 
 
+
+}
+
+<div class="comment-form">
+    <h3>Registrarme</h3>
+    <form class="form_area" id="myForm" method="post" enctype="multipart/form-data">
+
+        @if (@mensaje != null)
+        {
+            if ((bool)TempData["exitoAlEditar"])
+            {
+                <div class="alert-success">
+
+                    <h3> @mensaje </h3>
+                </div>
+            }
+            else
+            {
+                <div class="alert-danger">
+
+                    <h3> @mensaje </h3>
+                </div>
+            }
+        }
+
+        @{
+            if (esEstudiante)
+            {
+                <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span><br>
+                <strong>Nombre:</strong><input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly /><br /><br />
+                <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span><br />
+                <strong>Primer Apellido:</strong><input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly /><br /><br />
+                <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span><br />
+                <strong>Segundo Apellido:</strong><input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly /><br /><br />
+                <span asp-validation-for="@Model.miembro.email" class="text-danger"></span><br/>
+                <strong>Email:</strong><input asp-for="@Model.miembro.email" value="@estudiante.email" readonly /><br>
+                <br>
+                <div>
+                    @if (estudiante.genero == "Femenino")
+                    {
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
+                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                    }
+                    else if (estudiante.genero == "Masculino")
+                    {
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
+                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                    }
+                    else
+                    {
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
+                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                    }
+                </div>
+
+
+            }
+            else
+            {
+                <div>
+                    <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+                    <br>
+                    <strong>Nombre:</strong> <input asp-for="@Model.miembro.nombre" />
+                </div>
+                <div>
+                    <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                    <br>
+                    <strong>Primer Apellido:</strong> <input asp-for="@Model.miembro.primerApellido" />
+
+                </div>
+                <div>
+                    <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                    <br>
+                    <strong>Segundo apellido:</strong> <input asp-for="@Model.miembro.segundoApellido" />
+                </div>
+                <div>
+                    <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+                    <br />
+                    <strong>Email:</strong> <input asp-for="@Model.miembro.email" placeholder="Tu email" type="email" />
+                </div>
+                <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+                <br>
+                <div>
+                    <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino
+                    <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino
+                    <input type="radio" asp-for="@Model.miembro.genero" value="Otro" />Otro
+                </div>
+            }
+
+
+
+
+
+
+        }
+
+        <div>
+            <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
+            </br>
+            <strong>Pais:</strong> <input asp-for="@Model.miembro.pais" />
+        </div>
+        <div>
+            <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
+            </br>
+            <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" />
+        </div>
+        <div>
+            <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
+            </br>
+            <strong>Contraseña:</strong> <input asp-for="@Model.miembro.password" , type="password" />
+        </div>
+        </br>
+        <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
+        </br>
+        <p>
+            <strong>Para seleccionar mas de un idioma mantenga apretado Control + click</strong>
+        </p>
+        <select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
+            @foreach (var idioma in idiomas)
+            {
+
+                <option value="@idioma">@idioma</option>
+
+                <br>
+            }
+        </select></br>
+
+        <p>
+            <strong>Para seleccionar mas de una habilidad mantenga apretado Control + click</strong>
+        </p>
+        <select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
+            @foreach (var habilidad in habilidades)
+            {
+
+                <option value="@habilidad">@habilidad</option>
+
+                <br>
+            }
+        </select></br>
+        <input type="submit" asp-route-esEstudiante="@esEstudiante" value=" Enviar" class="btn btn-success" />
+
+    </form>
+</div>
+
+
+</div>
 <scripts>
 
 

@@ -1,0 +1,122 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.InscribirmeCursoModel
+@{
+    ViewData["Title"] = "InscribirmeCurso";
+    var mensaje = (string)TempData["mensaje"];
+    var esMiembro = (bool)ViewData["esMiembro"];
+    var curso = (string)ViewData["nombreCurso"];
+    var nombre = (string)ViewData["nombre"];
+    var primerApellido = (string)ViewData["primerApellido"];
+    var segundoApellido = (string)ViewData["segundoApellido"];
+    var genero = (string)ViewData["genero"];
+    var email = (string)ViewData["email"];
+
+}
+
+
+<div class="comment-form">
+    <div class="col-lg-4 offset-lg-1">
+        <div class="register_form">
+            <h3>Incribirme  a un Curso</h3>
+            <form class="form_area"
+                  id="myForm"
+                  method="post"
+                  enctype="multipart/form-data">
+                @if (esMiembro)
+                {
+                    <div class="row">
+                        <div class="col-lg-12 form_group">
+                            <div class="row">
+
+                                <input asp-for="@curso" value="@curso" readonly /><br /><br />
+                                <input asp-for="@nombre" value="@nombre" readonly /><br /><br />
+                                <input asp-for="@primerApellido" value="@primerApellido" readonly /><br /><br />
+                                <input asp-for="@segundoApellido" value="@segundoApellido" readonly /><br /><br />
+                                <input asp-for="@email" value="@email" readonly />
+                                <input type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
+                            </div>
+                            <div class="card-columns">
+                                @if (genero == "Femenino")
+                                {
+                                    <input asp-for="@genero" type="radio" value="Femenino" readonly checked />
+                                    <label asp-for="@genero">Femenino</label><br>
+                                    <input asp-for="@genero" type="radio" value="Masculino" readonly />
+                                    <label asp-for="@genero">Masculino</label><br>
+                                    <input asp-for="@genero" type="radio" value="Otro" readonly />
+                                    <label asp-for="@genero">Otro</label><br>
+                                }
+                                else if (genero == "Masculino")
+                                {
+                                    <input asp-for="@genero" type="radio" value="Femenino" readonly checked />
+                                    <label asp-for="@genero">Femenino</label><br>
+                                    <input asp-for="@genero" type="radio" value="Masculino" readonly checked />
+                                    <label asp-for="@genero">Masculino</label><br>
+                                    <input asp-for="@genero" type="radio" value="Otro" readonly />
+                                    <label asp-for="@genero">Otro</label><br>
+                                }
+                                else
+                                {
+                                    <input asp-for="@genero" type="radio" value="Femenino" readonly checked />
+                                    <label asp-for="@genero">Femenino</label><br>
+                                    <input asp-for="@genero" type="radio" value="Masculino" readonly />
+                                    <label asp-for="@genero">Masculino</label><br>
+                                    <input asp-for="@genero" type="radio" value="Otro" readonly checked />
+                                    <label asp-for="@genero">Otro</label><br>
+                                }
+
+                            </div>
+                            <div class="col-lg-12 text-center">
+                                <button class="primary-btn">Confirmar</button>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+
+                    <div class="col-lg-12 form_group">
+
+                        <div class="row">
+                            <input asp-for="@curso" value="@curso" readonly /><br /><br />
+                            <span asp-validation-for="@Model.participanteExterno.nombre" class="text-danger"></span>
+                            <input asp-for="@Model.participanteExterno.nombre"
+                                   placeholder="tu nombre"
+                                   required=""
+                                   type="text" />
+                            <span asp-validation-for="@Model.participanteExterno.primerApellido" class="text-danger"></span>
+                            <input asp-for="@Model.participanteExterno.primerApellido"
+                                   placeholder="Tu primer apellido"
+                                   required=""
+                                   type="text" />
+                            <span asp-validation-for="@Model.participanteExterno.segundoApellido" class="text-danger"></span>
+                            <input asp-for="@Model.participanteExterno.segundoApellido"
+                                   placeholder="Tu segundo apellido"
+                                   type="text" />
+                            <span asp-validation-for="@Model.participanteExterno.email" class="text-danger"></span>
+                            <input asp-for="@Model.participanteExterno.email" placeholder="Tu email" type="email" required="" />
+                            <input type="hidden" asp-for="@Model.curso.nombre" value="@curso" />
+
+                        </div>
+                        <div class="card-columns">
+                            <input type="radio" asp-for="@Model.participanteExterno.genero" value="Femenino" />Femenino<br />
+                            <input type="radio" asp-for="@Model.participanteExterno.genero" value="Masculino" />Masculino<br />
+                            <input type="radio" asp-for="@Model.participanteExterno.genero" value="Otro" />Otro<br />
+                        </div>
+                    </div>
+                    <div class="col-lg-12 text-center">
+                        <button class="primary-btn">Confirmar</button>
+                    </div>
+
+                }
+            </form>
+
+        </div>
+    </div>
+
+</div>
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }

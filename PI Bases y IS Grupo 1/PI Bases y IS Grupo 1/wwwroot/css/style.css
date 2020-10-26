@@ -1,11 +1,11 @@
 /*----------------------------------------------------
-@File: Default Styles
-@Author: SPONDON IT
-Author E-mail: info@spondonit.com
-
-This file contains the styling for the actual theme, this
-is the file you need to edit to change the look of the
-theme.
+@File: Default Styles 
+@Author: SPONDON IT 
+Author E-mail: info@spondonit.com 
+    
+This file contains the styling for the actual theme, this 
+is the file you need to edit to change the look of the 
+theme. 
 ---------------------------------------------------- */
 /*=====================================================================
 @Template Name: Medicare Medical
@@ -23,6 +23,11 @@ theme.
 /*----------------------------------------------------*/
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
+
+.center-element {
+align-content:center;
+}
+
 body {
     line-height: 25px;
     font-size: 16px;
@@ -31,11 +36,36 @@ body {
     color: #7b838a;
 }
 
+/*Encuestas*/
+
+.encuestas-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap-reverse;
+    border: 3px solid #002347;
+}
+
+.encuestas__elements {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10%;
+}
+
+.encuestas__elements h5 {
+        color: #f8b600;
+}
+
+
+
+/*-------------------------------------------*/
 /*Miembros*/
 .member-container {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    margin: 3%;
+    padding-left: 2%;
+    
 }
 
 .member_list {
@@ -50,6 +80,17 @@ body {
     width: 200px;
 }
 
+
+.member_img-perfil {
+    height: 200px;
+    width: 200px;
+    margin-right: 100px;
+    border-radius:10px;
+}
+
+
+
+
 /*----------------------------------------------------*/
 
 /*Cursos */
@@ -60,6 +101,73 @@ body {
 }
 
 /*----------------------------------------------------*/
+
+
+/*CrearCurso*/
+.accordion {
+    background-color: #002347;
+    color: #fff;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: 1px solid #002347;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 25px;
+    outline: none;
+    transition: 0.4s;
+    margin-bottom: 3px;
+}
+
+    .active, .accordion:hover {
+        background-color: #1c346c;
+    }
+
+.panel {
+    font-size: 18px;
+    padding: 18px;
+    display: none;
+    background-color: #ccc;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    overflow: hidden;
+}
+/*------------------------------------------*/
+
+/*Curso material*/
+.curso-material{
+    background: rgba(204,204,204,0.4);
+    color: #002347;
+    padding:5px;
+}
+
+.primary-btn__reverse {
+    display: inline-block;
+    background: rgba(0,35,71,2); 
+    padding: 0px 48px;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 48px;
+    border-radius: 15px !important;
+    border: 1px solid #002347;
+    outline: none !important;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    margin: 5px 10px 5px 10px;
+}
+
+    .primary-btn__reverse:hover {
+        background: #032c56;
+        color: #fdc632;
+        border: 1px solid #002347;
+    }
+/*--------------------------------------------*/
 h1,
 h2,
 h3,
@@ -69,6 +177,7 @@ h6 {
     font-family: "Rubik", sans-serif;
     font-weight: 500;
     color: #002347;
+    text-align:center;
 }
 
 .list {
@@ -180,7 +289,7 @@ button:focus {
 ============================================================================================ */
 .main_title {
     text-align: center;
-    margin-bottom: 85px;
+    margin-bottom: 40px;
 }
 
 @media (max-width: 991px) {
@@ -193,7 +302,7 @@ button:focus {
     font-size: 36px;
     line-height: 30px;
     font-weight: bold;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 
 @media (max-width: 575px) {
@@ -255,7 +364,7 @@ button:focus {
 
             .header_area .navbar .nav .nav-item .nav-link {
                 font: 500 15px/80px "Rubik", sans-serif;
-                text-transform: capitalize;
+                text-trans?area: capitalize;
                 color: #fff;
                 padding: 0px;
                 display: inline-block;
@@ -482,15 +591,15 @@ button:focus {
 ============================================================================================ */
 .home_banner_area {
     z-index: 1;
-    min-height: 900px;
+    min-height: 560px;
     position: relative;
-    background: url(../img/banner/home-banner.jpg) no-repeat center;
+    background: url(../img/banner/home-banner3.jpeg) no-repeat center;
     background-size: cover;
 }
 
     .home_banner_area .banner_inner {
         position: absolute;
-        top: 40%;
+        top: 20%;
         -webkit-transform: translateY(-50%);
         -moz-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
@@ -1449,6 +1558,7 @@ button:focus {
 }
 
 .testi_item {
+    width:900px;
     padding: 50px 55px;
     margin-bottom: 200px;
     margin-left: 10px;
@@ -1500,6 +1610,7 @@ button:focus {
 .testi_item:hover {
     box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
 }
+
 
 /* End Testimonial Area css
 ============================================================================================ */
@@ -3958,9 +4069,9 @@ h6 {
 ============================================================================================ */
 .primary-btn {
     display: inline-block;
-    background: #fdc632;
+    background: #002347;
     padding: 0px 48px;
-    color: #002347;
+    color: #ffffff;
     font-size: 13px;
     font-weight: 500;
     line-height: 50px;
@@ -3977,7 +4088,7 @@ h6 {
 
     .primary-btn:hover {
         background: #002347;
-        color: #fdc632;
+        color: #B2FFFF;
     }
 
 .primary-btn2 {
@@ -4002,6 +4113,32 @@ h6 {
 }
 
     .primary-btn2:hover {
+        background: #183a60;
+        color: #fdc632;
+        border: 1px solid #002347;
+    }
+.primary-btn3 {
+    display: inline-block;
+    background: #002347;
+    padding: 0px 48px;
+    color: #fdc632;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 30px;
+    border-radius: 15px !important;
+    border: 1px solid #002347;
+    outline: none !important;
+    text-align: center;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    margin: 5px 10px 5px 10px;
+}
+
+    .primary-btn3:hover {
         background: #183a60;
         color: #fdc632;
         border: 1px solid #002347;
@@ -4566,6 +4703,34 @@ h6 {
         text-align: left;
         margin-top: 20px;
     }
+}
+
+#imagenMiembro {
+    height: 100px;
+    width: 100px;
+    margin-top: 10px;
+    border-radius: 0px;
+}
+
+#filaDePersonas {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+#nombrePersona {
+    margin-top: 20px;
+}
+
+#botonParaPerfil {
+    flex: 1 0 21%;
+    margin: 5px;
+    height: 175px;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+#botonParaPerfil:hover {
+    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
 }
 
 /*---------------------------------------------------- */

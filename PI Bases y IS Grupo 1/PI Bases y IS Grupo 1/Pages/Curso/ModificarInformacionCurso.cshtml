@@ -1,0 +1,61 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.ModificarInformacionCursoModel
+@{
+    ViewData["Title"] = "ModificarInformacionCurso";
+    var informacionCurso = (Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>)ViewData["informacionCurso"];
+}
+
+<h2>Modificar la informacion del curso</h2>
+
+<div class="cursos-container">
+    @if (informacionCurso != null)
+    {
+
+            var curso = informacionCurso.Item1;
+            var educador = informacionCurso.Item2;
+            <div class="col-lg-4 right-contents">
+                <ul>
+                    <li>
+                        <a class="justify-content-between d-flex" href="#">
+                            <form method="post">
+                                <label asp-for="@curso.nombre">Curso</label>
+                                <input asp-for="@curso.nombre" />
+                                <br />
+                                <label asp-for="@curso.precio">Curso</label>
+                                <input asp-for="@curso.precio" />
+                                <p>Topicos</p>
+                                <br>
+                                @{
+                                    var topicos = "";
+
+                                    @foreach (var infoTopicos in informacionCurso.Item3)
+                                    {
+                                        topicos = topicos + " " + infoTopicos.Item1;
+
+
+                                    }
+                                }
+                                <span class="or"> @topicos </span>
+
+                                <input type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" />
+                            </form>
+                        </a>
+                    </li>
+                </ul>
+                <a asp-page="./CursoCreado" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
+
+            </div>
+        
+    }
+    else
+    {
+        <tr>
+            <td colspan="3" style=" color:red">
+                No se encontraron Coincidencias
+            </td>
+        </tr>
+
+    }
+    </br>
+</div>
+

@@ -1,0 +1,46 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.PagarCursoModel
+@{
+    ViewData["Title"] = "PagarCurso";
+    var nombre = (string)TempData["nombre"];
+    var primerApellido = (string)TempData["primerApellido"];
+    var segundoApellido = (string)TempData["segundoApellido"];
+    var email = (string)TempData["email"];
+    var genero = (string)TempData["genero"];
+    var nombreDeCurso = (string)TempData["nombreCurso"];
+    var mensaje = (string)TempData["mensaje"];
+ }
+
+ 
+  
+        <div class="col-lg-4 offset-lg-1">
+            <h2>Pagar Curso</h2>
+            <form class="form_area"
+                  id="myForm"
+                  method="post"
+                  enctype="multipart/form-data">
+                @if (@mensaje != null)
+                {
+                    if ((bool)TempData["exitoAlEditar"])
+                    {
+                        <div class="alert-success">
+
+                            <h3> @mensaje </h3>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="alert-danger">
+
+                            <h3> @mensaje </h3>
+                        </div>
+                    }
+                }
+                <strong>Subir comprobante de Pago:</strong> <input asp-for="@Model.comprobante" type="file" class="btn btn alert-info" /></br></br>
+
+                <button class="primary-btn" asp-route-nombre="@nombre" asp-route-primerApellido="@primerApellido" asp-route-segundoApellido="@segundoApellido" asp-route-email="@email" asp-route-genero="@genero" asp-route-nombreCurso="@nombreDeCurso" asp-route-esMiembro="@ViewData["esMiembro"]" asp-page-handler="AñadirEstudiante">Inscribirme</button>
+
+            </form>
+            </div>
+      
+                 

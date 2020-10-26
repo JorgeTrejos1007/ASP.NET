@@ -13,8 +13,9 @@ namespace PIBasesISGrupo1.Models
         [Required(ErrorMessage = "Es necesario que ingreses el nombre de la encuesta")]
         public string nombreEncuesta { get; set; }
 
-        [Required(ErrorMessage = "Es necesario que ingreses el autor de la encuesta")]
-        public string autor { get; set; }
+        
+        [RegularExpression(@"^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese un correo valido")]
+        public string correo { get; set; }
 
    
         [Required(ErrorMessage = "Es necesario que ingreses el topico de la encuesta")]

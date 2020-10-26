@@ -1,0 +1,98 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.CrearSeccionModel
+@{
+    ViewData["Title"] = "CrearSeccion";
+    var nombreCursoTemp = (string)TempData["nombreCurso"];
+    var nombreCursoView = (string)ViewData["nombreCurso"];
+    var seccionCreada = (bool)ViewData["seccionCreada"];
+    var nombreSeccion = (string)ViewData["nombreSeccion"];
+    var listaMateriales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["listaMateriales"];
+    var nombrePaginaCurso = (string)ViewData["nombrePaginaCurso"];
+    var mensajeError = (string)ViewData["mensajeError"];
+}
+
+
+@{
+    if (seccionCreada == false)
+    {
+        <h2>Crear Seccion</h2>
+        <div class="curso-material">
+            <form method="post">
+                <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
+                @if (mensajeError != "")
+                {
+                 <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>            
+                }
+                <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
+                <input asp-for="@Model.seccion.nombreSeccion" />
+                <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />
+
+                <input type="submit" value="Crear seccion" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="CrearSeccion" />
+            </form>
+            <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
+
+        </div>
+    }
+    else
+    {
+        <h2>Agregando material a: @nombreSeccion </h2>
+        <div class="curso-material">
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
+                <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />
+                <span asp-validation-for="@Model.material.nombreMaterial" class="text-danger"></span><br />
+                <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
+                <input asp-for="@Model.material.nombreMaterial" /><br />
+                <span asp-validation-for="@Model.archivo" class="text-danger"></span><br />
+                <label asp-for="@Model.archivo">Seleccione el material que desea agregar</label>
+
+                <input asp-for="@Model.archivo" type="file" /><br />
+                <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn__reverse text-uppercase enroll rounded-0" />
+            </form>
+
+            @{
+                if (listaMateriales != null)
+                {
+
+                    <br />
+                    <button class="accordion">@nombreSeccion</button>
+                    <div class="panel">
+                        @{ foreach (var material in listaMateriales)
+                            {
+                                <p>
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                        <span class="or">@material.nombreMaterial</span>
+                                    </a>
+                                </p>
+                            }
+                        }
+                    </div>
+
+                }
+            }
+
+            <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0">Terminar de agregar material</a> <br>
+        </div>
+    }
+}
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>
+
+@section scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

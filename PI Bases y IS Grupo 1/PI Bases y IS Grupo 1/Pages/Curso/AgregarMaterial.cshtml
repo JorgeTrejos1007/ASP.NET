@@ -1,0 +1,24 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.AgregarMaterialModel
+@{
+    ViewData["Title"] = "AgregarMaterial";
+    var nombreCurso = (String)ViewData["nombreCurso"];
+    var nombreSeccion = (String)ViewData["nombreSeccion"];
+}
+
+
+<h2>Agregando material a: @nombreSeccion </h2>
+<div class="curso-material">
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
+        <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCurso" />
+        <span asp-validation-for="@Model.material.nombreMaterial" class="text-danger"></span><br />
+        <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
+        <input asp-for="@Model.material.nombreMaterial" /><br />
+        <span asp-validation-for="@Model.archivo" class="text-danger"></span><br />
+        <label asp-for="@Model.archivo">Seleccione el material que desea agregar</label>
+
+        <input asp-for="@Model.archivo" type="file" /><br />
+        <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn__reverse text-uppercase enroll rounded-0" />
+    </form>
+</div>

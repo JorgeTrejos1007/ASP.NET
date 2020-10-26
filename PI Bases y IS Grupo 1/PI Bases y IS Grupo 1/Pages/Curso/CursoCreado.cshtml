@@ -1,0 +1,70 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.CursoCreadoModel
+@{
+    ViewData["Title"] = "CursoCreado";
+    var nombreCurso = (String)ViewData["nombreCurso"];
+}
+
+
+<div class="curso-material">
+    <h2 style="display:inline-block;">@nombreCurso</h2>
+    <a asp-page="./CursosCreados" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
+    <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="primary-btn__reverse text-uppercase enroll rounded-0">Crear seccion</a> <br>
+    <a asp-page="./ModificarInformacionCurso" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">Modificar la informacion del curso</a> <br>
+    <!--<a href="data:curso.tipoDocInformativo;base64,(Convert.ToBase64String(curso.byteArrayDocument))" download="curso.nombre .pdf">
+        <span class="or">Descargar documento descriptivo del curso</span>
+    </a>-->
+</div>
+@{
+    if (@Model.Secciones != null)
+    {
+        foreach (var item in @Model.Secciones)
+        {
+            <br />
+            <button class="accordion">@item.nombreSeccion</button>
+
+            <div class="panel">
+
+                @{ foreach (var material in item.listaMateriales)
+                    {
+                        <p>
+                            <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                <span class="or">@material.nombreMaterial</span>
+                            </a>
+                            <br>
+                        </p>
+                    }
+                }
+                <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">Editar</a>
+
+            </div>
+
+        }
+    }
+}
+
+<div>
+    <hr>
+    <h4>Comparte tu participación en este curso en redes sociales</h4>
+    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" 
+     data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:" 
+     data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
+</script>

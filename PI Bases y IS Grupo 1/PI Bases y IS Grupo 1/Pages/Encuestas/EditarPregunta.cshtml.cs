@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Encuestas
 {
+    [PermisosDeVista("Miembro de Nucleo", "Coordinador")]
     public class EditarPreguntaModel : PageModel
     {
         [BindProperty]

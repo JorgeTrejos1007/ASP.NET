@@ -27,6 +27,8 @@ namespace PIBasesISGrupo1.Models
         [Required(ErrorMessage = "Es necesario que el curso tenga un precio asignado")]
         [RegularExpression(@"^\d+$", ErrorMessage = "Por favor ingrese solo digitos validos. Ejemplo: 99 ")]
         public double precio {get; set;}
+
+        public string version {get; set;}
   
         [Required(ErrorMessage = "Es necesario que ingreses el email")]
         [Display(Name = "Ingrese el documento descriptivo del Curso")]
@@ -36,7 +38,7 @@ namespace PIBasesISGrupo1.Models
         public string emailDelMiembroDeNucleo { get; set; }
 
         public string tipoDocInformativo { get; set; }
-        //public  List<Materiales> { get; set; }
+        
 
     }
 }
