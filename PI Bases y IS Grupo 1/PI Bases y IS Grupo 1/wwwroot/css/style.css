@@ -24,6 +24,10 @@ theme.
 /*---------------------------------------------------- */
 /*----------------------------------------------------*/
 
+.login-background-student {
+    background-image: url("~/img/login-estudiante.jpg");
+}
+
 .center-element {
 align-content:center;
 }
