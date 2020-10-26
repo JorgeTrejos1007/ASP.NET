@@ -1,1 +1,0 @@
-﻿UPDATE Curso SET estado='No aprobado' WHERE estado='Aprobado'
