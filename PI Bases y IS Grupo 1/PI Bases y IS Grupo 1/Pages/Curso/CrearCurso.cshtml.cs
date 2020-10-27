@@ -28,7 +28,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
             catch
             {
-                return RedirectToPage("CursosAprobados");
+                return RedirectToPage("MisCursosPropuestos");
             }
       
         }
@@ -38,7 +38,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             CursoHandler accesoDatos = new CursoHandler();
             bool exito = accesoDatos.crearCurso(nombreCurso);
 
-            return RedirectToPage("CursosAprobados");
+            return RedirectToPage("MisCursosPropuestos");
         }
 
     }
