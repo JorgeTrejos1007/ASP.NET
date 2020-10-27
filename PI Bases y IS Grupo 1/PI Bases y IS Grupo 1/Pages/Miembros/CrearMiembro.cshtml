@@ -96,7 +96,7 @@
                                 <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
                                 <label asp-for="@Model.miembro.genero">Femenino</label>
                                 <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
-                                <label asp-for="@Model.miembro.genero">Masculino</label>
+                                <label asp-for="@Model.miembro.genero">Masculino </label>
                                 <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
                                 <label asp-for="@Model.miembro.genero">Otro</label><br>
                             }
@@ -129,16 +129,16 @@
                             <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
                             <input asp-for="@Model.miembro.segundoApellido" placeholder="Segundo Apellido" class="single-input" />
                         </div>
-                        <div class="mt-10">
+                        <div class="mt-10  ">
                             <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
                             <input asp-for="@Model.miembro.email" placeholder="Email" type="email" class="single-input" />
                         </div>
                         <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
 
-                        <div class="mt-10  single-input">
-                            <input type="radio" asp-for="@Model.miembro.genero" value="Femenino " /> Femenino
-                            <input type="radio" asp-for="@Model.miembro.genero" value=" Masculino " /> Masculino
-                            <input type="radio" asp-for="@Model.miembro.genero" value=" Otro" /> Otro
+                        <div class="card-columns single-input">
+                            <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" /> Femenino<br />
+                            <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" /> Masculino<br />
+                            <input type="radio" asp-for="@Model.miembro.genero" value="Otro" /> Otro
                         </div>
                     }
 
@@ -171,7 +171,8 @@
                     <div id="info"></div>
                 </div>
                 <div class=" input-group mt-10">
-                    <select class="  idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
+                    <span asp-validation-for="@Model.miembro.idiomas" class="text-danger"></span>
+                    <select class="  idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length" required>
                         @foreach (var idioma in idiomas)
                         {
 
@@ -182,7 +183,8 @@
                     </select>
                 </div>
                 <div class="mt-10">
-                    <select style="border-radius: 0" class="habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
+                    <span asp-validation-for="@Model.miembro.habilidades" class="text-danger"></span>
+                    <select style="border-radius: 0" class="habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length" required>
                         @foreach (var habilidad in habilidades)
                         {
 
