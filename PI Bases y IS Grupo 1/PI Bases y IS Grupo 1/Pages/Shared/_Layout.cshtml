@@ -1,4 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using PIBasesISGrupo1.Models
+@{
+    var miembroEnSesion = Context.Session.obtenerDatosDeSesion("Miembro");
+    var estudianteEnSesion = Context.Session.obtenerDatosDeSesion("Miembro");
+} 
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,17 +71,21 @@
                                 <ul class="dropdown-menu">
 
                                     @{
-                                        if (Context.Session.GetString("Miembro") != null)
+
+                                        if (miembroEnSesion != null)
                                         {
 
                                             <li class="nav-item">
                                                 <a class="nav-link" href="/Curso/ProponerCurso">Proponer curso</a>
                                             </li>
 
+                                            if (miembroEnSesion.tipoDeUsuario == "Miembro de Nucleo")
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/Curso/AprobarCurso">Cursos Propuestos</a>
+                                                </li>
 
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/Curso/AprobarCurso">Cursos Propuestos</a>
-                                            </li>
+                                            }
 
                                             <li class="nav-item">
                                                 <a class="nav-link" href="/Curso/MisCursosPropuestos">Mis Cursos Propuestos</a>
@@ -86,7 +95,7 @@
                                             </li>
 
                                         }
-                                        if (Context.Session.GetString("Estudiante") != null || Context.Session.GetString("Miembro") != null)
+                                        if (estudianteEnSesion != null || miembroEnSesion != null)
                                         {
 
                                             <li class="nav-item">
@@ -109,7 +118,7 @@
                             @{
 
 
-                                if (Context.Session.GetString("Miembro") != null)
+                                if (miembroEnSesion != null)
                                 {
 
 
@@ -117,9 +126,15 @@
                                         <a class="nav-link" href="/Catalogos/EditarCatalogo">Catalago</a>
                                     </li>
 
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
-                                    </li>
+                                    if (miembroEnSesion.tipoDeUsuario == "Miembro de Nucleo")
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
+                                        </li>
+
+                                    }
+
+
 
                                     <li class="nav-item">
 
@@ -127,7 +142,7 @@
                                         <a class="nav-link" href="/Logout/Logout">Cerrar sesion</a>
                                     </li>
                                 }
-                                else if (Context.Session.GetString("Estudiante") != null)
+                                else if (estudianteEnSesion != null)
                                 {
                                     <li class="nav-item">
                                         <a class="nav-link" href="/Logout/Logout">Cerrar sesion</a>
@@ -159,8 +174,6 @@
                                         <a class="nav-link" href="/Miembros/CrearMiembro">Registrarme</a>
                                     </li>
                                 }
-
-
                             }
 
 
@@ -203,6 +216,10 @@
     </environment>
     <environment exclude="Development">
     </environment>
+
+    <script src="~/js/ventanaModal.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/ventanaModal.css" />
+
 
     <script src="~/css/select2.min.css"></script>
     <script src="~/js/select2.min.js"></script>

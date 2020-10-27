@@ -50,10 +50,10 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return exito;
         }
-        public List<EncuestaModel> obtenerEncuestas()
+        public List<EncuestaModel> obtenerEncuestas(string emailMiembroDeNucleo)
         {
             List<EncuestaModel> encuestas = new List<EncuestaModel>();
-            string consulta = "SELECT * FROM Encuesta";
+            string consulta = "SELECT * FROM Encuesta WHERE emailMiembroDeNucleoFK ='"+emailMiembroDeNucleo+"';";
             DataTable tablaResultado = crearTablaConsulta(consulta);
             foreach (DataRow columna in tablaResultado.Rows)
             {

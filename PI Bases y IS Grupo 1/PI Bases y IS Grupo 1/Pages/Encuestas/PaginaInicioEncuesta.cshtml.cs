@@ -20,12 +20,35 @@ namespace PIBasesISGrupo1.Pages.Encuestas
         public List<EncuestaModel> Encuesta { get; set; }
         public void OnGet()
         {
-            EncuestasHandler accesoDatos = new EncuestasHandler();
-            ViewData["Encuestas"] = accesoDatos.obtenerEncuestas();
+            var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+             EncuestasHandler accesoDatos = new EncuestasHandler();
+            ViewData["Encuestas"] = accesoDatos.obtenerEncuestas(miembroEnSesion.email);
         }
 
-         public IActionResult OnPostCompartir(int id)        {
-                                    EncuestasHandler accesoDatos = new EncuestasHandler();                List<string> miembrosEmail = accesoDatos.obtenerTodosLosEmails();                EncuestaModel encuesta = accesoDatos.obtenerTuplaEncuesta(id);                MailMessage mail = new MailMessage();                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");                string url = "https://localhost:44326/Encuestas/RespuestasEncuesta/ResponderEncuesta?idEnc="+ id.ToString()+"&indexPregunta=0";                mail.From = new MailAddress("comunidad.practica.g1@gmail.com");                foreach (var email in miembrosEmail)                {                    mail.To.Add(email);                }                mail.Subject = "Encuesta disponible: " + encuesta.nombreEncuesta;                mail.Body = "Hola te invitamos a responder la siguiente encuesta " + url                +", tiene una vigencia de "+encuesta.vigencia+" dias";                SmtpServer.Port = 587;                SmtpServer.Credentials = new System.Net.NetworkCredential("comunidad.practica.g1@gmail.com", "AdriancitoG1.");                SmtpServer.EnableSsl = true;                SmtpServer.Send(mail);                   return RedirectToAction("~/Encuestas/PaginaInicioEncuesta");
+         public IActionResult OnPostCompartir(int id)
+        {
+            
+        
+                EncuestasHandler accesoDatos = new EncuestasHandler();
+                List<string> miembrosEmail = accesoDatos.obtenerTodosLosEmails();
+                EncuestaModel encuesta = accesoDatos.obtenerTuplaEncuesta(id);
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                string url = "https://localhost:44326/Encuestas/RespuestasEncuesta/ResponderEncuesta?idEnc="+ id.ToString()+"&indexPregunta=0";
+                mail.From = new MailAddress("comunidad.practica.g1@gmail.com");
+                foreach (var email in miembrosEmail)
+                {
+                    mail.To.Add(email);
+                }
+                mail.Subject = "Encuesta disponible: " + encuesta.nombreEncuesta;
+                mail.Body = "Hola te invitamos a responder la siguiente encuesta " + url
+                +", tiene una vigencia de "+encuesta.vigencia+" dias";
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("comunidad.practica.g1@gmail.com", "AdriancitoG1.");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+      
+             return RedirectToAction("~/Encuestas/PaginaInicioEncuesta");
 
         }
 
@@ -43,45 +66,34 @@ namespace PIBasesISGrupo1.Pages.Encuestas
             int filaPregunta = 1;
             int columnaPregunta= 1;
 
-            hojaDeRespuestas.Cell(1, 1).Value = "Nombre";
-
-            foreach (var pregunta in listaPreguntas) {
+            foreach (var pregunta in listaPreguntas) {   
+                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;
                 columnaPregunta++;
-                hojaDeRespuestas.Cell(filaPregunta, columnaPregunta).Value = pregunta.pregunta;              
             }
 
             int filaRespuesta = 2;
-            columnaPregunta = 1;
+            columnaPregunta = 0;
             string preguntaActual = " ";
-            int filaNombres = 1;
 
             foreach (var respuestaEncuestado in respuestasDeEncuestados)
             {
                 if (preguntaActual == respuestaEncuestado.pregunta)
                 {
                     filaRespuesta = filaRespuesta + 1;
-                    hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
                 }
                 else
                 {
                     preguntaActual = respuestaEncuestado.pregunta;
                     filaRespuesta = 2;
                     columnaPregunta = columnaPregunta + 1;
-                    hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
+                    
                 }
-
-                filaNombres = filaNombres + 1;
-
-                if (columnaPregunta == 2)
-                {
-                    hojaDeRespuestas.Cell(filaNombres, 1).Value = respuestaEncuestado.correoEncuestado;
-                }           
+                hojaDeRespuestas.Cell(filaRespuesta, columnaPregunta).Value = respuestaEncuestado.respuesta;
             }
 
             var datosEnMemoria = new MemoryStream();
             registroDeRespuestas.SaveAs(datosEnMemoria);
             var contenido = datosEnMemoria.ToArray();
-
             return File(contenido, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Respuestas.xlsx");
         }
 
