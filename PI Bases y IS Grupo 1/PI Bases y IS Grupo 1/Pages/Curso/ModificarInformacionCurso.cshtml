@@ -3,59 +3,88 @@
 @{
     ViewData["Title"] = "ModificarInformacionCurso";
     var informacionCurso = (Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>)ViewData["informacionCurso"];
+    var topicosYCategorias = (List<Tuple<string, string>>)ViewData["TopicosYCategorias"];
+    var nombreCurso= (string)ViewData["nombreCurso"];
 }
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-<h2>Modificar la informacion del curso</h2>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
 
-<div class="cursos-container">
-    @if (informacionCurso != null)
-    {
+<div style="margin-left:200px; margin-right:200px;">
+    <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
+        <div style=" margin-left:27%; margin-bottom: 15px; margin-top:10px;">
+            <h2><strong>Editando la informacion del curso</strong></h2>
+        </div>
+    </div>
 
-            var curso = informacionCurso.Item1;
+
+    <div class="editarCursos-container">
+        @if (informacionCurso != null)
+        {
+
+            Model.curso = informacionCurso.Item1;
             var educador = informacionCurso.Item2;
-            <div class="col-lg-4 right-contents">
-                <ul>
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <form method="post">
-                                <label asp-for="@curso.nombre">Curso</label>
-                                <input asp-for="@curso.nombre" />
-                                <br />
-                                <label asp-for="@curso.precio">Curso</label>
-                                <input asp-for="@curso.precio" />
-                                <p>Topicos</p>
-                                <br>
-                                @{
-                                    var topicos = "";
-
-                                    @foreach (var infoTopicos in informacionCurso.Item3)
-                                    {
-                                        topicos = topicos + " " + infoTopicos.Item1;
-
-
-                                    }
-                                }
-                                <span class="or"> @topicos </span>
-
-                                <input type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" />
-                            </form>
-                        </a>
-                    </li>
-                </ul>
-                <a asp-page="./CursoCreado" asp-route-nombreCurso="@curso.nombre" class="primary-btn2 text-uppercase enroll rounded-0">Volver</a>
-
+                        
+        <form method="post">
+            <div style="display:flex; flex-direction:row; margin-left:20%; margin-top:15px; ">
+                <div style="margin-right:5px; font-size:19px;">
+                    <label asp-for="@Model.curso.nombre">Nombre del curso</label>
+                    <input asp-for="@Model.curso.nombre" />
+                </div>
+                <div style="margin-right:5px; font-size:19px;">
+                    <label asp-for="@Model.curso.precio">Precio</label>
+                    <input asp-for="@Model.curso.precio" />
+                </div>
             </div>
-        
-    }
-    else
-    {
-        <tr>
-            <td colspan="3" style=" color:red">
-                No se encontraron Coincidencias
-            </td>
-        </tr>
+            
+           
+            <div style="display:flex; margin-left:20%;margin-top:20px;">
+                <label asp-for="@Model.curso.nombre" style="color:#032c56; margin-right:5px; font-size:19px;">Tópicos:</label>
+                <select style="width: 390px;" class="mul-select" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
+                    @foreach (var topicoYCategoria in informacionCurso.Item3)
+                    {
+                        <option value="@topicoYCategoria.Item1" selected="selected">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
+                    }
 
-    }
-    </br>
-</div>
+                    @foreach (var topicoYCategoria in topicosYCategorias)
+                    {
 
+                        <option value="@topicoYCategoria.Item1">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
+
+                        <br>
+                    }
+
+                </select>
+            </div>
+            <br>
+            <div style="margin-left:86%;">
+                <button type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" class="btn btn-info">
+                    <span class="glyphicon glyphicon-ok"></span> Guardar cambios
+                </button>
+            </div>
+        </form>
+
+        }
+        else
+        {
+            <tr>
+                <td colspan="3" style=" color:red">
+                    No se encontraron Coincidencias
+                </td>
+            </tr>
+
+        }
+        </br>
+    </div>
+    <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
+        <div style="margin-left:92%">
+            <a asp-page="./CursoCreado" asp-route-nombreCurso="@nombreCurso" class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left"></span> Volver
+            </a> <br>
+        </div>
+    </div>
+
+    </div>

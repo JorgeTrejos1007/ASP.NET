@@ -10,89 +10,136 @@
     var nombrePaginaCurso = (string)ViewData["nombrePaginaCurso"];
     var mensajeError = (string)ViewData["mensajeError"];
 }
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<div style="margin-left:200px; margin-right:200px;">
+    @{
+        if (seccionCreada == false)
+        {
+            <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
+                <div style=" margin-left:23%; margin-bottom: 20px;">
+                    <h2><strong>Creando Seccion en: @nombreCursoTemp</strong></h2>
+                </div>
+            </div>
 
-
-@{
-    if (seccionCreada == false)
-    {
-        <h2>Crear Seccion</h2>
-        <div class="curso-material">
-            <form method="post">
-                <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
-                @if (mensajeError != "")
-                {
-                 <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>            
-                }
-                <label asp-for="@Model.seccion.nombreSeccion">Ingrese el nombre de la seccion:</label>
-                <input asp-for="@Model.seccion.nombreSeccion" />
-                <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />
-
-                <input type="submit" value="Crear seccion" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="CrearSeccion" />
-            </form>
-            <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0">Volver</a> <br>
-
-        </div>
-    }
-    else
-    {
-        <h2>Agregando material a: @nombreSeccion </h2>
-        <div class="curso-material">
-            <form method="post" enctype="multipart/form-data">
-                <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
-                <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />
-                <span asp-validation-for="@Model.material.nombreMaterial" class="text-danger"></span><br />
-                <label asp-for="@Model.material.nombreMaterial">Ingrese el nombre del material:</label>
-                <input asp-for="@Model.material.nombreMaterial" /><br />
-                <span asp-validation-for="@Model.archivo" class="text-danger"></span><br />
-                <label asp-for="@Model.archivo">Seleccione el material que desea agregar</label>
-
-                <input asp-for="@Model.archivo" type="file" /><br />
-                <input type="submit" value="Añadir Material" asp-page-handler="AgregarMaterial" class="primary-btn__reverse text-uppercase enroll rounded-0" />
-            </form>
-
-            @{
-                if (listaMateriales != null)
-                {
-
-                    <br />
-                    <button class="accordion">@nombreSeccion</button>
-                    <div class="panel">
-                        @{ foreach (var material in listaMateriales)
-                            {
-                                <p>
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                        <span class="or">@material.nombreMaterial</span>
-                                    </a>
-                                </p>
-                            }
+            <div class="curso-material">
+                <div style="display:inline-block ; margin-bottom:20px; margin-left:18%;">
+                    <form method="post" style="display:inline-block">
+                        <span asp-validation-for="@Model.seccion.nombreSeccion" class="text-danger"></span><br />
+                        @if (mensajeError != "")
+                        {
+                            <span style="display:block;color:red"> @Html.DisplayFor(modelItem => mensajeError)</span>
                         }
-                    </div>
+                        <label asp-for="@Model.seccion.nombreSeccion" style="font-size:18px">Ingrese el nombre de la seccion:</label>
+                        <input asp-for="@Model.seccion.nombreSeccion" />
+                        <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />
 
+                        <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="CrearSeccion">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Crear seccion
+                        </button>
+                    </form>
+
+
+                </div>
+
+            </div>
+            <div style="margin-left:83%">
+                <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0">
+                    <span class="glyphicon glyphicon-arrow-left"></span> Volver
+                </a> <br>
+            </div>
+        }
+        else
+        {
+            <div class="curso-material" style=" margin-bottom: 20px;">
+                <div style=" margin-bottom: 10px;margin-left:10px; ">
+                    <h2><strong>Agregando material a: @nombreSeccion</strong></h2>
+                </div>
+            </div>
+
+            <div class="curso-material">
+                <div style="display:inline-block ; margin-bottom:20px; margin-left:10%;">
+                    <form method="post" enctype="multipart/form-data" style="display:inline-block;margin-top:20px;">
+                        <div style="display:inline-flex;  margin-top: 10px; margin-bottom:10px;">
+                            <input type="hidden" asp-for="@Model.material.nombreDeSeccion" value="@nombreSeccion" />
+                            <input type="hidden" asp-for="@Model.material.nombreDeCurso" value="@nombreCursoView" />
+
+                            <span asp-validation-for="@Model.material.nombreMaterial" class="text-danger"></span><br />
+                            <label asp-for="@Model.material.nombreMaterial" style="font-size:18px;">Ingrese el nombre del material:</label>
+                            <input asp-for="@Model.material.nombreMaterial" />
+                            <span asp-validation-for="@Model.archivo" class="text-danger"></span><br />
+                            <input asp-for="@Model.archivo" type="file" style="margin-left:5px;" />
+                        </div>
+
+
+                        <button style="margin-bottom:10px;" type="submit" asp-page-handler="AgregarMaterial" class="primary-btn__reverse text-uppercase enroll rounded-0">
+                            <span class="glyphicon glyphicon-plus-sign"></span> Añadir
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+            <div style="margin-bottom:15px;">
+
+                <div style=" margin-bottom: 10px;margin-left:10px; ">
+                    <h4 style="color:#032c56;"><strong>Vista previa:</strong></h4>
+                </div>
+
+
+                @{
+                    if (listaMateriales != null)
+                    {
+
+                        <br />
+                        <button class="accordion">@nombreSeccion</button>
+                        <div class="panel">
+                            @{ foreach (var material in listaMateriales)
+                                {
+                                    <p>
+                                        <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                            <span class="or">@material.nombreMaterial</span>
+                                        </a>
+                                    </p>
+                                }
+                            }
+                        </div>
+
+                    }
                 }
-            }
 
-            <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0">Terminar de agregar material</a> <br>
-        </div>
+
+
+
+            </div>
+            <div style="margin-left:81%">
+                <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0">
+                    <span class="glyphicon glyphicon-ok"></span> Terminar
+                </a> <br>
+            </div>
+        }
     }
-}
+</div>
+    <script>
+        var acc = document.getElementsByClassName("accordion");
+        var i;
 
-<script>
-    var acc = document.getElementsByClassName("accordion");
-    var i;
+        for (i = 0; i < acc.length; i++) {
+            acc[i].addEventListener("click", function () {
+                this.classList.toggle("active");
+                var panel = this.nextElementSibling;
+                if (panel.style.display === "block") {
+                    panel.style.display = "none";
+                } else {
+                    panel.style.display = "block";
+                }
+            });
+        }
+    </script>
 
-    for (i = 0; i < acc.length; i++) {
-        acc[i].addEventListener("click", function () {
-            this.classList.toggle("active");
-            var panel = this.nextElementSibling;
-            if (panel.style.display === "block") {
-                panel.style.display = "none";
-            } else {
-                panel.style.display = "block";
-            }
-        });
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
     }
-</script>
-
-@section scripts{
-    <partial name="_ValidationScriptsPartial" />
-}

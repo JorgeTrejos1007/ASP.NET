@@ -479,9 +479,41 @@ namespace PIBasesISGrupo1.Handler
             return cursos;
 
         }
+        public bool actualizarInfoCurso(Cursos curso ,string antiguaNombreCurso)
+        {
+            string consulta = "UPDATE Curso SET nombrePK=@nuevoNombreCurso, precio=@nuevoPrecio WHERE nombrePK=@antiguaNombreCurso";
 
 
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nuevoNombreCurso", curso.nombre);
+            comandoParaConsulta.Parameters.AddWithValue("@nuevoPrecio", curso.precio);
+            comandoParaConsulta.Parameters.AddWithValue("@antiguaNombreCurso", antiguaNombreCurso);
+            conexion.Open();
+            bool exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            if (curso.topicos.Length > 0)
+            {
+                exito = borrarTopicos(curso.nombre);
+                exito = insertarRelacionConTopico(curso);
+            }
+            conexion.Close();
+            return exito;
+        }
 
+        public bool borrarTopicos(string nombreCurso)
+        {
+            bool exito = false;
+            string consultaATablaContiene = "DELETE FROM Contiene WHERE nombreCursoFK=@nombreCurso ";
+            
+            SqlCommand comandoParaConsulta = new SqlCommand(consultaATablaContiene, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+               
+            exito = comandoParaConsulta.ExecuteNonQuery() >= 1;
+            
+            return exito;
+
+        }
 
     }
 }
