@@ -46,181 +46,134 @@
         }
                 <div class="col-lg-8 col-md-8">
                     <h3 class="mb-30 title_color">Registrarme</h3>
-
-                    <div class="mt-10">
-                        <input type="text" name="first_name" placeholder="First Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'First Name'"
-                               required class="single-input">
-                    </div>
-                    <div class="mt-10">
-                        <input type="text" name="last_name" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'"
-                               required class="single-input">
-                    </div>
-                    <div class="mt-10">
-                        <input type="text" name="last_name" placeholder="Last Name" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Last Name'"
-                               required class="single-input">
-                    </div>
-                    <div class="mt-10">
-                        <input type="email" name="EMAIL" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'"
-                               required class="single-input">
-                    </div>
-                    <div class="input-group-icon mt-10">
-                        <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
-                        <input type="text" name="address" placeholder="Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'"
-                               required class="single-input">
-                    </div>
-                    <div class="input-group-icon mt-10">
-                        <div class="icon"><i class="ti-location-arrow" aria-hidden="true"></i></div>
-                        <div class="form-select" id="default-select">
-                            <select>
-                                <option value="1">City</option>
-                                <option value="1">Dhaka</option>
-                                <option value="1">Dilli</option>
-                                <option value="1">Newyork</option>
-                                <option value="1">Islamabad</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="input-group-icon mt-10">
-                        <div class="icon"><i class="ti-map" aria-hidden="true"></i></div>
-                        <div class="form-select" id="default-select2">
-                            <select>
-                                <option value="1">Country</option>
-                                <option value="1">Bangladesh</option>
-                                <option value="1">India</option>
-                                <option value="1">England</option>
-                                <option value="1">Srilanka</option>
-                            </select>
-                        </div>
-                    </div>
-                     @{
+                    @{
                         if (esEstudiante)
                         {
-                            <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span><br>
-                            <input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly /><br /><br />
-                            <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span><br />
-                            <input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly /><br /><br />
-                            <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span><br />
-                            <input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly /><br /><br />
-                            <span asp-validation-for="@Model.miembro.email" class="text-danger"></span><br />
-                            <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly /><br>
-                            <br>
-                            <div>
-                                @if (estudiante.genero == "Femenino")
-                                {
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
-                                    <label asp-for="@Model.miembro.genero">Femenino</label>
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
-                                    <label asp-for="@Model.miembro.genero">Masculino</label>
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
-                                    <label asp-for="@Model.miembro.genero">Otro</label><br>
-                                }
-                                else if (estudiante.genero == "Masculino")
-                                {
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
-                                    <label asp-for="@Model.miembro.genero">Femenino</label>
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
-                                    <label asp-for="@Model.miembro.genero">Masculino</label>
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
-                                    <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly class="single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly class="single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly class="single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly class="single-input-primary" />
+                                </div>
+                                <div>
+                                    @if (estudiante.genero == "Femenino")
+                                    {
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
+                                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                    }
+                                    else if (estudiante.genero == "Masculino")
+                                    {
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
+                                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                    }
+                                    else
+                                    {
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                                        <label asp-for="@Model.miembro.genero">Femenino</label>
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                                        <label asp-for="@Model.miembro.genero">Masculino</label>
+                                        <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
+                                        <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                    }
+                                </div>
+
+
                                 }
                                 else
                                 {
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
-                                    <label asp-for="@Model.miembro.genero">Femenino</label>
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
-                                    <label asp-for="@Model.miembro.genero">Masculino</label>
-                                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
-                                    <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.nombre" placeholder="Nombre" class="single-input-primary" />
+                                </div>
+
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.primerApellido" placeholder="Primer Apellido" class="single-input-primary" />
+
+                                </div>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.segundoApellido" placeholder="Segundo Apellido" class="single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.email" placeholder="Email" type="email" class="single-input-primary" />
+                                </div>
+                                <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+
+                                <div class="mt-10">
+                                    <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" /> Femenino
+                                    <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" /> Masculino
+                                    <input type="radio" asp-for="@Model.miembro.genero" value="Otro" /> Otro
+                                </div>
                                 }
+
+
+
+
+
+
+                                }
+                                <div class="input-group-icon mt-10">
+                                    <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
+                                    <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
+                                    <input asp-for="@Model.miembro.pais" placeholder="Pais"
+                                           required class="single-input">
+                                </div>
+
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.hobbies" placeholder="Hobbies" class="single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
+                                    <input asp-for="@Model.miembro.password" placeholder="Contraseña" type="password" class="single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <input asp-for="@Model.archivoImagen" type="file" spaceholder="Subir foto" class=" single-input-primary" />
+                                </div>
+                                <div class="mt-10">
+                                    <select class="idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
+                                        @foreach (var idioma in idiomas)
+                                        {
+
+                                            <option value="@idioma">@idioma </option>
+
+                                            <br>
+                                        }
+                                    </select>
+                                </div>
+
+                                <select class="mt-10 habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
+                                    @foreach (var habilidad in habilidades)
+                                    {
+
+                                        <option value="@habilidad">@habilidad</option>
+
+                                        <br>
+                                    }
+                                </select></br>
+                                <input type="submit" asp-route-esEstudiante="@esEstudiante" value="Registrar" class="primary-btn" />
                             </div>
-
-
-                        }
-                        else
-                        {
-                            <div class="mt-10">
-                                <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
-                                <br>
-                                <input asp-for="@Model.miembro.nombre" placeholder="Nombre" class="single-input-primary" />
-                            </div>
-
-                            <div class="mt-10">
-                                <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
-                                <br>
-                                <input asp-for="@Model.miembro.primerApellido" placeholder="Primer Apellido" class="single-input-primary" />
-
-                            </div>
-                            <div class="mt-10">
-                                <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
-                                <br>
-                                <input asp-for="@Model.miembro.segundoApellido" placeholder="Segundo Apellido" class="single-input-primary" />
-                            </div>
-                            <div class="mt-10">
-                                <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
-                                <br />
-                                <input asp-for="@Model.miembro.email" placeholder="Email" type="email" class="single-input-primary" />
-                            </div>
-                            <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
-                            <br>
-                            <div class="mt-10">
-                                <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" />Femenino
-                                <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" />Masculino
-                                <input type="radio" asp-for="@Model.miembro.genero" value="Otro" />Otro
-                            </div>
-                        }
-
-
-
-
-
-
-                    }
-                            <div class="input-group-icon mt-10">
-                                <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
-                                <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
-                                <input asp-for="@Model.miembro.pais"   placeholder="Pais" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Address'"
-                                       required class="single-input">
-                            </div>
-                    <div class="input-group-icon mt-10">
-                        <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
-                        <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
-                        <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
-                        <input asp-for="@Model.miembro.pais" placeholder="Pais" class="form-select" id="default-select2" />
-                    </div>
-                    <div>
-                        <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
-                        </br>
-                        <strong>Hobbies:</strong> <input asp-for="@Model.miembro.hobbies" />
-                    </div>
-                    <div>
-                        <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
-                        </br>
-                        <strong>Contraseña:</strong> <input asp-for="@Model.miembro.password" , type="password" />
-                    </div>
-                    </br>
-                    <strong>Subir foto:</strong> <input asp-for="@Model.archivoImagen" type="file" class="btn btn alert-info" />
-                    </br>
-                    <strong>Idiomas:</strong><select class="mul-select" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length">
-                        @foreach (var idioma in idiomas)
-                        {
-
-                            <option value="@idioma">@idioma</option>
-
-                            <br>
-                        }
-                    </select></br>
-                    <strong>Habilidades:</strong><select class="mul-select" asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length">
-                        @foreach (var habilidad in habilidades)
-                        {
-
-                            <option value="@habilidad">@habilidad</option>
-
-                            <br>
-                        }
-                    </select></br>
-                    <input type="submit" asp-route-esEstudiante="@esEstudiante" value=" Enviar" class="btn btn-success" />
-                </div>
-    </form>
+</form>
 </div>
 
 <script src="js/jquery-3.2.1.min.js"></script>
@@ -235,6 +188,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
 <script src="js/gmaps.min.js"></script>
 <script src="js/theme.js"></script>
+ 
 <scripts>
 
 
