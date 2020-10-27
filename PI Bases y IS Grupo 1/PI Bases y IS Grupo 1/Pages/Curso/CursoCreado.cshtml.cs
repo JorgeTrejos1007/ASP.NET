@@ -18,13 +18,17 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             try
             {
+                if (TempData["CursoModificado"] == null)
+                {
+                    TempData["CursoModificado"] = false;
+                }
+                TempData["CursoModificado"] = TempData["CursoModificado"];
                 CursoHandler accesoDatos = new CursoHandler();
                 Secciones = accesoDatos.obtenerSecciones(nombreCurso);
                 ViewData["nombreCurso"] = nombreCurso;
-                
                 foreach (var item in Secciones)
                 {
-                    item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion,nombreCurso);
+                    item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
                 }
                 return Page();
             }

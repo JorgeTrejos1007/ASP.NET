@@ -29,6 +29,11 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         public IActionResult OnPostModificarCurso()
         {
+            if ((bool)TempData["cursoModificado"] == false)
+            {
+                TempData["cursoModificado"] = true;
+                curso.version ++;
+            }
             CursoHandler accesodatos = new CursoHandler();
             accesodatos.actualizarInfoCurso(curso, (string)TempData["nombreCurso"]);
             return RedirectToPage("CursoCreado", new { nombreCurso = curso.nombre });

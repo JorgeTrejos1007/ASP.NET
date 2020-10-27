@@ -89,12 +89,22 @@ namespace PIBasesISGrupo1.Pages.Curso
         }
         public IActionResult OnPostAgregarMaterial()
         {
-            TempData["seccionCreada"] = true;
-            TempData["nombreSeccion"] = material.nombreDeSeccion;
-            TempData["nombreCurso"] = material.nombreDeCurso;   
-            CursoHandler accesoDatos = new CursoHandler();
-            accesoDatos.agregarMaterial(material, archivo);
-            return RedirectToPage("CrearSeccion", "MaterialAgregado");
+            IActionResult vista;
+            try
+            {
+                TempData["seccionCreada"] = true;
+                TempData["nombreSeccion"] = material.nombreDeSeccion;
+                TempData["nombreCurso"] = material.nombreDeCurso;
+                CursoHandler accesoDatos = new CursoHandler();
+                accesoDatos.agregarMaterial(material, archivo);
+                vista = RedirectToPage("CrearSeccion", "MaterialAgregado");
+            }
+            catch
+            {
+                vista = RedirectToPage("CursoCreado",new { nombreCurso = material.nombreDeCurso});
+            }
+            return vista;
+           
         }
     }
 }

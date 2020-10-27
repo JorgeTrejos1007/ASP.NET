@@ -439,6 +439,7 @@ namespace PIBasesISGrupo1.Handler
             lectorDeDatosCurso.Read();
             curso.nombre = Convert.ToString(lectorDeDatosCurso["nombreCurso"]);
             curso.estado = Convert.ToString(lectorDeDatosCurso["estado"]);
+            curso.version = (int)(lectorDeDatosCurso["version"]);
             curso.precio = Convert.ToDouble(lectorDeDatosCurso["precio"]);
             curso.emailDelEducador = Convert.ToString(lectorDeDatosCurso["emailEducador"]);
             curso.byteArrayDocument = (byte[])lectorDeDatosCurso["documento"];
