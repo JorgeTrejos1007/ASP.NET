@@ -21,49 +21,51 @@
     </div>
 
 
-    <div class="cursos-container">
+    <div class="editarCursos-container">
         @if (informacionCurso != null)
         {
 
             Model.curso = informacionCurso.Item1;
             var educador = informacionCurso.Item2;
-            <div class="col-lg-4 right-contents">
-                <ul>
-                    <li>
-                        <a class="justify-content-between d-flex" href="#">
-                            <form method="post">
-                                <label asp-for="@Model.curso.nombre">Curso</label>
-                                <input asp-for="@Model.curso.nombre" />
-                                <br />
-                                <label asp-for="@Model.curso.precio">Precio</label>
-                                <input asp-for="@Model.curso.precio" />
-                                <h3 style="display:flex;">Topicos: </h3>
-                                <br>
-
-                                <select class="mul-select" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
-                                    @foreach (var topicoYCategoria in informacionCurso.Item3)
-                                    {
-                                    <option  value="@topicoYCategoria.Item1" selected="selected">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
-                                    }
-
-                                    @foreach (var topicoYCategoria in topicosYCategorias)
-                                    {
-
-                                        <option value="@topicoYCategoria.Item1">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
-
-                                        <br>
-                                    }
-
-                                </select>
-
-                                <input type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" />
-                            </form>
-                        </a>
-                    </li>
-                </ul>
-
-
+                        
+        <form method="post">
+            <div style="display:flex; flex-direction:row; margin-left:20%; margin-top:15px; ">
+                <div style="margin-right:5px; font-size:19px;">
+                    <label asp-for="@Model.curso.nombre">Nombre del curso</label>
+                    <input asp-for="@Model.curso.nombre" />
+                </div>
+                <div style="margin-right:5px; font-size:19px;">
+                    <label asp-for="@Model.curso.precio">Precio</label>
+                    <input asp-for="@Model.curso.precio" />
+                </div>
             </div>
+            
+           
+            <div style="display:flex; margin-left:20%;margin-top:20px;">
+                <label asp-for="@Model.curso.nombre" style="color:#032c56; margin-right:5px; font-size:19px;">Tópicos:</label>
+                <select style="width: 390px;" class="mul-select" asp-for="@Model.curso.topicos" multiple="multiple" size="@topicosYCategorias.Count">
+                    @foreach (var topicoYCategoria in informacionCurso.Item3)
+                    {
+                        <option value="@topicoYCategoria.Item1" selected="selected">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
+                    }
+
+                    @foreach (var topicoYCategoria in topicosYCategorias)
+                    {
+
+                        <option value="@topicoYCategoria.Item1">TOPICO:@topicoYCategoria.Item1 - CATEGORIA:@topicoYCategoria.Item2</option>
+
+                        <br>
+                    }
+
+                </select>
+            </div>
+            <br>
+            <div style="margin-left:86%;">
+                <button type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" class="btn btn-info">
+                    <span class="glyphicon glyphicon-ok"></span> Guardar cambios
+                </button>
+            </div>
+        </form>
 
         }
         else
