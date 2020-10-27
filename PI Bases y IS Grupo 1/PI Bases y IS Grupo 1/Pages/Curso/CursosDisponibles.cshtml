@@ -16,27 +16,26 @@
 
 <div class="cajota-cursos">
     <div class="row justify-content-center">
-        
-            <h1 class="mb-3">Cursos disponibles</h1>
+
+        <h1 class="mb-3">Cursos disponibles</h1>
+
+    </div>
+    
+      <div class="blog_right_sidebar">
+          <div class="search_widget">
+              <div class="input-group">
+                  @using (Html.BeginForm())
+                  {
+
+                      @Html.TextBox("searching", null, new { @class = "form-control", @style = "width:487%;", @placeholder = "Buscar curso" })<button class="btn btn-default" type="submit"><i class="ti-search"></i></button>
+
+                  }
+                 
+
+              </div>
+          </div>
+      </div>
        
-    </div>
-  
-    <div class="blog_right_sidebar">
-        <div class="search_widget">
-            <div class="input-group">
-                @using (Html.BeginForm())
-                {
-                    @Html.TextBox("searching")<input id="form-control" type="submit" value=" Buscar Curso" placeholder="Nombre, instructor, precio" />
-
-                }
-                <input type="text" class="form-control" placeholder="Buscar curso">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"><i class="ti-search"></i></button>
-                </span>
-            </div>
-        </div>
-    </div>
-
     <div class="cursos-container-2">
         @if (listaDeCursos.Count > 0)
         {
