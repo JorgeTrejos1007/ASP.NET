@@ -45,6 +45,7 @@ body {
 .encuestas__elements {
     display: flex;
     flex-direction: column;
+    margin:0 200px;
     background: rgba(204,204,204,0.3);
 }
 
@@ -57,8 +58,10 @@ body {
     }
 
 .encuestas__results {
-    display: inline-block;
-    height: 30px;
+    display:inline-block;
+    margin:auto auto auto 60px;
+    align-content:center;
+    height: auto;
     width: 30%;
     background: #777777;
     border: none;
@@ -74,24 +77,29 @@ body {
     background: rgba(56,164,255,.5);
     border: none;
     border-radius: 50px;
+    white-space:nowrap;
 }
 
 .encuestas__option {
+    display:flex;
+    flex-direction:column;
+    width:50%;
+    height:auto;
+    align-items:center;
+}
+
+.encuestas__options {
     display: flex;
     flex-direction: row;
 }
-
-    .encuestas__option h5 {
-        margin-right: 30px;
-    }
-
-.encuestas__elements h5 {
-    color: #f8b600;
+.encuestas__elements .encuestas__option h5 {
+    color: #002347;
 }
 
 .encuestas__title {
     background: rgba(204,204,204,0.3);
     text-align: center;
+    margin: 0 200px;
 }
 
 .encuestas__table th {
