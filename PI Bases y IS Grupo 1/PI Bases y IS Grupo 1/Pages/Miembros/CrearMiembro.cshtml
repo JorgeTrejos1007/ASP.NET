@@ -5,6 +5,7 @@
     var mensaje = (string)TempData["mensaje"];
     var idiomas = (string[])ViewData["idiomas"];
     var habilidades = (string[])ViewData["habilidades"];
+    var paises= (string[])ViewData["paises"];
     var esEstudiante = true;
     var estudiante = (PIBasesISGrupo1.Models.Miembro)ViewData["estudiante"];
     if (estudiante == null)
@@ -34,6 +35,9 @@
                 color: #fff;
                 background: #848484;
             }
+        select {
+            color: #848484;
+        }
     </style>
 
 </head>
@@ -135,7 +139,7 @@
                         </div>
                         <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
 
-                        <div class="card-columns single-input">
+                        <div class="card-columns single-input mt-10">
                             <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" /> Femenino<br />
                             <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" /> Masculino<br />
                             <input type="radio" asp-for="@Model.miembro.genero" value="Otro" /> Otro
@@ -148,12 +152,21 @@
 
 
                 }
-                <div class="input-group-icon mt-10">
-                    <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
-                    <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
-                    <input asp-for="@Model.miembro.pais" placeholder="Pais" required class="single-input">
+                        <div class="input-group-icon mt-10">
+                            <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
+                            <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
+                            <select   class="form-select border-0 single-input"  placeholder="Pais" asp-for="@Model.miembro.pais" required  >
+                                <option value="" disabled selected>Pais</option>
+                                @foreach (var pais in paises)
+                                {
 
-                </div>
+                                    <option value="@pais">@pais </option>
+
+
+                                }
+                            </select>
+
+                        </div>
 
                 <div class="mt-10">
                     <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
@@ -172,7 +185,7 @@
                 </div>
                 <div class=" input-group mt-10">
                     <span asp-validation-for="@Model.miembro.idiomas" class="text-danger"></span>
-                    <select class="  idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length" required>
+                    <select class="border-0  idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length" required>
                         @foreach (var idioma in idiomas)
                         {
 
@@ -184,7 +197,7 @@
                 </div>
                 <div class="mt-10">
                     <span asp-validation-for="@Model.miembro.habilidades" class="text-danger"></span>
-                    <select style="border-radius: 0" class="habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length" required>
+                    <select  class="border-0 habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length" required>
                         @foreach (var habilidad in habilidades)
                         {
 
