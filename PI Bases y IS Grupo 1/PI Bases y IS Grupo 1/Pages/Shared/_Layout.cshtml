@@ -21,6 +21,22 @@
         <!-- main css -->
         <link rel="stylesheet" href="~/css/style.css" />
     </environment>
+    <script>
+        $(document).ready(function () {
+            $(".idiomas-select").select2({
+                placeholder: "Idiomas",
+                tokenSeparators: ['/', ',', ';']
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".habilidades-select").select2({
+                placeholder: "Habilidades",
+                tokenSeparators: ['/', ',', ';']
+            });
+        });
+    </script>
     <environment exclude="Production">
     </environment>
 </head>
@@ -214,6 +230,22 @@
         $(document).ready(function () {
             $(".mul-select").select2({
                 placeholder: "- Sin selección -",
+                tokenSeparators: ['/', ',', ';']
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".idiomas-select").select2({
+                placeholder: "Idiomas",
+                tokenSeparators: ['/', ',', ';']
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".habilidades-select").select2({
+                placeholder: "Habilidades",
                 tokenSeparators: ['/', ',', ';']
             });
         });
