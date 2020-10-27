@@ -17,6 +17,10 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         public void OnGet(string email)
         {
+            if (email == null) {
+                var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                email = miembro.email;
+            }
             MiembroHandler accesoDatos = new MiembroHandler();
             ViewData["email"] = email;
             miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
