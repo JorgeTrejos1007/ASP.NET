@@ -19,6 +19,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
             ViewData["CursosCreados"] = cursoHandler.obtenerCursosCreados(miembroEnSesion.email);
+            TempData["cursoModificado"] = false;
         }
     }
 }

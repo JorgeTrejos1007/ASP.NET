@@ -29,12 +29,13 @@
             var educador = informacionCurso.Item2;
                         
         <form method="post">
-            <div style="display:flex; flex-direction:row; margin-left:20%; margin-top:15px; ">
+            <div style="display:flex; flex-direction:row; margin-left:20%; padding-top:30px; ">
                 <div style="margin-right:5px; font-size:19px;">
+                    <input type="hidden" asp-for="@Model.curso.version"/>
                     <label asp-for="@Model.curso.nombre">Nombre del curso</label>
                     <input asp-for="@Model.curso.nombre" />
                 </div>
-                <div style="margin-right:5px; font-size:19px;">
+                <div style="margin-left:5px; font-size:19px;">
                     <label asp-for="@Model.curso.precio">Precio</label>
                     <input asp-for="@Model.curso.precio" />
                 </div>
@@ -60,8 +61,8 @@
                 </select>
             </div>
             <br>
-            <div style="margin-left:86%;">
-                <button type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" class="btn btn-info">
+            <div style="margin-left:79%;">
+                <button type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
                     <span class="glyphicon glyphicon-ok"></span> Guardar cambios
                 </button>
             </div>
@@ -80,8 +81,8 @@
         </br>
     </div>
     <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
-        <div style="margin-left:92%">
-            <a asp-page="./CursoCreado" asp-route-nombreCurso="@nombreCurso" class="btn btn-info">
+        <div style="margin-left:86%">
+            <a asp-page="./CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
                 <span class="glyphicon glyphicon-arrow-left"></span> Volver
             </a> <br>
         </div>

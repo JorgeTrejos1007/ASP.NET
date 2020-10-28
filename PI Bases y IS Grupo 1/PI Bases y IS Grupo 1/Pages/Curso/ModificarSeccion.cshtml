@@ -18,15 +18,15 @@
             <h2><strong>Modificar seccion: @nombreSeccion</strong></h2>
         </div>
 
-        <div style="margin-top: 20px; margin-left:10px; display:inline-block;">
-            <a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="btn btn-info">
+        <div style="margin:auto 55% auto auto; display:inline-block;">
+            <a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
             <form method="post" style="display:inline-block;">
                 <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
                 <input type="hidden" asp-for="@Model.seccion.nombreSeccion" value="@nombreSeccion" />
 
-                <button type="submit" class="btn btn-info" asp-page-handler="BorrarSeccion">
+                <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="BorrarSeccion">
                     <span class="glyphicon glyphicon-trash"></span>
                 </button>
 
@@ -45,7 +45,7 @@
                         <h3 style="display:flex;"><strong>Nombre material</strong></h3>
                     </th>
                     <th>
-                        <a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="btn btn-info">
+                        <a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
                             <span class="glyphicon glyphicon-plus-sign"></span> Agregar material
                         </a>
                     </th>
@@ -68,7 +68,7 @@
                                         <input type="hidden" asp-for="@Model.material.nombreMaterial" value="@item.nombreMaterial" />
 
 
-                                        <button type="submit" class="btn btn-info" asp-page-handler="BorrarMaterial">
+                                        <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="BorrarMaterial">
                                             <span class="glyphicon glyphicon-trash"></span>
                                         </button>
 
@@ -84,7 +84,7 @@
     </div>
     <div class="curso-material">
 
-        <a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="btn btn-info" style="margin-left:58%; margin-bottom:3px; margin-top:3px;">
+        <a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin:auto auto auto 87%;">
             <span class="glyphicon glyphicon-ok"></span> Terminar
         </a>
     </div>

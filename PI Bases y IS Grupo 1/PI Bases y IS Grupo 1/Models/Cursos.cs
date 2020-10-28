@@ -28,7 +28,7 @@ namespace PIBasesISGrupo1.Models
         [RegularExpression(@"^\d+$", ErrorMessage = "Por favor ingrese solo digitos validos. Ejemplo: 99 ")]
         public double precio {get; set;}
 
-        public string version {get; set;}
+        public int version {get; set;}
   
         [Required(ErrorMessage = "Es necesario que ingreses el email")]
         [Display(Name = "Ingrese el documento descriptivo del Curso")]

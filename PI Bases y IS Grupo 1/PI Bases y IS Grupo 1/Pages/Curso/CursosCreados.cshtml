@@ -2,7 +2,7 @@
 @model PIBasesISGrupo1.Pages.Curso.CursosCreadosModel
 @{
     ViewData["Title"] = "CursosCreados";
-    var listaDeCursos = (List<string>)ViewData["CursosCreados"];
+    var listaDeCursos = (List<Tuple<string,int>>)ViewData["CursosCreados"];
 }
 
 <header>
@@ -31,13 +31,13 @@
                         @for (int j = i; j < i + 1; j++)
                         {
 
-                            <a class="borde" id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j]">
+                            <a class="borde" id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j].Item1">
                                 @if (j < listaDeCursos.Count())
                                 {
                                     <div id="cuadro-mis-cursos">
                                         <span class="flaticon-student"></span>
-                                        <h4 id="nombrePersona">@listaDeCursos[j]</h4>
-
+                                        <h4 id="nombrePersona">@listaDeCursos[j].Item1</h4>
+                                        <h4>Version: @listaDeCursos[j].Item2</h4>
                                     </div>
 
                                 }

@@ -24,10 +24,12 @@ namespace PIBasesISGrupo1.Pages.Curso
             IActionResult vista;
             try
             {
+
                 vista = Page();
                 ViewData["nombreCurso"] = nombreCurso;
-                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session,"Miembro");
-                if (miembroDeLaComunidad != null) {
+                var miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                if (miembroDeLaComunidad != null)
+                {
 
                     ViewData["nombre"] = miembroDeLaComunidad.nombre;
                     ViewData["primerApellido"] = miembroDeLaComunidad.primerApellido;
@@ -36,13 +38,14 @@ namespace PIBasesISGrupo1.Pages.Curso
                     ViewData["email"] = miembroDeLaComunidad.email;
                     ViewData["esMiembro"] = true;
                 }
-                else {
+                else
+                {
                     ViewData["esMiembro"] = false;
-                }           
+                }
             }
             catch
             {
-                vista = Redirect("~/Curso/InscribirmeCurso");
+                vista = RedirectToPage("CursosDisponibles");
             }
             return vista;
         }
@@ -52,8 +55,9 @@ namespace PIBasesISGrupo1.Pages.Curso
 
             TempData["esMiembro"] = true;
             TempData["nombreCurso"] = curso.nombre;
-            try {
-                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session,"Miembro");
+            try
+            {
+                Miembro miembroDeLaComunidad = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 if (miembroDeLaComunidad != null)
                 {
                     TempData["nombre"] = miembroDeLaComunidad.nombre;
@@ -62,20 +66,22 @@ namespace PIBasesISGrupo1.Pages.Curso
                     TempData["email"] = miembroDeLaComunidad.email;
                     TempData["genero"] = miembroDeLaComunidad.genero;
                 }
-                else {
-                    TempData["nombre"]= participanteExterno.nombre;
+                else
+                {
+                    TempData["nombre"] = participanteExterno.nombre;
                     TempData["primerApellido"] = participanteExterno.primerApellido;
                     TempData["segundoApellido"] = participanteExterno.segundoApellido;
                     TempData["email"] = participanteExterno.email;
                     TempData["genero"] = participanteExterno.genero;
-                    TempData["esMiembro"]= false;
+                    TempData["esMiembro"] = false;
 
                 }
-               
+
             }
-            catch {
+            catch
+            {
             }
-            return RedirectToPage("PagarCurso");  
+            return RedirectToPage("PagarCurso");
         }
     }
 }
