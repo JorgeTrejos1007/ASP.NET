@@ -28,7 +28,7 @@
                         @for (int j = i; j < i + 1; j++)
                         {
 
-                            <a id="botonParaPerfil" asp-page="./VistaCursoEstudiante" asp-route-nombreCurso="@listaDeCursos[j]">
+                            <a class="borde" id="botonParaPerfil" asp-page="./VistaCursoEstudiante" asp-route-nombreCurso="@listaDeCursos[j]">
                                 @if (j < listaDeCursos.Count())
                                 {
                                     <div id="cuadro-mis-cursos">
