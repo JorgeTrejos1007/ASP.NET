@@ -12,33 +12,40 @@
 
 }
 
-
+<header>
+    <style>
+        .centrar-documento {
+            text-align:center;
+        }
+    </style>
+</header>
 
 
 <div class="cajota-cursos">
-   
+
     <div class="cursos-container-2">
         <div class="justify-content-center">
             <h1 class="mb-3">Cursos Disponibles</h1>
         </div>
 
 
+        <div class="center">
+            <div class="blog_right_sidebar">
+                <div class="search_widget">
+                    <div class="input-group">
+                        @using (Html.BeginForm())
+                        {
 
-        <div class="blog_right_sidebar">
-            <div class="search_widget">
-                <div class="input-group">
-                    @using (Html.BeginForm())
-                    {
+                            @Html.TextBox("searching", null, new { @class = "form-control", @style = "width:435%;", @placeholder = "Buscar curso por nombre, precio o educador" })
+                            <button class="btn btn-default" type="submit"><i class="ti-search"></i></button>
 
-                        @Html.TextBox("searching", null, new { @class = "form-control", @style = "width:435%;", @placeholder = "Buscar curso por nombre, precio o educador" })
-                        <button class="btn btn-default" type="submit"><i class="ti-search"></i></button>
+                        }
 
-                    }
-
-
+                    </div>
                 </div>
             </div>
         </div>
+
 
 
 
@@ -68,15 +75,15 @@
                             <ul>
                                 <li>
                                     <a class="justify-content-between d-flex" href="#">
-                                        <p>Email</p>
-                                        <span class="or">@curso.emailDelEducador</span>
+                                        <p>Educador</p>
+                                        <span class="or">@educador.nombre @educador.primerApellido </span>
 
                                     </a>
                                 </li>
                                 <li>
                                     <a class="justify-content-between d-flex" href="#">
-                                        <p>Educador</p>
-                                        <span class="or">@educador.nombre @educador.primerApellido </span>
+                                        <p>Email</p>
+                                        <span class="or">@curso.emailDelEducador</span>
 
                                     </a>
                                 </li>
@@ -101,6 +108,18 @@
                                             }
                                         }
                                         <span class="or"> @topicos </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="justify-content-between d-flex" href="#">
+                                        <span class="or">
+                                            <div class="centrar-documento">
+                                                <a href="data:@curso.tipoDocInformativo;base64,@(Convert.ToBase64String(curso.byteArrayDocument))" download="@curso.nombre .pdf">
+                                                    <span class="or icon">
+                                                        Descargar documento descriptivo del curso <i class="ti-download" aria-hidden="false"></i>
+                                                    </span>
+                                                </a>
+                                            </div>
                                     </a>
                                 </li>
                             </ul>
