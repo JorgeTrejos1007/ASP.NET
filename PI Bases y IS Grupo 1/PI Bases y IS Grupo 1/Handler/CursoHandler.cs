@@ -365,7 +365,6 @@ namespace PIBasesISGrupo1.Handler
 
         public List<string> obtenerMisCursosDisponibles(string emailDelUsuario)        {            List<string> cursos = new List<string>();            string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");            return cursos;        }
 
-
         public bool borrarMaterial(MaterialModel material)
         {
             string consulta = "DELETE FROM Material " + "WHERE nombreCursoFK=@nombreCurso AND nombreSeccionFK=@nombreSeccion AND nombreMaterialPK=@nombreMaterial";

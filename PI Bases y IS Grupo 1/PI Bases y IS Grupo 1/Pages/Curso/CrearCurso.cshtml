@@ -18,8 +18,8 @@
             <div style="margin-bottom: 10px;margin-left:10px;">
                 <h2><strong>@nombreCurso</strong></h2>
             </div>
-            <div style="margin-top: 20px; margin-left:10px; display:inline-block;">
-                <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="btn btn-info">
+            <div style="margin:auto auto auto 0; display:inline-block;">
+                <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
                     <span class="glyphicon glyphicon-plus-sign"></span> Agregar seccion
                 </a>
             </div>
@@ -59,12 +59,12 @@
     </div>
 
     <div class="curso-material">
-        <div style="margin-left:74%; display:inline-flex;">
-            <a  asp-page="./MisCursosPropuestos" class="btn btn-info" style="margin-right:3px;">
+        <div style="margin-left:60%; display:inline-flex;">
+            <a  asp-page="./MisCursosPropuestos" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-right:3px;">
                 <span class="glyphicon glyphicon-arrow-left"></span> Volver
             </a>
             <form method="post" asp-route-nombreCurso="@nombreCurso">
-                <button class="btn btn-info">
+                <button class="primary-btn__reverse text-uppercase enroll rounded-0">
                     <span class="glyphicon glyphicon-ok"></span> Terminar de crear Curso
                 </button>
             </form>

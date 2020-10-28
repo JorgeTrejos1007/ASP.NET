@@ -50,27 +50,53 @@ namespace PIBasesISGrupo1.Pages.Curso
             
         }
 
-        public void OnGetSeccionCreada()
-        {    
-            ViewData["nombreCurso"] = TempData["nombreCurso"];
-            ViewData["seccionCreada"] = TempData["seccionCreada"];
-            ViewData["nombreSeccion"] = TempData["nombreSeccion"];
-            ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
-            TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
-            TempData["cursoModificado"] = TempData["cursoModificado"];
+        public IActionResult OnGetSeccionCreada()
+        {
+            IActionResult vista;
+            try
+            {           
+                ViewData["nombreCurso"] = TempData["nombreCurso"];
+                ViewData["seccionCreada"] = TempData["seccionCreada"];
+                ViewData["nombreSeccion"] = TempData["nombreSeccion"];
+                if (ViewData["nombreSeccion"] == null)
+                {
+                    return RedirectToPage("CursosCreados");
+                }                
+                ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
+                TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
+                TempData["cursoModificado"] = TempData["cursoModificado"];
+                vista = Page();
+            }
+            catch
+            {
+                vista = RedirectToPage("CursosCreados");
+            }
+            return vista;
         }
 
-        public void OnGetMaterialAgregado()
+        public IActionResult OnGetMaterialAgregado()
         {
-            ViewData["nombreCurso"] = TempData["nombreCurso"];
-            ViewData["seccionCreada"] = TempData["seccionCreada"];
-            ViewData["nombreSeccion"] = TempData["nombreSeccion"];
-            ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
-            TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
-            TempData["cursoModificado"] = TempData["cursoModificado"];
-            CursoHandler accesoDatos = new CursoHandler();
-            string nombreSeccion = (string)ViewData["nombreSeccion"];
-            ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion, (string)ViewData["nombreCurso"]);
+            IActionResult vista;
+            try
+            {
+                vista = Page();
+                ViewData["nombreCurso"] = TempData["nombreCurso"];
+                ViewData["seccionCreada"] = TempData["seccionCreada"];
+                ViewData["nombreSeccion"] = TempData["nombreSeccion"];
+                ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
+                TempData["nombreCurso"] = ViewData["nombreCurso"];
+                TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
+                TempData["cursoModificado"] = TempData["cursoModificado"];
+                CursoHandler accesoDatos = new CursoHandler();
+                string nombreSeccion = (string)ViewData["nombreSeccion"];
+                ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion, (string)ViewData["nombreCurso"]);
+            }
+            catch
+            {
+                vista = RedirectToPage("CursoCreados");
+            }
+            return vista;
+       
         }
         public IActionResult OnPostCrearSeccion()
         {

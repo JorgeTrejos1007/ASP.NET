@@ -6,21 +6,22 @@
 }
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+   
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material">
-        <div style="margin-left:25%;display:flex;">
+        <div style="display:flex;margin-left:20%;">
             <div style="margin-bottom: 10px;margin-left:10px;">
                 <h2><strong>@nombreCurso</strong></h2>
             </div>
-            <div style="margin-top: 20px; margin-left:10px; display:inline-block;">
-                <a asp-page="./ModificarInformacionCurso" asp-route-nombreCurso="@nombreCurso" class="btn btn-info">
+            <div style="display:inline-block;margin:auto auto auto 0;">
+                <a asp-page="./ModificarInformacionCurso" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </a>
 
-                <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="btn btn-info">
+                <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CursoCreado" class="primary-btn__reverse text-uppercase enroll rounded-0">
                     <span class="glyphicon glyphicon-plus-sign"></span> Agregar seccion
                 </a>
             </div>
@@ -50,7 +51,7 @@
                                 </p>
                             }
                         }
-                        <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn2 text-uppercase enroll rounded-0">
+                        <a asp-page="./ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@item.nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
                             <span class="glyphicon glyphicon-cog"></span> Editar
                         </a>
 
@@ -62,7 +63,7 @@
     </div>
     <br />
     <div class="curso-material">
-        <a asp-page="./CursosCreados" class="btn btn-info" style="margin-left:92%">
+        <a asp-page="./CursosCreados"class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-left:87%;margin-right:0;" >
             <span class="glyphicon glyphicon-arrow-left"></span> Volver
         </a>
     </div>
