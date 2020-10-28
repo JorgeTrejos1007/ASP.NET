@@ -34,7 +34,7 @@ namespace PIBasesISGrupo1.Pages.Encuestas
                 EncuestaModel encuesta = accesoDatos.obtenerTuplaEncuesta(id);
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-                string url = "https://localhost:44326/Encuestas/RespuestasEncuesta/ResponderEncuesta?idEnc="+ id.ToString()+"&indexPregunta=0";
+                string url = "http://edustage.azurewebsites.net/Encuestas/RespuestasEncuesta/ResponderEncuesta?idEnc="+ id.ToString()+"&indexPregunta=0";
                 mail.From = new MailAddress("comunidad.practica.g1@gmail.com");
                 foreach (var email in miembrosEmail)
                 {
