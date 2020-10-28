@@ -19,14 +19,32 @@ namespace PIBasesISGrupo1.Pages.Curso
             try
             {
                 CursoHandler accesoDatos = new CursoHandler();
-                Secciones = accesoDatos.obtenerSecciones(nombreCurso);
-                ViewData["nombreCurso"] = nombreCurso;
-
-                foreach (var item in Secciones)
+                var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
+                bool nombreCursoValido = false;
+                foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
-                    item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
+                    if (item.Item1.Equals(nombreCurso) == true)
+                    {
+                        nombreCursoValido = true;
+                        break;
+                    }
                 }
-                return Page();
+                if (nombreCursoValido)
+                {
+                    Secciones = accesoDatos.obtenerSecciones(nombreCurso);
+                    ViewData["nombreCurso"] = nombreCurso;
+
+                    foreach (var item in Secciones)
+                    {
+                        item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
+                    }
+                    return Page();
+                }
+                else
+                {
+                    return RedirectToPage("MisCursosInscritos");
+                }
             }
             catch
             {

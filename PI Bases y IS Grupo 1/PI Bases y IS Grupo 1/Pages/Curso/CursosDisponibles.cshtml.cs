@@ -21,7 +21,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
                 
 
-                ViewData["cursosMatriculados"] = cursoHandler.obtenerMisCursosMatriculados(usuarioEnSesion.email);
+                ViewData["cursosMatriculados"] = cursoHandler.obtenerMisCursosDisponibles(usuarioEnSesion.email);
 
             }
 

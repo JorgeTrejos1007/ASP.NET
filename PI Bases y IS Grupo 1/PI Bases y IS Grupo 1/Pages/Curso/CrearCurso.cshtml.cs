@@ -18,6 +18,18 @@ namespace PIBasesISGrupo1.Pages.Curso
             try
             {
                 CursoHandler accesoDatos = new CursoHandler();
+                var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                var comprobarCurso = accesoDatos.obtenerMisCursosPropuestos(miembroEnSesion.email);
+                bool nombreCursoValido = false;
+                foreach (var item in comprobarCurso)
+                {
+                    if (item.nombre.Equals(nombreCurso) == true)
+                    {
+                        nombreCursoValido = true;
+                        break;
+                    }
+                }
+                if (nombreCursoValido) { 
                 Secciones = accesoDatos.obtenerSecciones(nombreCurso);
                 ViewData["nombreCurso"] = nombreCurso;
                 foreach (var item in Secciones)
@@ -25,6 +37,11 @@ namespace PIBasesISGrupo1.Pages.Curso
                     item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion,nombreCurso);
                 }
                 return Page();
+                }
+                else
+                {
+                    return RedirectToPage("MisCursosPropuestos");
+                }
             }
             catch
             {

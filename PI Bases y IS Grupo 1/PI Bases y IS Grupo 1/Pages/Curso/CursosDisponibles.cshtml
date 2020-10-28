@@ -52,7 +52,7 @@
                 var curso = infoCursos.Item1;
                 var educador = infoCursos.Item2;
 
-                if (usuarioEnSesion && cursosMatriculados.Contains(curso.nombre) == true)
+                if ((usuarioEnSesion && cursosMatriculados.Contains(curso.nombre)) == true)
                 {
 
                     mostrar = false;

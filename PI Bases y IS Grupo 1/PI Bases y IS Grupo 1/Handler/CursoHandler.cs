@@ -363,6 +363,9 @@ namespace PIBasesISGrupo1.Handler
             return materiales;
         }
 
+        public List<string> obtenerMisCursosDisponibles(string emailDelUsuario)        {            List<string> cursos = new List<string>();            string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");            return cursos;        }
+
+
         public bool borrarMaterial(MaterialModel material)
         {
             string consulta = "DELETE FROM Material " + "WHERE nombreCursoFK=@nombreCurso AND nombreSeccionFK=@nombreSeccion AND nombreMaterialPK=@nombreMaterial";
@@ -406,14 +409,21 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
-        public List<string> obtenerCursosCreados(string emailEducador)
+        public List<Tuple<string,int>> obtenerCursosCreados(string emailEducador)
         {
-            List<string> cursos = new List<string>();
-            string consulta = "SELECT nombrePK FROM Curso WHERE emailEducadorFK=@emailEducador AND estado='Creado';";
+            List<Tuple<string, int>> cursos;
+            string consulta = "SELECT nombrePK,version FROM Curso WHERE emailEducadorFK=@emailEducador AND estado='Creado';";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@emailEducador", emailEducador);
-            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombrePK");
+            DataTable tablaCursosCreados = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            cursos = new List<Tuple<string, int>>();
+            foreach (DataRow columnaCursosCreados in tablaCursosCreados.Rows)
+            {
+                    cursos.Add(new Tuple<string, int>(Convert.ToString(columnaCursosCreados["nombrePK"]), Convert.ToInt32(columnaCursosCreados["version"])));
+            
+            }
+
             return cursos;
         }
 
@@ -469,16 +479,22 @@ namespace PIBasesISGrupo1.Handler
             return cursos;
         }
 
-        public List<string> obtenerMisCursosMatriculados(string emailDelUsuario)
+        public List<Tuple<string,int>> obtenerMisCursosMatriculados(string emailDelUsuario)
         {
-            List<string> cursos = new List<string>();
-            string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";
+            List<Tuple<string, int>> cursos;
+            string consulta = "SELECT I.nombreCursoFK, C.version FROM Inscribirse I JOIN Curso C ON I.nombreCursoFK = C.nombrePK WHERE emailEstudianteFK=@emailDelUsuario;";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
-            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);
-            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");
-            return cursos;
+            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            
+            DataTable tablaCursosMatriculados = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            cursos = new List<Tuple<string, int>>();
+            foreach (DataRow columnaCursosMatriculados in tablaCursosMatriculados.Rows)
+            {
+                cursos.Add(new Tuple<string, int>(Convert.ToString(columnaCursosMatriculados["nombreCursoFK"]), Convert.ToInt32(columnaCursosMatriculados["version"])));
 
+            }
+
+            return cursos;
         }
         public bool actualizarInfoCurso(Cursos curso ,string antiguaNombreCurso)
         {
