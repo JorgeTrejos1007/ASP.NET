@@ -5,6 +5,15 @@
     var listaDeCursos = (List<string>)ViewData["CursosCreados"];
 }
 
+<header>
+    <style>
+        .borde {
+            border-color: #002347;
+            border-style: solid;
+            border-width: thin;
+        }
+    </style>
+</header>
 <div class="cajota-cursos">
     <div class="row justify-content-center">
 
@@ -22,7 +31,7 @@
                         @for (int j = i; j < i + 1; j++)
                         {
 
-                            <a id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j]">
+                            <a class="borde" id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j]">
                                 @if (j < listaDeCursos.Count())
                                 {
                                     <div id="cuadro-mis-cursos">
