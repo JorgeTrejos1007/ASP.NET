@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
-    public class CursoCreadoModel : PageModel
+    public class VistaCursoEstudianteModel : PageModel
     {
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
@@ -20,7 +20,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
                 CursoHandler accesoDatos = new CursoHandler();
                 var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
-                var comprobarCurso = accesoDatos.obtenerCursosCreados(miembroEnSesion.email);
+                var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
@@ -32,10 +32,9 @@ namespace PIBasesISGrupo1.Pages.Curso
                 }
                 if (nombreCursoValido)
                 {
-                    TempData["cursoModificado"] = TempData["cursoModificado"];
-
                     Secciones = accesoDatos.obtenerSecciones(nombreCurso);
                     ViewData["nombreCurso"] = nombreCurso;
+
                     foreach (var item in Secciones)
                     {
                         item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
@@ -44,12 +43,12 @@ namespace PIBasesISGrupo1.Pages.Curso
                 }
                 else
                 {
-                    return RedirectToPage("CursosCreados");
+                    return RedirectToPage("MisCursosInscritos");
                 }
             }
             catch
             {
-                return RedirectToPage("CursosCreados");
+                return RedirectToPage("/Index");
             }
 
         }

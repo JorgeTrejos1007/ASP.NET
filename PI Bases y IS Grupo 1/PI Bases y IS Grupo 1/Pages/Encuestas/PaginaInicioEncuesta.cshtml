@@ -2,10 +2,10 @@
 @model PIBasesISGrupo1.Pages.Encuestas.PaginaInicioEncuestaModel
 @{
     ViewData["Title"] = "Lista de encuestas";
-    
+
 }
 
-<h2>Lista de encuestas</h2>
+<h1 class="encuestas__title">Lista de encuestas</h1>
 
 <p>
     <a asp-page="CrearEncuesta" class="primary-btn2 text-uppercase enroll rounded-0">Crear encuesta</a>
@@ -13,7 +13,7 @@
 
 
 
-<table class="table">
+<table class="table encuestas__table">
     <thead>
         <tr>
             <th>
@@ -42,7 +42,7 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.nombreEncuesta)
                         </td>
-         
+
                         <td>
                             @Html.DisplayFor(modelItem => item.topico)
                         </td>
@@ -54,19 +54,24 @@
                         </td>
                         <td>
 
+                            <div class="encuestas__buttons">
+                                <a asp-page="./EditarEncuesta" asp-route-id="@item.id" class="primary-btn-encuestas text-uppercase enroll rounded-0" style="margin-left:0px">Editar</a>
+                                <a asp-page="./BorrarEncuesta" asp-route-id="@item.id" class="primary-btn-encuestas text-uppercase enroll rounded-0" style="margin-left:35px;"> Borrar </a>
+                            </div>
+                            <div class="encuestas__buttons">
+                                <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
+                                    <button class="primary-btn-encuestas text-uppercase enroll rounded-0 "style="margin-left:0px">Compartir</button>
+                                </form>
+                                <a asp-page="./ListaPreguntas" asp-route-id="@item.id" class="primary-btn-encuestas text-uppercase enroll rounded-0"> Preguntas </a>
+                            </div>
+                            
+                            <div class="encuestas__buttons">
+                                <a asp-page="./MostrarRespuestas" asp-route-id="@item.id" class="primary-btn-encuestas text-uppercase enroll rounded-0" style="padding:0 8px;margin-left:0px;"> Ver respuestas </a>
 
-                            <a asp-page="./EditarEncuesta" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0">Editar</a>
-                            <a asp-page="./ListaPreguntas" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Preguntas </a>
-                            <a asp-page="./BorrarEncuesta" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Borrar </a>
-                            <a asp-page="./MostrarRespuestas" asp-route-id="@item.id" class="primary-btn2 text-uppercase enroll rounded-0"> Ver respuestas </a>
-
-                            <form asp-page-handler="compartir" method="post" asp-route-id="@item.id">
-                                <button class="primary-btn2 text-uppercase enroll rounded-0">Compartir</button>
-                            </form>
-                            <form asp-page-handler="ExportarRespuestas" method="post" asp-route-idEncuesta="@item.id">
-                                <button class="primary-btn2 text-uppercase enroll rounded-0">Exportar Respuestas</button>
-                            </form>
-
+                                <form asp-page-handler="ExportarRespuestas" method="post" asp-route-idEncuesta="@item.id">
+                                    <button class="primary-btn-encuestas text-uppercase enroll rounded-0">Exportar Respuestas</button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
 

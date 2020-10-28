@@ -23,13 +23,19 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             ViewData["nombreCurso"] = nombreCurso;
             ViewData["nombreSeccion"] = nombreSeccion;
-            CursoHandler accesoDatos = new CursoHandler();
-           
+            CursoHandler accesoDatos = new CursoHandler();        
             ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion,nombreCurso);
+            TempData["cursoModificado"] = TempData["cursoModificado"];
         }
         public IActionResult OnPostBorrarMaterial()
         {
             CursoHandler accesodatos = new CursoHandler();
+            if ((bool)TempData["cursoModificado"] == false)
+            {
+                TempData["cursoModificado"] = true;
+              
+                accesodatos.actualizarVersion(material.nombreDeCurso);
+            }
             accesodatos.borrarMaterial(material);
             return RedirectToPage("ModificarSeccion", new { nombreCurso = material.nombreDeCurso, nombreSeccion=material.nombreDeSeccion });
         }
@@ -37,6 +43,12 @@ namespace PIBasesISGrupo1.Pages.Curso
         public IActionResult OnPostBorrarSeccion()
         {
             CursoHandler accesodatos = new CursoHandler();
+            if ((bool)TempData["cursoModificado"] == false)
+            {
+                TempData["cursoModificado"] = true;
+
+                accesodatos.actualizarVersion(seccion.nombreCurso);
+            }
             accesodatos.borrarSeccion(seccion);
             return RedirectToPage("CursoCreado" , new{nombreCurso = seccion.nombreCurso});
         }

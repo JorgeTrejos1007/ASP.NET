@@ -24,12 +24,16 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             ViewData["nombreCurso"] = nombreCurso;
             ViewData["nombreSeccion"] = nombreSeccion;
-
+            TempData["cursoModificado"] = TempData["cursoModificado"];
         }
         public IActionResult OnPostAgregarMaterial()
-        {
-           
+        {   
             CursoHandler accesoDatos = new CursoHandler();
+            if ((bool)TempData["cursoModificado"] == false)
+            {
+                TempData["cursoModificado"] = true;
+                accesoDatos.actualizarVersion(material.nombreDeCurso);
+            }
             accesoDatos.agregarMaterial(material, archivo);
             return RedirectToPage("ModificarSeccion", new { nombreCurso = material.nombreDeCurso, nombreSeccion = material.nombreDeSeccion });
         }

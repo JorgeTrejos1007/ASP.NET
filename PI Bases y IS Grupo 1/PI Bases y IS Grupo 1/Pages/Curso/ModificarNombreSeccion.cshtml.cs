@@ -26,7 +26,7 @@ namespace PIBasesISGrupo1.Pages.Curso
      
             TempData["nombreCurso"] = nombreCurso;
             TempData["nombreSeccion"] = nombreSeccion;
-          
+            TempData["cursoModificado"] = TempData["cursoModificado"];
             if (TempData["ocurrioError"] != null)
             {
                 ViewData["mensajeError"] = "Esta seccion ya esta en el curso";
@@ -43,6 +43,12 @@ namespace PIBasesISGrupo1.Pages.Curso
             CursoHandler accesodatos = new CursoHandler();
             if (accesodatos.modificarSeccion(seccion, (string)TempData["nombreSeccion"]))
             {
+                if ((bool)TempData["cursoModificado"] == false)
+                {
+                    TempData["cursoModificado"] = true;
+
+                    accesodatos.actualizarVersion(seccion.nombreCurso);
+                }
                 vista = RedirectToPage("ModificarSeccion", new { nombreCurso = seccion.nombreCurso, nombreSeccion = seccion.nombreSeccion });
             }
             else

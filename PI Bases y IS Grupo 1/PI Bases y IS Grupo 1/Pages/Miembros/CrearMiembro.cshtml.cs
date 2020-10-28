@@ -41,6 +41,26 @@ namespace PIBasesISGrupo1.Pages.Miembros
                     "Comprension", "Asertividad", "Credibilidad"
 
                };
+        public string[] paises = new string[194] {
+            "Afganistan", "Albania", "Alemania" ,"Andorra","Angola" ,"Antigua y Barbuda" ,"Arabia Saudita" , "Argelia",
+            "Argentina" ,"Armenia" ,"Australia","Austria","Azerbaiyan","Bahamas","Banglades" ,"Barbados", "Barein",
+            "Belgica","Belice","Benin","Bielorrusia","Birmania","Bolivia","Bosnia y Herzegovina","Botsuana","Brasil","Brunei",
+            "Bulgaria", "Burkina Faso","Burundi","Butan","Cabo Verde","Camboya","Camerun","Canada","Catar","Chad","Chile","China",
+            "Chipre","Ciudad del Vaticano","Colombia","Comoras","Corea del Norte","Corea del Sur","Costa de Marfil","Costa Rica",
+            "Croacia","Cuba","Dinamarca","Dominica","Ecuador","Egipto","El Salvador","Emiratos Arabes Unidos","Eritrea","Eslovaquia",
+            "Eslovenia","España","Estados Unidos","Estonia","Etiopia","Filipinas","Finlandia", "Fiyi","Francia","Gabon","Gambia","Georgia",
+            "Ghana","Granada","Grecia","Guatemala","Guyana","Guinea", "Guinea ecuatorial","Guinea-Bisau","Haiti","Honduras","Hungria","India",
+            "Indonesia","Irak","Iran","Irlanda","Islandia","Islas Marshall","Islas Salomon","Israel","Italia","Jamaica","Japon","Jordania",
+            "Kazajistan","Kenia","Kirguistan","Kiribati","Kuwait","Laos","Lesoto","Letonia","Libano","Liberia","Libia","Liechtenstein","Lituania",
+            "Luxemburgo","Macedonia del Norte", "Madagascar","Malasia","Malaui","Maldivas","Mali","Malta", "Marruecos",  "Mauricio", "Mauritania",
+            "Mexico","Micronesia","Moldavia", "Monaco","Mongolia","Montenegro","Mozambique","Namibia", "Nauru","Nepal","Nicaragua","Niger","Nigeria",
+            "Noruega","Nueva Zelanda","Oman","Paises Bajos","Pakistan","Palaos","Panama","Nueva Guinea","Paraguay","Peru","Polonia","Portugal",
+            "Reino Unido","Republica Centroafricana","Republica Checa","Republica del Congo","Republica Democratica del Congo","Republica Dominicana",
+            "Republica Sudafricana","Ruanda","Rumania","Rusia","Samoa","San Cristobal y Nieves","San Marino","San Vicente y las Granadinas",
+            "Santa Lucia","Santo Tome y Principe","Senegal","Serbia","Seychelles","Sierra Leona","Singapur","Siria","Somalia","Sri Lanka","Suazilandia",
+            "Sudan","Sudan del Sur","Suecia","Suiza","Surinam","Tailandia","Tanzania","Tayikistan","Timor Oriental","Togo","Tonga","Trinidad y Tobago","Tunez",
+            "Turkmenistan","Turquia","Tuvalu","Ucrania","Uganda","Uruguay","Uzbekistan","Vanuatu","Venezuela", "Vietnam","Yemen","Yibuti","Zambia","Zimbabue"
+        };
 
         public IActionResult OnGet()
         {
@@ -51,6 +71,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 vista = Page();
                 ViewData["idiomas"] = idiomas;
                 ViewData["habilidades"] = habilidades;
+                ViewData["paises"] = paises;
             }
             catch
             {

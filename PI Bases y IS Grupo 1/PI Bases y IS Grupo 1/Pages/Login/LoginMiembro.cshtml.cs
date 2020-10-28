@@ -28,9 +28,9 @@ namespace PIBasesISGrupo1.Pages.Login
 
         public void OnGet()
         {
+
+
             
-
-
 
         }
 

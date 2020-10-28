@@ -15,15 +15,30 @@ namespace PIBasesISGrupo1.Pages.Curso
 {
     public class ModificarInformacionCursoModel : PageModel
     {
+        [BindProperty]
+        public Cursos curso { get; set; }
         public void OnGet(string nombreCurso)
         {
             CursoHandler accesodatos = new CursoHandler();
             ViewData["informacionCurso"]= accesodatos.obtenerInformacionCurso(nombreCurso);
+            CatalogoHandler accesoCatalago = new CatalogoHandler();
+            ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
+            ViewData["nombreCurso"] = nombreCurso;
+            TempData["nombreCurso"] = nombreCurso;
+            TempData["cursoModificado"] = TempData["cursoModificado"];
         }
 
-        public void OnPostModificarCurso()
+        public IActionResult OnPostModificarCurso()
         {
+            if ((bool)TempData["cursoModificado"] == false)
+            {
+                TempData["cursoModificado"] = true;
+                curso.version ++;
+            }
+
             CursoHandler accesodatos = new CursoHandler();
+            accesodatos.actualizarInfoCurso(curso, (string)TempData["nombreCurso"]);
+            return RedirectToPage("CursoCreado", new { nombreCurso = curso.nombre });
         }
     }
 }

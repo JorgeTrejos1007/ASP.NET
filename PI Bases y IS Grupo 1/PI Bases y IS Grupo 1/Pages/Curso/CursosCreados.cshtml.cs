@@ -7,15 +7,19 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Http;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Curso
 {
+    [PermisosDeVista("Miembro", "Miembro de Nucleo", "Educador", "Coordinador")]
     public class CursosCreadosModel : PageModel
     {
         private CursoHandler cursoHandler = new CursoHandler();
         public void OnGet()
         {
-            ViewData["CursosCreados"] = cursoHandler.obtenerCursosCreados();
+            var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+            ViewData["CursosCreados"] = cursoHandler.obtenerCursosCreados(miembroEnSesion.email);
+            TempData["cursoModificado"] = false;
         }
     }
 }

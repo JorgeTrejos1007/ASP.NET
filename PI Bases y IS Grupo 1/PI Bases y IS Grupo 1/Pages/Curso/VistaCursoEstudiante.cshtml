@@ -1,26 +1,20 @@
 ﻿@page
-@model PIBasesISGrupo1.Pages.Curso.CrearCursoModel
+@model PIBasesISGrupo1.Pages.Curso.VistaCursoEstudianteModel
 @{
-    ViewData["Title"] = "CrearCurso";
-    var nombreCurso = (string)ViewData["nombreCurso"];
+    ViewData["Title"] = "VistaCursoEstudiante";
+    var nombreCurso = (String)ViewData["nombreCurso"];
 }
-
 
 
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material">
-        <div style="display:flex; margin-left:35%;">
+        <div style="margin-left:38%;display:flex;">
             <div style="margin-bottom: 10px;margin-left:10px;">
                 <h2><strong>@nombreCurso</strong></h2>
             </div>
-            <div style="margin:auto auto auto 0; display:inline-block;">
-                <a asp-page="./CrearSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombrePaginaCurso="./CrearCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                    <i class="ti-plus" aria-hidden="false"></i> Agregar seccion
-                </a>
-            </div>
         </div>
     </div>
-   
+
     <div style="margin-bottom:20px;">
         <div style=" margin-bottom: 5px;margin-left:10px; display:flex;">
             <h3 style="color:#032c56;"><strong>Secciones: </strong></h3>
@@ -30,46 +24,52 @@
             {
                 foreach (var item in @Model.Secciones)
                 {
-                   
+
                     <button class="accordion">@item.nombreSeccion</button>
 
-                    <div class="panel">
+                    <div class="panel" style="background-color:#ccc;">
 
                         @{ foreach (var material in item.listaMateriales)
                             {
                                 <p>
                                     <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                        <span class="or">@material.nombreMaterial</span>
+                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
                                     <br>
                                 </p>
                             }
                         }
 
+
                     </div>
+
 
                 }
             }
         }
     </div>
-
     <div class="curso-material">
-        <div style="margin-left:60%; display:inline-flex;">
-            <a  asp-page="./MisCursosPropuestos" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin-right:3px;">
+        <div style="margin-left:86%; display:inline-flex;">
+            <a asp-page="./MisCursosInscritos" class="primary-btn__reverse text-uppercase enroll rounded-0" >
                 <i class="ti-back-left" aria-hidden="false"></i> Volver
             </a>
-            <form method="post" asp-route-nombreCurso="@nombreCurso">
-                <button class="primary-btn__reverse text-uppercase enroll rounded-0">
-                    <i class="ti-check" aria-hidden="false"></i> Terminar de crear Curso
-                </button>
-            </form>
         </div>
     </div>
-</div>
 
-
-
-    <script>
+        <div>
+            <hr>
+            <div style="display:inline-block; margin-right:55%;">
+                <h4>Comparte tu participación en este curso en redes sociales</h4>
+            </div>
+            <div>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+                   data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:"
+                   data-url="https://localhost:44326/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+        </div>
+    </div>
+<script>
         var acc = document.getElementsByClassName("accordion");
         var i;
 
@@ -84,4 +84,5 @@
                 }
             });
         }
-    </script>
+</script>
+

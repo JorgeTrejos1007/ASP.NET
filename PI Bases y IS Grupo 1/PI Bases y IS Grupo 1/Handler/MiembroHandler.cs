@@ -227,9 +227,8 @@ namespace PIBasesISGrupo1.Handler
         }
 
         private bool registrarEnLaTablaDeMiembros(string email) {
-            string consultaParaInsertarEnMiembros = "INSERT INTO Miembro(emailMiembroFK)"
-           + "VALUES (@email);";
-            SqlCommand comandoParaInsertarEnTablaDeMiembros = baseDeDatos.crearComandoParaConsulta(consultaParaInsertarEnMiembros);
+            SqlCommand comandoParaInsertarEnTablaDeMiembros = baseDeDatos.crearComandoParaConsulta("SP_InsertarEnMiembros");
+            comandoParaInsertarEnTablaDeMiembros.CommandType = CommandType.StoredProcedure;
             comandoParaInsertarEnTablaDeMiembros.Parameters.AddWithValue("@email", email);
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaInsertarEnTablaDeMiembros);
             return exito;
@@ -274,15 +273,6 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
             comandoParaConsulta.Parameters.AddWithValue("@nombreDeCurso", nombreDeCurso);
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
-            return exito;
-        }
-
-        public bool crearEducador(string emailEducador)
-        {
-            string consulta = "INSERT INTO Educador(emailEducadorFK) VALUES(@email);";
-            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
-            comando.Parameters.AddWithValue("@email", emailEducador);
-            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
             return exito;
         }
 

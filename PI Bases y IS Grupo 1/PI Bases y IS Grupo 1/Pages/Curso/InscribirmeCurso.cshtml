@@ -14,8 +14,26 @@
 }
 
 
-<div class="comment-form">
-    <div class="col-lg-4 offset-lg-1">
+
+<style type="text/css">
+    body {
+        background-image: url("/img/registro/jeshoots-com-pUAM5hPaCRI-unsplash.jpg");
+        background-size: 100%;
+    }
+
+    .center-login {
+        margin: 0;
+        margin-left: 30%;
+        margin-top:5%;
+    }
+
+    .left-login {
+        text-align: left;
+    }
+</style>
+
+
+    <div class="col-lg-4 center-login">
         <div class="register_form">
             <h3>Inscribirme  a un Curso</h3>
             <form class="form_area"
@@ -80,7 +98,7 @@
                             <input asp-for="@curso" value="@curso" readonly /><br /><br />
                             <span asp-validation-for="@Model.participanteExterno.nombre" class="text-danger"></span>
                             <input asp-for="@Model.participanteExterno.nombre"
-                                   placeholder="tu nombre"
+                                   placeholder="Tu nombre"
                                    required=""
                                    type="text" />
                             <span asp-validation-for="@Model.participanteExterno.primerApellido" class="text-danger"></span>
@@ -113,7 +131,7 @@
         </div>
     </div>
 
-</div>
+
 <scripts>
 
 
