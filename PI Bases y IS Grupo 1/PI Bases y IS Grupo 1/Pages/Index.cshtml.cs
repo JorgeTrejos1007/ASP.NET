@@ -9,16 +9,12 @@ using PIBasesISGrupo1.Handler;
 namespace PIBasesISGrupo1.Pages
 {
     public class IndexModel : PageModel
-    {
-        
+    {   
         public void OnGet()
         {
-            NoticiaHandler accesoNoticias = new NoticiaHandler();
-            ViewData["Noticias"] = accesoNoticias.obtenerTodasLasNoticias();
             MiembroHandler accesoDatos = new MiembroHandler();
             ViewData["TotalMiembros"] = accesoDatos.obtenerNumeroDeMiembros();
             ViewData["PaisesMiembro"] = accesoDatos.obtenerPaisesMiembro();
-
         }
     }
 }
