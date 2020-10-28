@@ -6,12 +6,7 @@
     var nombreSeccion = (string)ViewData["nombreSeccion"];
     var mensajeError = (string)ViewData["mensajeError"];
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+
 
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material" style=" margin-bottom: 15px;">
@@ -32,7 +27,7 @@
                 <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
 
                 <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="ModificarSeccion">
-                    <span class="glyphicon glyphicon-ok-sign"></span> Cambiar
+                    <i class="ti-check" aria-hidden="false"></i> Cambiar
                 </button>
 
 
@@ -42,7 +37,7 @@
     </div>
     <div style="margin-left:83%">
         <a asp-page="ModificarSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
-            <span class="glyphicon glyphicon-arrow-left"></span> Volver
+            <i class="ti-back-left" aria-hidden="false"></i> Volver
         </a> <br>
     </div>
 </div>

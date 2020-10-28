@@ -10,12 +10,7 @@
     var nombrePaginaCurso = (string)ViewData["nombrePaginaCurso"];
     var mensajeError = (string)ViewData["mensajeError"];
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+
 <div style="margin-left:200px; margin-right:200px;">
     @{
         if (seccionCreada == false)
@@ -39,7 +34,7 @@
                         <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCursoTemp" />
 
                         <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="CrearSeccion">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Crear seccion
+                            <i class="ti-plus" aria-hidden="false"></i> Crear seccion
                         </button>
                     </form>
 
@@ -49,7 +44,7 @@
             </div>
             <div style="margin-left:86%;">
                 <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoTemp" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                    <span class="glyphicon glyphicon-arrow-left"></span> Volver
+                    <i class="ti-back-left" aria-hidden="false"></i> Volver
                 </a> <br>
             </div>
         }
@@ -77,7 +72,7 @@
 
 
                         <button style="margin-bottom:10px;" type="submit" asp-page-handler="AgregarMaterial" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Añadir
+                            <i class="ti-plus" aria-hidden="false"></i> Añadir
                         </button>
 
                     </form>
@@ -101,7 +96,7 @@
                                 {
                                     <p>
                                         <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                            <span class="or">@material.nombreMaterial</span>
+                                            <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                         </a>
                                     </p>
                                 }
@@ -117,7 +112,7 @@
             </div>
             <div style="margin-left:81%">
                 <a asp-page="@nombrePaginaCurso" asp-route-nombreCurso="@nombreCursoView" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                    <span class="glyphicon glyphicon-ok"></span> Terminar
+                    <i class="ti-check" aria-hidden="false"></i> Terminar
                 </a> <br>
             </div>
         }

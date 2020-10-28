@@ -223,8 +223,9 @@ body {
     display: none;
     background-color: #ccc !important;
     border: 1px solid #ccc;
-    border-color: red;
+    color:#002347 ;
     border-radius: 15px;
+    margin-bottom:10px;
 }
 /*------------------------------------------*/
 
