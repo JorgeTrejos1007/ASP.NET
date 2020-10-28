@@ -290,7 +290,7 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
-            bool exitoAlInsertarEducador = miembrosHandler.crearEducador(emailDelQueLoPropuso);
+            //bool exitoAlInsertarEducador = miembrosHandler.crearEducador(emailDelQueLoPropuso);
             return exito;
         }
 

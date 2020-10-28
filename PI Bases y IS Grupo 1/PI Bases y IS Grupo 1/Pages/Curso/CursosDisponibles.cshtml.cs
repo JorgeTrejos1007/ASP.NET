@@ -19,8 +19,8 @@ namespace PIBasesISGrupo1.Pages.Curso
             Miembro usuarioEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
             if (usuarioEnSesion != null)
             {
-                
 
+                ViewData["miEmail"] = usuarioEnSesion.email;
                 ViewData["cursosMatriculados"] = cursoHandler.obtenerMisCursosMatriculados(usuarioEnSesion.email);
 
             }

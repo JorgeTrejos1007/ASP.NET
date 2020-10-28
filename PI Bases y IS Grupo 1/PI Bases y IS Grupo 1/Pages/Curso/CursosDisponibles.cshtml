@@ -4,6 +4,7 @@
 
     var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosDisponibles"];
     var usuarioEnSesion = true;
+    var miEmail = (string)ViewData["miEmail"];
     var cursosMatriculados = (List<string>)ViewData["cursosMatriculados"];
     if (cursosMatriculados == null)
     {
@@ -52,7 +53,7 @@
                 var curso = infoCursos.Item1;
                 var educador = infoCursos.Item2;
 
-                if (usuarioEnSesion && cursosMatriculados.Contains(curso.nombre) == true)
+                if (curso.emailDelEducador == miEmail || (usuarioEnSesion && cursosMatriculados.Contains(curso.nombre) == true))
                 {
 
                     mostrar = false;
