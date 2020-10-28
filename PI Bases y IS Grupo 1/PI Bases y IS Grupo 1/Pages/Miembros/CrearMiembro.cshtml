@@ -31,19 +31,32 @@
             border: 0px solid #fff;
         }
 
-            .subir:hover {
-                color: #fff;
-                background: #848484;
-            }
+        .subir:hover {
+            color: #fff;
+            background: #848484;
+        }
         select {
             color: #848484;
+        }
+        body {
+            background-image: url("/img/registro/registrarme.jpg");
+            background-size: 100%;
+        }
+        .margen-registro{
+            margin:1%;
+            padding:1%;
+        }
+        .center-login {
+            margin: 0;
+            align-content:center;
         }
     </style>
 
 </head>
 
 <div class="offset-lg-4">
-    <div class="align-self-md-center col-lg-8 col-md-8 ">
+    <div class="align-self-md-center col-lg-8 col-md-8">
+
 
         <form id="myForm" method="post" enctype="multipart/form-data">
 
@@ -64,155 +77,161 @@
                     </div>
                 }
             }
-            <div class="col-lg-8 col-md-8">
-                <h3 class="mb-30 title_color">Registrarme</h3>
-                @{
-                    if (esEstudiante)
-                    {
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly class="single-input" />
+                    <br>
+                        <div class="col-lg-8 col-md-8">
+                            <div class="modal-content margen-registro">
+                                <div class="margen-registro">
+                                    <h3 class="mb-30 title_color">Registrarme</h3>
+                                    
+                                    @{
+                                        if (esEstudiante)
+                                        {
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.nombre" value="@estudiante.nombre" readonly class="single-input" />
+                                            </div>
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly class="single-input" />
+                                            </div>
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly class="single-input" />
+                                            </div>
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly class="single-input" />
+                                            </div>
+                                            <div class="mt-10 single-input">
+                                                @if (estudiante.genero == "Femenino")
+                                                {
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
+                                                    <label asp-for="@Model.miembro.genero">Femenino</label>
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                                                    <label asp-for="@Model.miembro.genero">Masculino</label>
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                                                    <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                                }
+                                                else if (estudiante.genero == "Masculino")
+                                                {
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                                                    <label asp-for="@Model.miembro.genero">Femenino</label>
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
+                                                    <label asp-for="@Model.miembro.genero">Masculino </label>
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
+                                                    <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                                }
+                                                else
+                                                {
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
+                                                    <label asp-for="@Model.miembro.genero">Femenino</label>
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
+                                                    <label asp-for="@Model.miembro.genero">Masculino</label>
+                                                    <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
+                                                    <label asp-for="@Model.miembro.genero">Otro</label><br>
+                                                }
+                                            </div>
+
+
+                                        }
+                                        else
+                                        {
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.nombre" placeholder="Nombre" class="single-input" />
+                                            </div>
+
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.primerApellido" placeholder="Primer Apellido" class="single-input" />
+
+                                            </div>
+                                            <div class="mt-10">
+                                                <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.segundoApellido" placeholder="Segundo Apellido" class="single-input" />
+                                            </div>
+                                            <div class="mt-10  ">
+                                                <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
+                                                <input asp-for="@Model.miembro.email" placeholder="Email" type="email" class="single-input" />
+                                            </div>
+                                            <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
+
+                                            <div class="card-columns single-input mt-10">
+                                                <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" /> Femenino<br />
+                                                <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" /> Masculino<br />
+                                                <input type="radio" asp-for="@Model.miembro.genero" value="Otro" /> Otro
+                                            </div>
+                                        }
+
+
+
+
+
+
+                                    }
+                                    <div class="input-group-icon mt-10">
+                                        <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
+                                        <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
+                                        <select class="form-select border-0 single-input" placeholder="Pais" asp-for="@Model.miembro.pais" required>
+                                            <option value="" disabled selected>Pais</option>
+                                            @foreach (var pais in paises)
+                                            {
+
+                                                <option value="@pais">@pais </option>
+
+
+                                            }
+                                        </select>
+
+                                    </div>
+
+                                    <div class="mt-10">
+                                        <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
+                                        <input asp-for="@Model.miembro.hobbies" placeholder="Hobbies" required class="single-input" />
+                                    </div>
+                                    <div class="mt-10">
+                                        <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
+                                        <input asp-for="@Model.miembro.password" placeholder="Contraseña" type="password" class="single-input" />
+                                    </div>
+                                    <div class="mt-10 ">
+                                        <label for="file-upload" class="subir">
+                                            <i class="fas fa-cloud-upload-alt"></i> Seleccionar imagen de perfil
+                                        </label>
+                                        <input asp-for="@Model.archivoImagen" id="file-upload" onchange='cambiar()' type="file" style='display: none;' class="single-input" />
+                                        <div id="info"></div>
+                                    </div>
+                                    <div class=" input-group mt-10">
+                                        <span asp-validation-for="@Model.miembro.idiomas" class="text-danger"></span>
+                                        <select class="border-0  idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length" required>
+                                            @foreach (var idioma in idiomas)
+                                            {
+
+                                                <option value="@idioma">@idioma </option>
+
+
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mt-10">
+                                        <span asp-validation-for="@Model.miembro.habilidades" class="text-danger"></span>
+                                        <select class="border-0 habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length" required>
+                                            @foreach (var habilidad in habilidades)
+                                            {
+
+                                                <option value="@habilidad">@habilidad</option>
+
+                                                <br>
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="mt-20">
+                                        <input type="submit" asp-route-esEstudiante="@esEstudiante" value="Registrar" class="primary-btn offset-lg-3" />
+                                    </div>
+                            </div>
                         </div>
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.primerApellido" value="@estudiante.primerApellido" readonly class="single-input" />
-                        </div>
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.segundoApellido" value="@estudiante.segundoApellido" readonly class="single-input" />
-                        </div>
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.email" value="@estudiante.email" readonly class="single-input" />
-                        </div>
-                        <div class="mt-10 single-input">
-                            @if (estudiante.genero == "Femenino")
-                            {
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly checked />
-                                <label asp-for="@Model.miembro.genero">Femenino</label>
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
-                                <label asp-for="@Model.miembro.genero">Masculino</label>
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
-                                <label asp-for="@Model.miembro.genero">Otro</label><br>
-                            }
-                            else if (estudiante.genero == "Masculino")
-                            {
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
-                                <label asp-for="@Model.miembro.genero">Femenino</label>
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly checked />
-                                <label asp-for="@Model.miembro.genero">Masculino </label>
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly />
-                                <label asp-for="@Model.miembro.genero">Otro</label><br>
-                            }
-                            else
-                            {
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Femenino" readonly />
-                                <label asp-for="@Model.miembro.genero">Femenino</label>
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Masculino" readonly />
-                                <label asp-for="@Model.miembro.genero">Masculino</label>
-                                <input asp-for="@Model.miembro.genero" type="radio" value="Otro" readonly checked />
-                                <label asp-for="@Model.miembro.genero">Otro</label><br>
-                            }
-                        </div>
-
-
-                    }
-                    else
-                    {
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.nombre" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.nombre" placeholder="Nombre" class="single-input" />
-                        </div>
-
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.primerApellido" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.primerApellido" placeholder="Primer Apellido" class="single-input" />
-
-                        </div>
-                        <div class="mt-10">
-                            <span asp-validation-for="@Model.miembro.segundoApellido" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.segundoApellido" placeholder="Segundo Apellido" class="single-input" />
-                        </div>
-                        <div class="mt-10  ">
-                            <span asp-validation-for="@Model.miembro.email" class="text-danger"></span>
-                            <input asp-for="@Model.miembro.email" placeholder="Email" type="email" class="single-input" />
-                        </div>
-                        <span asp-validation-for="@Model.miembro.genero" class="text-danger"></span>
-
-                        <div class="card-columns single-input mt-10">
-                            <input type="radio" asp-for="@Model.miembro.genero" value="Femenino" /> Femenino<br />
-                            <input type="radio" asp-for="@Model.miembro.genero" value="Masculino" /> Masculino<br />
-                            <input type="radio" asp-for="@Model.miembro.genero" value="Otro" /> Otro
-                        </div>
-                    }
-
-
-
-
-
-
-                }
-                        <div class="input-group-icon mt-10">
-                            <span asp-validation-for="@Model.miembro.pais" class="text-danger"></span>
-                            <div class="icon"><i class="ti-location-pin" aria-hidden="true"></i></div>
-                            <select   class="form-select border-0 single-input"  placeholder="Pais" asp-for="@Model.miembro.pais" required  >
-                                <option value="" disabled selected>Pais</option>
-                                @foreach (var pais in paises)
-                                {
-
-                                    <option value="@pais">@pais </option>
-
-
-                                }
-                            </select>
-
-                        </div>
-
-                <div class="mt-10">
-                    <span asp-validation-for="@Model.miembro.hobbies" class="text-danger"></span>
-                    <input asp-for="@Model.miembro.hobbies" placeholder="Hobbies" required class="single-input" />
-                </div>
-                <div class="mt-10">
-                    <span asp-validation-for="@Model.miembro.password" class="text-danger"></span>
-                    <input asp-for="@Model.miembro.password" placeholder="Contraseña" type="password" class="single-input" />
-                </div>
-                <div class="mt-10">
-                    <label for="file-upload" class="subir">
-                        <i class="fas fa-cloud-upload-alt"></i> Seleccionar Imagen
-                    </label>
-                    <input asp-for="@Model.archivoImagen" id="file-upload" onchange='cambiar()' type="file" style='display: none;' class="single-input" />
-                    <div id="info"></div>
-                </div>
-                <div class=" input-group mt-10">
-                    <span asp-validation-for="@Model.miembro.idiomas" class="text-danger"></span>
-                    <select class="border-0  idiomas-select single-input-primary" asp-for="@Model.miembro.idiomas" multiple size="@idiomas.Length" required>
-                        @foreach (var idioma in idiomas)
-                        {
-
-                            <option value="@idioma">@idioma </option>
-
-
-                        }
-                    </select>
-                </div>
-                <div class="mt-10">
-                    <span asp-validation-for="@Model.miembro.habilidades" class="text-danger"></span>
-                    <select  class="border-0 habilidades-select single-input-primary " asp-for="@Model.miembro.habilidades" multiple="multiple" size="@habilidades.Length" required>
-                        @foreach (var habilidad in habilidades)
-                        {
-
-                            <option value="@habilidad">@habilidad</option>
-
-                            <br>
-                        }
-                    </select>
-                </div>
-                <div class="mt-20">
-                    <input type="submit" asp-route-esEstudiante="@esEstudiante" value="Registrar" class="primary-btn offset-lg-3" />
-
-                </div>
-            </div>
+                    </div>
         </form>
+        
     </div>
 </div>
 

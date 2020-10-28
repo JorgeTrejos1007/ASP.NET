@@ -6,36 +6,47 @@
 
 }
 
-
-<h2>Mis cursos Inscritos</h2>
-<div class="cursos-container">
-    @{
-        if (listaDeCursos != null)
-        {
-            for (int i = 0; i < listaDeCursos.Count(); i = i + 1)
+<header>
+    <style>
+        .borde {
+            border-color: #002347;
+            border-style:solid;
+            border-width:thin;
+        }
+    </style>
+</header>
+<div class="cajota-cursos">
+    <h2>Mis cursos matriculados</h2>
+    <div class="cursos-container">
+        @{
+            if (listaDeCursos != null)
             {
-                <div class="row" id="filaDeCursosInscritos" >
-                    @for (int j = i; j < i + 1; j++)
-                    {
+                for (int i = 0; i < listaDeCursos.Count(); i = i + 1)
+                {
+                    <div class="row" id="filaDeCursosInscritos">
 
-                        <a id="botonParaPerfil" asp-page="./VistaCursoEstudiante" asp-route-nombreCurso="@listaDeCursos[j]">
-                            @if (j < listaDeCursos.Count())
-                            {
-                                <div id="cuadro-mis-cursos">
+                        @for (int j = i; j < i + 1; j++)
+                        {
 
-                                    <span class="flaticon-student"></span>
-                                    <h4 id="nombrePersona">@listaDeCursos[j]</h4>
+                            <a id="botonParaPerfil" asp-page="./VistaCursoEstudiante" asp-route-nombreCurso="@listaDeCursos[j]">
+                                @if (j < listaDeCursos.Count())
+                                {
+                                    <div id="cuadro-mis-cursos">
+
+                                        <span class="flaticon-student"></span>
+                                        <h4 id="nombrePersona">@listaDeCursos[j]</h4>
 
 
-                                </div>
+                                    </div>
 
-                            }
-                        </a>
-                    }
-                </div>
+                                }
+                            </a>
+                        }
+                    </div>
+                }
             }
         }
-    }
+    </div>
 </div>
 
 
