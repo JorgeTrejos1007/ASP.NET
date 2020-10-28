@@ -38,7 +38,12 @@ namespace PIBasesISGrupo1
             });
 
             services.AddDistributedMemoryCache();
-            services.AddSession();
+            services.AddSession(options =>
+            {
+                options.Cookie.SameSite = SameSiteMode.None;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                options.Cookie.IsEssential = true;
+            });
             services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddAuthentication(options =>
