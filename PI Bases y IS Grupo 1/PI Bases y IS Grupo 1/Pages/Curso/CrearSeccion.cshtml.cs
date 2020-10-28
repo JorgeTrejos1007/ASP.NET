@@ -32,6 +32,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 ViewData["seccionCreada"] = false;
                 ViewData["nombrePaginaCurso"] = nombrePaginaCurso;
                 TempData["nombrePaginaCurso"] = nombrePaginaCurso;
+                TempData["cursoModificado"] = TempData["cursoModificado"];
                 if (TempData["ocurrioError"]!=null)
                 {
                     ViewData["mensajeError"] = "Esta seccion ya esta en el curso";
@@ -56,6 +57,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["nombreSeccion"] = TempData["nombreSeccion"];
             ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
             TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
+            TempData["cursoModificado"] = TempData["cursoModificado"];
         }
 
         public void OnGetMaterialAgregado()
@@ -65,6 +67,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["nombreSeccion"] = TempData["nombreSeccion"];
             ViewData["nombrePaginaCurso"] = TempData["nombrePaginaCurso"];
             TempData["nombrePaginaCurso"] = ViewData["nombrePaginaCurso"];
+            TempData["cursoModificado"] = TempData["cursoModificado"];
             CursoHandler accesoDatos = new CursoHandler();
             string nombreSeccion = (string)ViewData["nombreSeccion"];
             ViewData["listaMateriales"] = accesoDatos.obtenerMaterialDeUnaSeccion(nombreSeccion, (string)ViewData["nombreCurso"]);
@@ -77,6 +80,14 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["seccionCreada"] = true;
                 TempData["nombreSeccion"] = seccion.nombreSeccion;
                 TempData["nombreCurso"] = seccion.nombreCurso;
+
+                if ((bool)TempData["cursoModificado"] == false)
+                {
+                    TempData["cursoModificado"] = true;
+                    CursoHandler accesodatos = new CursoHandler();
+                    accesodatos.actualizarVersion(seccion.nombreCurso);
+                }
+
                 vista = RedirectToPage("CrearSeccion", "SeccionCreada");
             }
             else
@@ -97,6 +108,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["nombreCurso"] = material.nombreDeCurso;
                 CursoHandler accesoDatos = new CursoHandler();
                 accesoDatos.agregarMaterial(material, archivo);
+                TempData["cursoModificado"] = TempData["cursoModificado"];
                 vista = RedirectToPage("CrearSeccion", "MaterialAgregado");
             }
             catch

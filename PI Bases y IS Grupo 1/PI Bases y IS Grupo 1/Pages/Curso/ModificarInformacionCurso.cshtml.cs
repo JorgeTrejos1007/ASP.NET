@@ -25,6 +25,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["TopicosYCategorias"] = accesoCatalago.obteneTodosLosTopicosYCategoriasAsociadas();
             ViewData["nombreCurso"] = nombreCurso;
             TempData["nombreCurso"] = nombreCurso;
+            TempData["cursoModificado"] = TempData["cursoModificado"];
         }
 
         public IActionResult OnPostModificarCurso()
@@ -34,6 +35,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                 TempData["cursoModificado"] = true;
                 curso.version ++;
             }
+
             CursoHandler accesodatos = new CursoHandler();
             accesodatos.actualizarInfoCurso(curso, (string)TempData["nombreCurso"]);
             return RedirectToPage("CursoCreado", new { nombreCurso = curso.nombre });

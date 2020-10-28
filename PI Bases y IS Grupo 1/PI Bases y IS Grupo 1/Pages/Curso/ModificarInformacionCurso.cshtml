@@ -31,6 +31,7 @@
         <form method="post">
             <div style="display:flex; flex-direction:row; margin-left:20%; margin-top:15px; ">
                 <div style="margin-right:5px; font-size:19px;">
+                    <input type="hidden" asp-for="@Model.curso.version"/>
                     <label asp-for="@Model.curso.nombre">Nombre del curso</label>
                     <input asp-for="@Model.curso.nombre" />
                 </div>

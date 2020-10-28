@@ -18,11 +18,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             try
             {
-                if (TempData["CursoModificado"] == null)
-                {
-                    TempData["CursoModificado"] = false;
-                }
-                TempData["CursoModificado"] = TempData["CursoModificado"];
+                TempData["cursoModificado"] = TempData["cursoModificado"];
                 CursoHandler accesoDatos = new CursoHandler();
                 Secciones = accesoDatos.obtenerSecciones(nombreCurso);
                 ViewData["nombreCurso"] = nombreCurso;
