@@ -6,12 +6,7 @@
     var topicosYCategorias = (List<Tuple<string, string>>)ViewData["TopicosYCategorias"];
     var nombreCurso= (string)ViewData["nombreCurso"];
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
 
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
@@ -63,7 +58,7 @@
             <br>
             <div style="margin-left:79%;">
                 <button type="submit" value="Modificar Curso" asp-page-handler="ModificarCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                    <span class="glyphicon glyphicon-ok"></span> Guardar cambios
+                    <i class="ti-save" aria-hidden="false"></i> Guardar cambios
                 </button>
             </div>
         </form>
@@ -83,7 +78,7 @@
     <div class="curso-material" style=" margin-bottom: 15px;display:flex;">
         <div style="margin-left:86%">
             <a asp-page="./CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                <span class="glyphicon glyphicon-arrow-left"></span> Volver
+                <i class="ti-back-left" aria-hidden="false"></i> Volver
             </a> <br>
         </div>
     </div>

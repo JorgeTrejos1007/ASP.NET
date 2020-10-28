@@ -6,33 +6,29 @@
     var nombreSeccion = (String)ViewData["nombreSeccion"];
     var listaMateriales = (List<PIBasesISGrupo1.Models.MaterialModel>)ViewData["listaMateriales"];
 }
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+
 <div style="margin-left:200px; margin-right:200px;">
-    <div class="curso-material" style="display:flex;">
-        <div style="margin-bottom: 10px;margin-left:10px;">
-            <h2><strong>Modificar seccion: @nombreSeccion</strong></h2>
-        </div>
+    <div class="curso-material" >
+        <div style="display:flex;margin-left:10px;margin-bottom:20px; padding-top:20px">
+            <div style="display:flex;margin:20px 10px;">
+                <h2><strong>Modificar seccion: @nombreSeccion</strong></h2>
+            </div>
 
-        <div style="margin:auto 55% auto auto; display:inline-block;">
-            <a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                <span class="glyphicon glyphicon-pencil"></span>
-            </a>
-            <form method="post" style="display:inline-block;">
-                <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
-                <input type="hidden" asp-for="@Model.seccion.nombreSeccion" value="@nombreSeccion" />
+            <div style=" margin-left:30px; margin-top:10px; ">
+                <a asp-page="ModificarNombreSeccion" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
+                    <i class="ti-pencil-alt" aria-hidden="false"></i> Editar
+                </a>
+                <form method="post" style="display:inline-block;">
+                    <input type="hidden" asp-for="@Model.seccion.nombreCurso" value="@nombreCurso" />
+                    <input type="hidden" asp-for="@Model.seccion.nombreSeccion" value="@nombreSeccion" />
 
-                <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="BorrarSeccion">
-                    <span class="glyphicon glyphicon-trash"></span>
-                </button>
+                    <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="BorrarSeccion">
+                        <i class="ti-trash" aria-hidden="false"></i> Borrar
+                    </button>
 
-            </form>
+                </form>
 
-
+            </div>
         </div>
     </div>
 
@@ -46,7 +42,7 @@
                     </th>
                     <th>
                         <a asp-page="AgregarMaterial" asp-route-nombreCurso="@nombreCurso" asp-route-nombreSeccion="@nombreSeccion" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Agregar material
+                            <i class="ti-plus" aria-hidden="false"></i> Agregar material
                         </a>
                     </th>
                 </tr>
@@ -69,7 +65,7 @@
 
 
                                         <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" asp-page-handler="BorrarMaterial">
-                                            <span class="glyphicon glyphicon-trash"></span>
+                                            <i class="ti-trash" aria-hidden="false"></i> Borrar
                                         </button>
 
                                     </form>
@@ -85,7 +81,7 @@
     <div class="curso-material">
 
         <a asp-page="CursoCreado" asp-route-nombreCurso="@nombreCurso" class="primary-btn__reverse text-uppercase enroll rounded-0" style="margin:auto auto auto 87%;">
-            <span class="glyphicon glyphicon-ok"></span> Terminar
+            <i class="ti-check" aria-hidden="false"></i> Terminar
         </a>
     </div>
 </div>

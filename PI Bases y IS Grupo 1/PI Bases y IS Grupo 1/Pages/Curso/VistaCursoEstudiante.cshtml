@@ -5,12 +5,7 @@
     var nombreCurso = (String)ViewData["nombreCurso"];
 }
 
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-   
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-</head>
+
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material">
         <div style="margin-left:38%;display:flex;">
@@ -38,7 +33,7 @@
                             {
                                 <p>
                                     <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                        <span class="or">@material.nombreMaterial</span>
+                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
                                     <br>
                                 </p>
@@ -56,7 +51,7 @@
     <div class="curso-material">
         <div style="margin-left:86%; display:inline-flex;">
             <a asp-page="./MisCursosInscritos" class="primary-btn__reverse text-uppercase enroll rounded-0" >
-                <span class="glyphicon glyphicon-arrow-left"></span> Volver
+                <i class="ti-back-left" aria-hidden="false"></i> Volver
             </a>
         </div>
     </div>

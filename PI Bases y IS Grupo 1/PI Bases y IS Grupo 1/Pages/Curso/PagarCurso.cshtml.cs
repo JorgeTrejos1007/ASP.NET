@@ -42,7 +42,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                         }
                         else
                         {
-                            TempData["mensaje"] = "Usted ya esta Inscrito a este Curso";
+                            TempData["mensaje"] = "Usted ya está Inscrito a este curso";
                             TempData["exitoAlEditar"] = false;
                         }
                         return RedirectToAction("~/Curso/InscribirmeCursos");
