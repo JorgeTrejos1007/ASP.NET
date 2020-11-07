@@ -26,9 +26,9 @@ namespace PIBasesISGrupo1.Handler
             baseDeDatos = new BaseDeDatosHandler();   
         }
 
-        public List<int> extraerFrecuenciaDeIdiomas(List<string> idiomas)
+        public List<double> extraerPesoDeIdiomas(List<string> idiomas)
         {
-            List<int> frecuenciaDeIdiomas = new List<int>();
+            List<double> pesoDeIdiomas = new List<double>();
 
             foreach (string idioma in idiomas)
             {
@@ -43,15 +43,15 @@ namespace PIBasesISGrupo1.Handler
                 cantidadDeIdiomaEspecifica = (Int32)comando.ExecuteScalar();
                 conexion.Close();
 
-                frecuenciaDeIdiomas.Add((int)cantidadDeIdiomaEspecifica);
+                pesoDeIdiomas.Add(1/(double)cantidadDeIdiomaEspecifica);
             }
 
-            return frecuenciaDeIdiomas;
+            return pesoDeIdiomas;
         }
 
-        public List<int> extraerFrecuenciaDeHabilidades(List<string> habilidades)
+        public List<double> extraerPesoDeHabilidades(List<string> habilidades)
         {
-            List<int> frecuenciaDeHabilidades = new List<int>();
+            List<double> frecuenciaDeHabilidades = new List<double>();
 
             foreach (string habilidad in habilidades)
             {
@@ -66,15 +66,14 @@ namespace PIBasesISGrupo1.Handler
                 cantidadDeHabilidadEspecifica = (Int32)comando.ExecuteScalar();
                 conexion.Close();
 
-                frecuenciaDeHabilidades.Add((int)cantidadDeHabilidadEspecifica);
+                frecuenciaDeHabilidades.Add(1/(double)cantidadDeHabilidadEspecifica);
             }
 
             return frecuenciaDeHabilidades;
         }
 
-        public int extraerFrecuenciaDePais(string pais) {
-            int frecuenciaDePais = 0;
-        
+        public double extraerPesoDePais(string pais) {
+            
             string consulta = " SELECT COUNT(*)" +
                             " FROM  Usuario" +
                             " WHERE pais=@pais";
@@ -82,10 +81,37 @@ namespace PIBasesISGrupo1.Handler
             comando.Parameters.AddWithValue("@pais", pais);
 
             conexion.Open();
-            frecuenciaDePais = (Int32)comando.ExecuteScalar();
+            double frecuenciaDePais = (Int32)comando.ExecuteScalar();
             conexion.Close();
            
-            return frecuenciaDePais;
+            return (1/frecuenciaDePais);
+        }
+
+        public List<string> extraerPerfilesConAlMenosUnaSimilitud () {
+            List<string> correos = new List<string>();
+
+            string consulta = " SELECT COUNT(*)" +
+                            " FROM  Usuario" +
+                            " WHERE pais=@pais";
+
+            /*SELECT emailFK
+            FROM(
+                (SELECT emailFK FROM Idiomas WHERE idiomaPK = 'Español' OR idiomaPK = 'Ingles' GROUP BY emailFK)
+                UNION ALL
+                (SELECT emailFK FROM Habilidades WHERE habilidadPK = 'Flexibilidad' OR habilidadPK = 'Liderazgo' GROUP BY emailFK)
+                UNION ALL
+                (SELECT emailPK FROM Usuario WHERE pais = 'Costa Rica' GROUP BY emailPK)
+		        ) t
+            GROUP BY emailFK*/
+
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            comando.Parameters.AddWithValue("@pais", pais);
+
+            conexion.Open();
+            frecuenciaDePais = (Int32)comando.ExecuteScalar();
+            conexion.Close();
+
+            return (1 / frecuenciaDePais);
         }
 
     }

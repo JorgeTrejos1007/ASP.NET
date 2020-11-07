@@ -22,19 +22,19 @@ namespace PIBasesISGrupo1.Pages.Miembros
             ViewData["Miembros"] = accesoDatos.obtenerTodosLosMiembros();
             
             SimilitudPerfilHandler prueba = new SimilitudPerfilHandler();
-            List<int> valores = new List<int>();
+            List<double> valores = new List<double>();
             List<string> idioma = new List<string>();
             idioma.Add("Español");
             idioma.Add("Ingles");
-            valores = prueba.extraerFrecuenciaDeIdiomas(idioma);
+            valores = prueba.extraerPesoDeIdiomas(idioma);
 
-            List<int> cantidadHabilidades = new List<int>();
+            List<double> cantidadHabilidades = new List<double>();
             List<string> habilidades = new List<string>();
             habilidades.Add("Liderazgo");
             habilidades.Add("Optimismo");
-            cantidadHabilidades = prueba.extraerFrecuenciaDeHabilidades(habilidades);
+            cantidadHabilidades = prueba.extraerPesoDeHabilidades(habilidades);
 
-            int cantidadPais = prueba.extraerFrecuenciaDePais("Costa Rica");
+            double cantidadPais = prueba.extraerPesoDePais("Costa Rica");
         }
     }
 }
