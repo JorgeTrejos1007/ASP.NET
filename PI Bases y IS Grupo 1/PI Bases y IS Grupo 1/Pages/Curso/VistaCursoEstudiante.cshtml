@@ -36,8 +36,9 @@
                                     <a  href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba()">
                                         <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
-                                        <button hidden id="subir" asp-route-nombreMaterial="@material.nombreMaterial"></button>
+                                        <button value="submit" hidden id="subir" asp-route-nombreMaterial="@material.nombreMaterial" asp-route-nombreSeccion="@material.nombreDeSeccion" asp-route-nombreCurso="@material.nombreDeCurso" asp-page-handler="SubirMaterial"></button>
                                     </form>
+                                
                                     <br>
                                 
                             }

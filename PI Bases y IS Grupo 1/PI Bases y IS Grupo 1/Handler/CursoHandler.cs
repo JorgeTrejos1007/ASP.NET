@@ -342,6 +342,7 @@ namespace PIBasesISGrupo1.Handler
         {
             List<MaterialModel> materiales = new List<MaterialModel>();
             string consulta = "SELECT * FROM Material WHERE nombreSeccionFK = @nombreSeccion AND nombreCursoFK = @nombreCurso";
+
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
@@ -357,6 +358,38 @@ namespace PIBasesISGrupo1.Handler
                     nombreDeSeccion = Convert.ToString(columna["nombreSeccionFK"]),
                     nombreMaterial = Convert.ToString(columna["nombreMaterialPK"]),
                     tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
+                    
+                });
+
+            }
+            return materiales;
+        }
+
+        public List<MaterialModel> obtenerMaterialesDeUnaSeccionParaEstudiante( string nombreCurso, string nombreSeccion, string email)
+        {
+            List<MaterialModel> materiales = new List<MaterialModel>();
+            string consulta = "SELECT M.nombreMaterialPK, M.nombreSeccionFK, M.nombreCursoFK, M.material, M.tipoArchivo, HC.visto "+
+                               " FROM Material M JOIN HaCubierto HC "+
+                               " ON M.nombreCursoFK= HC.nombreCursoFK AND M.nombreSeccionFK = HC.nombreSeccionFK AND M.nombreMaterialPK = HC.nombreMaterialFK "+
+                               " WHERE HC.emailEstudianteFK=@email AND HC.nombreCursoFK = @nombreCurso AND HC.nombreSeccionFK= @nombreSeccion";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
+
+            DataTable tablaResultado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                materiales.Add(
+                new MaterialModel
+                {
+                    archivo = (byte[])columna["material"],
+                    nombreDeCurso = Convert.ToString(columna["nombreCursoFK"]),
+                    nombreDeSeccion = Convert.ToString(columna["nombreSeccionFK"]),
+                    nombreMaterial = Convert.ToString(columna["nombreMaterialPK"]),
+                    tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
+                    visto=Convert.ToInt32(columna["visto"])
                 });
 
             }
@@ -545,6 +578,17 @@ namespace PIBasesISGrupo1.Handler
             
             return exito;
 
+        }
+
+        public bool marcarMaterial(string nombreMaterial, string nombreSeccion, string nombreCurso, string email) {
+            SqlCommand comandoParaMarcarMaterial = baseDeDatos.crearComandoParaConsulta("SP_Marcar_Material");
+            comandoParaMarcarMaterial.CommandType = CommandType.StoredProcedure;
+            comandoParaMarcarMaterial.Parameters.AddWithValue("@emailEstudiante", email);
+            comandoParaMarcarMaterial.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            comandoParaMarcarMaterial.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
+            comandoParaMarcarMaterial.Parameters.AddWithValue("@nombreMaterial", nombreMaterial);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaMarcarMaterial);
+            return exito;
         }
 
     }

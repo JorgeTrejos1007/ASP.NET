@@ -15,17 +15,19 @@ namespace PIBasesISGrupo1.Pages.Curso
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
         public Miembro miembroEnSesion;
+        CursoHandler accesoDatos = new CursoHandler();
         public IActionResult OnGet(String nombreCurso)
         {
             try
             {
-                CursoHandler accesoDatos = new CursoHandler();
+                
                  miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 if (miembroEnSesion==null)
                 {
                     miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
                 }
                 var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
+                TempData["email"] = miembroEnSesion.email;
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
@@ -42,9 +44,11 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                     foreach (var item in Secciones)
                     {
-                        item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
+                        item.listaMateriales = accesoDatos.obtenerMaterialesDeUnaSeccionParaEstudiante(nombreCurso, item.nombreSeccion, miembroEnSesion.email);
                     }
+                    
                     return Page();
+
                 }
                 else
                 {
@@ -57,8 +61,8 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
-        public void OnPost(string nombreMaterial) {
-
+        public void OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreCurso) {
+           bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreCurso, (string)TempData["email"]);
         }
 
     }
