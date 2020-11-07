@@ -86,9 +86,6 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
             return existe;
         }
-
     }
-
-
 }
 
