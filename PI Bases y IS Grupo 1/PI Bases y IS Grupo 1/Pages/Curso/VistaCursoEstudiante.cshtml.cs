@@ -20,6 +20,10 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
                 CursoHandler accesoDatos = new CursoHandler();
                 var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                if (miembroEnSesion==null)
+                {
+                    miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
+                }
                 var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
