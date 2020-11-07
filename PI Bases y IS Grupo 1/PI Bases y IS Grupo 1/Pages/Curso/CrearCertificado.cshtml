@@ -3,112 +3,132 @@
 @{
     ViewData["Title"] = "CrearCertificado";
 }
-<!DOCTYPE html>
-<html>
 
 <head>
-    <title>
-        How to convert an HTML element
-        or document into image ?
-    </title>
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
     </script>
 
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
     </script>
+    <link rel="stylesheet" href="~/css/certificado.css" />
 </head>
 
-<body>
-    <center>
-        <h2 style="color:green">
-            GeeksForGeeks
-        </h2>
 
-        <h2 style="color:purple">
-            Convert div to image
-        </h2>
+    <div class="container pm-certificate-container" id="certificado__container">
+        <div class="outer-border"></div>
+        <div class="inner-border"></div>
 
-        <div id="html-content-holder" style="background-color: #F0F0F1;
-                color: #00cc65; width: 500px;padding-left: 25px;
-                padding-top: 10px;">
+        <div class="pm-certificate-border col-xs-12">
+            <div class="row pm-certificate-header">
+                <div class="pm-certificate-title cursive col-xs-12 text-center">
+                    <h2>Buffalo Public Schools Certificate of Completion</h2>
+                </div>
+            </div>
 
-            <strong>
-                GeeksForGeeks
-            </strong>
+            <div class="row pm-certificate-body">
 
-            <hr />
+                <div class="pm-certificate-block">
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                            <div class="pm-certificate-name underline margin-0 col-xs-8 text-center">
+                                <span class="pm-name-text bold">TrueNorth Administrator</span>
+                            </div>
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                        </div>
+                    </div>
 
-            <h3 style="color: #3e4b51;">
-                ABOUT US
-            </h3>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                            <div class="pm-earned col-xs-8 text-center">
+                                <span class="pm-earned-text padding-0 block cursive">has earned</span>
+                                <span class="pm-credits-text block bold sans">PD175: 1.0 Credit Hours</span>
+                            </div>
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                            <div class="col-xs-12"></div>
+                        </div>
+                    </div>
 
-            <p style="color: #3e4b51;">
-                <b>GeeksForGeeks</b> is a portal and a forum
-                for many tutorials focusing on Programming
-                ASP.Net, C#, jQuery, AngularJs, Gridview, MVC,
-                Ajax, Javascript, XML, MS SQL-Server, NodeJs,
-                Web Design, Software and much more
-            </p>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                            <div class="pm-course-title col-xs-8 text-center">
+                                <span class="pm-earned-text block cursive">while completing the training course entitled</span>
+                            </div>
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                        </div>
+                    </div>
 
-            <p style="color: #3e4b51;">
-                How many times were you frustrated while
-                looking out for a good collection of
-                programming/algorithm/interview questions?
-                What did you expect and what did you get?
-                This portal has been created to provide
-                well written, well thought and well
-                explained solutions for selected questions.
-            </p>
+                    <div class="col-xs-12">
+                        <div class="row">
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                            <div class="pm-course-title underline col-xs-8 text-center">
+                                <span class="pm-credits-text block bold sans">BPS PGS Initial PLO for Principals at Cluster Meetings</span>
+                            </div>
+                            <div class="col-xs-2"><!-- LEAVE EMPTY --></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12">
+                    <div class="row">
+                        <div class="pm-certificate-footer">
+                            <div class="col-xs-4 pm-certified col-xs-4 text-center">
+                                <span class="pm-credits-text block sans">Buffalo City School District</span>
+                                <span class="pm-empty-space block underline"></span>
+                                <span class="bold block">Crystal Benton Instructional Specialist II, Staff Development</span>
+                            </div>
+                            <div class="col-xs-4">
+                                <!-- LEAVE EMPTY -->
+                            </div>
+                            <div class="col-xs-4 pm-certified col-xs-4 text-center">
+                                <span class="pm-credits-text block sans">Date Completed</span>
+                                <span class="pm-empty-space block underline"></span>
+                                <span class="bold block">DOB: </span>
+                                <span class="bold block">Social Security # (last 4 digits)</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
         </div>
+    </div>
 
-        <input id="btn-Preview-Image" type="button"
-               value="Preview" />
+<a id="btn-Convert-Html2Image" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">
+    Download
+</a>
 
-        <a id="btn-Convert-Html2Image" href="#">
-            Download
-        </a>
 
-        <br />
+<script>
+    $(document).ready(function () {
 
-        <h3>Preview :</h3>
+        // Global variable
+        var element = $("#certificado__container");
 
-        <div id="previewImage"></div>
+        // Global variable
+        var getCanvas;
 
-        <script>
-            $(document).ready(function () {
+        $("#btn-Convert-Html2Image").on('click', function () {
 
-                // Global variable
-                var element = $("#html-content-holder");
-
-                // Global variable
-                var getCanvas;
-
-                $("#btn-Preview-Image").on('click', function () {
-                    html2canvas(element, {
-                        onrendered: function (canvas) {
-                            $("#previewImage").append(canvas);
-                            getCanvas = canvas;
-                        }
-                    });
-                });
-
-                $("#btn-Convert-Html2Image").on('click', function () {
-                    var imgageData =
-                        getCanvas.toDataURL("image/png");
-
-                    // Now browser starts downloading
-                    // it instead of just showing it
-                    var newData = imgageData.replace(
-                        /^data:image\/png/, "data:application/octet-stream");
-
-                    $("#btn-Convert-Html2Image").attr(
-                        "download", "GeeksForGeeks.png").attr(
-                            "href", newData);
-                });
+            html2canvas(element, {
+                onrendered: function (canvas) {
+                    getCanvas = canvas;
+                }
             });
-        </script>
-    </center>
-</body>
 
-</html>            
+            var imgageData = getCanvas.toDataURL("image/png");
+
+            // Now browser starts downloading
+            // it instead of just showing it
+            var newData = imgageData.replace(
+                /^data:image\/png/, "data:application/octet-stream");
+
+            $("#btn-Convert-Html2Image").attr(
+                "download", "Certficado.png").attr(
+                    "href", newData);
+        });
+    });
+</script>
