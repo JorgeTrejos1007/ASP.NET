@@ -14,12 +14,13 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
+        public Miembro miembroEnSesion;
         public IActionResult OnGet(String nombreCurso)
         {
             try
             {
                 CursoHandler accesoDatos = new CursoHandler();
-                var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                 miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 if (miembroEnSesion==null)
                 {
                     miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
