@@ -31,12 +31,15 @@
 
                         @{ foreach (var material in item.listaMateriales)
                             {
-                                <p>
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                
+                                    <form method="post"  >
+                                    <a  href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba()">
                                         <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
+                                        <button hidden id="subir" asp-route-nombreMaterial="@material.nombreMaterial"></button>
+                                    </form>
                                     <br>
-                                </p>
+                                
                             }
                         }
 
@@ -70,6 +73,12 @@
         </div>
     </div>
 <script>
+    function prueba() {
+        document.getElementById("subir").click();
+
+    }
+
+
         var acc = document.getElementsByClassName("accordion");
         var i;
 

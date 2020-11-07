@@ -57,5 +57,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
+        public void OnPost(string nombreMaterial) {
+
+        }
+
     }
 }
