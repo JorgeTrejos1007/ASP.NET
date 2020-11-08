@@ -61,10 +61,10 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
-        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreCurso) {
-           bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreCurso, (string)TempData["email"]);
-
-           return Page();
+        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreDeCurso) {
+           bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, (string)TempData["email"]);
+            
+            return RedirectToPage("VistaCursoEstudiante", new { nombreCurso = nombreDeCurso });
         }
 
     }

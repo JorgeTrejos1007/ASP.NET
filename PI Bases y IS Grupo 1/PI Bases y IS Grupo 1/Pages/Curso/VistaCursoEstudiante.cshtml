@@ -6,6 +6,7 @@
 }
 
 
+
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material">
         <div style="margin-left:38%;display:flex;">
@@ -27,25 +28,34 @@
 
                     <button class="accordion">@item.nombreSeccion</button>
 
-                    <div class="panel" style="background-color:#ccc;">
+                    <div class="panel" style="background-color:#dedede;">
 
-                        @{ 
-                                
-                                foreach (var material in item.listaMateriales)
-                                {
-                                    
-                                    <form method="post"  >
-                                        <a  href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial+@material.nombreDeSeccion')">
-                                            <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
-                                        </a>
-                                        <button  hidden id="@material.nombreMaterial+@material.nombreDeSeccion" asp-route-nombreMaterial="@material.nombreMaterial" asp-route-nombreSeccion="@material.nombreDeSeccion" asp-route-nombreCurso="@material.nombreDeCurso" asp-page-handler="SubirMaterial"></button>
-                                    </form>
+                        @{
 
-                                    
-                                    <br>
+                            foreach (var material in item.listaMateriales)
+                            {
+
+                                <form method="post">
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial+@material.nombreDeSeccion')">
+                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
+                                    </a>
+                                    @if (material.visto == 1)
+                                    {
+                                        <span class="or" style="color:#13b208; margin-left:15px;">Visto <i class="ti-check" aria-hidden="false"></i></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="or" style="color:red; margin-left:15px;">No visto <i class="ti-close" aria-hidden="false"></i></span>
+                                    }
+
+                                    <button hidden id="@material.nombreMaterial+@material.nombreDeSeccion" asp-route-nombreMaterial="@material.nombreMaterial" asp-route-nombreSeccion="@material.nombreDeSeccion" asp-route-nombreDeCurso="@material.nombreDeCurso" asp-page-handler="SubirMaterial"></button>
+                                </form>
 
 
-                                }
+                                <br>
+
+
+                            }
                         }
 
 
@@ -58,48 +68,48 @@
     </div>
     <div class="curso-material">
         <div style="margin-left:86%; display:inline-flex;">
-            <a asp-page="./MisCursosInscritos" class="primary-btn__reverse text-uppercase enroll rounded-0" >
+            <a asp-page="./MisCursosInscritos" class="primary-btn__reverse text-uppercase enroll rounded-0">
                 <i class="ti-back-left" aria-hidden="false"></i> Volver
             </a>
         </div>
     </div>
+    
 
-        <div>
-            <hr>
-            <div style="display:inline-block; margin-right:55%;">
-                <h4>Comparte tu participación en este curso en redes sociales</h4>
-            </div>
-            <div>
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button"
+</div>
+<div class="container-body body-content" style="margin-bottom:90px;">
+    <footer class="footer-margin">
+
+        <p>
+            <h4>
+                Comparte tu participación en este curso en redes sociales
+
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" style="width:90px !important"
                    data-text="Me he inscrito en el curso de @nombreCurso de la comunidad práctica de aprendizaje. Aquí el enlace a la página de la comunidad:"
-                   data-url="http://edustage.azurewebsites.net/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="large">Tweet</a>
+                   data-url="http://edustage.azurewebsites.net/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="Large">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-            </div>
-        </div>
-    </div>
+            </h4>
+        </p>
+    </footer>
+</div>
 <script>
     function prueba(id) {
-
-        
-      
         document.getElementById(id).click();
-
     }
 
 
-        var acc = document.getElementsByClassName("accordion");
-        var i;
+    var acc = document.getElementsByClassName("accordion");
+    var i;
 
-        for (i = 0; i < acc.length; i++) {
-            acc[i].addEventListener("click", function () {
-                this.classList.toggle("active");
-                var panel = this.nextElementSibling;
-                if (panel.style.display === "block") {
-                    panel.style.display = "none";
-                } else {
-                    panel.style.display = "block";
-                }
-            });
-        }
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.display === "block") {
+                panel.style.display = "none";
+            } else {
+                panel.style.display = "block";
+            }
+        });
+    }
 </script>
 
