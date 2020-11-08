@@ -82,15 +82,23 @@ namespace PIBasesISGrupo1.MotorSimilitudes
                 }
             }
 
-            semejanzaDePerfiles.OrderByDescending(key => key.Value);
             
-            for (int index = 0; index < cantidadPerfiles - 1 && index < semejanzaDePerfiles.Count; index++)
-            {
-                var item = semejanzaDePerfiles.ElementAt(index);
+            semejanzaDePerfiles.Remove(miEmail);
 
-                if (item.Key != miEmail)
+            var items = from pair in semejanzaDePerfiles
+                        orderby pair.Value descending
+                        select pair;
+
+            int contador = 0;
+            foreach (KeyValuePair<string, double> pair in items)
+            {
+                if (contador < cantidadPerfiles)
                 {
-                    topPerfilesMasSimilares[index] = item.Key;
+                    topPerfilesMasSimilares.Add(pair.Key);
+                    contador = contador+1;
+                }
+                else {
+                    break;
                 }
             }
 
