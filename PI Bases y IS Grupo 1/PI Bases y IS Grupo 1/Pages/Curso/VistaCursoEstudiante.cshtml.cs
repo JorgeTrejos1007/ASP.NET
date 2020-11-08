@@ -61,8 +61,10 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
-        public void OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreCurso) {
+        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreCurso) {
            bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreCurso, (string)TempData["email"]);
+
+           return Page();
         }
 
     }
