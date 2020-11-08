@@ -107,10 +107,17 @@
                                                 <a class="nav-link" href="/Curso/ProponerCurso">Proponer</a>
                                             </li>
 
-                                            if (miembroEnSesion.tipoDeUsuario == "Miembro de Nucleo")
+                                            if (miembroEnSesion.tipoDeUsuario == "Miembro de Nucleo" || miembroEnSesion.tipoDeUsuario == "Coordinador")
                                             {
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="/Curso/AprobarCurso">Aprobar</a>
+                                                </li>
+
+                                            }
+                                            if (miembroEnSesion.tipoDeUsuario == "Coordinador")
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/Miembros/AprobarCurso">Aprobar</a>
                                                 </li>
 
                                             }
