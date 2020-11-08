@@ -16,15 +16,17 @@ namespace PIBasesISGrupo1.Pages.Certificado
 {
     public class AprobarCertificadoModel : PageModel
     {
-        private CertificadoHandler accesoAlCertificado = new CertificadoHandler();
+        private CertificadoHandler accesoAlCertificado;
         public void OnGet()
         {
+            accesoAlCertificado = new CertificadoHandler();
             ViewData["Certificados"] = accesoAlCertificado.obtenerCertificadosNoAprobados();
 
         }
         public IActionResult OnPost(int id)
         {
-
+            accesoAlCertificado = new CertificadoHandler();
+            bool exito = accesoAlCertificado.aprobarCertificado(id);
             return RedirectToPage("AprobarCertificado");
         }
     }

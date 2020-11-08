@@ -46,6 +46,16 @@ namespace PIBasesISGrupo1.Handler
             }
             return listaDeCertificados;
         }
+        public bool aprobarCertificado(int idCertificado) {
+            string consulta = "UPDATE Certificado SET estadoDelCertificado= 'Aprobado'" +
+            " WHERE idCertificadoPK = @id;";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@id", idCertificado);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
+            return exito;
+
+
+        }
 
     }
 }
