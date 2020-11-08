@@ -140,7 +140,7 @@ namespace PIBasesISGrupo1.Handler
             return consulta;
         }
 
-        public List<string> extraerCorreosConAlMenosUnaSimiltudEnPais(string pais)
+        public List<string> extraerCorreosConSimiltudEnPais(string pais)
         {
             List<string> correos = new List<string>();
 
@@ -160,8 +160,17 @@ namespace PIBasesISGrupo1.Handler
             return correos;
         }
 
-        public List<int> revisionParaCrearListaBinaria(string[] atributos, List<string> correos) {
-            List<int> p;return p;ssss
-        }
+        public int revisarSiTieneElAtributoSegunCorreo(string nombreTabla,string atributo, string columnaDeBusqueda, string correo)
+        {       
+            string consulta = "SELECT COUNT(*) " + "FROM " + nombreTabla + " WHERE " + columnaDeBusqueda + "=@atributo AND emailFK=@correo";
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            comando.Parameters.AddWithValue("@atributo", atributo);
+            comando.Parameters.AddWithValue("@correo", correo);
+
+            conexion.Open();
+            Int32 estaAtributo = (Int32)comando.ExecuteScalar();
+            conexion.Close();
+
+            return (int)estaAtributo;                }
     }
 }

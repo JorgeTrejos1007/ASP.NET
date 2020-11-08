@@ -22,13 +22,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
             ViewData["Miembros"] = accesoDatos.obtenerTodosLosMiembros();
 
             SimilitudPerfilHandler prueba = new SimilitudPerfilHandler();
-            string[] habilidades = {"Liderazgo", "Optimismo"};
 
-            string consulta = prueba.crearConsultaTamañoDinamicoHabilidades(habilidades);
-            List<string> correos = prueba.extraerCorreosConAlMenosUnaSimilitud(habilidades, consulta);
-
-            string pais = "Costa Rica";
-            List<string> resultado = prueba.extraerCorreosConAlMenosUnaSimiltudEnPais(pais);
+            //string nombreTabla,string atributo, string columnaDeBusqueda,  string correo
+            int estaDentroDeTabla = prueba.revisarSiTieneElAtributoSegunCorreo("Idiomas","Japones","idiomaPK","jorgetukitrejos@gmail.com");
         }
     }
 }
