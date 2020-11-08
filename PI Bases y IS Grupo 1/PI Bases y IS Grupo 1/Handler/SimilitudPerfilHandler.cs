@@ -26,7 +26,7 @@ namespace PIBasesISGrupo1.Handler
             baseDeDatos = new BaseDeDatosHandler();   
         }
 
-        public List<double> extraerPesoDeIdiomas(List<string> idiomas)
+        public List<double> extraerPesoDeIdiomas(string[] idiomas)
         {
             List<double> pesoDeIdiomas = new List<double>();
 
@@ -49,7 +49,7 @@ namespace PIBasesISGrupo1.Handler
             return pesoDeIdiomas;
         }
 
-        public List<double> extraerPesoDeHabilidades(List<string> habilidades)
+        public List<double> extraerPesoDeHabilidades(string[] habilidades)
         {
             List<double> frecuenciaDeHabilidades = new List<double>();
 
@@ -87,32 +87,58 @@ namespace PIBasesISGrupo1.Handler
             return (1/frecuenciaDePais);
         }
 
-        public List<string> extraerPerfilesConAlMenosUnaSimilitud () {
+        
+        public List<string> extraerCorreosConAlMenosUnaSimilitud(string[] atributos, string consulta)
+        {
             List<string> correos = new List<string>();
 
-            string consulta = " SELECT COUNT(*)" +
-                            " FROM  Usuario" +
-                            " WHERE pais=@pais";
-
-            /*SELECT emailFK
-            FROM(
-                (SELECT emailFK FROM Idiomas WHERE idiomaPK = 'Español' OR idiomaPK = 'Ingles' GROUP BY emailFK)
-                UNION ALL
-                (SELECT emailFK FROM Habilidades WHERE habilidadPK = 'Flexibilidad' OR habilidadPK = 'Liderazgo' GROUP BY emailFK)
-                UNION ALL
-                (SELECT emailPK FROM Usuario WHERE pais = 'Costa Rica' GROUP BY emailPK)
-		        ) t
-            GROUP BY emailFK*/
-
             SqlCommand comando = new SqlCommand(consulta, conexion);
-            comando.Parameters.AddWithValue("@pais", pais);
 
-            conexion.Open();
-            frecuenciaDePais = (Int32)comando.ExecuteScalar();
-            conexion.Close();
+            for (int i = 0; i < atributos.Length; i++) {
+                comando.Parameters.AddWithValue("@"+ atributos[i], atributos[i]);
+            }
 
-            return (1 / frecuenciaDePais);
+            DataTable tablaCorreos = baseDeDatos.crearTablaConsulta(comando);
+
+            foreach (DataRow columna in tablaCorreos.Rows)
+            {
+                correos.Add(Convert.ToString(columna["emailFK"]));
+            }
+            return correos;
         }
 
+        public string crearConsultaTamañoDinamicoHabilidades(string[] habilidades)
+        {
+            string consulta = "SELECT DISTINCT emailFK" + " FROM Habilidades" + " WHERE ";
+            for (int index = 0; index < habilidades.Length; index++)
+            {
+                if (index < habilidades.Length - 1)
+                {
+                    consulta += "habilidadPK = @" + habilidades[index] + " OR ";
+                }
+                else
+                {
+                    consulta += "habilidadPK = @" + habilidades[index];
+                }
+            }
+            return consulta;
+        }
+
+        public string crearConsultaTamanoDinamicoIdiomas(string[] idiomas)
+        {
+            string consulta = "SELECT DISTINCT emailFK" + " FROM Idiomas" + " WHERE ";
+            for (int index = 0; index < idiomas.Length; index++)
+            {
+                if (index < idiomas.Length - 1)
+                {
+                    consulta += "idiomaPK = @" + idiomas[index] + " OR ";
+                }
+                else
+                {
+                    consulta += "idiomaPK = @" + idiomas[index];
+                }
+            }
+            return consulta;
+        }
     }
 }
