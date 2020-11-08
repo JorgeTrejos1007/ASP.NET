@@ -2,7 +2,47 @@
 @model PIBasesISGrupo1.Pages.Certificado.AprobarCertificadoModel
 @{
     ViewData["Title"] = "AprobarCertificado";
+    var certificados = (List<PIBasesISGrupo1.Models.Certificado>)ViewData["Certificados"];
 }
 
-<h2>AprobarCertificado</h2>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+
+    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
+    </script>
+
+</head>
+
+@foreach (var certificado in certificados) {
+           
+    <div class="certificado__container" id="certificado">
+        <div class="certificado__elements">
+            <p class="certificado__title">Certificado de finalización</p>
+            <br />
+            <p class="certificado__content">POR MEDIO DEL PRESENTE, SE CONFIRMA QUE</p>
+            <p class="certificado__ownerName">@certificado.nombreEstudiante</p>
+            <br />
+            <p class="certificado__content">HA FINALIZADO SATISFACTORIAMENTE</p>
+            <p class="certificado__content certificado__content-lessMargin">EL CURSO @certificado.nombreCurso</p>
+            <br />
+            <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
+            <br />
+            <br />
+            <div class="certificado__members">
+                <div>
+                    <p class="certificado__members__line"></p>
+                    <p class="certificado__members__information">PATRICIA SAN JUAN, COORDINADORA DEL PROGRAMA</p>
+                </div>
+                <div>
+                    <p class="certificado__members__line"></p>
+                    <p class="certificado__members__information">3 DE ABRIL DE 2012</p>
+                </div>
+            </div>
+            <form method="post" asp-route-id="@certificado.idCertificado"  >
+                <button class="primary-btn2 text-uppercase enroll rounded-0">Firmar</button>
+            </form>
+        </div>
+    </div>
+}
 

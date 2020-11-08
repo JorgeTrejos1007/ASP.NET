@@ -21,7 +21,8 @@ namespace PIBasesISGrupo1.Handler
         }
         public List<Certificado> obtenerCertificadosNoAprobados(){
             List<Certificado> listaDeCertificados = new List<Certificado>();
-            string consulta = "SELECT E.nombre AS 'nombreEducador'  ,Cu.nombrePK AS 'nombreCurso', S.nombre AS 'nombreEstudiante' " +
+            string consulta = "SELECT  C.idCertificadoPK AS 'idCertificado', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'" +
+                "  ,Cu.nombrePK AS 'nombreCurso', S.nombre+ ' '+S.primerApellido+ ' '+S.segundoApellido AS 'nombreEstudiante' " +
                 "FROM Certifica Certi " +
                 "JOIN Usuario E ON E.emailPK = Certi.emailEducadorFK " +
                 "JOIN Curso Cu ON Cu.nombrePK = Certi.nombreCursoFK " +
@@ -36,8 +37,9 @@ namespace PIBasesISGrupo1.Handler
                 certificadoTemporal = new Certificado
                 {
                     nombreCurso = Convert.ToString(columna["nombreCurso"]),
-                    nombreEducador = Convert.ToString(columna["emailEducador"]),
-                    nombreEstudiante = Convert.ToString(columna["emailEstudiante"]),
+                    nombreEducador = Convert.ToString(columna["nombreEducador"]),
+                    nombreEstudiante = Convert.ToString(columna["nombreEstudiante"]),
+                    idCertificado= Convert.ToInt32(columna["idCertificado"])
 
                 };
                 listaDeCertificados.Add(certificadoTemporal);
