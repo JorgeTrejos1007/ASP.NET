@@ -72,7 +72,7 @@ namespace PIBasesISGrupo1.Handler
             return frecuenciaDeHabilidades;
         }
 
-        public double extraerPesoDePais(string pais) {
+        public double extraerPesoDePaises(string pais) {
             
             string consulta = " SELECT COUNT(*)" +
                             " FROM  Usuario" +
@@ -86,7 +86,6 @@ namespace PIBasesISGrupo1.Handler
            
             return (1/frecuenciaDePais);
         }
-
         
         public List<string> extraerCorreosConAlMenosUnaSimilitud(string[] atributos, string consulta)
         {
@@ -139,6 +138,30 @@ namespace PIBasesISGrupo1.Handler
                 }
             }
             return consulta;
+        }
+
+        public List<string> extraerCorreosConAlMenosUnaSimiltudEnPais(string pais)
+        {
+            List<string> correos = new List<string>();
+
+            string consulta = " SELECT emailPK" +
+                            " FROM  Usuario" +
+                            " WHERE pais=@pais";
+
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            comando.Parameters.AddWithValue("@pais",pais);
+            
+            DataTable tablaCorreos = baseDeDatos.crearTablaConsulta(comando);
+
+            foreach (DataRow columna in tablaCorreos.Rows)
+            {
+                correos.Add(Convert.ToString(columna["emailPK"]));
+            }
+            return correos;
+        }
+
+        public List<int> revisionParaCrearListaBinaria(string[] atributos, List<string> correos) {
+            List<int> p;return p;ssss
         }
     }
 }

@@ -26,6 +26,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
             string consulta = prueba.crearConsultaTamañoDinamicoHabilidades(habilidades);
             List<string> correos = prueba.extraerCorreosConAlMenosUnaSimilitud(habilidades, consulta);
+
+            string pais = "Costa Rica";
+            List<string> resultado = prueba.extraerCorreosConAlMenosUnaSimiltudEnPais(pais);
         }
     }
 }
