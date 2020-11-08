@@ -160,7 +160,7 @@ namespace PIBasesISGrupo1.Handler
             return correos;
         }
 
-        public int revisarSiTieneElAtributoSegunCorreo(string nombreTabla,string atributo, string columnaDeBusqueda, string correo)
+        public double revisarSiTieneElAtributoSegunCorreo(string nombreTabla,string atributo, string columnaDeBusqueda, string correo)
         {       
             string consulta = "SELECT COUNT(*) " + "FROM " + nombreTabla + " WHERE " + columnaDeBusqueda + "=@atributo AND emailFK=@correo";
             SqlCommand comando = new SqlCommand(consulta, conexion);
@@ -171,6 +171,7 @@ namespace PIBasesISGrupo1.Handler
             Int32 estaAtributo = (Int32)comando.ExecuteScalar();
             conexion.Close();
 
-            return (int)estaAtributo;                }
+            return (double)estaAtributo;        
+        }
     }
 }
