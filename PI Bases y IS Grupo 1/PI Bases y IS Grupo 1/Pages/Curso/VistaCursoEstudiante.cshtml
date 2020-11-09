@@ -5,7 +5,26 @@
     var nombreCurso = (String)ViewData["nombreCurso"];
 }
 
-
+<script>
+    function animacionResultados(cantidadRespuestasPorPregunta, cantidadRespuestasDeLaOpcion, nombreOpcion) {
+        var elem = document.getElementById(nombreOpcion);
+        var width = 1;
+        var id = setInterval(frame, 1);
+        function frame() {
+            if (width >= (cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) {
+                clearInterval(id);
+            } else {
+                width++;
+                elem.style.width = width + "%";
+                elem.innerHTML = parseInt((cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) + "% (" + cantidadRespuestasDeLaOpcion + ")";
+            }
+        }
+        if (cantidadRespuestasDeLaOpcion == 0) {
+            elem.style.background = "#777777";
+            elem.innerHTML = parseInt((cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) + "% (" + cantidadRespuestasDeLaOpcion + ")";
+        }
+    }
+</script>
 
 <div style="margin-left:200px; margin-right:200px;">
     <div class="curso-material">
@@ -13,9 +32,16 @@
             <div style="margin-bottom: 10px;margin-left:10px;">
                 <h2><strong>@nombreCurso</strong></h2>
             </div>
+            <div class="encuestas__results">
+                <div class="encuestas__progressBar" id="progreso">
+                </div>
+            </div>
+            <script>
+                animacionResultados(20, 15, 'progreso');
+            </script>
         </div>
     </div>
-
+    
     <div style="margin-bottom:20px;">
         <div style=" margin-bottom: 5px;margin-left:10px; display:flex;">
             <h3 style="color:#032c56;"><strong>Secciones: </strong></h3>
@@ -73,7 +99,7 @@
             </a>
         </div>
     </div>
-    
+
 
 </div>
 <div class="container-body body-content" style="margin-bottom:90px;">
