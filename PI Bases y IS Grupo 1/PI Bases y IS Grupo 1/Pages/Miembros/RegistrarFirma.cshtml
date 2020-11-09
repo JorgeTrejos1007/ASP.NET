@@ -2,8 +2,8 @@
 @model PIBasesISGrupo1.Pages.Miembros.RegistrarFirmaModel
 @{
     ViewData["Title"] = "RegistrarFirma";
-    var mensaje= "a";
 }
+
 
 <style type="text/css">
 
@@ -36,41 +36,17 @@
                   id="myForm"
                   method="post"
                   enctype="multipart/form-data">
-                @if (@mensaje != null)
-                {
-                    if ((bool)TempData["exitoAlEditar"])
-                    {
-                        <div class="alert-success">
 
-                            <h3> @mensaje </h3>
-
-                        </div>
-                        <div class="center-login">
-                            <a asp-page="MisCursosInscritos" class="primary-btn">Ir a cursos</a>
-                        </div>
-                    }
-                    else
-                    {
-                        <div class="alert-danger">
-
-                            <h3> @mensaje </h3>
-                        </div>
-                        <div class="center-login">
-                            <a asp-page="MisCursosInscritos" class="primary-btn">Ir a cursos</a>
-                        </div>
-                    }
-                }
                 </br>
                 <label for="file-upload" class="subir">
-                    <i class="fas fa-cloud-upload-alt"></i> Para completar su incripción del curso, por favor a continuación suba su comprobante de pago en el que tenga su nombre completo, además el nombre del curso como concepto de pago y el monto cancelado.
+                    <i class="fas fa-cloud-upload-alt"></i> Para poder crear el curso, se le solicita que por favor suba su firma, en formato de imaagen.
                 </label>
-                <input asp-for="@Model.comprobante" type="file" class="btn btn alert-info" /></br></br>
+                <input type="file" class="btn btn alert-info" /></br></br>
 
                 <div class="center-login">
-                    <button class="primary-btn" asp-route-nombre="@nombre" asp-route-primerApellido="@primerApellido" asp-route-segundoApellido="@segundoApellido" asp-route-email="@email" asp-route-genero="@genero" asp-route-nombreCurso="@nombreDeCurso" asp-route-esMiembro="@ViewData["esMiembro"]" asp-page-handler="AñadirEstudiante">Inscribirme</button>
+                    <button class="primary-btn">Añadir firma</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
-

@@ -427,6 +427,19 @@ namespace PIBasesISGrupo1.Handler
             conexion.Close();
         }
          
+        public byte[] obtenerFirmaEducador(string emailEducador)
+        {
+            string consulta = "SELECT firma FROM Educador WHERE emailEducadorFK = @emailEducador";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailEducador", emailEducador);
+            conexion.Open();
+            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+            lectorDeDatos.Read();
+            byte[] firma;
+            firma= (byte[])(lectorDeDatos["firma"]);
+            return firma;
+        }
 
 
     }
