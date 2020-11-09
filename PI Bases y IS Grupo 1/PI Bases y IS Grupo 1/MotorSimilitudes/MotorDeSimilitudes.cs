@@ -39,7 +39,7 @@ namespace PIBasesISGrupo1.MotorSimilitudes
         }
 
 
-        public List<string> retorneLosPerfilesMasSimilares()
+        public List<string> retorneCorreosDeLosPerfilesMasSimilares()
         {
             List<string> topPerfilesMasSimilares = new List<string>();
             List<double> significanciaDePerfilPorIdioma = new List<double>();
@@ -105,17 +105,58 @@ namespace PIBasesISGrupo1.MotorSimilitudes
             return topPerfilesMasSimilares;
         }
 
+
+        public List<string> retorneLosCorreosDePerfilesConHabilidadesSimilaresAMiPerfil() {
+            List<string> topPerfilesMasSimilares = new List<string>();
+            List<double> similitudDePerfilPorHabilidad = new List<double>();
+            Dictionary<string, double> semejanzaDePerfiles = new Dictionary<string, double>();
+            string consultaHabilidades = consultasParaSimilitudes.crearConsultaTamañoDinamicoHabilidades(habilidades);
+
+            pesosHabilidad = consultasParaSimilitudes.extraerPesoDeHabilidades(habilidades);       
+            correosConSimilitudEnHabilidades = consultasParaSimilitudes.extraerCorreosConAlMenosUnaSimilitud(habilidades, consultaHabilidades);
+            similitudDePerfilPorHabilidad = calculoDeSimilitudSegunElCriterio(habilidades, correosConSimilitudEnHabilidades, pesosHabilidad, "Habilidades", "habilidadPK");
+
+            for (int iterador = 0; iterador < correosConSimilitudEnHabilidades.Count; iterador++)
+            {
+               
+                semejanzaDePerfiles.Add(correosConSimilitudEnHabilidades[iterador], similitudDePerfilPorHabilidad[iterador]);
+                
+            }
+
+            semejanzaDePerfiles.Remove(miEmail);
+
+            var items = from pair in semejanzaDePerfiles orderby pair.Value descending select pair;
+
+            int contador = 0;
+            foreach (KeyValuePair<string, double> pair in items)
+            {
+                if (contador < cantidadPerfiles)
+                {
+                    topPerfilesMasSimilares.Add(pair.Key);
+                    contador = contador + 1;
+                }
+                else
+                {
+                    break;
+                }
+            }
+
+            return topPerfilesMasSimilares;
+        }
+
+
         public void calcularPesosDeAtributos () {
             pesosIdioma = consultasParaSimilitudes.extraerPesoDeIdiomas(idiomas);
             pesosHabilidad = consultasParaSimilitudes.extraerPesoDeHabilidades(habilidades);
             pesoPais = consultasParaSimilitudes.extraerPesoDePaises(pais);
+
         }
 
         public void extraerCorreosDePerfilesSimilares () {
-            string consulta = consultasParaSimilitudes.crearConsultaTamanoDinamicoIdiomas(idiomas);
-            correosConSimilitudEnIdiomas = consultasParaSimilitudes.extraerCorreosConAlMenosUnaSimilitud(idiomas, consulta);
-            consulta = consultasParaSimilitudes.crearConsultaTamañoDinamicoHabilidades(habilidades);
-            correosConSimilitudEnHabilidades = consultasParaSimilitudes.extraerCorreosConAlMenosUnaSimilitud(habilidades, consulta);
+            string consultaIdiomas = consultasParaSimilitudes.crearConsultaTamanoDinamicoIdiomas(idiomas);
+            correosConSimilitudEnIdiomas = consultasParaSimilitudes.extraerCorreosConAlMenosUnaSimilitud(idiomas, consultaIdiomas);
+            string consultaHabilidades = consultasParaSimilitudes.crearConsultaTamañoDinamicoHabilidades(habilidades);
+            correosConSimilitudEnHabilidades = consultasParaSimilitudes.extraerCorreosConAlMenosUnaSimilitud(habilidades, consultaHabilidades);
             correosConSimilitudEnPais = consultasParaSimilitudes.extraerCorreosConSimiltudEnPais(pais);
         }
 
