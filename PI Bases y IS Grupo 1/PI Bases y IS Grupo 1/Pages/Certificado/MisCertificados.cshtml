@@ -2,7 +2,49 @@
 @model PIBasesISGrupo1.Pages.Certificado.MisCertificadosModel
 @{
     ViewData["Title"] = "MisCertificados";
+    var certificados = (List<PIBasesISGrupo1.Models.Certificado>)ViewData["Certificados"];
+}
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+
+    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
+    </script>
+
+</head>
+<h1 class="mb-3">Mis Certificados</h1>
+@foreach (var certificado in certificados)
+{
+
+    <div class="certificado__container" id="certificado">
+        <div class="certificado__elements">
+            <p class="certificado__title">Certificado de finalización</p>
+            <br />
+            <p class="certificado__content">POR MEDIO DEL PRESENTE, SE CONFIRMA QUE</p>
+            <p class="certificado__ownerName">@certificado.nombreEstudiante</p>
+            <br />
+            <p class="certificado__content">HA FINALIZADO SATISFACTORIAMENTE</p>
+            <p class="certificado__content certificado__content-lessMargin">EL CURSO @certificado.nombreCurso</p>
+            <br />
+            <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
+            <br />
+            <br />
+            <div class="certificado__members">
+                <div>
+                    <p class="certificado__members__line"></p>
+                    <p class="certificado__members__information">FIRMA DEL COORDINADOR</p>
+                </div>
+                <div>
+                    <p class="certificado__members__line"></p>
+                    <p class="certificado__members__information">FIRMA DEL DOCENTE</p>
+                </div>
+            </div>
+           
+                <button class="primary-btn2 text-uppercase enroll rounded-0">Descargar</button>
+           
+        </div>
+    </div>
 }
 
-<h2>MisCertificados</h2>
+
 
