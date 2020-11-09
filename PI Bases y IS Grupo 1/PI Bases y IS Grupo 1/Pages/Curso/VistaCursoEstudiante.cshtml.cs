@@ -46,7 +46,15 @@ namespace PIBasesISGrupo1.Pages.Curso
                     {
                         item.listaMateriales = accesoDatos.obtenerMaterialesDeUnaSeccionParaEstudiante(nombreCurso, item.nombreSeccion, miembroEnSesion.email);
                     }
+
+                    ViewData["cantidadMaterialVisto"] = accesoDatos.obtenerCantidadMaterialVistoPorEstudiante(nombreCurso, miembroEnSesion.email);
+
+                    ViewData["cantidadMaterialTotal"] = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreCurso, miembroEnSesion.email);
+
+                   
+
                     
+
                     return Page();
 
                 }

@@ -581,15 +581,43 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool marcarMaterial(string nombreMaterial, string nombreSeccion, string nombreCurso, string email) {
-            SqlCommand comandoParaMarcarMaterial = baseDeDatos.crearComandoParaConsulta("SP_Marcar_Material");
-            comandoParaMarcarMaterial.CommandType = CommandType.StoredProcedure;
-            comandoParaMarcarMaterial.Parameters.AddWithValue("@emailEstudiante", email);
-            comandoParaMarcarMaterial.Parameters.AddWithValue("@nombreCurso", nombreCurso);
-            comandoParaMarcarMaterial.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
-            comandoParaMarcarMaterial.Parameters.AddWithValue("@nombreMaterial", nombreMaterial);
-            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaMarcarMaterial);
+            SqlCommand consultaParaMarcarMaterial = baseDeDatos.crearComandoParaConsulta("SP_Marcar_Material");
+            consultaParaMarcarMaterial.CommandType = CommandType.StoredProcedure;
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@emailEstudiante", email);
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@nombreMaterial", nombreMaterial);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(consultaParaMarcarMaterial);
             return exito;
         }
+
+        public int obtenerCantidadMaterialVistoPorEstudiante(string nombreDeCurso , string emailEstudiante) {
+            string consulta = "SELECT COUNT(1) as Cantidad FROM HaCubierto WHERE emailEstudianteFK=@emailEstudiante " +
+                "AND nombreCursoFK=@nombreCurso AND visto=1 ";
+            SqlCommand consultaParaObtenerCantidadMaterialVistol = baseDeDatos.crearComandoParaConsulta(consulta);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@nombreCurso", nombreDeCurso);
+
+            int cantidad = baseDeDatos.obtenerCantidadDeElementos(consultaParaObtenerCantidadMaterialVistol);
+
+
+            return cantidad;
+        }
+
+        public int obtenerCantidadMaterialPorEstudiante(string nombreDeCurso, string emailEstudiante)
+        {
+            string consulta = "SELECT COUNT(1) FROM HaCubierto WHERE emailEstudianteFK=@emailEstudiante " +
+                "AND nombreCursoFK=@nombreCurso ";
+            SqlCommand consultaParaObtenerCantidadMaterialVistol = baseDeDatos.crearComandoParaConsulta(consulta);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@nombreCurso", nombreDeCurso);
+    
+            int cantidad = baseDeDatos.obtenerCantidadDeElementos(consultaParaObtenerCantidadMaterialVistol);
+
+            return cantidad;
+        }
+
+
 
     }
 }

@@ -87,6 +87,23 @@ namespace PIBasesISGrupo1.Handler
             return existe;
         }
 
+
+        public int obtenerCantidadDeElementos(SqlCommand ComandoParaConsulta)
+        {
+            conexion.Open();
+            int cantidad = 0;
+            try
+            {
+                cantidad = (int)ComandoParaConsulta.ExecuteScalar();
+            }
+            catch
+            {
+                cantidad = 0;
+            }
+            conexion.Close();
+            return cantidad;
+        }
+
     }
 
 

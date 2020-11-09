@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "VistaCursoEstudiante";
     var nombreCurso = (String)ViewData["nombreCurso"];
+
+    int cantidadMaterialVisto = (int)ViewData["cantidadMaterialVisto"];
+
+    int cantidadMaterialTotal = (int)ViewData["cantidadMaterialTotal"];
+
 }
 
 <script>
@@ -37,7 +42,7 @@
                 </div>
             </div>
             <script>
-                animacionResultados(20, 15, 'progreso');
+                animacionResultados(@cantidadMaterialTotal, @cantidadMaterialVisto, 'progreso');
             </script>
         </div>
     </div>
