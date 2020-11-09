@@ -20,14 +20,16 @@ namespace PIBasesISGrupo1.Pages.Certificado
         private CertificadoHandler accesoAlCertificado;
         public void OnGet()
         {
+            Miembro datosDelCoordinador = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+            ViewData["email"] = datosDelCoordinador.email;
             accesoAlCertificado = new CertificadoHandler();
             ViewData["Certificados"] = accesoAlCertificado.obtenerCertificadosNoAprobados();
 
         }
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost(int id,string email)
         {
             accesoAlCertificado = new CertificadoHandler();
-            bool exito = accesoAlCertificado.aprobarCertificado(id);
+            bool exito = accesoAlCertificado.aprobarCertificado(id,email);
             return RedirectToPage("AprobarCertificado");
         }
     }
