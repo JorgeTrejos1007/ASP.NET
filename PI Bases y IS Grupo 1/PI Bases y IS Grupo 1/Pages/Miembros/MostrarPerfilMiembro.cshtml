@@ -14,7 +14,7 @@
         }
 
         .testi_item {
-            background-color:whitesmoke;
+            background-color:white;
             width: 1200px;
             padding: 50px 55px;
             margin-bottom: 200px;
@@ -153,11 +153,17 @@
     </body>
 </div>
 
-<div style="width=100%; text-align:center; margin-top:-95px;">
-    <h2 >Perfiles que te podrían interesar</h2>
-</div>
-<div class="member-container">
+<div style="width=100%; text-align:center; margin-top:-40px;">
     @{var miembro = (List<PIBasesISGrupo1.Models.Miembro>)ViewData["informacionDePerfilesMasSimilares"];
+@if (miembro.Any())
+{
+<h2 class="main_title">Perfiles que te podrían interesar</h2>
+}
+    }
+</div>
+
+<div class="member-container">
+    @{
         int i = 0;
         for (i = 0; i < miembro.Count(); i = i + 4)
         {
