@@ -30,4 +30,10 @@
     <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\ErrorDePermisosInsuficientes.cshtml">
+      <Pack>$(IncludeRazorContentInPack)</Pack>
+    </Content>
+  </ItemGroup>
+
 </Project>
