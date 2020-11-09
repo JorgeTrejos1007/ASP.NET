@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,12 +30,18 @@ namespace PIBasesISGrupo1.Filters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
+            FilterHandler filtros = new FilterHandler();
+
+            
+
             try
             {
                 Miembro miembroSesionActual = Sesion.obtenerDatosDeSesion(context.HttpContext.Session, "Miembro");
-                if (rolesPerimitidos.Contains(miembroSesionActual.tipoDeUsuario) == false)
+              
+
+                if (filtros.verificarRol(miembroSesionActual.email, rolesPerimitidos) == false)
                 {
-                    context.Result = new RedirectResult("~/Error");
+                    context.Result = new RedirectResult("~/ErrorDePermisosInsuficientes");
                 }
             }
             catch {
