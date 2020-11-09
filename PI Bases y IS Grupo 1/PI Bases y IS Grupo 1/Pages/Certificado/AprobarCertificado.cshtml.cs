@@ -14,6 +14,7 @@ using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Certificado
 {
+    [PermisosDeVista("Coordinador")]
     public class AprobarCertificadoModel : PageModel
     {
         private CertificadoHandler accesoAlCertificado;
