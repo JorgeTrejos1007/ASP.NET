@@ -89,12 +89,15 @@ namespace PIBasesISGrupo1.Handler
         
         public List<string> extraerCorreosConAlMenosUnaSimilitud(string[] atributos, string consulta)
         {
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
             List<string> correos = new List<string>();
 
             SqlCommand comando = new SqlCommand(consulta, conexion);
 
             for (int i = 0; i < atributos.Length; i++) {
-                comando.Parameters.AddWithValue("@"+ atributos[i], atributos[i]);
+                comando.Parameters.AddWithValue("@"+ parametro + numeroDeParametro.ToString(), atributos[i]);
+                numeroDeParametro = numeroDeParametro + 1;
             }
 
             DataTable tablaCorreos = baseDeDatos.crearTablaConsulta(comando);
@@ -108,16 +111,20 @@ namespace PIBasesISGrupo1.Handler
 
         public string crearConsultaTamañoDinamicoHabilidades(string[] habilidades)
         {
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
             string consulta = "SELECT DISTINCT emailFK" + " FROM Habilidades" + " WHERE ";
+
             for (int index = 0; index < habilidades.Length; index++)
             {
                 if (index < habilidades.Length - 1)
                 {
-                    consulta += "habilidadPK = @" + habilidades[index] + " OR ";
+                    consulta += "habilidadPK = @" + parametro + numeroDeParametro.ToString() + " OR ";
+                    numeroDeParametro = numeroDeParametro + 1;
                 }
                 else
                 {
-                    consulta += "habilidadPK = @" + habilidades[index];
+                    consulta += "habilidadPK = @" + parametro + numeroDeParametro.ToString();
                 }
             }
             return consulta;
@@ -125,16 +132,20 @@ namespace PIBasesISGrupo1.Handler
 
         public string crearConsultaTamanoDinamicoIdiomas(string[] idiomas)
         {
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
             string consulta = "SELECT DISTINCT emailFK" + " FROM Idiomas" + " WHERE ";
+
             for (int index = 0; index < idiomas.Length; index++)
             {
                 if (index < idiomas.Length - 1)
                 {
-                    consulta += "idiomaPK = @" + idiomas[index] + " OR ";
+                    consulta += "idiomaPK = @" + parametro + numeroDeParametro.ToString() + " OR ";
+                    numeroDeParametro = numeroDeParametro + 1;
                 }
                 else
                 {
-                    consulta += "idiomaPK = @" + idiomas[index];
+                    consulta += "idiomaPK = @" + parametro + numeroDeParametro.ToString();
                 }
             }
             return consulta;
