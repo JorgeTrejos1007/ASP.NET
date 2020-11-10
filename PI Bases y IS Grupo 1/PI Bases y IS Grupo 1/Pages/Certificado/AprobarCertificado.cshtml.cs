@@ -51,9 +51,9 @@ namespace PIBasesISGrupo1.Pages.Certificado
         public IActionResult OnPost(string emailEstudiante, string nombreCurso, string emailCoordinador)
         {
             accesoAlCertificado = new CertificadoHandler();
-             string tipoBinario = tipoImagen.Substring(22);
+            string tipoBinario = tipoImagen.Substring(22);
             byte[] tipoImagenBinaria = Convert.FromBase64String(tipoBinario);
-            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador,tipoImagenBinaria);
+            //bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador,tipoImagenBinaria);
             
             return RedirectToPage("AprobarCertificado");
         }

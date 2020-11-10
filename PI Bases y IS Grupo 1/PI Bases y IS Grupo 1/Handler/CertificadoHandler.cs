@@ -73,7 +73,7 @@ namespace PIBasesISGrupo1.Handler
             return listaDeCertificados;
         }
         public bool aprobarCertificado(string emailEstudiante, string nombreCurso, string emailCoordinador,byte[] imagen) {
-            string consulta = "UPDATE Certificado SET estadoDelCertificado= 'Aprobado'," +
+            string consulta = "UPDATE Certificado SET estado= 'Aprobado'," +
                 " emailCoordinadorFK = @emailCoordinador,fechaEmitido=GETDATE(),imagenCertificado= @imagen" +
             " WHERE emailEstudianteFK = @emailEstudiante AND nombreCursoFK = @curso";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
