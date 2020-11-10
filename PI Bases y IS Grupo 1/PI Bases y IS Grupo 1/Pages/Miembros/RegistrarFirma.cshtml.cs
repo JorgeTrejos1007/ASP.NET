@@ -14,9 +14,12 @@ using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
-    [PermisosDeVista("Coordinador")]
+    //[PermisosDeVista("Educador","Coordinador")]
     public class RegistrarFirmaModel : PageModel
     {
+        [BindProperty]
+        public IFormFile firma { get; set; }
+
         public void OnGet()
         {
 
