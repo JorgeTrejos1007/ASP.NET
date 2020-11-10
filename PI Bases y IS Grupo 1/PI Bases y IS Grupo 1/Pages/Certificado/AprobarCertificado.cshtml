@@ -30,17 +30,20 @@
             <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
             <br />
             <br />
+           
             <div class="certificado__members">
                 <div>
+                     
                     <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">PATRICIA SAN JUAN, COORDINADORA DEL PROGRAMA</p>
+                    <p class="certificado__members__information">FIRMA COORDINADOR</p>
                 </div>
                 <div>
+                    <img src="data:image/png;base64,@(Convert.ToBase64String(certificado.firmaEducador))" style="width:200px;height:100px" />
                     <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">3 DE ABRIL DE 2012</p>
+                    <p class="certificado__members__information">FIRMA EDUCADOR</p>
                 </div>
             </div>
-            <form method="post" asp-route-id="@certificado.emailEstudiante" asp-route="@certificado.nombreCurso" asp-route-email="@email"  >
+            <form method="post" asp-route-id="@certificado.emailEstudiante" asp-route="@certificado.nombreCurso" asp-route-email="@email">
                 <button class="primary-btn2 text-uppercase enroll rounded-0">Firmar</button>
             </form>
         </div>
