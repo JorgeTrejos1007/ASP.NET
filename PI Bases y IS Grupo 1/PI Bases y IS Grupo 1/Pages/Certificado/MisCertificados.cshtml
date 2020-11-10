@@ -16,14 +16,30 @@
 @foreach (var certificado in certificados)
 {
 
- 
-    <div>
-        <img src="data:image/png;base64,@(Convert.ToBase64String(@certificado.imagenCertificado))" style="width:200px;height:100px" />
-        <button class="primary-btn2 text-uppercase enroll rounded-0">Descargar</button>
+
+    <div style="margin:auto">
+        <img id="certificado" src="@certificado.imagenCertificado" style="width:50%;height:15% " /><br>
+        <button id="btn-Convert-Html2Image" class="primary-btn2 text-uppercase enroll rounded-0">Descargar</button>
 
     </div>
 
- }
 
+}
+<script>
+    $('#btn-Convert-Html2Image').click(function () {
 
+            
+            html2canvas($('#certificado'),
+                {
+                    onrendered: function (canvas) {
+                        var a = document.createElement('a');
+                        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                        a.download = 'Certificado.png';
+                        a.click();
+                    }
+                });
+                    
+    });
 
+</script>

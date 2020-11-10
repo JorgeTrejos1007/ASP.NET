@@ -52,9 +52,9 @@ namespace PIBasesISGrupo1.Handler
         public List<Certificado> obtenerMisCertificados(string email)
         {
             List<Certificado> listaDeCertificados = new List<Certificado>();
-            string consulta = "SELECT imagenCertificado AS 'certificado' "+
-                "FROM Certifica " +
-                "WHERE  estadoDelCertificado = 'Aprobado'  AND  emailEstudianteFK= @email; ";
+            string consulta = "SELECT imagenCertificado "+
+                "FROM Certificado " +
+                "WHERE  estado  = 'Aprobado'  AND  emailEstudianteFK= @email; ";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@email", email);
             DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
@@ -64,7 +64,7 @@ namespace PIBasesISGrupo1.Handler
                 certificadoTemporal = new Certificado
                 {
                      
-                    imagenCertificado = Convert.IsDBNull(columna["firma"]) ? null : (byte[])(columna["imagenCertificado"]) 
+                    imagenCertificado = Convert.IsDBNull(columna["imagenCertificado"]) ? null : (string)(columna["imagenCertificado"]) 
                     
 
                 };
@@ -72,7 +72,7 @@ namespace PIBasesISGrupo1.Handler
             }
             return listaDeCertificados;
         }
-        public bool aprobarCertificado(string emailEstudiante, string nombreCurso, string emailCoordinador,byte[] imagen) {
+        public bool aprobarCertificado(string emailEstudiante, string nombreCurso, string emailCoordinador,string imagen) {
             string consulta = "UPDATE Certificado SET estado= 'Aprobado'," +
                 " emailCoordinadorFK = @emailCoordinador,fechaEmitido=GETDATE(),imagenCertificado= @imagen" +
             " WHERE emailEstudianteFK = @emailEstudiante AND nombreCursoFK = @curso";

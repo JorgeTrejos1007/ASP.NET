@@ -36,42 +36,44 @@
             </div>
         </div>
     </div>
+
 </div>
 
 
 <form method="post">
-    <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value=""/>
+    <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
     <button id="btn-Convert-Html2Image" type="submit" asp-page-handler="AprobarCertificado" onclick="myFunction()" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">
         Download
     </button>
-</form>
-    
-  
+    </form>
 
 
 
-<script>
 
-    html2canvas($('#certificado'), {
-        onrendered: function (canvas) {
-            var dataURL = canvas.toDataURL();
-            document.getElementById("informacionImagen").value = dataURL;
-        }
-    }); 
-    $('#btn-Convert-Html2Image').click(function () {
 
-    /*
-        html2canvas($('#certificado'),
-            {
-                onrendered: function (canvas) {
-                    var a = document.createElement('a');
-                    // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-                    a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                    a.download = 'Certificado.png';
-                    a.click();
-                }
-            });
-            */
-    });
- 
-</script>
+    <script>
+        
+
+        html2canvas($('#certificado'), {
+            onrendered: function (canvas) {
+                var dataURL = canvas.toDataURL();
+                document.getElementById("informacionImagen").value = dataURL;
+            }
+        });
+        $('#btn-Convert-Html2Image').click(function () {
+
+            /*
+                html2canvas($('#certificado'),
+                    {
+                        onrendered: function (canvas) {
+                            var a = document.createElement('a');
+                            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                            a.download = 'Certificado.png';
+                            a.click();
+                        }
+                    });
+                    */
+        });
+
+    </script>
