@@ -38,17 +38,29 @@
     </div>
 </div>
 
-<a id="btn-Convert-Html2Image" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">
-    Download
-</a>
 
-<input type="submit" id="prueba" value=""/>
+<form method="post">
+    <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value=""/>
+    <button id="btn-Convert-Html2Image" type="submit" asp-page-handler="AprobarCertificado" onclick="myFunction()" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">
+        Download
+    </button>
+</form>
+    
+  
+
+
+
 <script>
 
-    var x = document.getElementById("prueba");
-    x.setAttribute()
-    /*
+    html2canvas($('#certificado'), {
+        onrendered: function (canvas) {
+            var dataURL = canvas.toDataURL();
+            document.getElementById("informacionImagen").value = dataURL;
+        }
+    }); 
     $('#btn-Convert-Html2Image').click(function () {
+
+    /*
         html2canvas($('#certificado'),
             {
                 onrendered: function (canvas) {
@@ -59,6 +71,7 @@
                     a.click();
                 }
             });
+            */
     });
-    */
+ 
 </script>
