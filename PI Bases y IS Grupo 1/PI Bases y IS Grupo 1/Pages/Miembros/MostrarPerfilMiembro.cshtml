@@ -8,114 +8,155 @@
     <style>
         .center-perfil {
             margin: 0;
-            margin-left:20%;
+            margin-left: 20%;
         }
     </style>
 </header>
 
 
-        <html>
-        <br>
+<html>
+<br>
 
-
-        <div class="member-container">
-            <body id="top">
-                <div class="center-perfil">
+<div class="member-container">
+    <body id="top">
+        <div class="center-perfil">
+            <div class="row">
+                <div class="testi_item">
+                    <h2 class="main_title">
+                        @Model.miembro.nombre @Model.miembro.primerApellido
+                        @if (@Model.miembro.segundoApellido != null)
+                        {
+                            @Model.miembro.segundoApellido
+                        }
+                    </h2>
                     <div class="row">
-                        <div class="testi_item">
-                            <h2 class="main_title">
-                                @Model.miembro.nombre @Model.miembro.primerApellido
-                                @if (@Model.miembro.segundoApellido != null)
+                        <div class="col-lg-4 col-md-6">
+                            <br>
+                            @{
+                                if (@Model.miembro.byteArrayImage != null)
                                 {
-                                    @Model.miembro.segundoApellido
+                                    <img class="member_img-perfil" src="data:@Model.miembro.tipoArchivo;base64,@(Convert.ToBase64String(Model.@miembro.byteArrayImage))" asp-append-version="true" />
                                 }
-                            </h2>
-                            <div class="row">
-                                <div class="col-lg-4 col-md-6">
-                                    <br>
-                                    @{
-                                        if (@Model.miembro.byteArrayImage != null)
-                                        {
-                                            <img class="member_img-perfil" src="data:@Model.miembro.tipoArchivo;base64,@(Convert.ToBase64String(Model.@miembro.byteArrayImage))" asp-append-version="true" />
+                                else
+                                {
+                                    <img class="member_img-perfil" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                                }
+                            }
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="testi_text">
+                                <div class="row mt-3">
+                                    <div class="col-sm-4"><h3 class="widget_title">Correo</h3></div>
+                                    <div class="col-sm-8">@Model.miembro.email</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-4"><h3 class="widget_title">Género</h3></div>
+                                    <div class="col-sm-8">@Model.miembro.genero</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-4"><h3 class="widget_title">País</h3></div>
+                                    <div class="col-sm-8">@Model.miembro.pais</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-4"><h3 class="widget_title">Hobbies</h3></div>
+                                    <div class="col-sm-8">@Model.miembro.hobbies</div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-4"><h3 class="widget_title">Idiomas</h3></div>
+                                    <div class="col-sm-8">
+                                        @{
+                                            if (@Model.miembro.idiomas != null)
+                                            {
+                                                @foreach (var idioma in @Model.miembro.idiomas)
+                                                {
+                                                    @idioma<br />
+
+                                                }
+                                            }
+
                                         }
-                                        else
-                                        {
-                                            <img class="member_img-perfil" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-sm-4"><h3 class="widget_title">Habilidades</h3></div>
+                                    <div class="col-sm-8">
+                                        @{
+                                            if (@Model.miembro.habilidades != null)
+                                            {
+
+                                                @foreach (var habilidad in @Model.miembro.habilidades)
+                                                {
+                                                    @habilidad <br />
+
+                                                }
+                                            }
                                         }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <div class="testi_text">
+                                <div hidden class="h4 mt-0 title">
+                                    @Model.miembro.nombre @Model.miembro.primerApellido
+                                    @if (@Model.miembro.segundoApellido != null)
+                                    {
+                                        @Model.miembro.segundoApellido
                                     }
                                 </div>
-                                <div class="col-lg-8">
-                                    <div class="testi_text">
-                                        <div class="row mt-3">
-                                            <div class="col-sm-4"><h3 class="widget_title">Correo</h3></div>
-                                            <div class="col-sm-8">@Model.miembro.email</div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-4"><h3 class="widget_title">Género</h3></div>
-                                            <div class="col-sm-8">@Model.miembro.genero</div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-4"><h3 class="widget_title">País</h3></div>
-                                            <div class="col-sm-8">@Model.miembro.pais</div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-4"><h3 class="widget_title">Hobbies</h3></div>
-                                            <div class="col-sm-8">@Model.miembro.hobbies</div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-4"><h3 class="widget_title">Idiomas</h3></div>
-                                            <div class="col-sm-8">
-                                                @{
-                                                    if (@Model.miembro.idiomas != null)
-                                                    {
-                                                        @foreach (var idioma in @Model.miembro.idiomas)
-                                                        {
-                                                            @idioma<br />
+                                <div class="row mt-3">
 
-                                                        }
-                                                    }
-
-                                                }
-                                            </div>
-                                        </div>
-                                        <div class="row mt-3">
-                                            <div class="col-sm-4"><h3 class="widget_title">Habilidades</h3></div>
-                                            <div class="col-sm-8">
-                                                @{
-                                                    if (@Model.miembro.habilidades != null)
-                                                    {
-
-                                                        @foreach (var habilidad in @Model.miembro.habilidades)
-                                                        {
-                                                            @habilidad <br />
-
-                                                        }
-                                                    }
-                                                }
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-8">
-                                    <div class="testi_text">
-                                        <div hidden class="h4 mt-0 title">
-                                            @Model.miembro.nombre @Model.miembro.primerApellido
-                                            @if (@Model.miembro.segundoApellido != null)
-                                            {
-                                                @Model.miembro.segundoApellido
-                                            }
-                                        </div>
-                                        <div class="row mt-3">
-
-                                            <div hidden class="col-sm-8">anthony@company.com</div>
-                                        </div>
-                                    </div>
+                                    <div hidden class="col-sm-8">anthony@company.com</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </body>
+</div>
 
-        </body>
-    </html>
+<div style="width=100%; text-align:center; margin-top:-40px;">
+    <h2 class="main_title">Perfiles que te podrían interesar</h2>
+</div>
+<div class="member-container">
+    @{var miembro = (List<PIBasesISGrupo1.Models.Miembro>)ViewData["informacionDePerfilesMasSimilares"];
+        int i = 0;
+        for (i = 0; i < miembro.Count(); i = i + 4)
+        {
+            <div class="row" id="filaDePersonas">
+                @for (int j = i; j < i + 4; j++)
+                {
+                    if (j < miembro.Count())
+                    {
+                        <a id="botonParaPerfil" asp-page="./MostrarPerfilMiembro" asp-route-email="@miembro[j].email">
+                            <div id="cuadroDePerfil">
+                                @{
+                                    if (miembro[j].byteArrayImage != null)
+                                    {
+                                        <img id="imagenMiembro" src="data:@miembro[j].tipoArchivo;base64,@(Convert.ToBase64String(@miembro[j].byteArrayImage))" asp-append-version="true" />
+                                    }
+                                    else
+                                    {
+                                        <img id="imagenMiembro" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
+                                    }
+                                    if (@miembro[j].segundoApellido != null)
+                                    {
+                                        <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido @miembro[j].segundoApellido</h4>
+                                    }
+                                    else
+                                    {
+                                        <h4 id="nombrePersona">@miembro[j].nombre @miembro[j].primerApellido</h4>
+                                    }
+                                }
+                            </div>
+                        </a>
+                    }
+                }
+            </div>
+        }
+    }
+</div>
+
+</html>

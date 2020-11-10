@@ -35,7 +35,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 informacionDePerfilesMasSimilares.Add(accesoDatos.obtenerDatosDeUnMiembro(correosDePerfilesMasSimilares[index]));
             }
 
-            ViewData["informacionDePerfilesMasSimilares"] = motorDeSimilitudes.retorneCorreosDeLosPerfilesMasSimilares();
+            ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
         }
     }    
 }
