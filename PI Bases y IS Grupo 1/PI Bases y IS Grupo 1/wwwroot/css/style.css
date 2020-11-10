@@ -57,6 +57,17 @@ body {
         padding: 5px 0;
     }
 
+.curso__results {
+    display: inline-block;
+    margin: auto auto auto 15px;
+    align-content: center;
+    height: auto;
+    width: 30%;
+    background: #777777;
+    border: none;
+    border-radius: 50px;
+}
+
 .encuestas__results {
     display:inline-block;
     margin:auto auto auto 60px;
