@@ -18,6 +18,8 @@ namespace PIBasesISGrupo1.Pages.Certificado
     public class AprobarCertificadoModel : PageModel
     {
         private CertificadoHandler accesoAlCertificado;
+        [BindProperty]
+        public string tipoImagen { get; set; }
         public IActionResult OnGet()
         {
             IActionResult vista;
@@ -49,7 +51,10 @@ namespace PIBasesISGrupo1.Pages.Certificado
         public IActionResult OnPost(string emailEstudiante, string nombreCurso, string emailCoordinador)
         {
             accesoAlCertificado = new CertificadoHandler();
-            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador);
+             string tipoBinario = tipoImagen.Substring(22);
+            byte[] tipoImagenBinaria = Convert.FromBase64String(tipoBinario);
+            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador,tipoImagenBinaria);
+            
             return RedirectToPage("AprobarCertificado");
         }
     }

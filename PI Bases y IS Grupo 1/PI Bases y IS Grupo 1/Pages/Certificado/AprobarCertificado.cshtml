@@ -15,9 +15,35 @@
     </script>
 
 </head>
+<script>
 
-@foreach (var certificado in certificados) {
-           
+    html2canvas($('#certificado'), {
+        onrendered: function (canvas) {
+            var dataURL = canvas.toDataURL();
+            document.getElementById("informacionImagen").value = dataURL;
+        }
+    });
+    $('#btn-Convert-Html2Image').click(function () {
+
+        /*
+            html2canvas($('#certificado'),
+                {
+                    onrendered: function (canvas) {
+                        var a = document.createElement('a');
+                        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                        a.download = 'Certificado.png';
+                        a.click();
+                    }
+                });
+                */
+    });
+
+</script>
+
+@foreach (var certificado in certificados)
+{
+
     <div class="certificado__container" id="certificado">
         <div class="certificado__elements">
             <p class="certificado__title">Certificado de finalización</p>
@@ -31,10 +57,10 @@
             <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
             <br />
             <br />
-           
+
             <div class="certificado__members">
                 <div>
-                    <img src="data:image/png;base64,@(Convert.ToBase64String(firmaCoordinador))" style="width:200px;height:100px" /> 
+                    <img src="data:image/png;base64,@(Convert.ToBase64String(firmaCoordinador))" style="width:200px;height:100px" />
                     <p class="certificado__members__line"></p>
                     <p class="certificado__members__information">FIRMA COORDINADOR</p>
                 </div>
@@ -44,8 +70,9 @@
                     <p class="certificado__members__information">FIRMA EDUCADOR</p>
                 </div>
             </div>
-            <form method="post" asp-route-id="@certificado.emailEstudiante" asp-route="@certificado.nombreCurso" asp-route-email="@email">
-                <button class="primary-btn2 text-uppercase enroll rounded-0">Firmar</button>
+            <form method="post" asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email">
+                <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
+                <button type="submit" id="btn-Convert-Html2Image" onclick="myFunction()" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
             </form>
         </div>
     </div>

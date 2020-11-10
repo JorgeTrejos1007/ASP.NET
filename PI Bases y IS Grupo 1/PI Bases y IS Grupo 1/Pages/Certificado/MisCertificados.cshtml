@@ -16,35 +16,14 @@
 @foreach (var certificado in certificados)
 {
 
-    <div class="certificado__container" id="certificado">
-        <div class="certificado__elements">
-            <p class="certificado__title">Certificado de finalización</p>
-            <br />
-            <p class="certificado__content">POR MEDIO DEL PRESENTE, SE CONFIRMA QUE</p>
-            <p class="certificado__ownerName">@certificado.nombreEstudiante</p>
-            <br />
-            <p class="certificado__content">HA FINALIZADO SATISFACTORIAMENTE</p>
-            <p class="certificado__content certificado__content-lessMargin">EL CURSO @certificado.nombreCurso</p>
-            <br />
-            <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
-            <br />
-            <br />
-            <div class="certificado__members">
-                <div>
-                    <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">FIRMA DEL COORDINADOR</p>
-                </div>
-                <div>
-                    <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">FIRMA DEL DOCENTE</p>
-                </div>
-            </div>
-           
-                <button class="primary-btn2 text-uppercase enroll rounded-0">Descargar</button>
-           
-        </div>
+ 
+    <div>
+        <img src="data:image/png;base64,@(Convert.ToBase64String(@certificado.imagenCertificado))" style="width:200px;height:100px" />
+        <button class="primary-btn2 text-uppercase enroll rounded-0">Descargar</button>
+
     </div>
-}
+
+ }
 
 
 
