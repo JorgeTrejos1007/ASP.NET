@@ -26,10 +26,10 @@ namespace PIBasesISGrupo1.Pages.Certificado
             ViewData["Certificados"] = accesoAlCertificado.obtenerCertificadosNoAprobados();
 
         }
-        public IActionResult OnPost(int id,string email)
+        public IActionResult OnPost(string emailEstudiante,string nombreCurso, string emailCoordinador)
         {
             accesoAlCertificado = new CertificadoHandler();
-            bool exito = accesoAlCertificado.aprobarCertificado(id,email);
+            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante,nombreCurso,emailCoordinador);
             return RedirectToPage("AprobarCertificado");
         }
     }
