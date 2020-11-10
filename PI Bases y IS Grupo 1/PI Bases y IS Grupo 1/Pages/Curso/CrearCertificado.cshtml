@@ -43,32 +43,18 @@
 </a>
 
 <script>
-    $(document).ready(function () {
 
-        // Global variable
-        var element = $("#certificado");
-
-        // Global variable
-        var getCanvas;
-
-        $("#btn-Convert-Html2Image").on('click', function () {
-
-            html2canvas(element, {
+    $('#btn-Convert-Html2Image').click(function () {
+        html2canvas($('#certificado'),
+            {
                 onrendered: function (canvas) {
-                    getCanvas = canvas;
+                    var a = document.createElement('a');
+                    // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                    a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                    a.download = 'Certificado.png';
+                    a.click();
                 }
             });
-
-            var imgageData = getCanvas.toDataURL("image/png");
-
-            // Now browser starts downloading
-            // it instead of just showing it
-            var newData = imgageData.replace(
-                /^data:image\/png/, "data:application/octet-stream");
-
-            $("#btn-Convert-Html2Image").attr(
-                "download", "Certficado.png").attr(
-                    "href", newData);
-        });
     });
-</script>	
+
+</script>
