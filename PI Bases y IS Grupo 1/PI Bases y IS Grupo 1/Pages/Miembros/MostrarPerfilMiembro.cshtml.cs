@@ -17,6 +17,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
 
         public void OnGet(string email)
         {
+            //Si es null es porque es mi perfil
             if (email == null) {
                 var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 email = miembro.email;
@@ -27,14 +28,28 @@ namespace PIBasesISGrupo1.Pages.Miembros
             miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
 
             int cantidadDePerfiles = 4;
-            MotorDeSimilitudes motorDeSimilitudes = new MotorDeSimilitudes(miembro.habilidades, miembro.idiomas, miembro.pais, cantidadDePerfiles, email);
-            List<string > correosDePerfilesMasSimilares = motorDeSimilitudes.retorneCorreosDeLosPerfilesMasSimilares();
             List<Miembro> informacionDePerfilesMasSimilares = new List<Miembro>();
+            List<string> correosDePerfilesMasSimilares = new List<string>();
 
-            for (int index = 0; index < correosDePerfilesMasSimilares.Count; index++) {
+            //si es mi perfil
+            var perfilActual = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+            string emailDelPerfilEnSesion=null;
+
+            if (perfilActual != null) {
+                emailDelPerfilEnSesion = perfilActual.email;
+            }
+            if (email== emailDelPerfilEnSesion) {
+                MotorDeSimilitudes motorDeSimilitudes = new MotorDeSimilitudes(miembro.habilidades, cantidadDePerfiles, email);
+                correosDePerfilesMasSimilares = motorDeSimilitudes.retorneLosCorreosDePerfilesConHabilidadesSimilaresAMiPerfil();
+            }
+            else {
+                MotorDeSimilitudes motorDeSimilitudes = new MotorDeSimilitudes(miembro.habilidades, miembro.idiomas, miembro.pais, cantidadDePerfiles, email);
+                correosDePerfilesMasSimilares = motorDeSimilitudes.retorneCorreosDeLosPerfilesMasSimilares();
+            }
+            for (int index = 0; index < correosDePerfilesMasSimilares.Count; index++)
+            {
                 informacionDePerfilesMasSimilares.Add(accesoDatos.obtenerDatosDeUnMiembro(correosDePerfilesMasSimilares[index]));
             }
-
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
         }
     }    
