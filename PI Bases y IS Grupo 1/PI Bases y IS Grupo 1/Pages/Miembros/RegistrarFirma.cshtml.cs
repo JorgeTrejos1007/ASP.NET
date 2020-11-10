@@ -44,7 +44,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                         Miembro datosDelMiembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
                         MiembroHandler accesoDatos = new MiembroHandler();
                         accesoDatos.agregarFirmaCoordinador(datosDelMiembro.email, firma);
-                        vista = Redirect("~/Index");
+                        vista = Redirect("~/Certificado/AprobarCertificado");
                     }
                     else
                     {

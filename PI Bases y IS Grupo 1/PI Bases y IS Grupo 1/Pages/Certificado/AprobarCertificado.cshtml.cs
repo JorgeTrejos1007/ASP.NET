@@ -18,18 +18,37 @@ namespace PIBasesISGrupo1.Pages.Certificado
     public class AprobarCertificadoModel : PageModel
     {
         private CertificadoHandler accesoAlCertificado;
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            Miembro datosDelCoordinador = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
-            ViewData["email"] = datosDelCoordinador.email;
-            accesoAlCertificado = new CertificadoHandler();
-            ViewData["Certificados"] = accesoAlCertificado.obtenerCertificadosNoAprobados();
+            IActionResult vista;
+            try
+            {
+                Miembro datosDelCoordinador = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+                ViewData["email"] = datosDelCoordinador.email;
+                MiembroHandler accesoDatos = new MiembroHandler();
+                if (accesoDatos.obtenerFirmaCoordinador(datosDelCoordinador.email) != null)
+                {
 
+                    accesoAlCertificado = new CertificadoHandler();
+                    ViewData["Certificados"] = accesoAlCertificado.obtenerCertificadosNoAprobados();
+                    vista = Page();
+                }
+                else
+                {
+                    TempData["tipoUsuario"] = "Coordinador";
+                    vista = Redirect("~/Miembros/RegistrarFirma");
+                }
+            }
+            catch
+            {
+                vista = Redirect("~/Index"); //Redirigir a pagina 404
+            }
+            return vista;
         }
-        public IActionResult OnPost(string emailEstudiante,string nombreCurso, string emailCoordinador)
+        public IActionResult OnPost(string emailEstudiante, string nombreCurso, string emailCoordinador)
         {
             accesoAlCertificado = new CertificadoHandler();
-            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante,nombreCurso,emailCoordinador);
+            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador);
             return RedirectToPage("AprobarCertificado");
         }
     }
