@@ -38,6 +38,13 @@ namespace PIBasesISGrupo1.MotorSimilitudes
             this.miEmail = miEmail;
         }
 
+        public MotorDeSimilitudes(string[] habilidades, int cantidadPerfiles, string miEmail)
+        {
+            this.habilidades = habilidades;
+            this.cantidadPerfiles = cantidadPerfiles;
+            this.miEmail = miEmail;
+        }
+
 
         public List<string> retorneCorreosDeLosPerfilesMasSimilares()
         {
