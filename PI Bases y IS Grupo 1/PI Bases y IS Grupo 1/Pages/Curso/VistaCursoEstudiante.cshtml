@@ -41,10 +41,10 @@
 
         </div>
         <div style="margin-left:32%;display:flex;">
-            <div >
+            <div>
                 <h3>Progreso:</h3>
             </div>
-            <div class="curso__results"  >
+            <div class="curso__results">
                 <div class="encuestas__progressBar" id="progreso">
 
                 </div>
@@ -52,68 +52,86 @@
             <script>
                 animacionResultados(@cantidadMaterialTotal, @cantidadMaterialVisto, 'progreso');
             </script>
+
         </div>
     </div>
-        <div style="margin-bottom:20px;">
-            <div style=" margin-bottom: 5px;margin-left:10px; display:flex;">
-                <h3 style="color:#032c56;"><strong>Secciones: </strong></h3>
+    <br>
+
+    @{
+        if ((bool)ViewData["cursoTerminado"])
+        {
+            <div class="alert-success">
+
+                <h3> Felicidades has completado el curso tu certificado 
+                llegará pronto</h3>
             </div>
-            @{
-                if (@Model.Secciones != null)
+        }
+
+
+    }
+
+
+
+    <div style="margin-bottom:20px;">
+        <div style=" margin-bottom: 5px;margin-left:10px; display:flex;">
+            <h3 style="color:#032c56;"><strong>Secciones: </strong></h3>
+        </div>
+        @{
+            if (@Model.Secciones != null)
+            {
+                foreach (var item in @Model.Secciones)
                 {
-                    foreach (var item in @Model.Secciones)
-                    {
 
-                        <button class="accordion">@item.nombreSeccion</button>
+                    <button class="accordion">@item.nombreSeccion</button>
 
-                        <div class="panel" style="background-color:#dedede;">
+                    <div class="panel" style="background-color:#dedede;">
 
-                            @{
+                        @{
 
-                                foreach (var material in item.listaMateriales)
-                                {
+                            foreach (var material in item.listaMateriales)
+                            {
 
-                                    <form method="post">
-                                        <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial+@material.nombreDeSeccion')">
-                                            <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
-                                        </a>
-                                        @if (material.visto == 1)
-                                        {
-                                            <span class="or" style="color:#13b208; margin-left:15px;">Visto <i class="ti-check" aria-hidden="false"></i></span>
-                                        }
-                                        else
-                                        {
-                                            <span class="or" style="color:red; margin-left:15px;">No visto <i class="ti-close" aria-hidden="false"></i></span>
-                                        }
+                                <form method="post">
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial+@material.nombreDeSeccion')">
+                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
+                                    </a>
+                                    @if (material.visto == 1)
+                                    {
+                                        <span class="or" style="color:#13b208; margin-left:15px;">Visto <i class="ti-check" aria-hidden="false"></i></span>
+                                    }
+                                    else
+                                    {
+                                        <span class="or" style="color:red; margin-left:15px;">No visto <i class="ti-close" aria-hidden="false"></i></span>
+                                    }
 
-                                        <button hidden id="@material.nombreMaterial+@material.nombreDeSeccion" asp-route-nombreMaterial="@material.nombreMaterial" asp-route-nombreSeccion="@material.nombreDeSeccion" asp-route-nombreDeCurso="@material.nombreDeCurso" asp-page-handler="SubirMaterial"></button>
-                                    </form>
+                                    <button hidden id="@material.nombreMaterial+@material.nombreDeSeccion" asp-route-nombreMaterial="@material.nombreMaterial" asp-route-nombreSeccion="@material.nombreDeSeccion" asp-route-nombreDeCurso="@material.nombreDeCurso" asp-page-handler="SubirMaterial"></button>
+                                </form>
 
 
-                                    <br>
+                                <br>
 
 
-                                }
                             }
+                        }
 
 
-                        </div>
+                    </div>
 
 
-                    }
                 }
             }
-        </div>
-        <div class="curso-material">
-            <div style="margin-left:86%; display:inline-flex;">
-                <a asp-page="./MisCursosInscritos" class="primary-btn__reverse text-uppercase enroll rounded-0">
-                    <i class="ti-back-left" aria-hidden="false"></i> Volver
-                </a>
-            </div>
-        </div>
-
-
+        }
     </div>
+    <div class="curso-material">
+        <div style="margin-left:86%; display:inline-flex;">
+            <a asp-page="./MisCursosInscritos" class="primary-btn__reverse text-uppercase enroll rounded-0">
+                <i class="ti-back-left" aria-hidden="false"></i> Volver
+            </a>
+        </div>
+    </div>
+
+
+</div>
 <div class="container-body body-content" style="margin-bottom:90px;">
     <footer class="footer-margin">
 

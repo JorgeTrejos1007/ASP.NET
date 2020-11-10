@@ -617,6 +617,15 @@ namespace PIBasesISGrupo1.Handler
             return cantidad;
         }
 
+        public bool asignarCertificado(string nombreCurso, string emailEstudiante)
+        {
+            SqlCommand consultaParaAsignarCertificado = baseDeDatos.crearComandoParaConsulta("SP_Insertar_Estudiante_En_Tabla_Certificado");
+            consultaParaAsignarCertificado.CommandType = CommandType.StoredProcedure;
+            consultaParaAsignarCertificado.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            consultaParaAsignarCertificado.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(consultaParaAsignarCertificado);
+            return exito;
+        }
 
 
     }
