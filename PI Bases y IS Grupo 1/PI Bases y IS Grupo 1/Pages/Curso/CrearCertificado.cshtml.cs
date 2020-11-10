@@ -18,7 +18,10 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         public void OnGet()
         {
-
+            Miembro datosDelMiembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+            MiembroHandler accesoDatos = new MiembroHandler();
+            ViewData["firma"] = accesoDatos.obtenerFirmaEducador(datosDelMiembro.email);
+         
         }
     }
 }

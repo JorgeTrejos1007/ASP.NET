@@ -26,7 +26,7 @@ namespace PIBasesISGrupo1.Handler
             conexionBD = new ConexionModel();
             conexion = conexionBD.Connection();
         }
-       
+
         private DataTable crearTablaConsulta(string consulta)
         {
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
@@ -436,11 +436,49 @@ namespace PIBasesISGrupo1.Handler
             conexion.Open();
             SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
             lectorDeDatos.Read();
-            byte[] firma;
-            firma= (byte[])(lectorDeDatos["firma"]);
+            byte[] firma = null;
+            if ((lectorDeDatos["firma"]) != DBNull.Value) {
+                firma = (byte[])(lectorDeDatos["firma"]);
+            }              
             return firma;
         }
+        public bool agregarFirmaEducador(string emailEducador, IFormFile firma)
+        {
+            string consulta = "UPDATE Educador SET firma = @firma WHERE emailEducadorFK = @emailEducador";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailEducador", emailEducador);
+            comandoParaConsulta.Parameters.AddWithValue("@firma", obtenerBytes(firma));
 
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+
+        }
+
+        public byte[] obtenerFirmaCoordinador(string emailCoordinador)
+        {
+            string consulta = "SELECT firma FROM Coordinador WHERE emailCoordinadorFK = @emailCoordinador";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", emailCoordinador);
+            conexion.Open();
+            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+            lectorDeDatos.Read();
+            byte[] firma = null;
+            if ((lectorDeDatos["firma"]) != DBNull.Value)
+            {
+                firma = (byte[])(lectorDeDatos["firma"]);
+            }
+            return firma;
+        }
+        public bool agregarFirmaCoordinador(string emailCoordinador, IFormFile firma)
+        {
+            string consulta = "UPDATE Coordinador SET firma = @firma WHERE emailCoordinadorFK = @emailCoordinador";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@firma", obtenerBytes(firma));
+
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+
+        }
 
     }
 }

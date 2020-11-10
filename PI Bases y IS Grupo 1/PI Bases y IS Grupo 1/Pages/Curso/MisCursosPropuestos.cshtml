@@ -3,15 +3,16 @@
 @{
     ViewData["Title"] = "Mis Cursos Propuestos";
     var listaDeCursos = (List<PIBasesISGrupo1.Models.Cursos>)ViewData["MisCursosPropuestos"];
+    var firmaEducador = (byte[])ViewData["firmaEducador"];
 
 }
 
 <div class="cajota-cursos">
-    
 
-        <h1 class="mb-3">Mis cursos propuestos</h1>
 
-   
+    <h1 class="mb-3">Mis cursos propuestos</h1>
+
+
 
 
     <div class="cursos-container-2">
@@ -41,9 +42,14 @@
 
                             @{
 
-                                if (@curso.estado == "Aprobado")
+                                if ((@curso.estado == "Aprobado") && (firmaEducador != null))
                                 {
                                     <a asp-page="./CrearCurso" asp-route-nombreCurso="@curso.nombre" asp-route-nombrePaginaCurso="./CrearCurso" button class="primary-btn2 text-uppercase enroll rounded-0"> Crear curso</a>
+                                }
+                                else if ((@curso.estado == "Aprobado") && (firmaEducador == null))
+                                {
+                                    TempData["tipoUsuario"] = "Educador";
+                                    <a href="~/Miembros/RegistrarFirma" class="primary-btn2 text-uppercase enroll rounded-0"> Crear curso</a>
                                 }
 
 
@@ -52,7 +58,7 @@
                         </ul>
                     </div>
                 </div>
-             }
-         }
+            }
+        }
     </div>
 </div>
