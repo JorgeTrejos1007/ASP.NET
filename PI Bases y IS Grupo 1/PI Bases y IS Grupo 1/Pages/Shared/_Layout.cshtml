@@ -1,9 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using PIBasesISGrupo1.Models
+@using PIBasesISGrupo1.Handler
 @{
     var miembroEnSesion = Context.Session.obtenerDatosDeSesion("Miembro");
     var estudianteEnSesion = Context.Session.obtenerDatosDeSesion("Estudiante");
-} 
+    var filtros = new FilterHandler();
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,11 +13,9 @@
 
     <style>
         .footer-margin {
-            margin:12%;
-            position:absolute;
-            display:inline-block;
-            text-align:left;
-            
+            margin: 15%;
+            position: fixed;
+            text-align: center;
         }
     </style>
 
@@ -109,13 +109,15 @@
                                                 <a class="nav-link" href="/Curso/ProponerCurso">Proponer</a>
                                             </li>
 
-                                            if (miembroEnSesion.tipoDeUsuario == "Miembro de Nucleo")
+                                            if (filtros.verificarRol(miembroEnSesion.email, "Miembro de Nucleo"))
                                             {
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="/Curso/AprobarCurso">Aprobar</a>
                                                 </li>
 
                                             }
+
+                                         
 
                                             <li class="nav-item">
                                                 <a class="nav-link" href="/Curso/MisCursosPropuestos">Propuestos</a>
@@ -157,7 +159,7 @@
                                         <a class="nav-link" href="/Catalogos/EditarCatalogo">Catalago</a>
                                     </li>
 
-                                    if (miembroEnSesion.tipoDeUsuario == "Miembro de Nucleo")
+                                    if (filtros.verificarRol(miembroEnSesion.email, "Miembro de Nucleo"))
                                     {
                                         <li class="nav-item">
                                             <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>
@@ -216,12 +218,12 @@
         </div>
     </header>
     <!--================ End Header Menu Area =================-->
-  <partial name="_CookieConsentPartial" />
+    <partial name="_CookieConsentPartial" />
 
     <div class="container-body body-content">
         @RenderBody()
         <hr />
-        <footer class="footer-margin" >
+        <footer class="footer-margin">
             <p>&copy; 2020 - Comunidad de Practica Edustage</p>
         </footer>
     </div>
