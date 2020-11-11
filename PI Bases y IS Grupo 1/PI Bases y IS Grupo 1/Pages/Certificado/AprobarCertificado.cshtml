@@ -21,7 +21,9 @@
 
 </head>
 
-
+@{
+    int cont = 0;
+}
 @foreach (var certificado in certificados)
 {
 
@@ -61,6 +63,7 @@
             <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
             <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
         </form>
+     
     </div>
     <script>
 
@@ -72,6 +75,7 @@
         });
 
     </script>
+
 }
 
 
