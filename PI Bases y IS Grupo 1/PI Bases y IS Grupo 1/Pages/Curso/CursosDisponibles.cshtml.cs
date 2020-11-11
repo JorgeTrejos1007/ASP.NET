@@ -20,8 +20,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             if (usuarioEnSesion != null)
             {
                 ViewData["miEmail"] = usuarioEnSesion.email;
-                ViewData["cursosMatriculados"] = cursoHandler.obtenerMisCursosDisponibles(usuarioEnSesion.email);
+                ViewData["misCursos"] = cursoHandler.obtenerMisCursos(usuarioEnSesion.email);
 
+          
             }
 
         }

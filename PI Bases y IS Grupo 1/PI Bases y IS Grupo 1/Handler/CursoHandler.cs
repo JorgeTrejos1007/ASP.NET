@@ -134,7 +134,7 @@ namespace PIBasesISGrupo1.Handler
         {
             List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>> cursos = new List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>>();
             string consultaCategorias = "SELECT C.nombrePK AS nombreCurso,C.estado AS estado,C.precio AS precio," +
-                " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
+                " C.emailEducadorFK AS emailEducador,C.version AS version ,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
             "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.emailPK " + "WHERE estado='Creado'";
             string consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
             " FROM Curso Cu Join  Contiene C ON Cu.nombrePK = C.nombreCursoFK" +
@@ -154,7 +154,8 @@ namespace PIBasesISGrupo1.Handler
                     precio = Convert.ToDouble(columna["precio"]),
                     emailDelEducador = Convert.ToString(columna["emailEducador"]),
                     byteArrayDocument = (byte[])columna["documento"],
-                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
+                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"]),
+                    version= (int)columna["version"]
                 };
                 catalogo = new List<Tuple<string, string>>();
                 foreach (DataRow columnaTopicos in tableTopicos.Rows)
@@ -396,7 +397,15 @@ namespace PIBasesISGrupo1.Handler
             return materiales;
         }
 
-        public List<string> obtenerMisCursosDisponibles(string emailDelUsuario)        {            List<string> cursos = new List<string>();            string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");            return cursos;        }
+        public List<Tuple<string, int>> obtenerMisCursos(string emailDelEstudiante)        {                        List <Tuple<string, int>> misCursos = obtenerMisCursosMatriculados(emailDelEstudiante);
+            List<Tuple<string, int>> cursosAprobados = obtenerCursosAprobados(emailDelEstudiante);
+
+            misCursos.AddRange(cursosAprobados);
+
+
+            
+
+            return misCursos;        }
 
         public bool borrarMaterial(MaterialModel material)
         {
@@ -626,6 +635,24 @@ namespace PIBasesISGrupo1.Handler
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(consultaParaAsignarCertificado);
             return exito;
         }
+
+        public List<Tuple<string, int>> obtenerCursosAprobados(string emailEstudiante)
+        {
+            List<Tuple<string, int>> cursosAprobados = new List<Tuple<string, int>>();
+            string consulta = "SELECT nombreCursoFK, version FROM Certificado WHERE emailEstudianteFK=@emailDelEstudiante;";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailDelEstudiante", emailEstudiante);
+            DataTable tablaCursosAprobados = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columnaCursosAprobados in tablaCursosAprobados.Rows)
+            {
+                cursosAprobados.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["version"])));
+
+            }
+            return cursosAprobados;
+
+            
+        }
+
 
 
     }
