@@ -64,13 +64,13 @@ body {
 }
 .certificado__title{
     margin-top: 20px;
-    font-size: 25px;
+    font-size: 23px;
 }
 .certificado__content {
-    font-size: 18px;
+    font-size: 15px;
 }
 .certificado__ownerName {
-    font-size: 40px;
+    font-size: 25px;
 }
 .certificado__content-lessMargin{
     margin-top: -15px;
@@ -80,7 +80,7 @@ body {
     justify-content:center;
 }
 .certificado__members div{
-    margin-right:50px;
+    margin:0 70px;
 }
 .certificado__members__line {
     height: 1px;
@@ -88,7 +88,7 @@ body {
     background-color: #002347;
 }
 .certificado__members__information {
-    
+    font-size:15px;
 }
 /*-----------------------------*/
 /*Encuestas*/
