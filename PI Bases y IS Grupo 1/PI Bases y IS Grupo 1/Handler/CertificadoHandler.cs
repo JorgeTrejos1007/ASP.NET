@@ -91,7 +91,20 @@ namespace PIBasesISGrupo1.Handler
             comandoParaInsertarEnTablaDeMiembros.CommandType = CommandType.StoredProcedure;
             comandoParaInsertarEnTablaDeMiembros.Parameters.AddWithValue("@email", email);
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaInsertarEnTablaDeMiembros);
-       }
+        }
 
+        public List<string> obtenerCursosAprobados(string emailEstudiante) {
+            List<string> cursosAprobados = new List<string>();
+            string consulta = "SELECT nombreCursoFK, version FROM Certificado WHERE emailEstudianteFK=@emailEstudiante";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            DataTable tablaCertificado = baseDeDatos.crearTablaConsulta(comando);
+          
+            foreach (DataRow columna in tablaCertificado.Rows)
+            {
+                cursosAprobados.Add(Convert.ToString(columna["nombreCursoFK"])+ " v."+ Convert.ToString(columna["version"]));
+            }
+            return cursosAprobados;
+        }
     }
 }

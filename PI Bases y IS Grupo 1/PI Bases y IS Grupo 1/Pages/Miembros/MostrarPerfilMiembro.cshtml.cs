@@ -27,6 +27,12 @@ namespace PIBasesISGrupo1.Pages.Miembros
             ViewData["email"] = email;
             miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
 
+            CertificadoHandler accesoDatosCertificado = new CertificadoHandler();
+
+            List<string> cursosAprobados = accesoDatosCertificado.obtenerCursosAprobados(email);
+            ViewData["cursosAprobados"] = cursosAprobados;
+
+
             int cantidadDePerfiles = 4;
             List<Miembro> informacionDePerfilesMasSimilares = new List<Miembro>();
             List<string> correosDePerfilesMasSimilares = new List<string>();
