@@ -15,7 +15,7 @@
     </script>
 
 </head>
- 
+
 
 @foreach (var certificado in certificados)
 {
@@ -31,8 +31,6 @@
             <p class="certificado__content certificado__content-lessMargin">EL CURSO @certificado.nombreCurso</p>
             <br />
             <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
-            <br />
-            <br />
 
             <div class="certificado__members">
                 <div>
@@ -46,11 +44,16 @@
                     <p class="certificado__members__information">FIRMA EDUCADOR</p>
                 </div>
             </div>
-            <form method="post" asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email">
-                <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
-                <button type="submit" id="btn-Convert-Html2Image" onclick="myFunction()" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
-            </form>
+            <br />
+            <br />
+            <br />
         </div>
+    </div>
+    <div style="position:relative;left:45%;bottom:130px">
+        <form method="post" asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email">
+            <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
+            <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
+        </form>
     </div>
     <script>
 
@@ -59,21 +62,6 @@
                 var dataURL = canvas.toDataURL();
                 document.getElementById("informacionImagen").value = dataURL;
             }
-        });
-        $('#btn-Convert-Html2Image').click(function () {
-
-            /*
-                html2canvas($('#certificado'),
-                    {
-                        onrendered: function (canvas) {
-                            var a = document.createElement('a');
-                            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-                            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                            a.download = 'Certificado.png';
-                            a.click();
-                        }
-                    });
-                    */
         });
 
     </script>
