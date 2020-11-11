@@ -14,13 +14,22 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
+        public Miembro miembroEnSesion;
+        CursoHandler accesoDatos = new CursoHandler();
         public IActionResult OnGet(String nombreCurso)
         {
+            bool cursoTerminado = false;
+
             try
             {
-                CursoHandler accesoDatos = new CursoHandler();
-                var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                
+                 miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                if (miembroEnSesion==null)
+                {
+                    miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
+                }
                 var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
+                TempData["email"] = miembroEnSesion.email;
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
@@ -37,9 +46,23 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                     foreach (var item in Secciones)
                     {
-                        item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
+                        item.listaMateriales = accesoDatos.obtenerMaterialesDeUnaSeccionParaEstudiante(nombreCurso, item.nombreSeccion, miembroEnSesion.email);
                     }
+
+                    ViewData["cantidadMaterialVisto"] = accesoDatos.obtenerCantidadMaterialVistoPorEstudiante(nombreCurso, miembroEnSesion.email);
+
+                    ViewData["cantidadMaterialTotal"] = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreCurso, miembroEnSesion.email);
+
+                    cursoTerminado = verificarSiHaTerminadoElCurso((int)ViewData["cantidadMaterialVisto"], (int)ViewData["cantidadMaterialTotal"]);
+                    if (cursoTerminado==true) {
+                        accesoDatos.asignarCertificado(nombreCurso, miembroEnSesion.email);
+                    }
+
+                    ViewData["cursoTerminado"] = cursoTerminado;
+
+
                     return Page();
+
                 }
                 else
                 {
@@ -52,5 +75,20 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
+        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreDeCurso) {
+           bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, (string)TempData["email"]);
+            
+            return RedirectToPage("VistaCursoEstudiante", new { nombreCurso = nombreDeCurso });
+        }
+
+
+        public bool verificarSiHaTerminadoElCurso(int cantidadMaterialVisto, int cantidadMaterialTotal) {
+            bool terminado = false;
+            if (cantidadMaterialVisto== cantidadMaterialTotal) {
+                terminado = true;
+            }
+            return terminado;
+        } 
+
     }
 }
