@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
+using PIBasesISGrupo1.MotorSimilitudes;
 using Microsoft.Extensions.Configuration;
 
 
