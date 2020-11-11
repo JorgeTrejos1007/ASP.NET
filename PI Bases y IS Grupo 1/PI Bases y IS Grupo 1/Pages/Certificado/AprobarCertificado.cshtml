@@ -13,6 +13,11 @@
 
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
     </script>
+    <style>
+        .certifica {
+            text-align: center;
+        }
+    </style>
 
 </head>
 
@@ -30,7 +35,7 @@
             <p class="certificado__content certificado__content-lessMargin">@certificado.nombreCurso</p>
             <p class="certificado__content">Impartido por: @certificado.nombreEducador</p>
             <p class="certificado__content">
-                Fecha de Emision @certificado.fecha.Substring(0,2)-@certificado.fecha.Substring(3,2)-@certificado.fecha.Substring(6,4)
+             Fecha de Emision @certificado.fecha.Substring(0,2)-@certificado.fecha.Substring(3,2)-@certificado.fecha.Substring(6,4)
             </p>
 
             <div class="certificado__members">
@@ -51,7 +56,7 @@
             <br />
         </div>
     </div>
-    <div style="position:relative;left:43%;bottom:130px">
+    <div class="certifica" style="position:relative;left:0%;bottom:130px">
         <form method="post" asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email">
             <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
             <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
