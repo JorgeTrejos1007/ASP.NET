@@ -101,7 +101,7 @@
                                     </a>
 
                                     <div id="@material.nombreMaterial+@material.nombreDeSeccion">
-                                        
+
                                         @if (material.visto == 1)
                                         {
                                             <span class="or" style="color:#13b208; margin-left:15px;">Visto <i class="ti-check" aria-hidden="false"></i></span>
@@ -175,13 +175,12 @@
                 },
                 data: { "nombreMaterial": nombreMaterial, "nombreSeccion": nombreDeSeccion, "nombreDeCurso": nombreDeCurso, "emailEstudiante":email },
                 success: function (response) {
-                    
 
-                    animacionResultados(response.Item1, response.Item2, 'progreso')
 
                     
+                    animacionResultados(response.Item1, response.Item2, 'progreso');
 
-               
+
 
                 },
                 failure: function (response) {
@@ -191,34 +190,24 @@
                     alert("No X2");
                 }
             });
+
+
+            marcarVisto(nombreMaterial,nombreDeSeccion);
         }
 
 
 
-        /*$.ajax({
-            type: "POST",
-            url: "VistaCursoEstudiante?handler=SubirMaterial",
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader("XSRF-TOKEN",
-                    $('input:hidden[name="__RequestVerificationToken"]').val());
-            },
-            data: { "nombreMaterial": nombreMaterial, "nombreSeccion": nombreDeSeccion, "nombreDeCurso": nombreDeCurso},
-            success: function (response) {
-                alert("Hello:");
-            },
-            failure: function (response) {
-                alert("No");
-            },
-            error: function (response) {
-                alert("No X2");
-            }
-        });*/
-
-
-
-
-        //document.getElementById(id).click();
+        
     }
+
+    function marcarVisto(nombreMaterial, nombreDeSeccion) {
+
+        
+        document.getElementById(nombreMaterial + '+' + nombreDeSeccion).innerHTML = "<span class='or' style='color: #13b208; margin - left: 15px; '>Visto <i class='ti - check' aria-hidden='false'></i></span>";
+
+
+    }
+
 
 
     var acc = document.getElementsByClassName("accordion");
