@@ -26,7 +26,7 @@
         }
         if (cantidadMaterialVisto == 0) {
             elem.style.background = "#777777";
-            elem.innerHTML= parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
+            elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
         }
     }
 </script>
@@ -62,8 +62,10 @@
         {
             <div class="alert-success">
 
-                <h3> Felicidades has completado el curso tu certificado 
-                llegará pronto</h3>
+                <h3>
+                    Felicidades has completado el curso tu certificado
+                    llegará pronto
+                </h3>
             </div>
         }
 
@@ -92,7 +94,7 @@
                             {
 
                                 <form method="post">
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial+@material.nombreDeSeccion')">
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial','@material.nombreDeSeccion','@material.nombreDeCurso',@material.visto)">
                                         <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
                                     @if (material.visto == 1)
@@ -147,9 +149,65 @@
         </p>
     </footer>
 </div>
+
+
+
 <script>
-    function prueba(id) {
-        document.getElementById(id).click();
+    function prueba(nombreMaterial, nombreDeSeccion, nombreDeCurso,visto) {
+
+        if (visto == 0) {
+            $.ajax({
+                type: "POST",
+                url: "VistaCursoEstudiante?handler=SubirMaterial",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "nombreMaterial": nombreMaterial, "nombreSeccion": nombreDeSeccion, "nombreDeCurso": nombreDeCurso },
+                success: function (response) {
+                    var cantidadTotal=@cantidadMaterialTotal;
+                    
+                    var cantidadVista =@cantidadMaterialVisto+1;
+
+
+                    animacionResultados(cantidadTotal, cantidadVista, 'progreso')
+
+
+                },
+                failure: function (response) {
+                    alert("No");
+                },
+                error: function (response) {
+                    alert("No X2");
+                }
+            });
+        }
+
+
+
+        /*$.ajax({
+            type: "POST",
+            url: "VistaCursoEstudiante?handler=SubirMaterial",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "nombreMaterial": nombreMaterial, "nombreSeccion": nombreDeSeccion, "nombreDeCurso": nombreDeCurso},
+            success: function (response) {
+                alert("Hello:");
+            },
+            failure: function (response) {
+                alert("No");
+            },
+            error: function (response) {
+                alert("No X2");
+            }
+        });*/
+
+
+
+
+        //document.getElementById(id).click();
     }
 
 
