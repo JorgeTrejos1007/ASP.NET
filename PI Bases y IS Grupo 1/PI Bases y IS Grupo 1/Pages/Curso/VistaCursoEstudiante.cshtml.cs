@@ -29,7 +29,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                     miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
                 }
                 var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
-                TempData["email"] = miembroEnSesion.email;
+                ViewData["email"] = miembroEnSesion.email;
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
@@ -75,12 +75,20 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
-        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreDeCurso) {
-
-
-            //bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, (string)TempData["email"]);
+        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreDeCurso,string emailEstudiante) {
             
-            return RedirectToPage("VistaCursoEstudiante", new { nombreCurso = nombreDeCurso });
+
+            bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, (string)TempData["email"]);
+
+            int cantidadMaterialVisto = accesoDatos.obtenerCantidadMaterialVistoPorEstudiante(nombreDeCurso, emailEstudiante);
+
+            int cantidadMaterialTotal = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreDeCurso, emailEstudiante);
+
+            Tuple<int, int> materialTotalYvisto = new Tuple<int, int>(cantidadMaterialTotal, cantidadMaterialVisto);
+
+
+
+            return new JsonResult(materialTotalYvisto);
         }
 
 
