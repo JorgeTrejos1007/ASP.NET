@@ -59,10 +59,10 @@
 
                         <li class="justify-content-between d-flex" href="#">
                             <span class="or">@certificado.nombreEstudiante</span>
-                            <span class="or">@certificado.nombreCurso</span>
+                            <span class="or">@certificado.nombreCurso @certificado.version</span>
                             <span class="or">@certificado.nombreEducador</span>
                             <form method="post" asp-for asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email" asp-route-version="@certificado.version" >
-                                 <button type="submit" class="primary-btn text-uppercase enroll rounded-0" href="#">Firmar</button>
+                                 <button type="submit" class="primary-btn text-uppercase enroll rounded-0" href="#">Aprobar</button>
                             </form>
 
                         </li>
