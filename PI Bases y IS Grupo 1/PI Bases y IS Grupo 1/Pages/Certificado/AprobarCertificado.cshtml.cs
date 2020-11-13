@@ -19,7 +19,7 @@ namespace PIBasesISGrupo1.Pages.Certificado
     {
         private CertificadoHandler accesoAlCertificado;
         [BindProperty]
-        public string tipoImagen { get; set; }
+        public byte[] firmaCoordinador{get;set;}
         public IActionResult OnGet()
         {
             IActionResult vista;
@@ -48,10 +48,10 @@ namespace PIBasesISGrupo1.Pages.Certificado
             }
             return vista;
         }
-        public IActionResult OnPost(string emailEstudiante, string nombreCurso, string emailCoordinador)
+        public IActionResult OnPost(string emailEstudiante, string nombreCurso, string emailCoordinador,   int version)
         {
             accesoAlCertificado = new CertificadoHandler();
-            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador,tipoImagen);
+            bool exito = accesoAlCertificado.aprobarCertificado(emailEstudiante, nombreCurso, emailCoordinador,  version);
             
             return RedirectToPage("AprobarCertificado");
         }

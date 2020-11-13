@@ -14,69 +14,72 @@
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
     </script>
     <style>
+
+        .centrar-documento {
+            text-align: center;
+        }
+
         .certifica {
             text-align: center;
         }
+
+       .hx{
+            text-align: left
+        }
+        #header h4 {
+            display: inline;
+        }
+
+     
     </style>
 
 </head>
+<div class="cajota-cursos">
+    <div class="row justify-content-center">
+        <h1 class="mb-3">Aprobar Certificados</h1>
+    </div>
 
-@{
-    int cont = 0;
-}
-@foreach (var certificado in certificados)
-{
+    <div class="cursos-container-2">
+        <div class="cajita-cursos col-lg-12">
+            <div class="col-lg-12 right-contents">
+                <div id="header">
+                    
+                        <h4 class="mb-30">Estudiante</h4>
+                     
+                     
+                        <h4 class="mb-30">Curso</h4>
+                   
+                    <h4 class="mb-30">Educador</h4>
+                    <hr class="new5">
+                 
+                <ul>
 
-    <div class="certificado__container" id="certificado">
-        <div class="certificado__elements">
-            <p class="certificado__title"><strong>CERTIFICADO DE FINALIZACIÓN</strong></p>
-            <br />
-            <p class="certificado__content">Este certificado se otorga a</p>
-            <p class="certificado__ownerName"><strong>@certificado.nombreEstudiante</strong></p>
-            <p class="certificado__content">Por completar con exito el curso de</p>
-            <p class="certificado__content certificado__content-lessMargin">@certificado.nombreCurso</p>
-            <p class="certificado__content">Impartido por: @certificado.nombreEducador</p>
-            <p class="certificado__content">
-             Fecha de Emision @certificado.fecha.Substring(0,2)-@certificado.fecha.Substring(3,2)-@certificado.fecha.Substring(6,4)
-            </p>
+                    @foreach (var certificado in certificados)
+                    {
 
-            <div class="certificado__members">
-                <div>
-                    <img src="data:image/png;base64,@(Convert.ToBase64String(firmaCoordinador))" style="width:200px;height:100px" />
-                    <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">Firma coordinador</p>
-                </div>
-                <img src="~/img/logoCertificado.jpg" style="width:200px;height:100px"/>
-                <div>
-                    <img src="data:image/png;base64,@(Convert.ToBase64String(certificado.firmaEducador))" style="width:200px;height:100px" />
-                    <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">Firma Educador</p>
-                </div>
+                        <li class="justify-content-between d-flex" href="#">
+                            <span class="or">@certificado.nombreEstudiante</span>
+                            <span class="or">@certificado.nombreCurso</span>
+                            <span class="or">@certificado.nombreEducador</span>
+                            <form method="post" asp-for asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email" asp-route-version="@certificado.version" >
+                                 <button type="submit" class="primary-btn text-uppercase enroll rounded-0" href="#">Firmar</button>
+                            </form>
+
+                        </li>
+
+
+
+
+
+                    }
+                </ul>
             </div>
-            <br />
-            <br />
-            <br />
         </div>
     </div>
-    <div class="certifica" style="position:relative;left:0%;bottom:130px">
-        <form method="post" asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email">
-            <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
-            <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
-        </form>
-     
+
+
     </div>
-    <script>
-
-        html2canvas($('#certificado'), {
-            onrendered: function (canvas) {
-                var dataURL = canvas.toDataURL();
-                document.getElementById("informacionImagen").value = dataURL;
-            }
-        });
-
-    </script>
-
-}
+              
 
 
 

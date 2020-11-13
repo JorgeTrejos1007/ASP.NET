@@ -12,9 +12,10 @@ namespace PIBasesISGrupo1.Models
         public string nombreEducador { get; set; }
         public string nombreEstudiante { get; set; }
         public byte[] firmaEducador { get; set; }
-        public byte []  firmaCoordinador { get; set; }
+        public byte[] firmaCoordinador { get; set; }
         public string imagenCertificado { get; set; }
         public string fecha { get; set; }
         public string emailEstudiante { get; set; }
+        public int version{ get; set; }
     }
 }
