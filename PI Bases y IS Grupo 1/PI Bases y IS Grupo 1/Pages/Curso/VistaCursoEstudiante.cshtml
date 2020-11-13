@@ -14,22 +14,26 @@
 
 <script>
     function animacionResultados(cantidadMaterialTotal, cantidadMaterialVisto, nombreDiv) {
-        var elem = document.getElementById(nombreDiv);
-        var width = 1;
-        var id = setInterval(frame, 1);
-        function frame() {
-            if (width >= (cantidadMaterialVisto / cantidadMaterialTotal) * 100) {
-                clearInterval(id);
-            } else {
-                width++;
-                elem.style.width = width + "%";
+        if (cantidadMaterialTotal!=0) {
+            var elem = document.getElementById(nombreDiv);
+            var width = 1;
+            var id = setInterval(frame, 1);
+            function frame() {
+                if (width >= (cantidadMaterialVisto / cantidadMaterialTotal) * 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + "%";
+                    elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
+                }
+            }
+            if (cantidadMaterialVisto == 0) {
+                elem.style.background = "#777777";
                 elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
             }
+
         }
-        if (cantidadMaterialVisto == 0) {
-            elem.style.background = "#777777";
-            elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
-        }
+        
     }
 </script>
 
