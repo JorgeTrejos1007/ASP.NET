@@ -96,7 +96,7 @@
                             {
 
                                 <form method="post">
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial','@material.nombreDeSeccion','@material.nombreDeCurso',@material.visto,'@email')">
+                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="marcarMaterial('@material.nombreMaterial','@material.nombreDeSeccion','@material.nombreDeCurso',@material.visto,'@email')">
                                         <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
 
@@ -163,12 +163,12 @@
 
 
 <script>
-    function prueba(nombreMaterial, nombreDeSeccion, nombreDeCurso, visto, email) {
+    function marcarMaterial(nombreMaterial, nombreDeSeccion, nombreDeCurso, visto, email) {
 
         if (visto == 0) {
             $.ajax({
                 type: "POST",
-                url: "VistaCursoEstudiante?handler=SubirMaterial",
+                url: "VistaCursoEstudiante?handler=MarcarMaterialVisto",
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("XSRF-TOKEN",
                         $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -183,12 +183,7 @@
 
 
                 },
-                failure: function (response) {
-                    alert("No");
-                },
-                error: function (response) {
-                    alert("No X2");
-                }
+               
             });
 
 

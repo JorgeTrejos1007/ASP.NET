@@ -81,11 +81,11 @@ body {
 
 .encuestas__progressBar {
     line-height: 30px;
-    width: 1;
+    width: 0px;
     text-align: center;
     color: #fff;
     height: 30px;
-    background: rgba(56,164,255,.5);
+    background: rgba(56,164,255,.5) !important;
     border: none;
     border-radius: 50px;
     white-space:nowrap;
