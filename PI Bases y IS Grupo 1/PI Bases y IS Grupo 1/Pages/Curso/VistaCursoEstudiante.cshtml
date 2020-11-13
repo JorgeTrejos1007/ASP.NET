@@ -13,6 +13,16 @@
 }
 
 <script>
+
+    function mostrarMensajeDeCursoFinalizado() {
+        document.getElementById("certificado").hidden = false;
+
+    }
+
+    
+
+
+
     function animacionResultados(cantidadMaterialTotal, cantidadMaterialVisto, nombreDiv) {
         if (cantidadMaterialTotal!=0) {
             var elem = document.getElementById(nombreDiv);
@@ -64,16 +74,22 @@
     <br>
 
     @{
-        if ((bool)ViewData["cursoTerminado"])
-        {
-            <div class="alert-success">
+        
+            <div id="certificado" hidden class="alert-success">
 
                 <h3>
                     Felicidades has completado el curso tu certificado
                     llegará pronto
                 </h3>
             </div>
-        }
+        
+            if (cantidadMaterialTotal == cantidadMaterialVisto)
+            {
+                <script>
+                    mostrarMensajeDeCursoFinalizado();
+                </script>
+            
+            }
 
 
     }
@@ -121,10 +137,10 @@
 
                                     </div>
 
-                                    
 
-                                   
-                             
+
+
+
 
 
                                 <br>
@@ -163,9 +179,9 @@
                    data-url="http://edustage.azurewebsites.net/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="Large">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </h4>
-        </p>
-    </footer>
-</div>
+            </p>
+            </footer>
+        </div>
 
 
 
@@ -186,7 +202,10 @@
 
                     
                     animacionResultados(response.Item1, response.Item2, 'progreso');
-
+                    if (response.Item1 == response.Item2) {
+                        asignarCertificado(nombreDeCurso, email)
+                        mostrarMensajeDeCursoFinalizado()
+                    }
 
 
                 },
@@ -210,6 +229,23 @@
 
     }
 
+   
+    function asignarCertificado(nombreCurso, emailEstudiante) {
+        $.ajax({
+            type: "POST",
+            url: "VistaCursoEstudiante?handler=EmitirCertificado",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "nombreDeCurso": nombreCurso, "emailEstudiante": emailEstudiante },
+            success: function (response) {
+                
+            },
+
+        });
+
+    }
 
 
     var acc = document.getElementsByClassName("accordion");

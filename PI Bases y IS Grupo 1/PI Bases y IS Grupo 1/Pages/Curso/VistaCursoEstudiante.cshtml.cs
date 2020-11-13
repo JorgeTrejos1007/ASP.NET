@@ -18,7 +18,6 @@ namespace PIBasesISGrupo1.Pages.Curso
         CursoHandler accesoDatos = new CursoHandler();
         public IActionResult OnGet(String nombreCurso)
         {
-            bool cursoTerminado = false;
 
             try
             {
@@ -53,14 +52,7 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                     ViewData["cantidadMaterialTotal"] = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreCurso, miembroEnSesion.email);
 
-                    cursoTerminado = verificarSiHaTerminadoElCurso((int)ViewData["cantidadMaterialVisto"], (int)ViewData["cantidadMaterialTotal"]);
-                    if (cursoTerminado==true) {
-                        accesoDatos.asignarCertificado(nombreCurso, miembroEnSesion.email);
-                    }
-
-                    ViewData["cursoTerminado"] = cursoTerminado;
-
-
+             
                     return Page();
 
                 }
@@ -92,13 +84,13 @@ namespace PIBasesISGrupo1.Pages.Curso
         }
 
 
-        public bool verificarSiHaTerminadoElCurso(int cantidadMaterialVisto, int cantidadMaterialTotal) {
-            bool terminado = false;
-            if (cantidadMaterialVisto== cantidadMaterialTotal) {
-                terminado = true;
-            }
-            return terminado;
-        } 
+       
+
+        public void OnPostEmitirCertificado(string nombreDeCurso, string emailEstudiante) {
+
+            accesoDatos.asignarCertificado(nombreDeCurso, emailEstudiante);
+
+        }
 
     }
 }
