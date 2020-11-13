@@ -95,12 +95,15 @@
                             foreach (var material in item.listaMateriales)
                             {
 
-                                <form method="post">
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="marcarMaterial('@material.nombreMaterial','@material.nombreDeSeccion','@material.nombreDeCurso',@material.visto,'@email')">
-                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
-                                    </a>
+                                    <div style="display:inline-flex;">
+                                        <form method="post">
+                                        <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="marcarMaterial('@material.nombreMaterial','@material.nombreDeSeccion','@material.nombreDeCurso',@material.visto,'@email')">
+                                            <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
+                                        </a>
+                                        </form>
+                                    </div>
 
-                                    <div id="@material.nombreMaterial+@material.nombreDeSeccion">
+                                    <div id="@material.nombreMaterial+@material.nombreDeSeccion" style="display:inline-flex;">
 
                                         @if (material.visto == 1)
                                         {
@@ -117,7 +120,7 @@
                                     
 
                                    
-                                </form>
+                             
 
 
                                 <br>
