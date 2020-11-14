@@ -1,10 +1,12 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Evento.VerStreamingModel
-@{ 
+@{
     ViewData["Title"] = "Lista de encuestas";
 }
 <h1>Ver evento en vivo!!</h1>
-<div style="margin-left:25%;">
-    <iframe width="560" height="315" src="https://www.twitch.tv/calabuth" frameborder="0" allowfullscreen></iframe>
-    <!--<video id="stream" src="https://www.twitch.tv/ronny_666_" controls width="800" height="550" loop/>-->
+
+
+<div class="iframe-container" style="overflow: hidden; padding-top: 56.25%; position: relative;">
+    <iframe allow="microphone; camera" style="border: 0; height: 100%; left: 0; position: absolute; top: 0; width: 100%;" src="https://us02web.zoom.us/j/7919074420?pwd=eVFCdnlsNmVHQ050R2JtaUVMaDhtQT09" frameborder="0"></iframe>
 </div>
+
