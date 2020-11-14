@@ -18,7 +18,6 @@ namespace PIBasesISGrupo1.Pages.Curso
         CursoHandler accesoDatos = new CursoHandler();
         public IActionResult OnGet(String nombreCurso)
         {
-            bool cursoTerminado = false;
 
             try
             {
@@ -29,7 +28,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                     miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
                 }
                 var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
-                TempData["email"] = miembroEnSesion.email;
+                ViewData["email"] = miembroEnSesion.email;
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
@@ -53,14 +52,7 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                     ViewData["cantidadMaterialTotal"] = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreCurso, miembroEnSesion.email);
 
-                    cursoTerminado = verificarSiHaTerminadoElCurso((int)ViewData["cantidadMaterialVisto"], (int)ViewData["cantidadMaterialTotal"]);
-                    if (cursoTerminado==true) {
-                        accesoDatos.asignarCertificado(nombreCurso, miembroEnSesion.email);
-                    }
-
-                    ViewData["cursoTerminado"] = cursoTerminado;
-
-
+             
                     return Page();
 
                 }
@@ -75,20 +67,30 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
-        public IActionResult OnPostSubirMaterial(string nombreMaterial , string nombreSeccion, string nombreDeCurso) {
-           bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, (string)TempData["email"]);
+        public IActionResult OnPostMarcarMaterialVisto(string nombreMaterial , string nombreSeccion, string nombreDeCurso,string emailEstudiante) {
             
-            return RedirectToPage("VistaCursoEstudiante", new { nombreCurso = nombreDeCurso });
+
+            bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, emailEstudiante);
+
+            int cantidadMaterialVisto = accesoDatos.obtenerCantidadMaterialVistoPorEstudiante(nombreDeCurso, emailEstudiante);
+
+            int cantidadMaterialTotal = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreDeCurso, emailEstudiante);
+
+            Tuple<int, int> materialTotalYvisto = new Tuple<int, int>(cantidadMaterialTotal, cantidadMaterialVisto);
+
+
+
+            return new JsonResult(materialTotalYvisto);
         }
 
 
-        public bool verificarSiHaTerminadoElCurso(int cantidadMaterialVisto, int cantidadMaterialTotal) {
-            bool terminado = false;
-            if (cantidadMaterialVisto== cantidadMaterialTotal) {
-                terminado = true;
-            }
-            return terminado;
-        } 
+       
+
+        public void OnPostEmitirCertificado(string nombreDeCurso, string emailEstudiante) {
+
+            accesoDatos.asignarCertificado(nombreDeCurso, emailEstudiante);
+
+        }
 
     }
 }

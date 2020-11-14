@@ -4,6 +4,8 @@
     ViewData["Title"] = "VistaCursoEstudiante";
     var nombreCurso = (String)ViewData["nombreCurso"];
 
+    var email = (string)ViewData["email"];
+
     int cantidadMaterialVisto = (int)ViewData["cantidadMaterialVisto"];
 
     int cantidadMaterialTotal = (int)ViewData["cantidadMaterialTotal"];
@@ -11,23 +13,37 @@
 }
 
 <script>
+
+    function mostrarMensajeDeCursoFinalizado() {
+        document.getElementById("certificado").hidden = false;
+
+    }
+
+    
+
+
+
     function animacionResultados(cantidadMaterialTotal, cantidadMaterialVisto, nombreDiv) {
-        var elem = document.getElementById(nombreDiv);
-        var width = 1;
-        var id = setInterval(frame, 1);
-        function frame() {
-            if (width >= (cantidadMaterialVisto / cantidadMaterialTotal) * 100) {
-                clearInterval(id);
-            } else {
-                width++;
-                elem.style.width = width + "%";
+        if (cantidadMaterialTotal!=0) {
+            var elem = document.getElementById(nombreDiv);
+            var width = 1;
+            var id = setInterval(frame, 1);
+            function frame() {
+                if (width >= (cantidadMaterialVisto / cantidadMaterialTotal) * 100) {
+                    clearInterval(id);
+                } else {
+                    width++;
+                    elem.style.width = width + "%";
+                    elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
+                }
+            }
+            if (cantidadMaterialVisto == 0) {
+                elem.style.background = "#777777";
                 elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
             }
+
         }
-        if (cantidadMaterialVisto == 0) {
-            elem.style.background = "#777777";
-            elem.innerHTML= parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
-        }
+        
     }
 </script>
 
@@ -58,14 +74,22 @@
     <br>
 
     @{
-        if ((bool)ViewData["cursoTerminado"])
-        {
-            <div class="alert-success">
+        
+            <div id="certificado" hidden class="alert-success">
 
-                <h3> Felicidades has completado el curso tu certificado 
-                llegará pronto</h3>
+                <h3>
+                    Felicidades has completado el curso tu certificado
+                    llegará pronto
+                </h3>
             </div>
-        }
+        
+            if (cantidadMaterialTotal == cantidadMaterialVisto)
+            {
+                <script>
+                    mostrarMensajeDeCursoFinalizado();
+                </script>
+            
+            }
 
 
     }
@@ -91,21 +115,32 @@
                             foreach (var material in item.listaMateriales)
                             {
 
-                                <form method="post">
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="prueba('@material.nombreMaterial+@material.nombreDeSeccion')">
-                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
-                                    </a>
-                                    @if (material.visto == 1)
-                                    {
-                                        <span class="or" style="color:#13b208; margin-left:15px;">Visto <i class="ti-check" aria-hidden="false"></i></span>
-                                    }
-                                    else
-                                    {
-                                        <span class="or" style="color:red; margin-left:15px;">No visto <i class="ti-close" aria-hidden="false"></i></span>
-                                    }
+                                    <div style="display:inline-flex;">
+                                        <form method="post">
+                                        <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial" onclick="marcarMaterial('@material.nombreMaterial','@material.nombreDeSeccion','@material.nombreDeCurso',@material.visto,'@email')">
+                                            <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
+                                        </a>
+                                        </form>
+                                    </div>
 
-                                    <button hidden id="@material.nombreMaterial+@material.nombreDeSeccion" asp-route-nombreMaterial="@material.nombreMaterial" asp-route-nombreSeccion="@material.nombreDeSeccion" asp-route-nombreDeCurso="@material.nombreDeCurso" asp-page-handler="SubirMaterial"></button>
-                                </form>
+                                    <div id="@material.nombreMaterial+@material.nombreDeSeccion" style="display:inline-flex;">
+
+                                        @if (material.visto == 1)
+                                        {
+                                            <span class="or" style="color:#13b208; margin-left:15px;">Visto <i class="ti-check" aria-hidden="false"></i></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="or" style="color:red; margin-left:15px;">No visto <i class="ti-close" aria-hidden="false"></i></span>
+                                        }
+
+
+                                    </div>
+
+
+
+
+
 
 
                                 <br>
@@ -144,12 +179,72 @@
                    data-url="http://edustage.azurewebsites.net/" data-hashtags="CompartirConocimientoEsLoMásImportante" data-show-count="false" data-size="Large">Tweet</a>
                 <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </h4>
-        </p>
-    </footer>
-</div>
+            </p>
+            </footer>
+        </div>
+
+
+
 <script>
-    function prueba(id) {
-        document.getElementById(id).click();
+    function marcarMaterial(nombreMaterial, nombreDeSeccion, nombreDeCurso, visto, email) {
+
+        if (visto == 0) {
+            $.ajax({
+                type: "POST",
+                url: "VistaCursoEstudiante?handler=MarcarMaterialVisto",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "nombreMaterial": nombreMaterial, "nombreSeccion": nombreDeSeccion, "nombreDeCurso": nombreDeCurso, "emailEstudiante":email },
+                success: function (response) {
+
+
+                    
+                    animacionResultados(response.Item1, response.Item2, 'progreso');
+                    if (response.Item1 == response.Item2) {
+                        asignarCertificado(nombreDeCurso, email)
+                        mostrarMensajeDeCursoFinalizado()
+                    }
+
+
+                },
+               
+            });
+
+
+            marcarVisto(nombreMaterial,nombreDeSeccion);
+        }
+
+
+
+        
+    }
+
+    function marcarVisto(nombreMaterial, nombreDeSeccion) {
+
+        
+        document.getElementById(nombreMaterial + '+' + nombreDeSeccion).innerHTML = "<span class='or' style='color: #13b208; margin - left: 15px; '>Visto <i class='ti - check' aria-hidden='false'></i></span>";
+
+
+    }
+
+   
+    function asignarCertificado(nombreCurso, emailEstudiante) {
+        $.ajax({
+            type: "POST",
+            url: "VistaCursoEstudiante?handler=EmitirCertificado",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "nombreDeCurso": nombreCurso, "emailEstudiante": emailEstudiante },
+            success: function (response) {
+                
+            },
+
+        });
+
     }
 
 
