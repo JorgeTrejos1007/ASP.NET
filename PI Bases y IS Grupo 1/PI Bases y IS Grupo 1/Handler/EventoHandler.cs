@@ -29,12 +29,10 @@ namespace PIBasesISGrupo1.Handler
 
         public bool registrarEvento(Evento evento, IFormFile archivoImagen)
         {
-            bool exito = false;
-
             string consulta = "INSERT INTO Evento(emailCoordinadorFK, nombreEventoPK, fechaYHoraPK, descripcion, imagen, tipoArchivoImagen) "
                 + "VALUES (@emailCoordinador, @nombre, @fechaYHora, @descripcion, @archivoImagen, @tipoArchivoImagen) ";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
 
             comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador",evento.emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombre", evento.nombre);
@@ -43,71 +41,58 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(archivoImagen));
             comandoParaConsulta.Parameters.AddWithValue("@tipoArchivoImagen", archivoImagen.ContentType);
 
-            exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
-            /*
-            if (evento.tipo == "Virtual")
-            {
-                registrarEventoVirtual(evento);
-            }
-            else {
-                registrarEventoPresencial(evento);
-            }
-            */
-
-            return exito;
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
 
         public bool registrarEventoVirtual(Evento evento) {
-            bool exito = false;
-            string consulta = "INSERT INTO VIRTUAL "+ "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal)";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            string consulta = "INSERT INTO Virtual "+ "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal)";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
             comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", evento.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
-            exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
 
-            return exito;
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
 
         public bool registrarEventoPresencial(Evento evento)
         {
-            bool exito = false;
-            string consulta = "INSERT INTO VIRTUAL " + "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @lugar)";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+            string consulta = "INSERT INTO Presencial " + "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @lugar)";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
             comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", evento.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
             comandoParaConsulta.Parameters.AddWithValue("@lugar", evento.lugar);
-            exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
 
-            bool seRegistroSector = registrarSectores(evento);
-
-            return (exito && seRegistroSector);
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
 
         public bool registrarSectores(Evento evento)
         {
             bool exito = false;
             string consulta = "INSERT INTO Sector " + "VALUES(@nombreDeSector, @emailCoordinador, @nombreDeEvento, @fechaYHora, @cantidadAsientos, @tipo)";
-            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
-            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
 
-            for (int index=0; index < evento.sectores.Count; index++) {
+            for (int index = 0; index < evento.sectores.Count; index++) {
+                SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
                 comandoParaConsulta.Parameters.AddWithValue("@nombreDeSector", evento.sectores[index].nombreDeSector);
                 comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
-                comandoParaConsulta.Parameters.AddWithValue(" @nombreDeEvento", evento.nombre);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreDeEvento", evento.nombre);
                 comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
                 comandoParaConsulta.Parameters.AddWithValue("@cantidadAsientos", evento.sectores[index].cantidadAsientos);
                 comandoParaConsulta.Parameters.AddWithValue("@tipo", evento.sectores[index].tipo);
+
                 exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
 
                 if (!exito) {
                     break;
                 }
-            }
+            } 
+
             return exito;
         }
 

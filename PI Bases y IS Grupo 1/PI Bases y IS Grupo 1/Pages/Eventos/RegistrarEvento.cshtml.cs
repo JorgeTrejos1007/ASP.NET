@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 namespace PIBasesISGrupo1.Pages.Eventos
 {
     public class RegistrarEventoModel : PageModel
@@ -19,18 +20,53 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
         }
 
-        public void OnPost()
+        public IActionResult OnPost()
         {
+            evento.tipo = "Presencial";
+            evento.nombreCanalStream = "Ronnyale";
+            
+            evento.lugar = "Jaco";
+            Sector sector1 = new Sector();
+            sector1.nombreDeSector = "sol";
+            sector1.tipo = "No numerado";
+            sector1.cantidadAsientos = 3;
+            Sector sector2 = new Sector();
+            sector2.nombreDeSector = "Platea";
+            sector2.tipo = "Numerado";
+            sector2.cantidadAsientos = 4;
+            evento.sectores = new List<Sector>();
+            evento.sectores.Add(sector1);
+            evento.sectores.Add(sector2);
 
-            var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
-            evento.emailCoordinador  = miembro.email;
-
-            EventoHandler accesoDatosEventos = new EventoHandler();
-            if (accesoDatosEventos.registrarEvento(evento, archivoImagen))
+            IActionResult vista;
+            try
             {
-                TempData["mensaje"] = "Se ha logrado agregar noticia con exito";
-                TempData["exitoAlEditar"] = true; 
+                var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                evento.emailCoordinador = miembro.email;
+
+                EventoHandler accesoDatosEventos = new EventoHandler();
+
+                if (accesoDatosEventos.registrarEvento(evento, archivoImagen))
+                {
+                    if (evento.tipo.Equals("Virtual"))
+                    {
+                        accesoDatosEventos.registrarEventoVirtual(evento);
+                    }
+                    else
+                    {
+                        if (accesoDatosEventos.registrarEventoPresencial(evento))
+                        {
+                            accesoDatosEventos.registrarSectores(evento);
+                        }
+                    }
+                }
+                vista = Redirect("~/Index");
             }
+            catch
+            {
+                vista = Redirect("~/Error");
+            }
+            return vista;
         }
     }
 }
