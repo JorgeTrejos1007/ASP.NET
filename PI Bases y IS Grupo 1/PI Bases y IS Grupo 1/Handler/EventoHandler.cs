@@ -82,6 +82,31 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@lugar", evento.lugar);
             exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
 
+            bool seRegistroSector = registrarSectores(evento);
+
+            return (exito && seRegistroSector);
+        }
+
+        public bool registrarSectores(Evento evento)
+        {
+            bool exito = false;
+            string consulta = "INSERT INTO Sector " + "VALUES(@nombreDeSector, @emailCoordinador, @nombreDeEvento, @fechaYHora, @cantidadAsientos, @tipo)";
+            SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
+            SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
+
+            for (int index=0; index < evento.sectores.Count; index++) {
+                comandoParaConsulta.Parameters.AddWithValue("@nombreDeSector", evento.sectores[index].nombreDeSector);
+                comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
+                comandoParaConsulta.Parameters.AddWithValue(" @nombreDeEvento", evento.nombre);
+                comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
+                comandoParaConsulta.Parameters.AddWithValue("@cantidadAsientos", evento.sectores[index].cantidadAsientos);
+                comandoParaConsulta.Parameters.AddWithValue("@tipo", evento.sectores[index].tipo);
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+
+                if (!exito) {
+                    break;
+                }
+            }
             return exito;
         }
 
