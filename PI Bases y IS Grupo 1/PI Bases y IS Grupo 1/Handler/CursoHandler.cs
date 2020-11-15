@@ -129,6 +129,21 @@ namespace PIBasesISGrupo1.Handler
             }
             return misCursosPropuestos;
         }
+        public List<string> obtenerNombresDeCursos()
+        {
+            List<string> misCursosPropuestos = new List<string>();
+            string consulta = "SELECT C.nombrePK AS nombreCurso" +
+            " FROM Curso C " + 
+            "WHERE estado ='Creado'";
+            SqlCommand ComandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(ComandoParaConsulta);
+            foreach (DataRow columna in tablaCurso.Rows)
+            {
+               
+                misCursosPropuestos.Add( Convert.ToString(columna["nombreCurso"]));
+            }
+            return misCursosPropuestos;
+        }
 
         public List<Tuple<Cursos, Miembro,List<Tuple<string,string>>>> obtenerCursosDisponibles()
         {
