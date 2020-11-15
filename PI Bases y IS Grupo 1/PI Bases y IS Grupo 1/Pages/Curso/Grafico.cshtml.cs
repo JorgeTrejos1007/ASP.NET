@@ -16,25 +16,37 @@ namespace PIBasesISGrupo1.Pages.Curso
         private GraficoHandler grafico=new GraficoHandler();
         [BindProperty]        public string[] cursosAFiltrar { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
             accesoACursos = new CursoHandler();
+            ViewData["cursos"] = accesoACursos.obtenerNombresDeCursos();
+            if (TempData["Grafico"] != null)
+            {
+                ViewData["Grafico"] = TempData["Grafico"];
+            }
+
+            return Page();
+
+        }
+        public IActionResult OnPost() {
+            
             List<DataPoint> dataPoints = new List<DataPoint>();
-            List<string> estudiantesConCertificado = grafico.obtenerEstudiantesCertificadosDeUnCurso("Algebra Lineal");
-            List<string> estudiantesSinCertificado = grafico.obtenerEstudiantesQueEstanCursandoUnCurso("Algebra Lineal");
+            List<string> estudiantesConCertificado = grafico.obtenerEstudiantesCertificadosDeUnCurso(cursosAFiltrar[0]);
+            List<string> estudiantesSinCertificado = grafico.obtenerEstudiantesQueEstanCursandoUnCurso(cursosAFiltrar[0]);
             double total = estudiantesConCertificado.Count + estudiantesSinCertificado.Count;
             double totalConCertificado = estudiantesConCertificado.Count;
             double totalSinCertificado = estudiantesSinCertificado.Count;
-            ViewData["cursos"] = accesoACursos.obtenerNombresDeCursos();
+
             if (totalConCertificado > 0)
             {
-                
 
-                double porcentajeConCertificado=((totalConCertificado / total)*100);
+
+                double porcentajeConCertificado = ((totalConCertificado / total) * 100);
                 dataPoints.Add(new DataPoint("Certificados", Math.Round(porcentajeConCertificado)));
 
             }
-            else {
+            else
+            {
                 dataPoints.Add(new DataPoint("Certificados", 0));
 
             }
@@ -43,7 +55,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
 
                 double porcentajeSinCertificado = ((totalSinCertificado / total) * 100);
-                
+
                 dataPoints.Add(new DataPoint("Cursando", Math.Round(porcentajeSinCertificado)));
 
             }
@@ -53,12 +65,8 @@ namespace PIBasesISGrupo1.Pages.Curso
 
             }
 
-            ViewData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
-
-           
-        }
-        public void OnPost() {
-
+            TempData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
+            return RedirectToPage("Grafico");
         }
     }
 }
