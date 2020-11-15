@@ -18,8 +18,6 @@ namespace PIBasesISGrupo1.Pages.Certificado
     public class AprobarCertificadoModel : PageModel
     {
         private CertificadoHandler accesoAlCertificado;
-        [BindProperty]
-        public byte[] firmaCoordinador{get;set;}
         public IActionResult OnGet()
         {
             IActionResult vista;
@@ -28,8 +26,7 @@ namespace PIBasesISGrupo1.Pages.Certificado
                 Miembro datosDelCoordinador = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
                 ViewData["email"] = datosDelCoordinador.email;
                 MiembroHandler accesoDatos = new MiembroHandler();
-                ViewData["firmaCoordinador"] = accesoDatos.obtenerFirmaCoordinador(datosDelCoordinador.email);
-                if (ViewData["firmaCoordinador"] != null)
+                if (accesoDatos.obtenerFirmaCoordinador(datosDelCoordinador.email) != null)
                 {
 
                     accesoAlCertificado = new CertificadoHandler();
@@ -44,7 +41,7 @@ namespace PIBasesISGrupo1.Pages.Certificado
             }
             catch
             {
-                vista = Redirect("~/Index"); //Redirigir a pagina 404
+                vista = Redirect("~/Error"); 
             }
             return vista;
         }

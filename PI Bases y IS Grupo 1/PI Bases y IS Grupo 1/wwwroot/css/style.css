@@ -29,7 +29,7 @@ theme.
 }
 
 .center-element {
-align-content:center;
+    align-content: center;
 }
 
 body {
@@ -54,42 +54,71 @@ body {
     -moz-box-shadow: 0px 9px 22px 0px rgba(0,0,0,0.75);
     box-shadow: 0px 9px 22px 0px rgba(0,0,0,0.75);
 }
+
 .certificado__elements {
     margin: 15px 15px;
     border: 3px solid #618597;
     background: #fff;
     outline: 3px solid #fff;
-    text-align:center;
+    text-align: center;
     color: #002347;
 }
-.certificado__title{
+
+.certificado__title {
     margin-top: 20px;
     font-size: 23px;
 }
+
 .certificado__content {
     font-size: 15px;
 }
+
 .certificado__ownerName {
     font-size: 25px;
 }
-.certificado__content-lessMargin{
+
+.certificado__content-lessMargin {
     margin-top: -15px;
 }
-.certificado__members{
-    display:flex;
-    justify-content:center;
+
+.certificado__members {
+    display: flex;
+    justify-content: center;
 }
-.certificado__members div{
-    margin:0 70px;
-}
+
+    .certificado__members div {
+        margin: 0 70px;
+    }
+
 .certificado__members__line {
     height: 1px;
     margin: 0;
     background-color: #002347;
 }
+
 .certificado__members__information {
-    font-size:15px;
+    font-size: 15px;
 }
+
+
+.certificado__table {
+}
+
+    .certificado__table th {
+        background: rgba(204,204,204,0.3);
+    }
+
+    .certificado__table td {
+        color: #002347;
+    }
+
+    .certificado__table td p {
+        margin-top:20px;
+    }
+    .certificado__table th h3 {
+        display:inline-block;
+    }
+
 /*-----------------------------*/
 /*Encuestas*/
 .encuestas__elements {
@@ -108,9 +137,9 @@ body {
     }
 
 .encuestas__results {
-    display:inline-block;
-    margin:auto auto auto 60px;
-    align-content:center;
+    display: inline-block;
+    margin: auto auto auto 60px;
+    align-content: center;
     height: auto;
     width: 30%;
     background: #777777;
@@ -127,22 +156,23 @@ body {
     background: rgba(56,164,255,.5);
     border: none;
     border-radius: 50px;
-    white-space:nowrap;
+    white-space: nowrap;
 }
 
 .encuestas__option {
-    display:flex;
-    flex-direction:column;
-    width:50%;
-    height:auto;
-    align-items:center;
-    margin-left:25px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: auto;
+    align-items: center;
+    margin-left: 25px;
 }
 
 .encuestas__options {
     display: flex;
     flex-direction: row;
 }
+
 .encuestas__elements .encuestas__option h5 {
     color: #002347;
 }
@@ -162,9 +192,10 @@ body {
     flex-direction: row;
     flex-wrap: wrap;
 }
+
 #cuadro-mis-cursos {
     position: relative;
-    margin-top:3%;
+    margin-top: 3%;
 }
 
 .primary-btn-encuestas {
@@ -201,7 +232,6 @@ body {
     flex-wrap: wrap;
     margin: 3%;
     padding-left: 2%;
-    
 }
 
 .member_list {
@@ -221,7 +251,7 @@ body {
     height: 200px;
     width: 200px;
     margin-right: 100px;
-    border-radius:10px;
+    border-radius: 10px;
 }
 
 
@@ -234,13 +264,13 @@ body {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    
-    margin-right:10%;
+    margin-right: 10%;
 }
+
 .editarCursos-container {
     background: rgba(204,204,204,0.8);
     color: #002347;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 
 /*----------------------------------------------------*/
@@ -273,22 +303,22 @@ body {
     display: none;
     background-color: #ccc !important;
     border: 1px solid #ccc;
-    color:#002347 ;
+    color: #002347;
     border-radius: 15px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
 }
 /*------------------------------------------*/
 
 /*Curso material*/
-.curso-material{
+.curso-material {
     background: rgba(204,204,204,0.4);
     color: #002347;
-    padding:5px;
+    padding: 5px;
 }
 
 .primary-btn__reverse {
     display: inline-block;
-    background: rgba(0,35,71,2); 
+    background: rgba(0,35,71,2);
     padding: 0px 25px;
     color: #fff;
     font-size: 13px;
@@ -322,7 +352,7 @@ h6 {
     font-family: "Rubik", sans-serif;
     font-weight: 500;
     color: #002347;
-    text-align:center;
+    text-align: center;
 }
 
 .list {
@@ -509,7 +539,7 @@ button:focus {
 
             .header_area .navbar .nav .nav-item .nav-link {
                 font: 500 15px/80px "Rubik", sans-serif;
-                text-trans?area: capitalize;
+                text-trans ?area: capitalize;
                 color: #fff;
                 padding: 0px;
                 display: inline-block;
@@ -1703,7 +1733,7 @@ button:focus {
 }
 
 .testi_item {
-    width:900px;
+    width: 900px;
     padding: 50px 55px;
     margin-bottom: 200px;
     margin-left: 10px;
@@ -4263,13 +4293,14 @@ h6 {
         color: #fdc632;
         border: 1px solid #002347;
     }
+
 hr.new5 {
     height: 1px;
     background-color: #002347;
 }
 
 .text-align-left {
-    text-align:left;
+    text-align: left;
 }
 
 .primary-btn-comunidad {
@@ -4299,6 +4330,7 @@ hr.new5 {
         color: #fdc632;
         border: 1px solid #002347;
     }
+
 .primary-btn3 {
     display: inline-block;
     background: #002347;
@@ -4325,19 +4357,18 @@ hr.new5 {
         color: #fdc632;
         border: 1px solid #002347;
     }
+
 .primary-btn4 {
     display: inline-block;
     background: #4cd3e3;
     padding: 15px;
-    padding-right:16px;
-    padding-top:20px;
+    padding-right: 16px;
+    padding-top: 20px;
     color: #fff;
     font-size: 30px;
-    
-    height:73px;
-    width:60px;
+    height: 73px;
+    width: 60px;
     border-radius: 7px !important;
-    
     outline: none !important;
     text-align: center !important;
     text-transform: uppercase;
@@ -4346,24 +4377,24 @@ hr.new5 {
     -moz-transition: all 0.3s ease 0s;
     -o-transition: all 0.3s ease 0s;
     transition: all 0.3s ease 0s;
-    
 }
-    .white_bg_btn {
-        background: #fff;
-        display: inline-block;
-        color: #002347;
-        line-height: 40px;
-        padding: 0px 28px;
-        font-size: 14px;
-        font-family: "Roboto", sans-serif;
-        font-weight: 500;
-        text-transform: uppercase;
-        -webkit-transition: all 0.3s ease 0s;
-        -moz-transition: all 0.3s ease 0s;
-        -o-transition: all 0.3s ease 0s;
-        transition: all 0.3s ease 0s;
-        border: none;
-    }
+
+.white_bg_btn {
+    background: #fff;
+    display: inline-block;
+    color: #002347;
+    line-height: 40px;
+    padding: 0px 28px;
+    font-size: 14px;
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    -webkit-transition: all 0.3s ease 0s;
+    -moz-transition: all 0.3s ease 0s;
+    -o-transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s;
+    border: none;
+}
 
     .white_bg_btn:hover {
         background: #fdc632;
@@ -4942,12 +4973,12 @@ hr.new5 {
     background-color: #f9f9f9;
 }
 
-#botonParaPerfil:hover {
-    box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
-}
+    #botonParaPerfil:hover {
+        box-shadow: 0px 10px 30px 0px rgba(0, 35, 71, 0.1);
+    }
 
 .cajita-cursos {
-    height:50%;
+    height: 50%;
     width: 100%;
     margin-bottom: 20px;
     margin-left: 20px;
@@ -4961,15 +4992,15 @@ hr.new5 {
 }
 
 .cajota-cursos {
-    align-content:center;
+    align-content: center;
     zoom: 90%;
     width: 100%;
     background: #f1f9ff;
     padding: 10%;
-    padding-top:1%;
+    padding-top: 1%;
     //margin-left: 10px;
     //margin: auto;
-    margin:0%;
+    margin: 0%;
 }
 
 hr.new5 {

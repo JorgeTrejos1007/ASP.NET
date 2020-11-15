@@ -4,83 +4,45 @@
     ViewData["Title"] = "AprobarCertificado";
     var email = (string)ViewData["email"];
     var certificados = (List<PIBasesISGrupo1.Models.Certificado>)ViewData["Certificados"];
-    var firmaCoordinador = (byte[])ViewData["firmaCoordinador"];
 }
 
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
-    </script>
 
-    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
-    </script>
-    <style>
+<table class="table certificado__table">
+    <thead>
+        <tr>
+            <th>
+                <h3>Estudiante</h3>
+            </th>
 
-        .centrar-documento {
-            text-align: center;
+            <th>
+                <h3>Curso</h3>
+            </th>
+            <th>
+                <h3>Educador</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var certificado in certificados)
+        {
+
+            <tr>
+                <td>
+                    <p>@certificado.nombreEstudiante</p>
+                </td>
+                <td>
+                    <p>@certificado.nombreCurso @certificado.version</p>
+                </td>
+                <td>
+                    <p>@certificado.nombreEducador</p>
+                </td>
+                <td>
+                    <form method="post" asp-for asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email" asp-route-version="@certificado.version">
+                        <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">Aprobar</button>
+                    </form>
+                </td>
+            </tr>
         }
-
-        .certifica {
-            text-align: center;
-        }
-
-       .hx{
-            text-align: left
-        }
-        #header h4 {
-            display: inline;
-        }
-
-     
-    </style>
-
-</head>
-<div class="cajota-cursos">
-    <div class="row justify-content-center">
-        <h1 class="mb-3">Aprobar Certificados</h1>
-    </div>
-
-    <div class="cursos-container-2">
-        <div class="cajita-cursos col-lg-12">
-            <div class="col-lg-12 right-contents">
-                <div id="header">
-                    
-                        <h4 class="mb-30">Estudiante</h4>
-                     
-                     
-                        <h4 class="mb-30">Curso</h4>
-                   
-                    <h4 class="mb-30">Educador</h4>
-                    <hr class="new5">
-                 
-                <ul>
-
-                    @foreach (var certificado in certificados)
-                    {
-
-                        <li class="justify-content-between d-flex" href="#">
-                            <span class="or">@certificado.nombreEstudiante</span>
-                            <span class="or">@certificado.nombreCurso @certificado.version</span>
-                            <span class="or">@certificado.nombreEducador</span>
-                            <form method="post" asp-for asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email" asp-route-version="@certificado.version" >
-                                 <button type="submit" class="primary-btn text-uppercase enroll rounded-0" href="#">Aprobar</button>
-                            </form>
-
-                        </li>
-
-
-
-
-
-                    }
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
-    </div>
-              
-
-
-
-
+    </tbody>
+</table>
