@@ -628,7 +628,7 @@ namespace PIBasesISGrupo1.Handler
 
         public bool asignarCertificado(string nombreCurso, string emailEstudiante)
         {
-            SqlCommand consultaParaAsignarCertificado = baseDeDatos.crearComandoParaConsulta("SP_Insertar_Estudiante_En_Tabla_Certificado");
+            SqlCommand consultaParaAsignarCertificado = baseDeDatos.crearComandoParaConsulta("SP_Actualizar_Estudiante_En_Tabla_Certificado");
             consultaParaAsignarCertificado.CommandType = CommandType.StoredProcedure;
             consultaParaAsignarCertificado.Parameters.AddWithValue("@nombreCurso", nombreCurso);
             consultaParaAsignarCertificado.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
