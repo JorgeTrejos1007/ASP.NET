@@ -1,6 +1,8 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Curso.GraficoModel
-
+@{
+    var cursosDisponibles = (List<string>)ViewData["cursos"];
+}}
 
     <!DOCTYPE HTML>
     <html>
@@ -30,6 +32,24 @@ chart.render();
         </script>
     </head>
     <body>
+
+        <div >
+            <form method="post" enctype="multipart/form-data">
+                <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
+                <select class="border-0 habilidades-select single-input-primary " asp-for="@Model.cursosAFiltrar" multiple="multiple" size="@cursosDisponibles.Count" required>
+                    @foreach (var curso in cursosDisponibles)
+                    {
+
+                        <option value="@curso">@curso</option>
+
+                        <br>
+                    }
+                </select>
+
+                <input type="submit" value="Filtrar" class="primary-btn2 text-uppercase enroll rounded-0" aps-page-handler="OnPost" />
+
+            </form>
+        </div>
         <div id="chartContainer" style="height: 370px; width: 100%;"></div>
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>

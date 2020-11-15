@@ -12,17 +12,20 @@ namespace PIBasesISGrupo1.Pages.Curso
     public class GraficoModel : PageModel
     {
         // GET: Home
-        public GraficoHandler grafico=new GraficoHandler();
-        [BindProperty]        string[] cursosAFiltrar { get; set; }
+        private CursoHandler accesoACursos;
+        private GraficoHandler grafico=new GraficoHandler();
+        [BindProperty]        public string[] cursosAFiltrar { get; set; }
 
         public void OnGet()
         {
+            accesoACursos = new CursoHandler();
             List<DataPoint> dataPoints = new List<DataPoint>();
             List<string> estudiantesConCertificado = grafico.obtenerEstudiantesCertificadosDeUnCurso("Algebra Lineal");
             List<string> estudiantesSinCertificado = grafico.obtenerEstudiantesQueEstanCursandoUnCurso("Algebra Lineal");
             double total = estudiantesConCertificado.Count + estudiantesSinCertificado.Count;
             double totalConCertificado = estudiantesConCertificado.Count;
             double totalSinCertificado = estudiantesSinCertificado.Count;
+            ViewData["cursos"] = accesoACursos.obtenerNombresDeCursos();
             if (totalConCertificado > 0)
             {
                 
@@ -53,6 +56,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             ViewData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
 
            
+        }
+        public void OnPost() {
+
         }
     }
 }
