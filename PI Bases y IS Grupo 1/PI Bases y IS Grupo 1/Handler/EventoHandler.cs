@@ -31,7 +31,7 @@ namespace PIBasesISGrupo1.Handler
         {
             bool exito = false;
 
-            string consulta = "INSERT INTO Evento(emailCoordinador, nombrePK, fechaYHora, descripcion, imagen, tipoArchivoImagen) "
+            string consulta = "INSERT INTO Evento(emailCoordinadorFK, nombreEventoPK, fechaYHoraPK, descripcion, imagen, tipoArchivoImagen) "
                 + "VALUES (@emailCoordinador, @nombre, @fechaYHora, @descripcion, @archivoImagen, @tipoArchivoImagen) ";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
@@ -43,8 +43,8 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(archivoImagen));
             comandoParaConsulta.Parameters.AddWithValue("@tipoArchivoImagen", archivoImagen.ContentType);
 
-            exito= baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
-
+            exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            /*
             if (evento.tipo == "Virtual")
             {
                 registrarEventoVirtual(evento);
@@ -52,17 +52,18 @@ namespace PIBasesISGrupo1.Handler
             else {
                 registrarEventoPresencial(evento);
             }
+            */
 
             return exito;
         }
 
         public bool registrarEventoVirtual(Evento evento) {
             bool exito = false;
-            string consulta = "INSERT INTO VIRTUAL "+"VALUES(@emailCoordinador, @nombre, @fechaYHora, @nombreCanal)";
+            string consulta = "INSERT INTO VIRTUAL "+ "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
-            comandoParaConsulta.Parameters.AddWithValue("@nombre", evento.nombre);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", evento.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
             exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
@@ -73,11 +74,11 @@ namespace PIBasesISGrupo1.Handler
         public bool registrarEventoPresencial(Evento evento)
         {
             bool exito = false;
-            string consulta = "INSERT INTO VIRTUAL " + "VALUES(@emailCoordinador, @nombre, @fechaYHora, @lugar)";
+            string consulta = "INSERT INTO VIRTUAL " + "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @lugar)";
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
-            comandoParaConsulta.Parameters.AddWithValue("@nombre", evento.nombre);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", evento.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
             comandoParaConsulta.Parameters.AddWithValue("@lugar", evento.lugar);
             exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);

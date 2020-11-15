@@ -1,0 +1,30 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.RegistrarEventoModel
+@{
+    ViewData["Title"] = "RegistrarEvento";
+}
+
+<h2>RegistrarEvento</h2>
+<form method="post" enctype="multipart/form-data">
+    <div>
+
+        <strong>Nombre del evento:</strong> <input asp-for="@Model.evento.nombre" />
+        </br>
+        </br>
+        <strong>Fecha de publicacion:</strong> <input asp-for="@Model.evento.fechaYHora" type="date" />
+        </br>
+        </br>
+        @{
+            <label asp-for="@Model.evento.descripcionDelEvento">Contenido de la noticia:</label><br>
+            <textarea rows="5" cols="125" asp-for="@Model.evento.descripcionDelEvento"> </textarea><br /><br />
+        }
+
+        </br>
+        </br>
+        <strong>Imagen del evento:</strong> <input asp-for="@Model.archivoImagen" type="file" />
+        </br>
+        </br>
+        <input type="submit" value=" Enviar" />
+    </div>
+
+</form>
