@@ -34,6 +34,16 @@ namespace PIBasesISGrupo1.Models
         [Display(Name = "Ingrese ingreses la direccion de dónde se va a llevar a cabo el evento")]
         public string lugar { get; set; }
 
+
+        [Required(ErrorMessage = "Es necesario que elija el tipo de evento")]
+        [Display(Name = "Elija el tipo de evento")]
+        public string tipo { get; set; }
+
+        [Required(ErrorMessage = "Es necesario que ingrese su email para crear el evento")]
+        [RegularExpression("^[_A-Za-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [Display(Name = "Ingrese su email")]
+        public string emailCoordinador{ get; set; }
+
         public List<Sector> sectores { get; set; }
     }
 }
