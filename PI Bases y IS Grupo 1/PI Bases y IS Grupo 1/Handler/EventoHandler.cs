@@ -34,10 +34,10 @@ namespace PIBasesISGrupo1.Handler
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
 
-            comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador",evento.emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombre", evento.nombre);
-            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora",evento.fechaYHora);
-            comandoParaConsulta.Parameters.AddWithValue("@descripcion",evento.descripcionDelEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
+            comandoParaConsulta.Parameters.AddWithValue("@descripcion", evento.descripcionDelEvento);
             comandoParaConsulta.Parameters.AddWithValue("@archivoImagen", obtenerBytes(archivoImagen));
             comandoParaConsulta.Parameters.AddWithValue("@tipoArchivoImagen", archivoImagen.ContentType);
 
@@ -45,7 +45,7 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool registrarEventoVirtual(Evento evento) {
-            string consulta = "INSERT INTO Virtual "+ "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal)";
+            string consulta = "INSERT INTO Virtual " + "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal)";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
 
@@ -91,9 +91,67 @@ namespace PIBasesISGrupo1.Handler
                 if (!exito) {
                     break;
                 }
-            } 
+            }
 
             return exito;
+        }
+
+        public List<Evento> obtenerTodosLosEventosVirtuales()
+        {
+            List<Evento> eventos = new List<Evento>();
+            string consulta = "SELECT Evento.*, Virtual.nombreCanal FROM Evento JOIN Virtual " +
+                              "ON Evento.emailCoordinadorFK = Virtual.emailCoordinadorFK AND Evento.nombreEventoPK = Virtual.nombreEventoFK AND Evento.fechaYHoraPK = Virtual.fechaYHoraFK " +
+                              "WHERE fechaYHoraPK > GETDATE()";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                eventos.Add(
+                new Evento
+                {
+                    emailCoordinador = Convert.ToString(columna["emailCoordinadorFK"]),
+                    nombre = Convert.ToString(columna["nombreEventoPK"]),
+                    fechaYHora = Convert.ToDateTime(columna["fechaYHoraPK"]),
+                    descripcionDelEvento = Convert.ToString(columna["descripcion"]),
+                    arrayArchivoImagen = (byte[])columna["imagen"],
+                    tipoArchivoImagen = Convert.ToString(columna["TipoArchivoImagen"]),
+                    nombreCanalStream = Convert.ToString(columna["nombreCanal"]),
+                    tipo = "Virtual"
+                });
+            }
+
+            return eventos;
+        }
+
+        public List<Evento> obtenerTodosLosEventosPresenciales()
+        {
+            List<Evento> eventos = new List<Evento>();
+            string consulta = "SELECT Evento.*, Presencial.lugar FROM Evento JOIN Presencial " +
+                              "ON Evento.emailCoordinadorFK = Presencial.emailCoordinadorFK AND Evento.nombreEventoPK = Presencial.nombreEventoFK AND Evento.fechaYHoraPK = Presencial.fechaYHoraFK " +
+                              "WHERE fechaYHoraPK > GETDATE()";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                eventos.Add(
+                new Evento
+                {
+                    emailCoordinador = Convert.ToString(columna["emailCoordinadorFK"]),
+                    nombre = Convert.ToString(columna["nombreEventoPK"]),
+                    fechaYHora = Convert.ToDateTime(columna["fechaYHoraPK"]),
+                    descripcionDelEvento = Convert.ToString(columna["descripcion"]),
+                    arrayArchivoImagen = (byte[])columna["imagen"],
+                    tipoArchivoImagen = Convert.ToString(columna["TipoArchivoImagen"]),
+                    lugar = Convert.ToString(columna["lugar"]),
+                    tipo = "Presencial"
+                });
+            }
+
+            return eventos;
         }
 
         private byte[] obtenerBytes(IFormFile archivo)
@@ -106,3 +164,4 @@ namespace PIBasesISGrupo1.Handler
         }
     }
 }
+

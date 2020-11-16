@@ -22,21 +22,20 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
         public IActionResult OnPost()
         {
-            evento.tipo = "Presencial";
+            /*evento.tipo = "Virtual";
             evento.nombreCanalStream = "Ronnyale";
             
             evento.lugar = "Jaco";
             Sector sector1 = new Sector();
-            sector1.nombreDeSector = "sol";
+            sector1.nombreDeSector = "Sombra";
             sector1.tipo = "No numerado";
             sector1.cantidadAsientos = 3;
             Sector sector2 = new Sector();
-            sector2.nombreDeSector = "Platea";
+            sector2.nombreDeSector = "Pentahouse";
             sector2.tipo = "Numerado";
             sector2.cantidadAsientos = 4;
-            evento.sectores = new List<Sector>();
             evento.sectores.Add(sector1);
-            evento.sectores.Add(sector2);
+            evento.sectores.Add(sector2);*/
 
             IActionResult vista;
             try

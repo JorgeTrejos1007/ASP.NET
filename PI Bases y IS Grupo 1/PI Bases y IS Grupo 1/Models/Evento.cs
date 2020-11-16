@@ -44,6 +44,6 @@ namespace PIBasesISGrupo1.Models
         [Display(Name = "Ingrese su email")]
         public string emailCoordinador{ get; set; }
 
-        public List<Sector> sectores { get; set; }
+        public List<Sector> sectores { get; set; } = new List<Sector>();
     }
 }
