@@ -17,7 +17,8 @@ namespace PIBasesISGrupo1.Pages.Eventos
     
         public void OnGet()
         {
-
+            Sector sector = new Sector();
+            ViewData["sector"] = sector; 
         }
 
         public IActionResult OnPost()
