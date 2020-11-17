@@ -627,7 +627,15 @@ namespace PIBasesISGrupo1.Handler
 
             return cantidad;
         }
+        public int obtenerCantidadMaterialPorCurso(string nombreDeCurso)
+        {
+            string consulta = "SELECT COUNT(1) FROM Material WHERE  nombreCursoFK=@nombreCurso ";
+            SqlCommand consultaParaObtenerCantidadMaterial = baseDeDatos.crearComandoParaConsulta(consulta);
+            consultaParaObtenerCantidadMaterial.Parameters.AddWithValue("@nombreCurso", nombreDeCurso);
+            int cantidad = baseDeDatos.obtenerCantidadDeElementos(consultaParaObtenerCantidadMaterial);
 
+            return cantidad;
+        }
         public int obtenerCantidadMaterialPorEstudiante(string nombreDeCurso, string emailEstudiante)
         {
             string consulta = "SELECT COUNT(1) FROM HaCubierto WHERE emailEstudianteFK=@emailEstudiante " +
@@ -667,7 +675,14 @@ namespace PIBasesISGrupo1.Handler
 
             
         }
-
+        public List<string> obtenerCorreorsDeEstudiantesMatriculadosEnUnCurso(string nombreCurso) {
+             string consulta = "SELECT emailEstudianteFK FROM Inscribirse " +
+             " WHERE nombreCursoFK=@nombreCurso ";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso",nombreCurso);
+            List<string> correos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta,"emailEstudianteFK");
+            return correos;
+        }
 
 
     }

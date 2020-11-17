@@ -20,11 +20,6 @@ namespace PIBasesISGrupo1.Pages.Curso
         {
             accesoACursos = new CursoHandler();
             ViewData["cursos"] = accesoACursos.obtenerNombresDeCursos();
-            if (TempData["Grafico"] != null)
-            {
-                ViewData["Grafico"] = TempData["Grafico"];
-            }
-
             return Page();
 
         }
@@ -66,7 +61,52 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
             TempData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
+            crearGraficoDeMaterialesVistosDeUnCurso();
             return RedirectToPage("Grafico");
+            
         }
+        private void crearGraficoDeMaterialesVistosDeUnCurso(){
+            accesoACursos = new CursoHandler();
+            double cantidadDeMaterialesVistosPorEstudiantes = 0.0;
+            double cantidadDeMateriales = 0.0;
+            double porcentajeDeMaterialesVistos = 0.0;
+            List<string> estudiantes = new List<string>();
+            foreach (var curso in cursosAFiltrar) {
+                cantidadDeMateriales += accesoACursos.obtenerCantidadMaterialPorCurso(curso);
+                estudiantes = accesoACursos.obtenerCorreorsDeEstudiantesMatriculadosEnUnCurso(curso);
+                foreach (var estudiante in estudiantes) {
+                    cantidadDeMaterialesVistosPorEstudiantes += accesoACursos.obtenerCantidadMaterialVistoPorEstudiante(curso, estudiante);
+                      
+
+                }
+                 
+            }
+            porcentajeDeMaterialesVistos  = cantidadDeMaterialesVistosPorEstudiantes / (estudiantes.Count*cantidadDeMateriales);
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            if (cantidadDeMaterialesVistosPorEstudiantes > 0)
+            {
+                        dataPoints.Add(new DataPoint("Materiales Vistos", Math.Round(porcentajeDeMaterialesVistos*100)));
+
+            }
+            else
+            {
+                dataPoints.Add(new DataPoint("Materiales Vistos", 0));
+
+            }
+            double porcentajeDeMaterialesNoVistos = 1.0 - porcentajeDeMaterialesVistos;
+            if (porcentajeDeMaterialesNoVistos > 0)
+            {
+                dataPoints.Add(new DataPoint("Materiales No Vistos", Math.Round(porcentajeDeMaterialesNoVistos*100)));
+
+            }
+            else
+            {
+                dataPoints.Add(new DataPoint("Materiales No Vistos", 0));
+
+            }
+            TempData["GraficoMateriales"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+
     }
 }

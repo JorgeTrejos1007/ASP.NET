@@ -24,14 +24,17 @@
 		            startAngle: 160,
 		            toolTipContent: "<b>{label}</b>: {y}%",
 		            indexLabel: "{label} - {y}%",
-		            dataPoints: @Html.Raw(ViewData["Grafico"])
+		            dataPoints: @Html.Raw(TempData["Grafico"])
 	            }]
             });
             chart.render();
 
             function onClick(e) {
-                alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.x + ", y: " + e.dataPoint.y + " }");
-            }
+                if (e.dataPoint.label == "Cursando") {
+                    graficoDeMaterialesVistos()
+
+                }
+             }
 
 
         }
@@ -57,6 +60,7 @@
         </form>
     </div>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
@@ -79,7 +83,41 @@
             console.log(url);
             alert(url);
         }*/
-    };
+    function graficoDeMaterialesVistos() {
+
+        var chart = new CanvasJS.Chart("chartContainer2", {
+            theme: "dark2",
+            exportFileName: "Doughnut Chart",
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Porcentaje De Avance De Los Estudiantes"
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "doughnut",
+                innerRadius: 90,
+                showInLegend: false,
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(TempData["GraficoMateriales"])
+                   
+            }]
+        });
+        chart.render();
+
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+
+    }
 
 
 </script>
