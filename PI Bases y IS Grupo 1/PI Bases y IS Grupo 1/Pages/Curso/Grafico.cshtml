@@ -4,54 +4,82 @@
     var cursosDisponibles = (List<string>)ViewData["cursos"];
 }}
 
-    <!DOCTYPE HTML>
-    <html>
-    <head>
-        <script>
-window.onload = function () {
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+        window.onload = function () {
 
-var chart = new CanvasJS.Chart("chartContainer", {
-	theme: "light2", // "light1", "light2", "dark1", "dark2"
-	exportEnabled: true,
-	animationEnabled: true,
-	title: {
-		text: "Automotive Semiconductor Vendors 2015",
-		fontSize: 21
-	},
-	data: [{
-		type: "pie",
-		startAngle: 160,
-		toolTipContent: "<b>{label}</b>: {y}%",
-		indexLabel: "{label} - {y}%",
-		dataPoints: @Html.Raw(ViewData["Grafico"])
-	}]
-});
-chart.render();
+            var chart = new CanvasJS.Chart("chartContainer", {
+	            theme: "light2", // "light1", "light2", "dark1", "dark2"
+	            exportEnabled: true,
+	            animationEnabled: true,
+	            title: {
+		            text: "Automotive Semiconductor Vendors 2015",
+		            fontSize: 21
+	            },
+	            data: [{
+                    type: "pie",
+                    click: onClick,
+		            startAngle: 160,
+		            toolTipContent: "<b>{label}</b>: {y}%",
+		            indexLabel: "{label} - {y}%",
+		            dataPoints: @Html.Raw(ViewData["Grafico"])
+	            }]
+            });
+            chart.render();
 
-}
-        </script>
-    </head>
-    <body>
+            function onClick(e) {
+                alert(e.dataSeries.type + ", dataPoint { x:" + e.dataPoint.x + ", y: " + e.dataPoint.y + " }");
+            }
 
-        <div >
-            <form method="post" enctype="multipart/form-data">
-                <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
-                <select class="border-0 habilidades-select single-input-primary " asp-for="@Model.cursosAFiltrar" multiple="multiple" size="@cursosDisponibles.Count" required>
-                    @foreach (var curso in cursosDisponibles)
-                    {
 
-                        <option value="@curso">@curso</option>
+        }
+    </script>
+</head>
+<body>
 
-                        <br>
-                    }
-                </select>
+    <div>
+        <form method="post" enctype="multipart/form-data">
+            <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
+            <select class="border-0 habilidades-select single-input-primary " asp-for="@Model.cursosAFiltrar" multiple="multiple" size="@cursosDisponibles.Count" required>
+                @foreach (var curso in cursosDisponibles)
+                {
 
-                <input type="submit" value="Filtrar" class="primary-btn2 text-uppercase enroll rounded-0" aps-page-handler="OnPost" />
+                    <option value="@curso">@curso</option>
 
-            </form>
-        </div>
-        <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-    </body>
+                    <br>
+                }
+            </select>
+
+            <input type="submit" value="Filtrar" class="primary-btn2 text-uppercase enroll rounded-0" aps-page-handler="OnPost" />
+
+        </form>
+    </div>
+    <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+</body>
 </html>
+
+<script> 
+    
+    /*canvas.onclick = function (evt) {
+        
+        var activePoints = myNewChart.getElementsAtEvent(evt);
+        window.alert("hola");
+        if (activePoints[0]) {
+            var chartData = activePoints[0]['_chart'].config.data;
+            var idx = activePoints[0]['_index'];
+
+            var label = chartData.labels[idx];
+            var value = chartData.datasets[0].data[idx];
+
+            var url = "http://example.com/?label=" + label + "&value=" + value;
+            console.log(url);
+            alert(url);
+        }*/
+    };
+
+
+</script>
