@@ -2,36 +2,8 @@
 @model PIBasesISGrupo1.Pages.Eventos.RegistrarEventoModel
 @{
     ViewData["Title"] = "RegistrarEvento";
-    var sector = (PIBasesISGrupo1.Models.Sector)ViewData["sector"];
 }
 
-<!--
-<form method="post" enctype="multipart/form-data">
-    <div>
-
-        <strong>Nombre del evento:</strong> <input asp-for="Model.evento.nombre" />
-        </br>
-        </br>
-
-        <strong>Fecha de publicacion:</strong> <input asp-for="Model.evento.fechaYHora" type="date" />
-        </br>
-        </br>
-
-        {
-            <label asp-for="Model.evento.descripcionDelEvento">Contenido de la noticia:</label><br>
-            <textarea rows="5" cols="125" asp-for="Model.evento.descripcionDelEvento"> </textarea><br /><br />
-        }
-        </br>
-        </br>
-
-        <strong>Imagen del evento:</strong> <input asp-for="Model.archivoImagen" type="file" />
-        </br>
-        </br>
-
-
-        <input type="submit" value=" Enviar" />
-    </div>
-</form> -->
 
 <head>
     <link rel="stylesheet" href="css/bootstrap.css" />
@@ -65,6 +37,7 @@
         .margen-registro {
             margin: 1%;
             padding: 1%;
+            width: 300px;
         }
 
         .center-login {
@@ -75,6 +48,7 @@
 
 </head>
 
+@Html.AntiForgeryToken()
 <div class="offset-lg-4">
     <div class="align-self-md-center col-lg-8 col-md-8">
 
@@ -130,19 +104,19 @@
 
                             <div>
                                 <label id="errorNombreSector" class="text-danger" style="display:none">Es necesario que ingrese el nombre del sector</label>
-                                <input asp-for="@sector.nombreDeSector" placeholder="Ingrese el nombre del sector" class="single-input" />
+                                <input type="text" placeholder="Ingrese el nombre del sector" id="nombreSector" class="single-input" />
 
                                 <label id="errorCantidadAsientos" class="text-danger" style="display:none">Es necesario que ingrese la cantidad de asientos</label>
-                                <input asp-for="@sector.cantidadAsientos" placeholder="Ingrese la cantidad de asientos" class="single-input" />
+                                <input type="number" placeholder="Ingrese la cantidad de asientos" id="cantidadDeAsientos" class="single-input" />
 
                                 <label id="errorTipoSector" class="text-danger" style="display:none">Es necesario que ingrese el tipo de sector</label>
-                                <input asp-for="@sector.tipo" type="radio" value="Numerado" />
-                                <label asp-for="@sector.tipo">Numerado</label>
+                                <input name="tipoAsiento" type="radio" value="Numerado" />
+                                <label>Numerado</label>
 
-                                <input asp-for="@sector.tipo" type="radio" value="Numerado" />
-                                <label asp-for="@sector.tipo">No Numerado</label>
+                                <input name="tipoAsiento" type="radio" value="No Numerado" />
+                                <label>No Numerado</label>
                                 <div class="mt-20">
-                                    <button value="Agregar Sector" class="primary-btn offset-lg-3" onclick="añadirSector()">Boton Prueba</button>
+                                    <button value="Agregar Sector" class="primary-btn offset-lg-3" id="añadirSector">Boton Prueba</button>
                                 </div>
                                 <table class="table">
                                     <thread>
@@ -210,17 +184,28 @@
             tipoEventoOculto.style.display = "none";
         }
     }
-    function añadirSector() {
-
-        if ((sector.cantidadAsientos == 0)) {
-            document.getElementById("errorCantidadAsientos").style.display = "block";
-        }
-        else {
-            document.getElementById("errorCantidadAsientos").style.display = "none";
-        }
-
-    }
-
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#añadirSector").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Eventos/RegistrarEvento?handler=AñadirSector",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "nombre": $("#nombreSector").val(), "cantidadDeAsientos": $("#cantidadDeAsientos").val(), "tipoAsiento": $('input:radio[name=tipoAsiento]:checked').val() },
+                success: function (response) {
+                    if (response == "error") {
+                        //document.getElementById("errorNombreSector").style.display = "block";
+                        alert("Hubo un error");
+                    }
+                }
+            });
+        });
+    });
 </script>
 <scripts>
 
@@ -228,3 +213,4 @@
     @section scripts{
         <partial name="_ValidationScriptsPartial" />
     }
+</scripts>

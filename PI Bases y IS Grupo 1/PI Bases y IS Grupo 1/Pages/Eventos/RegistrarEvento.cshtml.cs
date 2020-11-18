@@ -17,8 +17,6 @@ namespace PIBasesISGrupo1.Pages.Eventos
     
         public void OnGet()
         {
-            Sector sector = new Sector();
-            ViewData["sector"] = sector; 
         }
 
         public IActionResult OnPost()
@@ -67,6 +65,35 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 vista = Redirect("~/Error");
             }
             return vista;
+        }
+
+        public IActionResult OnPostAñadirSector(string nombre, int cantidadDeAsientos, string tipoAsiento)
+        {
+            Sector sector = new Sector();
+            if((nombre == null) || cantidadDeAsientos == 0 || tipoAsiento == null)
+            {
+                return new JsonResult("error");
+            }
+            else {
+                sector.nombreDeSector = nombre;
+                sector.cantidadAsientos = cantidadDeAsientos;
+                sector.tipo = tipoAsiento;
+                if (TempData["listaSectores"] == null)
+                {
+                    List<Sector> sectores = new List<Sector>();
+                    sectores.Add(sector);
+                    TempData["listaSectores"] = sectores;
+                }
+                else
+                {
+                    List<Sector> sectores = new List<Sector>();
+                    sectores = (List<Sector>)TempData["listaSectores"];
+                    sectores.Add(sector);
+                    TempData["listaSectores"] = sectores;          
+                }
+                return new JsonResult(sector);
+            }
+            
         }
     }
 }
