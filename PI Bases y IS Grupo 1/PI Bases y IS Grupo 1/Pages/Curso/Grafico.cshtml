@@ -34,6 +34,7 @@
                     graficoDeMaterialesVistos()
 
                 }
+                
              }
 
 
@@ -60,16 +61,19 @@
         </form>
     </div>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-    <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+    <div id="chartContainer2" style="height: 370px; width: 100%;"></div> 
+    <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
+    
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
 </html>
 
-<script> 
-    
+<script>
+
+
     /*canvas.onclick = function (evt) {
-        
+
         var activePoints = myNewChart.getElementsAtEvent(evt);
         window.alert("hola");
         if (activePoints[0]) {
@@ -103,7 +107,7 @@
                 showInLegend: false,
                 indexLabel: "{label} - {y}%",
                 dataPoints: @Html.Raw(TempData["GraficoMateriales"])
-                   
+
             }]
         });
         chart.render();
@@ -118,6 +122,26 @@
         }
 
     }
+      function habilidades () {
+  
+          var chart = new CanvasJS.Chart("habilidadesEstudiantes", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title:{
+		text: "Habilidades mas Frecuentes"
+	},
+	axisY: {
+		title: "Cantidad de Personas"
+	},
+	data: [{        
+		type: "column",  
+		showInLegend: false, 
+		legendMarkerColor: "grey",
+		dataPoints:@Html.Raw(TempData["GraficoHabilidades"])
+	}]
+});
+        chart.render();
 
-
+    }
+    habilidades();
 </script>

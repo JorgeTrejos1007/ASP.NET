@@ -15,6 +15,13 @@ namespace PIBasesISGrupo1.Pages.Curso
         private CursoHandler accesoACursos;
         private GraficoHandler grafico=new GraficoHandler();
         [BindProperty]        public string[] cursosAFiltrar { get; set; }
+        public string[] habilidades = new string[17]
+               {
+                    "Empatia","Saber escuchar","Liderazgo", "Flexibilidad","Optimismo", "Confianza","Honestidad",
+                    "Paciencia","Comunicacion","Convencimiento","Esfuerzo", "Esfuerzo","Dedicacion","Comprension",
+                    "Comprension", "Asertividad", "Credibilidad"
+
+               };
 
         public IActionResult OnGet()
         {
@@ -61,11 +68,12 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
             TempData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
-            crearGraficoDeMaterialesVistosDeUnCurso();
+            obtenerDatosDeMaterialesVistosDeUnCurso();
+            obtenerDatosDeLasHabilidades(cursosAFiltrar);
             return RedirectToPage("Grafico");
             
         }
-        private void crearGraficoDeMaterialesVistosDeUnCurso(){
+        private void obtenerDatosDeMaterialesVistosDeUnCurso(){
             accesoACursos = new CursoHandler();
             double cantidadDeMaterialesVistosPorEstudiantes = 0.0;
             double cantidadDeMateriales = 0.0;
@@ -107,6 +115,21 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["GraficoMateriales"] = JsonConvert.SerializeObject(dataPoints);
 
         }
+        private void obtenerDatosDeLasHabilidades(string[] cursos) {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            grafico = new GraficoHandler();
+            List<Tuple<string,int>> habilidadesMasFrecuentes=grafico.obtenerLasHabilidadesMasFrecuentes(cursos);
+            foreach (var habilidad in habilidadesMasFrecuentes)
+            {
+                dataPoints.Add(new DataPoint(habilidad.Item1,habilidad.Item2));
+            }
+
+
+            TempData["GraficoHabilidades"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+        
+        
 
     }
 }
