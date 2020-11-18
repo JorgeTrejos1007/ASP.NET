@@ -1,0 +1,64 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Comunidad.GraficoComunidadModel
+@{
+    var topTopicos = (List<string>)ViewData["TopTopicos"];
+}
+
+<head>
+    <h2>Estadísticas de la Comunidad</h2>
+</head>
+<div class="row">
+    <div class="col-lg-4 col-md-6">
+    </div>
+</div>
+
+<body>
+    <div style="display:flex; margin-top:50px;">
+        <div id="topCursos" style="height: 370px; width:50%;"></div>
+        <div id="topTopicosCursos" style="height: 370px; width:50%;">
+            <ul>
+                <h3 style="text-align:left;">Tópicos más buscados según cursos</h3>
+                @{
+                    foreach (var topico in topTopicos)
+                    {
+                        <li>@topico</li>
+                    }
+                }
+            </ul>
+
+        </div>
+    </div>
+
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+</body>
+
+    <script>
+
+    function habilidades () {
+
+        var chart = new CanvasJS.Chart("topCursos", {
+        animationEnabled: true,
+	    theme: "light2", // "light1", "light2", "dark1", "dark2"
+	    title:{
+        text: "Cursos más matriculados"
+
+        },
+	    axisY: {
+        title: "Cantidad de estudiantes"
+
+        },
+	    data: [{
+        type: "column",
+		    showInLegend: false,
+		    legendMarkerColor: "grey",
+		    dataPoints:@Html.Raw(TempData["GraficoTopCursos"])
+
+        }]
+    });
+    chart.render();
+
+    }
+habilidades();
+
+    </script>

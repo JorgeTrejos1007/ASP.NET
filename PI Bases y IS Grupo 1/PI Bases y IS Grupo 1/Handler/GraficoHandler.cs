@@ -90,6 +90,40 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
+        public List<Tuple<string, int>> obtenerTopCursos()
+        {
+
+            List<Tuple<string, int>> topCursos = new List<Tuple<string, int>>();
+            string consulta = "SELECT TOP 5 COUNT(nombreCursoFK) AS cantidad, nombreCursoFK" +            " FROM Certificado GROUP BY nombreCursoFK ORDER BY COUNT(nombreCursoFK) DESC";
+            
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaTopCursos = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaTopCursos in tablaTopCursos.Rows)
+            {
+                topCursos.Add(new Tuple<string, int>(Convert.ToString(columnaTopCursos["nombreCursoFK"]), Convert.ToInt32(columnaTopCursos["Cantidad"])));
+
+            }
+            return topCursos;
+
+        }
+        public List<string> obtenerTopicosDeTopCursos()
+        {
+
+            List<string> topTopicos = new List<string>();
+            string consulta = "SELECT nombreTopicoFK FROM Contiene WHERE nombreCursoFK IN("+
+                               " SELECT TOP 5 nombreCursoFK FROM Certificado GROUP BY nombreCursoFK ORDER BY COUNT(nombreCursoFK) DESC)";
+
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaTopicosTopCursos = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaTopicos in tablaTopicosTopCursos.Rows)
+            {
+                topTopicos.Add(Convert.ToString(columnaTopicos["nombreTopicoFK"]));
+
+            }
+            return topTopicos;
+
+        }
+
 
 
     }
