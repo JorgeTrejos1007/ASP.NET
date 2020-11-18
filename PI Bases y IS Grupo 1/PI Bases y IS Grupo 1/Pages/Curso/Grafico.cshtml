@@ -31,11 +31,12 @@
 
             function onClick(e) {
                 if (e.dataPoint.label == "Cursando") {
-                    if (document.getElementById("chartContainer2").hidden == true) {
-                        document.getElementById("chartContainer2").hidden = false;
+                    if (document.getElementById("chartContainer2").style.display === "none") {
+                        //document.getElementById("chartContainer2").hidden = false;
+                        document.getElementById("chartContainer2").style.display = "block";
                         graficoDeMaterialesVistos()
                     } else {
-                        document.getElementById("chartContainer2").hidden = true;
+                        document.getElementById("chartContainer2").style.display = "none";
                     }
 
 
@@ -69,10 +70,11 @@
     <div class="row">
         <div class="col-lg-4 col-md-6">
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+            <div id="chartContainer2" style="height: 370px; width: 100%; display: none;"></div>
+
         </div>
-        <div class="col-lg-4 col-md-6">
-            <div id="chartContainer2" hidden style="height: 370px; width: 100%;"></div>
-        </div>
+     
         <div class="col-lg-4 col-md-6">
             <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
         </div>
