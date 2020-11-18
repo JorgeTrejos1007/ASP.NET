@@ -77,5 +77,14 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             TempData["GraficotopHablidadesPorPais"] = JsonConvert.SerializeObject(dataPoints);
 
         }
+
+        public void OnPostObtenerHabilidaesYtiposDeUsuario(string pais)
+        {
+
+            int a = 1;
+        }
+
+
+
     }
 }
