@@ -64,6 +64,31 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
+        public List<Tuple<string, int>> obtenerLosPaisesMasFrecuentes(string[] cursos)
+        {
+
+            List<Tuple<string, int>> paises = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(pais) AS Cantidad,pais" +            " FROM Usuario  WHERE emailPK IN (SELECT emailEstudianteFK FROM Certificado " +            " WHERE";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += ") GROUP BY pais  ORDER BY COUNT(pais)DESC";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            {
+                paises.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["pais"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return paises;
+
+        }
 
 
 
