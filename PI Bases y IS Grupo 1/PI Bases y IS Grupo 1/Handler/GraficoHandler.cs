@@ -123,7 +123,58 @@ namespace PIBasesISGrupo1.Handler
             return topTopicos;
 
         }
+        public List<Tuple<string, int>> obtenerTiposDeUsuarios()
+        {
 
+            List<Tuple<string, int>> tiposUsuario = new List<Tuple<string, int>>();
+            string consulta = "SELECT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK FROM Rol GROUP BY rolUsuarioPK ";
+
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaTiposDeUsuarios = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow tipoUsuario in tablaTiposDeUsuarios.Rows)
+            {
+                tiposUsuario.Add(new Tuple<string, int>(Convert.ToString(tipoUsuario["rolUsuarioPK"]), Convert.ToInt32(tipoUsuario["cantidad"])));
+
+            }
+            return tiposUsuario;
+
+        }
+        public int obtenerCantidadEstudiantes()
+        {
+
+            int cantidadEstudiantes = 0;
+            string consulta = "SELECT COUNT(*) as CantidadDeEstudiantes  FROM Estudiante";
+
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaCantidadEstudiantes = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCantidad in tablaCantidadEstudiantes.Rows)
+            {
+                cantidadEstudiantes=Convert.ToInt32(columnaCantidad["CantidadDeEstudiantes"]);
+
+            }
+            return cantidadEstudiantes;
+
+        }
+
+        public List<Tuple<string, int>> obtenerCantidadDeMiembrosPorPais()
+        {
+
+            List<Tuple<string, int>> CantidadDeMiembrosPorPais = new List<Tuple<string, int>>();
+            string consulta = " SELECT COUNT(pais) AS Cantidad, pais FROM Usuario WHERE emailPK IN(SELECT emailMiembroFK FROM Miembro)"+
+                                " GROUP BY pais ORDER BY COUNT(pais)DESC";
+
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaCantidadDeMiembrosPorPais = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow miembrosPorPais in tablaCantidadDeMiembrosPorPais.Rows)
+            {
+                CantidadDeMiembrosPorPais.Add(new Tuple<string, int>(Convert.ToString(miembrosPorPais["pais"]), Convert.ToInt32(miembrosPorPais["Cantidad"])));
+
+            }
+            return CantidadDeMiembrosPorPais;
+
+        }
+
+       
 
 
     }

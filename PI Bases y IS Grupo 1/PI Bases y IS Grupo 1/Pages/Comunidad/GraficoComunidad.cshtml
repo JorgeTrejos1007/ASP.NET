@@ -7,15 +7,13 @@
 <head>
     <h2>Estadísticas de la Comunidad</h2>
 </head>
-<div class="row">
-    <div class="col-lg-4 col-md-6">
-    </div>
-</div>
+
 
 <body>
-    <div style="display:flex; margin-top:50px;">
-        <div id="topCursos" style="height: 370px; width:50%;"></div>
-        <div id="topTopicosCursos" style="height: 370px; width:50%;">
+    <div class="row" style="margin-top:80px;">
+        <div id="tipoUsuarios" class="col-lg-4 col-md-6"></div>
+        <div id="topCursos" class="col-lg-4 col-md-6"></div>
+        <div id="topTopicosCursos" class="col-lg-4 col-md-6">
             <ul>
                 <h3 style="text-align:left;">Tópicos más buscados según cursos</h3>
                 @{
@@ -27,13 +25,13 @@
             </ul>
 
         </div>
+
     </div>
 
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
-
-    <script>
+<script>
 
     function habilidades () {
 
@@ -55,10 +53,34 @@
 		    dataPoints:@Html.Raw(TempData["GraficoTopCursos"])
 
         }]
-    });
-    chart.render();
+        });
+        chart.render();
 
-    }
-habilidades();
+        }
+        habilidades();
+        function tipoUsuarios () {
+            var chart = new CanvasJS.Chart("tipoUsuarios", {
+	            theme: "light2", // "light1", "light2", "dark1", "dark2"
+	            exportEnabled: false,
+	            animationEnabled: true,
+	            title: {
+		            text: "Tipos de usuario"
+	            },
+	            data: [{
+		            type: "pie",
+		            startAngle: 25,
+		            toolTipContent: "<b>{label}</b>: {y}%",
+		            showInLegend: "true",
+		            legendText: "{label}",
+		            indexLabelFontSize: 16,
+		            indexLabel: "{label} - {y}%",
+		            dataPoints: @Html.Raw(TempData["GraficoTiposUsuario"])
+	            }]
+            });
+            chart.render();
 
-    </script>
+         }
+ 
+        tipoUsuarios();
+
+</script>
