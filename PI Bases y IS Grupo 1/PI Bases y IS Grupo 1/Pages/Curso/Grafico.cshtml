@@ -67,9 +67,10 @@
         </form>
     </div>
     <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-    <div id="chartContainer2" hidden style="height: 370px; width: 100%;"></div> 
+    <div id="chartContainer2" hidden style="height: 370px; width: 100%;"></div>
     <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
-    
+    <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
+
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
@@ -136,4 +137,40 @@
 
       }
     habilidades();
+
+    function paises() {
+
+        var chart = new CanvasJS.Chart("paisesEstudiantes", {
+            theme: "light2", //"light1", "light2", "dark1"
+            animationEnabled: true,
+            exportEnabled: true,
+            title: {
+                text: "Top de Paises"
+            },
+            axisX: {
+                margin: 10,
+                labelPlacement: "inside",
+                tickPlacement: "inside"
+            },
+            axisY2: {
+                
+                titleFontSize: 14,
+                includeZero: false,
+                
+            },
+            data: [{
+                type: "bar",
+                axisYType: "secondary",
+                yValueFormatString: "#",
+                indexLabel: "{y}",
+                dataPoints: @Html.Raw(TempData["GraficoPaises"])
+     
+              }]
+        });
+        chart.render();
+
+    }
+    paises()
+
+
 </script>
