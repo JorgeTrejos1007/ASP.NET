@@ -25,6 +25,7 @@
             </ul>
 
         </div>
+        <div id="cantPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
 
     </div>
 
@@ -81,6 +82,33 @@
 
          }
  
-        tipoUsuarios();
+    tipoUsuarios();
+
+    function cantPorPais () {
+
+        var chart = new CanvasJS.Chart("cantPorPais", {
+            theme: "light2",
+	    animationEnabled: true,
+	
+	    title:{
+		    text:"Miembros por país"
+	    },
+	    axisX:{
+		    interval: 1
+	    },
+	   
+	    data: [{
+		    type: "bar",
+		    name: "companies",
+		    axisYType: "secondary",
+		   
+		    dataPoints:  @Html.Raw(TempData["GraficoCantidadDeMiembrosPorPais"])
+		
+	    }]
+    });
+    chart.render();
+
+    }
+    cantPorPais();
 
 </script>

@@ -173,8 +173,24 @@ namespace PIBasesISGrupo1.Handler
             return CantidadDeMiembrosPorPais;
 
         }
+        public List<Tuple<string, int>> obtenerLasHabilidadesMasFrecuentesPorPais(string pais)
+        {
 
-       
+            List<Tuple<string, int>> habilidades = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(habilidadPK) AS Cantidad,habilidadPK FROM Habilidades WHERE emailFK IN( " +                             " SELECT emailPK FROM Usuario WHERE pais = @pais) " +                             " GROUP BY habilidadPK ORDER BY COUNT(habilidadPK)DESC";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@pais", pais);
+            DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            {
+                habilidades.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["habilidadPK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return habilidades;
+
+        }
+
+
 
 
     }

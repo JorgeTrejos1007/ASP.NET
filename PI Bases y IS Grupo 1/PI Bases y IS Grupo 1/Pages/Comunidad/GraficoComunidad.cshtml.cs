@@ -17,6 +17,7 @@ namespace PIBasesISGrupo1.Pages.Comunidad
         {
             ObtenerTopCursos();
             ObtenerTiposUsuario();
+            obtenerCantidadDeMiembrosPorPais();
         }
         public void ObtenerTopCursos()
         {
@@ -52,16 +53,28 @@ namespace PIBasesISGrupo1.Pages.Comunidad
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
 
-            List<Tuple<string, int>> tiposUsuario = grafico.obtenerTiposDeUsuarios();
-            int cantidadEstudiantes = grafico.obtenerCantidadEstudiantes();
-            foreach (var tipoUsuario in tiposUsuario)
+            List<Tuple<string, int>> CantidadDeMiembrosPorPais = grafico.obtenerCantidadDeMiembrosPorPais();
+            
+            foreach (var miembro in CantidadDeMiembrosPorPais)
             {
-                dataPoints.Add(new DataPoint(tipoUsuario.Item1, tipoUsuario.Item2));
+                dataPoints.Add(new DataPoint(miembro.Item1, miembro.Item2));
             }
-            dataPoints.Add(new DataPoint("Estudiates", cantidadEstudiantes));
+ 
+            TempData["GraficoCantidadDeMiembrosPorPais"] = JsonConvert.SerializeObject(dataPoints);
 
+        }
+        public void topHablidadesPorPais( string pais)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
 
-            TempData["GraficoTiposUsuario"] = JsonConvert.SerializeObject(dataPoints);
+            List<Tuple<string, int>> topHablidadesPorPais = grafico.obtenerLasHabilidadesMasFrecuentesPorPais(pais);
+
+            foreach (var habilidad in topHablidadesPorPais)
+            {
+                dataPoints.Add(new DataPoint(habilidad.Item1, habilidad.Item2));
+            }
+
+            TempData["GraficotopHablidadesPorPais"] = JsonConvert.SerializeObject(dataPoints);
 
         }
     }
