@@ -1,0 +1,106 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.CrearEventoModel
+@{
+    ViewData["Title"] = "CrearEvento";
+}
+
+<head>
+    <style>
+        body {
+            background-image: url("/img/registro/registrarme.jpg");
+            background-size: 100%;
+        }
+        .text-danger{
+            margin:auto;
+        }
+    </style>
+
+</head>
+<div class="evento__container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="evento__elements">
+            <h2 class="evento__title">Registrar Evento</h2>
+
+
+            <span asp-validation-for="@Model.evento.nombre" class="text-danger"></span>
+            <label asp-for="@Model.evento.nombre" class="evento__label">Ingrese el nombre del evento:</label>
+            <input asp-for="@Model.evento.nombre" class="evento__input" />
+
+            <br />
+            <span asp-validation-for="@Model.fecha" class="text-danger"></span>
+            <span asp-validation-for="@Model.hora" class="text-danger"></span>
+            <label class="evento__label">Ingrese la fecha del evento</label>
+            <div class="evento__datetime">
+                <input type="date" asp-for="@Model.fecha" class="evento__input-time" />
+                <input type="time" asp-for="@Model.hora" class="evento__input-time" />
+            </div>
+
+            <br />
+            <span asp-validation-for="@Model.evento.descripcionDelEvento" class="text-danger"></span>
+            <label asp-for="@Model.evento.descripcionDelEvento" class="evento__label">Ingrese la descripcion del evento</label>
+            <textarea rows="5" cols="70" asp-for="@Model.evento.descripcionDelEvento" style="margin:auto;max-height:300px"></textarea>
+            <br />
+
+            <span asp-validation-for="@Model.imagenEvento" class="text-danger"></span>
+            <label asp-for="@Model.imagenEvento" class="evento__label">Ingrese la imagen del evento:</label>
+            <input asp-for="@Model.imagenEvento" class="evento__input" />
+
+            <br />
+
+            <div class="evento__type">
+                <div>
+                    <label asp-for="@Model.evento.tipo" class="evento__label">Virtual</label>
+                    <input asp-for="@Model.evento.tipo" type="radio" value="Virtual" onchange="tipoEvento('Virtual')" class="evento__input-type" />
+                </div>
+                <div>
+                    <label asp-for="@Model.evento.tipo" class="evento__label">Presencial</label>
+                    <input asp-for="@Model.evento.tipo" type="radio" value="Presencial" onchange="tipoEvento('Presencial')" class="evento__input-type" />
+                </div>
+            </div>
+
+            <div class="evento__type" id="Virtual" style="display:none">
+                <div>
+                    <span asp-validation-for="@Model.evento.nombreCanalStream" class="text-danger"></span>
+                    <label asp-for="@Model.evento.nombreCanalStream" class="evento__label">Ingrese el nombre del canal del stream:</label>
+                    <input asp-for="@Model.evento.nombreCanalStream" class="evento__type-input" />
+                    <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="CrearEventoVirtual">Crear Evento</button>
+                </div>
+            </div>
+
+            <div class="evento__type" id="Presencial" style="display:none">
+                <div>
+                    <span asp-validation-for="@Model.evento.lugar" class="text-danger"></span>
+                    <label asp-for="@Model.evento.lugar" class="evento__label">Ingrese el nombre del lugar del evento:</label>
+                    <input asp-for="@Model.evento.lugar" class="evento__type-input" />
+                    <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="CrearSeccionEventoPresencial">Crear Sectores</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+    function tipoEvento(tipo) {
+        var tipoEventoAMostrar = document.getElementById(tipo);
+        if (tipo == "Virtual") {
+            var tipoEventoOculto = document.getElementById("Presencial");
+            tipoEventoOculto.style.display = "none";
+            tipoEventoAMostrar.style.display = "block";
+        }
+        else {
+            var tipoEventoOculto = document.getElementById("Virtual");
+            tipoEventoAMostrar.style.display = "block";
+            tipoEventoOculto.style.display = "none";
+        }
+    }
+</script>
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+</scripts>

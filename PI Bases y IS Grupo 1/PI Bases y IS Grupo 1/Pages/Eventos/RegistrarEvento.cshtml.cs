@@ -7,16 +7,14 @@ using System.Collections.Generic;
 namespace PIBasesISGrupo1.Pages.Eventos
 {
     public class RegistrarEventoModel : PageModel
-    { 
-
+    {
         [BindProperty]
-        public Evento evento { get; set; }
+        public IFormFile archivoImagen{get;set;}
 
-        [BindProperty]
-        public IFormFile archivoImagen { get; set; }
-    
         public void OnGet()
         {
+            Evento evento = new Evento();
+            ViewData["evento"] = evento;
         }
 
         public IActionResult OnPost()
@@ -34,7 +32,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
             sector2.tipo = "Numerado";
             sector2.cantidadAsientos = 4;
             evento.sectores.Add(sector1);
-            evento.sectores.Add(sector2);*/
+            evento.sectores.Add(sector2);
 
             IActionResult vista;
             try
@@ -65,9 +63,11 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 vista = Redirect("~/Error");
             }
             return vista;
+            */
+            return null;
         }
 
-        public IActionResult OnPostAñadirSector(string nombre, int cantidadDeAsientos, string tipoAsiento)
+        public IActionResult OnPostAñadirSector(string nombre, int cantidadDeAsientos, string tipoAsiento, List<Sector> listaSectores)
         {
             Sector sector = new Sector();
             if((nombre == null) || cantidadDeAsientos == 0 || tipoAsiento == null)
@@ -78,20 +78,18 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 sector.nombreDeSector = nombre;
                 sector.cantidadAsientos = cantidadDeAsientos;
                 sector.tipo = tipoAsiento;
-                if (TempData["listaSectores"] == null)
-                {
-                    List<Sector> sectores = new List<Sector>();
+                List<Sector> sectores = new List<Sector>();
+                if (listaSectores == null)
+                {                
                     sectores.Add(sector);
-                    TempData["listaSectores"] = sectores;
                 }
                 else
                 {
-                    List<Sector> sectores = new List<Sector>();
-                    sectores = (List<Sector>)TempData["listaSectores"];
+                    sectores = listaSectores;
                     sectores.Add(sector);
-                    TempData["listaSectores"] = sectores;          
+        
                 }
-                return new JsonResult(sector);
+                return new JsonResult(sectores);
             }
             
         }
