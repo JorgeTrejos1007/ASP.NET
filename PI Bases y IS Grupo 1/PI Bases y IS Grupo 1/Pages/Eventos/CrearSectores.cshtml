@@ -71,7 +71,8 @@
             <tbody id="sector__table-rows"></tbody>
         </table>
         <div>
-            <button type="submit" asp-page-handler="TerminarCrearSectores" class="primary-btn2 text-uppercase enroll rounded-0" style="width:200px;margin:0 0 20px 250px">Terminar</button>
+            <a href="~/Eventos/MostrarEventos" class="primary-btn2 text-uppercase enroll rounded-0" style="width:200px;margin:0 0 20px 250px">Terminar</a>
+            <button type="submit" asp-page-handler="TerminarCrearSectores" style="display:none"></button>
         </div>
     </form>
 </div>
@@ -110,7 +111,7 @@
                             document.getElementById("nombreSector").value = "";
                             document.getElementById("cantidadDeAsientos").value = "";
                             document.getElementById("tipoAsientoNumerado").checked = false;
-                            document.getElementById("tipoAsientoNoNumerado").checked = false;
+                            document.getElementById("tipoAsientoNumerado").checked = false;
                         }
                     }
                 }
