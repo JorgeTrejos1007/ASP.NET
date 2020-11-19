@@ -13,7 +13,7 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         // GET: Home
         private CursoHandler accesoACursos;
-        private GraficoHandler grafico=new GraficoHandler();
+        private GraficoHandler grafico = new GraficoHandler();
         [BindProperty]        public string[] cursosAFiltrar { get; set; }
         public string[] habilidades = new string[17]
                {
@@ -22,6 +22,7 @@ namespace PIBasesISGrupo1.Pages.Curso
                     "Comprension", "Asertividad", "Credibilidad"
 
                };
+        public List<string> topicos;
 
         public IActionResult OnGet()
         {
@@ -31,14 +32,14 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         }
         public IActionResult OnPost() {
-            
+
             List<DataPoint> dataPoints = new List<DataPoint>();
             List<string> estudiantesConCertificado = grafico.obtenerEstudiantesCertificadosDeUnCurso(cursosAFiltrar[0]);
             List<string> estudiantesSinCertificado = grafico.obtenerEstudiantesQueEstanCursandoUnCurso(cursosAFiltrar[0]);
             double total = estudiantesConCertificado.Count + estudiantesSinCertificado.Count;
             double totalConCertificado = estudiantesConCertificado.Count;
             double totalSinCertificado = estudiantesSinCertificado.Count;
-
+            grafico = new GraficoHandler();
             if (totalConCertificado > 0)
             {
 
@@ -68,14 +69,18 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
             TempData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
+            topicos = grafico.obtenerDatosTopicos();
             obtenerDatosDeMaterialesVistosDeUnCurso();
             obtenerDatosDeLasHabilidades(cursosAFiltrar);
             obtenerDatosDeLasPaises(cursosAFiltrar);
             obtenerDatosDeLasHabilidadesFrecuentesDeEstdiantesCertificados(cursosAFiltrar);
+            obtenerDatosDeLosIdiomas(cursosAFiltrar);
+            obtenerDatosEstudiantesPorCurso(cursosAFiltrar);
+            obtenerTopicosDeLosCursos(cursosAFiltrar); 
             return RedirectToPage("Grafico");
-            
+
         }
-        private void obtenerDatosDeMaterialesVistosDeUnCurso(){
+        private void obtenerDatosDeMaterialesVistosDeUnCurso() {
             accesoACursos = new CursoHandler();
             double cantidadDeMaterialesVistosPorEstudiantes = 0.0;
             double cantidadDeMateriales = 0.0;
@@ -86,16 +91,16 @@ namespace PIBasesISGrupo1.Pages.Curso
                 estudiantes = accesoACursos.obtenerCorreorsDeEstudiantesMatriculadosEnUnCurso(curso);
                 foreach (var estudiante in estudiantes) {
                     cantidadDeMaterialesVistosPorEstudiantes += accesoACursos.obtenerCantidadMaterialVistoPorEstudiante(curso, estudiante);
-                      
+
 
                 }
-                 
+
             }
-            porcentajeDeMaterialesVistos  = cantidadDeMaterialesVistosPorEstudiantes / (estudiantes.Count*cantidadDeMateriales);
+            porcentajeDeMaterialesVistos = cantidadDeMaterialesVistosPorEstudiantes / (estudiantes.Count * cantidadDeMateriales);
             List<DataPoint> dataPoints = new List<DataPoint>();
             if (cantidadDeMaterialesVistosPorEstudiantes > 0)
             {
-                        dataPoints.Add(new DataPoint("Materiales Vistos", Math.Round(porcentajeDeMaterialesVistos*100)));
+                dataPoints.Add(new DataPoint("Materiales Vistos", Math.Round(porcentajeDeMaterialesVistos * 100)));
 
             }
             else
@@ -106,7 +111,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             double porcentajeDeMaterialesNoVistos = 1.0 - porcentajeDeMaterialesVistos;
             if (porcentajeDeMaterialesNoVistos > 0)
             {
-                dataPoints.Add(new DataPoint("Materiales No Vistos", Math.Round(porcentajeDeMaterialesNoVistos*100)));
+                dataPoints.Add(new DataPoint("Materiales No Vistos", Math.Round(porcentajeDeMaterialesNoVistos * 100)));
 
             }
             else
@@ -119,22 +124,47 @@ namespace PIBasesISGrupo1.Pages.Curso
         }
         private void obtenerDatosDeLasHabilidades(string[] cursos) {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            grafico = new GraficoHandler();
-            List<Tuple<string,int>> habilidadesMasFrecuentes=grafico.obtenerLasHabilidadesMasFrecuentes(cursos);
+             
+            List<Tuple<string, int>> habilidadesMasFrecuentes = grafico.obtenerLasHabilidadesMasFrecuentes(cursos);
             foreach (var habilidad in habilidadesMasFrecuentes)
             {
-                dataPoints.Add(new DataPoint(habilidad.Item1,habilidad.Item2));
+                dataPoints.Add(new DataPoint(habilidad.Item1, habilidad.Item2));
             }
 
 
             TempData["GraficoHabilidades"] = JsonConvert.SerializeObject(dataPoints);
 
         }
+        private void obtenerDatosDeLosIdiomas(string[] cursos)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<Tuple<string, int>> idiomasMasFrecuentes = grafico.obtenerIdiomasMasFrecuentesDeEstudiantes(cursos);
+            foreach (var idioma in idiomasMasFrecuentes)
+            {
+                dataPoints.Add(new DataPoint(idioma.Item1, idioma.Item2));
+            }
+
+
+            TempData["GraficoIdiomas"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+        private void obtenerDatosEstudiantesPorCurso(string[] cursos) {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<Tuple<string, int>>  estudiantes= grafico.obtenerEstudiantesPorCurso(cursos);
+            int total = grafico.retornarTotalDeEstudiantesEnLosCursosFiltrados();
+            foreach (var estudiante in estudiantes)
+            {
+                dataPoints.Add(new DataPoint(estudiante.Item1, ((double)estudiante.Item2/total) * 100));   
+            }
+
+
+            TempData["GraficoEstudiantes"] = JsonConvert.SerializeObject(dataPoints);
+            TempData["numeroEstudiantes"] = total;
+        }
 
         private void obtenerDatosDeLasPaises(string[] cursos)
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            grafico = new GraficoHandler();
             List<Tuple<string, int>> pasiesMasFrecuentes = grafico.obtenerLosPaisesMasFrecuentes(cursos);
 
             foreach (var pais in pasiesMasFrecuentes)
@@ -158,6 +188,15 @@ namespace PIBasesISGrupo1.Pages.Curso
 
 
             TempData["HabilidadesEstudiantesCertificados"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+        private void obtenerTopicosDeLosCursos(string[] cursos) {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<Tuple<string, List<string>>> topicosPorCurso = grafico.obtenerTopicosDeCursos(cursos);
+            foreach (var habilidad in topicosPorCurso)
+            {
+                 
+            }
 
         }
         

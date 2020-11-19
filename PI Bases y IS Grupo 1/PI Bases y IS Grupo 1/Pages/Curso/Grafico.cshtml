@@ -2,14 +2,16 @@
 @model PIBasesISGrupo1.Pages.Curso.GraficoModel
 @{
     var cursosDisponibles = (List<string>)ViewData["cursos"];
+     
 }}
 
 <!DOCTYPE HTML>
 <html>
 <head>
+
     <script>
         window.onload = function () {
-
+            document.getElementById("numdata").style.display = "block";
             var chart = new CanvasJS.Chart("chartContainer", {
 	            theme: "light2", // "light1", "light2", "dark1", "dark2"
 	            exportEnabled: true,
@@ -31,6 +33,7 @@
 
             function onClick(e) {
                 if (e.dataPoint.label == "Cursando") {
+                     
                     if (document.getElementById("chartContainer2").style.display === "none"  ) {
                         //document.getElementById("chartContainer2").hidden = false;
                         document.getElementById("chartContainer2").style.display = "block";
@@ -38,18 +41,18 @@
                             document.getElementById("habilidadesEstudiantes1").style.display = "none";
                         }
                         graficoDeMaterialesVistos()
-                        
+
                     } else {
                         document.getElementById("chartContainer2").style.display = "none";
                     }
-                    
 
 
-                } 
+
+                }
                 else if (e.dataPoint.label == "Certificados") {
                     if (document.getElementById("habilidadesEstudiantes1").style.display === "none") {
                         //document.getElementById("chartContainer2").hidden = false;
-                        
+
                         document.getElementById("habilidadesEstudiantes1").style.display = "block";
                         if (document.getElementById("chartContainer2").style.display === "block") {
                             document.getElementById("chartContainer2").style.display = "none";
@@ -61,13 +64,84 @@
 
 
                 }
-                   
-                
+
+
              }
 
 
         }
     </script>
+    <style>
+
+
+        .box {
+            background: linear-gradient(#526494, #604484);
+            margin: 15px auto 0;
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .box__header {
+            padding: 15px 25px;
+            position: relative;
+        }
+
+        .box__header-title {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .box__body {
+            padding: 0 25px;
+        }
+
+        /* STATS */
+
+        .stats {
+            color: #fff;
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .stats__amount {
+            font-size: 42px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .stats__caption {
+            font-size: 18px;
+        }
+
+        .stats__change {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            text-align: right;
+            color: #b1b7c8;
+        }
+
+        .stats__value {
+            font-size: 18px;
+        }
+
+        .stats__period {
+            font-size: 14px;
+        }
+
+        .stats__value--positive {
+            color: #aedc6f;
+        }
+
+        .stats__value--negative {
+            color: #fb5055;
+        }
+
+        .stats--main .stats__amount {
+            font-size: 54px;
+        }
+    </style>
 </head>
 <body>
 
@@ -104,9 +178,33 @@
         <div class="col-lg-4 col-md-6">
             <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
         </div>
+        <div class="col-lg-4 col-md-6">
+            <div id="graficoIdiomas" style="height: 370px; width: 100%;"></div>
+        </div>
+        <div class="col-lg-4 col-md-6" style="text-align: center;">
+            <div id="numdata" style="display:none; text-align: center;"  class="col-lg-4 col-md-6" >
+
+                <div id="totalEstudiantes" class="box">
+                    <div class="box__header">
+                        <h3 class="box__header-title">Estudiantes Matriculados</h3>
+                    </div>
+                    <div class="box__body">
+                        <div class="stats stats--main">
+                            <div class="stats__amount" style="text-align: center;">@TempData["numeroEstudiantes"]</div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+            <div id="estudiantesEnCadaCurso" style="height: 370px; width: 100%; display:none"></div>
+        </div>
          
 
-    </div>
+
+        </div>
 
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
@@ -116,7 +214,7 @@
 <script>
 
 
-   
+
     function graficoDeMaterialesVistos() {
 
         var chart = new CanvasJS.Chart("chartContainer2", {
@@ -152,9 +250,9 @@
         }
 
     }
-     
+
       function habilidades () {
-  
+
           var chart = new CanvasJS.Chart("habilidadesEstudiantes", {
 	        animationEnabled: true,
 	        theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -164,9 +262,9 @@
 	        axisY: {
 		        title: "Cantidad de Personas"
 	        },
-	        data: [{        
-		        type: "column",  
-		        showInLegend: false, 
+	        data: [{
+		        type: "column",
+		        showInLegend: false,
 		        legendMarkerColor: "grey",
 		        dataPoints:@Html.Raw(TempData["GraficoHabilidades"])
 	        }]
@@ -191,10 +289,10 @@
                 tickPlacement: "inside"
             },
             axisY2: {
-                
+
                 titleFontSize: 14,
                 includeZero: false,
-                
+
             },
             data: [{
                 type: "bar",
@@ -202,7 +300,7 @@
                 yValueFormatString: "#",
                 indexLabel: "{y}",
                 dataPoints: @Html.Raw(TempData["GraficoPaises"])
-     
+
               }]
         });
         chart.render();
@@ -210,7 +308,7 @@
     }
     paises()
      function habilidadesCertificados () {
-  
+
           var chart = new CanvasJS.Chart("habilidadesEstudiantes1", {
 	        animationEnabled: true,
 	        theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -220,17 +318,89 @@
 	        axisY: {
 		        title: "Cantidad de Personas"
 	        },
-	        data: [{        
-		        type: "column",  
-		        showInLegend: false, 
+	        data: [{
+		        type: "column",
+		        showInLegend: false,
 		        legendMarkerColor: "grey",
 		        dataPoints:@Html.Raw(TempData["HabilidadesEstudiantesCertificados"])
 	        }]
         });
         chart.render();
 
-      }
+    }
+    function idiomas() {
+
+        var chart = new CanvasJS.Chart("graficoIdiomas", {
+            animationEnabled: true,
+            title: {
+                text: "Idiomas Frecuentes"
+            },
+            axisY: {
+                title: "Idiomas",
+                valueFormatString: "#0,,.",
+                suffix: "mn",
+                prefix: "$"
+            },
+            data: [{
+                type: "splineArea",
+                color: "rgba(54,158,173,.7)",
+                markerSize: 5,
+                xValueFormatString: "YYYY",
+                yValueFormatString: "#,##0.##",
+                dataPoints: @Html.Raw(TempData["GraficoIdiomas"])
+	}]
+        });
+        chart.render();
+    }
+    idiomas();
+    document.getElementById("totalEstudiantes").addEventListener("click", function () {
+        if (document.getElementById("estudiantesEnCadaCurso").style.display === "none") {
+            //document.getElementById("chartContainer2").hidden = false;
+            document.getElementById("estudiantesEnCadaCurso").style.display = "block";
+            estudiantesPorCurso()
+
+        } else {
+            document.getElementById("estudiantesEnCadaCurso").style.display = "none";
+        }
+    });
+
+    function estudiantesPorCurso() { 
+        var chart = new CanvasJS.Chart("estudiantesEnCadaCurso", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Estudiantes Por Curso"
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                showInLegend: true,
+                toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(TempData["GraficoEstudiantes"])
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
     
+    
+
+     
+
+
+
 
 
 </script>
