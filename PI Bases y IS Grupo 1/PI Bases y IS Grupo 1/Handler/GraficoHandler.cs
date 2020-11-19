@@ -89,6 +89,31 @@ namespace PIBasesISGrupo1.Handler
             return paises;
 
         }
+        public List<Tuple<string, int>> obtenerLasHabilidadesMasFrecuentesDeEstudiantesCertificados(string[] cursos)
+        {
+
+            List<Tuple<string, int>> habilidades = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(habilidadPK) AS Cantidad,habilidadPK" +            " FROM Habilidades WHERE emailFK IN (SELECT emailEstudianteFK FROM Certificado " +            " WHERE estado='Aprobado' AND (";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += ")) GROUP BY habilidadPK  ORDER BY COUNT(habilidadPK)DESC";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            {
+                habilidades.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["habilidadPK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return habilidades;
+
+        }
 
 
 

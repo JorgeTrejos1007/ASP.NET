@@ -71,6 +71,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             obtenerDatosDeMaterialesVistosDeUnCurso();
             obtenerDatosDeLasHabilidades(cursosAFiltrar);
             obtenerDatosDeLasPaises(cursosAFiltrar);
+            obtenerDatosDeLasHabilidadesFrecuentesDeEstdiantesCertificados(cursosAFiltrar);
             return RedirectToPage("Grafico");
             
         }
@@ -145,6 +146,21 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["GraficoPaises"] = JsonConvert.SerializeObject(dataPoints);
 
         }
+        private void obtenerDatosDeLasHabilidadesFrecuentesDeEstdiantesCertificados(string[] cursos)
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            grafico = new GraficoHandler();
+            List<Tuple<string, int>> habilidadesMasFrecuentes = grafico.obtenerLasHabilidadesMasFrecuentesDeEstudiantesCertificados(cursos);
+            foreach (var habilidad in habilidadesMasFrecuentes)
+            {
+                dataPoints.Add(new DataPoint(habilidad.Item1, habilidad.Item2));
+            }
+
+
+            TempData["HabilidadesEstudiantesCertificados"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+        
 
 
 

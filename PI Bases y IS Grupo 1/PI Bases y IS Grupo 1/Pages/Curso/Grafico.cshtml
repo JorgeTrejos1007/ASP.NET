@@ -15,7 +15,7 @@
 	            exportEnabled: true,
 	            animationEnabled: true,
 	            title: {
-		            text: "Automotive Semiconductor Vendors 2015",
+		            text: "Estudiantes Certificados y no Certificados",
 		            fontSize: 21
 	            },
 	            data: [{
@@ -31,16 +31,37 @@
 
             function onClick(e) {
                 if (e.dataPoint.label == "Cursando") {
-                    if (document.getElementById("chartContainer2").style.display === "none") {
+                    if (document.getElementById("chartContainer2").style.display === "none"  ) {
                         //document.getElementById("chartContainer2").hidden = false;
                         document.getElementById("chartContainer2").style.display = "block";
+                        if (document.getElementById("habilidadesEstudiantes1").style.display === "block") {
+                            document.getElementById("habilidadesEstudiantes1").style.display = "none";
+                        }
                         graficoDeMaterialesVistos()
+                        
                     } else {
                         document.getElementById("chartContainer2").style.display = "none";
                     }
+                    
 
 
                 } 
+                else if (e.dataPoint.label == "Certificados") {
+                    if (document.getElementById("habilidadesEstudiantes1").style.display === "none") {
+                        //document.getElementById("chartContainer2").hidden = false;
+                        
+                        document.getElementById("habilidadesEstudiantes1").style.display = "block";
+                        if (document.getElementById("chartContainer2").style.display === "block") {
+                            document.getElementById("chartContainer2").style.display = "none";
+                        }
+                        habilidadesCertificados()
+                    } else {
+                        document.getElementById("habilidadesEstudiantes1").style.display = "none";
+                    }
+
+
+                }
+                   
                 
              }
 
@@ -70,18 +91,23 @@
     <div class="row">
         <div class="col-lg-4 col-md-6">
             <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-
             <div id="chartContainer2" style="height: 370px; width: 100%; display: none;"></div>
+            <div id="habilidadesEstudiantes1" style="height: 370px; width: 100%; display: none;"></div>
+
+
 
         </div>
-     
+
         <div class="col-lg-4 col-md-6">
             <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
         </div>
+         
+
     </div>
+
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
@@ -94,7 +120,7 @@
     function graficoDeMaterialesVistos() {
 
         var chart = new CanvasJS.Chart("chartContainer2", {
-            theme: "dark2",
+            theme: "light2",
             exportFileName: "Doughnut Chart",
             exportEnabled: true,
             animationEnabled: true,
@@ -126,6 +152,7 @@
         }
 
     }
+     
       function habilidades () {
   
           var chart = new CanvasJS.Chart("habilidadesEstudiantes", {
@@ -182,6 +209,28 @@
 
     }
     paises()
+     function habilidadesCertificados () {
+  
+          var chart = new CanvasJS.Chart("habilidadesEstudiantes1", {
+	        animationEnabled: true,
+	        theme: "light2", // "light1", "light2", "dark1", "dark2"
+	        title:{
+		        text: "Habilidades mas Frecuentes"
+	        },
+	        axisY: {
+		        title: "Cantidad de Personas"
+	        },
+	        data: [{        
+		        type: "column",  
+		        showInLegend: false, 
+		        legendMarkerColor: "grey",
+		        dataPoints:@Html.Raw(TempData["HabilidadesEstudiantesCertificados"])
+	        }]
+        });
+        chart.render();
+
+      }
+    
 
 
 </script>
