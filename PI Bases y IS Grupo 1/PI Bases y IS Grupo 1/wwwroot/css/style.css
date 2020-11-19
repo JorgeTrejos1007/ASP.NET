@@ -102,10 +102,31 @@ body {
     margin: 20px auto;
     border: 1px solid #777777;
 }
+.sector__elements {
+    display: flex;
+    flex-direction: column;
+}
+.sector__label {
+    margin: auto;
+}
+
+.sector__input {
+    margin: auto;
+    width: 250px;
+}
+.sector__type {
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+.sector__type div{
+    display:flex;
+    flex-direction:column;
+    margin-right:20px;
+}
+.sector__input-type{
+    margin:auto;
+}
 /*-----------*/
-
-
-
 /*Encuestas*/
 .encuestas__elements {
     display: flex;

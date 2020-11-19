@@ -2,6 +2,7 @@
 @model PIBasesISGrupo1.Pages.Eventos.CrearEventoModel
 @{
     ViewData["Title"] = "CrearEvento";
+    var mensajeError = (string)TempData["MensajeError"];
 }
 
 <head>
@@ -10,18 +11,24 @@
             background-image: url("/img/registro/registrarme.jpg");
             background-size: 100%;
         }
-        .text-danger{
-            margin:auto;
+
+        .text-danger {
+            margin: auto;
         }
     </style>
 
 </head>
+@Html.AntiForgeryToken()
 <div class="evento__container">
     <form method="post" enctype="multipart/form-data">
         <div class="evento__elements">
             <h2 class="evento__title">Registrar Evento</h2>
-
-
+            @{
+                if (mensajeError != "")
+                {
+                    <label class="text-danger">@mensajeError</label>
+                }
+            }
             <span asp-validation-for="@Model.evento.nombre" class="text-danger"></span>
             <label asp-for="@Model.evento.nombre" class="evento__label">Ingrese el nombre del evento:</label>
             <input asp-for="@Model.evento.nombre" class="evento__input" />
@@ -43,10 +50,11 @@
 
             <span asp-validation-for="@Model.imagenEvento" class="text-danger"></span>
             <label asp-for="@Model.imagenEvento" class="evento__label">Ingrese la imagen del evento:</label>
-            <input asp-for="@Model.imagenEvento" class="evento__input" />
+            <input asp-for="@Model.imagenEvento" id="imagenEvento" class="evento__input" />
 
             <br />
 
+            <span asp-validation-for="@Model.evento.tipo" class="text-danger"></span>
             <div class="evento__type">
                 <div>
                     <label asp-for="@Model.evento.tipo" class="evento__label">Virtual</label>
@@ -97,6 +105,7 @@
         }
     }
 </script>
+
 <scripts>
 
 
