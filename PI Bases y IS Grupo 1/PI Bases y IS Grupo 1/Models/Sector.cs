@@ -13,9 +13,8 @@ namespace PIBasesISGrupo1.Models
         [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese el nombre del sector")]
         public string nombreDeSector { get; set; }
 
-        [Required(ErrorMessage = "Es necesario que ingrese el tipo de sector")]
-        [Display(Name = "Ingrese el tipo")]
-        [RegularExpression(@"^(Numerado|No numerado)$", ErrorMessage = "Por favor ingrese si el sector es Numerado o No numerado")]
+        [Required(ErrorMessage = "Es necesario que elija el tipo de sector")]
+        [Display(Name = "Elija el tipo de sector")]
         public string tipo { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingrese la cantidad de asientos")]

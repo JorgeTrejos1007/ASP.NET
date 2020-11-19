@@ -2,36 +2,9 @@
 @model PIBasesISGrupo1.Pages.Eventos.RegistrarEventoModel
 @{
     ViewData["Title"] = "RegistrarEvento";
-    var sector = (PIBasesISGrupo1.Models.Sector)ViewData["sector"];
+    var evento = (PIBasesISGrupo1.Models.Evento)ViewData["evento"];
 }
 
-<!--
-<form method="post" enctype="multipart/form-data">
-    <div>
-
-        <strong>Nombre del evento:</strong> <input asp-for="Model.evento.nombre" />
-        </br>
-        </br>
-
-        <strong>Fecha de publicacion:</strong> <input asp-for="Model.evento.fechaYHora" type="date" />
-        </br>
-        </br>
-
-        {
-            <label asp-for="Model.evento.descripcionDelEvento">Contenido de la noticia:</label><br>
-            <textarea rows="5" cols="125" asp-for="Model.evento.descripcionDelEvento"> </textarea><br /><br />
-        }
-        </br>
-        </br>
-
-        <strong>Imagen del evento:</strong> <input asp-for="Model.archivoImagen" type="file" />
-        </br>
-        </br>
-
-
-        <input type="submit" value=" Enviar" />
-    </div>
-</form> -->
 
 <head>
     <link rel="stylesheet" href="css/bootstrap.css" />
@@ -65,6 +38,7 @@
         .margen-registro {
             margin: 1%;
             padding: 1%;
+            width: 300px;
         }
 
         .center-login {
@@ -75,6 +49,7 @@
 
 </head>
 
+@Html.AntiForgeryToken()
 <div class="offset-lg-4">
     <div class="align-self-md-center col-lg-8 col-md-8">
 
@@ -86,17 +61,17 @@
                         <h3 class="mb-30 title_color">Registrar evento</h3>
 
                         <div class="mt-10">
-                            <span asp-validation-for="@Model.evento.nombre" class="text-danger"></span>
-                            <input asp-for="@Model.evento.nombre" placeholder="Ingrese el nombre del evento" class="single-input" />
+                            <span asp-validation-for="@evento.nombre" class="text-danger"></span>
+                            <input asp-for="@evento.nombre" placeholder="Ingrese el nombre del evento" class="single-input" />
                         </div>
                         <div class="mt-10">
-                            <span asp-validation-for="@Model.evento.fechaYHora" class="text-danger"></span>
-                            <label asp-for="@Model.evento.fechaYHora" class="single-input">Ingresa una fecha y hora </label>
-                            <input type="date" asp-for="@Model.evento.fechaYHora" class="single-input" />
+                            <span asp-validation-for="@evento.fechaYHora" class="text-danger"></span>
+                            <label asp-for="@evento.fechaYHora" class="single-input">Ingresa una fecha y hora </label>
+                            <input type="date" asp-for="@evento.fechaYHora" class="single-input" />
                         </div>
                         <div class="mt-10">
-                            <span asp-validation-for="@Model.evento.descripcionDelEvento" class="text-danger"></span>
-                            <textarea rows="3" cols="10" asp-for="@Model.evento.descripcionDelEvento" placeholder="Ingrese la descripcion del evento" class="single-input"></textarea>
+                            <span asp-validation-for="@evento.descripcionDelEvento" class="text-danger"></span>
+                            <textarea rows="3" cols="10" asp-for="@evento.descripcionDelEvento" placeholder="Ingrese la descripcion del evento" class="single-input"></textarea>
                         </div>
                         <div class="mt-10 ">
                             <label for="file-upload" class="subir">
@@ -107,16 +82,16 @@
                             <div id="info"></div>
                         </div>
                         <div class="mt-10 single-input">
-                            <input asp-for="@Model.evento.tipo" type="radio" value="Virtual" onchange="tipoEvento('Virtual')" />
-                            <label asp-for="@Model.evento.tipo">Virtual</label>
-                            <input asp-for="@Model.evento.tipo" type="radio" value="Presencial" onchange="tipoEvento('Presencial')" />
-                            <label asp-for="@Model.evento.tipo">Presencial</label>
+                            <input asp-for="@evento.tipo" type="radio" value="Virtual" onchange="tipoEvento('Virtual')" />
+                            <label asp-for="@evento.tipo">Virtual</label>
+                            <input asp-for="@evento.tipo" type="radio" value="Presencial" onchange="tipoEvento('Presencial')" />
+                            <label asp-for="@evento.tipo">Presencial</label>
                         </div>
 
 
                         <div id="Virtual" class="mt-10" style="display:none">
-                            <span asp-validation-for="@Model.evento.nombreCanalStream" class="text-danger"></span>
-                            <input asp-for="@Model.evento.nombreCanalStream" placeholder="Ingrese el nombre del canal del stream" class="single-input" />
+                            <span asp-validation-for="@evento.nombreCanalStream" class="text-danger"></span>
+                            <input asp-for="@evento.nombreCanalStream" placeholder="Ingrese el nombre del canal del stream" class="single-input" />
 
                             <div class="mt-20">
                                 <input type="submit" value="Registrar" class="primary-btn offset-lg-3" />
@@ -125,24 +100,24 @@
 
 
                         <div id="Presencial" class="mt-10" style="display:none">
-                            <span asp-validation-for="@Model.evento.lugar" class="text-danger"></span>
-                            <input asp-for="@Model.evento.lugar" placeholder="Ingrese el nombre del lugar del evento" class="single-input" />
+                            <span asp-validation-for="@evento.lugar" class="text-danger"></span>
+                            <input asp-for="@evento.lugar" placeholder="Ingrese el nombre del lugar del evento" class="single-input" />
 
                             <div>
                                 <label id="errorNombreSector" class="text-danger" style="display:none">Es necesario que ingrese el nombre del sector</label>
-                                <input asp-for="@sector.nombreDeSector" placeholder="Ingrese el nombre del sector" class="single-input" />
+                                <input type="text" placeholder="Ingrese el nombre del sector" id="nombreSector" class="single-input" />
 
                                 <label id="errorCantidadAsientos" class="text-danger" style="display:none">Es necesario que ingrese la cantidad de asientos</label>
-                                <input asp-for="@sector.cantidadAsientos" placeholder="Ingrese la cantidad de asientos" class="single-input" />
+                                <input type="number" placeholder="Ingrese la cantidad de asientos" id="cantidadDeAsientos" class="single-input" />
 
                                 <label id="errorTipoSector" class="text-danger" style="display:none">Es necesario que ingrese el tipo de sector</label>
-                                <input asp-for="@sector.tipo" type="radio" value="Numerado" />
-                                <label asp-for="@sector.tipo">Numerado</label>
+                                <input name="tipoAsiento" type="radio" value="Numerado" />
+                                <label>Numerado</label>
 
-                                <input asp-for="@sector.tipo" type="radio" value="Numerado" />
-                                <label asp-for="@sector.tipo">No Numerado</label>
+                                <input name="tipoAsiento" type="radio" value="No Numerado" />
+                                <label>No Numerado</label>
                                 <div class="mt-20">
-                                    <button value="Agregar Sector" class="primary-btn offset-lg-3" onclick="añadirSector()">Boton Prueba</button>
+                                    <button value="Agregar Sector" class="primary-btn offset-lg-3" id="añadirSector">Boton Prueba</button>
                                 </div>
                                 <table class="table">
                                     <thread>
@@ -161,7 +136,9 @@
                                     <tbody>
 
                                         <tr>
-                                            <td></td>
+                                            <td>
+
+                                            </td>
                                         </tr>
 
                                     </tbody>
@@ -210,17 +187,31 @@
             tipoEventoOculto.style.display = "none";
         }
     }
-    function añadirSector() {
-
-        if ((sector.cantidadAsientos == 0)) {
-            document.getElementById("errorCantidadAsientos").style.display = "block";
-        }
-        else {
-            document.getElementById("errorCantidadAsientos").style.display = "none";
-        }
-
-    }
-
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#añadirSector").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Eventos/RegistrarEvento?handler=AñadirSector",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "nombre": $("#nombreSector").val(), "cantidadDeAsientos": $("#cantidadDeAsientos").val(), "tipoAsiento": $('input:radio[name=tipoAsiento]:checked').val()},
+                success: function (response) {
+                    if (response == "error") {
+                        //document.getElementById("errorNombreSector").style.display = "block";
+                        alert("Hubo un error");
+                    }
+                    else {
+                       
+                    }
+                }
+            });
+        });
+    });
 </script>
 <scripts>
 
@@ -228,3 +219,4 @@
     @section scripts{
         <partial name="_ValidationScriptsPartial" />
     }
+</scripts>

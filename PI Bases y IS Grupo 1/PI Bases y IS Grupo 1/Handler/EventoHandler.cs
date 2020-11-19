@@ -71,29 +71,19 @@ namespace PIBasesISGrupo1.Handler
             return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
 
-        public bool registrarSectores(Evento evento)
+        public bool registrarSector(Sector sector, string emailCoordinador, string nombreDeEvento, DateTime fechaYHora)
         {
-            bool exito = false;
-            string consulta = "INSERT INTO Sector " + "VALUES(@nombreDeSector, @emailCoordinador, @nombreDeEvento, @fechaYHora, @cantidadAsientos, @tipo)";
-
-            for (int index = 0; index < evento.sectores.Count; index++) {
+            string consulta = "INSERT INTO Sector " + "VALUES(@nombreDeSector, @emailCoordinador, @nombreDeEvento, @fechaYHora, @cantidadAsientos, @tipo)";       
                 SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
 
-                comandoParaConsulta.Parameters.AddWithValue("@nombreDeSector", evento.sectores[index].nombreDeSector);
-                comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
-                comandoParaConsulta.Parameters.AddWithValue("@nombreDeEvento", evento.nombre);
-                comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
-                comandoParaConsulta.Parameters.AddWithValue("@cantidadAsientos", evento.sectores[index].cantidadAsientos);
-                comandoParaConsulta.Parameters.AddWithValue("@tipo", evento.sectores[index].tipo);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreDeSector", sector.nombreDeSector);
+                comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", emailCoordinador);
+                comandoParaConsulta.Parameters.AddWithValue("@nombreDeEvento", nombreDeEvento);
+                comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+                comandoParaConsulta.Parameters.AddWithValue("@cantidadAsientos", sector.cantidadAsientos);
+                comandoParaConsulta.Parameters.AddWithValue("@tipo", sector.tipo);
 
-                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
-
-                if (!exito) {
-                    break;
-                }
-            }
-
-            return exito;
+            return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
 
         public List<Evento> obtenerTodosLosEventosVirtuales()

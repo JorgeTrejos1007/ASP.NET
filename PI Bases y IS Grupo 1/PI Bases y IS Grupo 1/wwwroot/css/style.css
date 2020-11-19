@@ -40,12 +40,98 @@ body {
     color: #7b838a;
 }
 
-/*Encuestas*/
+/*Eventos*/
 
+
+.evento__container {
+    display: block;
+    width: 700px;
+    height: auto;
+    background: #fff;
+    margin:20px auto;
+    border: 1px solid #777777;
+}
+.evento__elements{
+    display:flex;
+    flex-direction:column;
+}
+.evento__label{
+    margin:auto;
+}
+.evento__input{
+    margin:auto;
+    width:250px;
+}
+.evento__datetime{
+    display:flex;
+    margin:auto;
+}
+.evento__input-time {
+    margin: 0;
+}
+.evento__type {
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+.evento__type div{
+    display: flex;
+    flex-direction:column;
+    margin-right:15px;
+}
+.evento__input-type{
+    margin:auto;
+}
+.evento__virtual {
+    margin: auto;
+}
+.evento__presencial {
+    margin:auto;
+}
+.evento__type-input{
+    margin:auto;
+    width:235px;
+}
+/*---------------*/
+
+/*Sector*/
+.sector__container {
+    display: block;
+    width: 700px;
+    height: auto;
+    background: #fff;
+    margin: 20px auto;
+    border: 1px solid #777777;
+}
+.sector__elements {
+    display: flex;
+    flex-direction: column;
+}
+.sector__label {
+    margin: auto;
+}
+
+.sector__input {
+    margin: auto;
+    width: 250px;
+}
+.sector__type {
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+.sector__type div{
+    display:flex;
+    flex-direction:column;
+    margin-right:20px;
+}
+.sector__input-type{
+    margin:auto;
+}
+/*-----------*/
+/*Encuestas*/
 .encuestas__elements {
     display: flex;
     flex-direction: column;
-    margin:0 200px;
+    margin: 0 200px;
     background: rgba(204,204,204,0.3);
 }
 
