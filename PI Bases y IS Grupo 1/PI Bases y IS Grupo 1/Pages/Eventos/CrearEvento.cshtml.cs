@@ -32,6 +32,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
         public void OnGet()
         {
+
         }
         public IActionResult OnPostCrearEventoVirtual()
         {
@@ -55,13 +56,14 @@ namespace PIBasesISGrupo1.Pages.Eventos
         public IActionResult OnPostCrearSeccionEventoPresencial()
         {
             IActionResult vista;
-            try {
-                Miembro datosDelMiembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
-                evento.emailCoordinador = datosDelMiembro.email;
-                evento.fechaYHora = Convert.ToDateTime(concatenarFechaYHora(fecha, hora));
-                TempData["evento"] = evento;
-                TempData["imagenEvento"] = imagenEvento;
-                vista = RedirectToPage("CrearSectores");
+            try
+            {
+
+                Miembro datosDelMiembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name); 
+                TempData["emailCoordinador"] = datosDelMiembro.email;
+                TempData["nombreEvento"] = evento.nombre;
+                TempData["fechaYHora"] = Convert.ToDateTime(concatenarFechaYHora(fecha, hora));
+                vista = Redirect("~/Eventos/CrearSectores");
             }
             catch
             {

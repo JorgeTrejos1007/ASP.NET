@@ -2,7 +2,47 @@
 @model PIBasesISGrupo1.Pages.Eventos.CrearSectoresModel
 @{
     ViewData["Title"] = "CrearSectores";
+    var nombreEvento = (string)ViewData["nombreEvento"];
 }
 
-<h2>CrearSectores</h2>
 
+<head>
+    <style>
+        body {
+            background-image: url("/img/registro/registrarme.jpg");
+            background-size: 100%;
+        }
+
+        .text-danger {
+            margin: auto;
+        }
+    </style>
+
+</head>
+
+<div class="sector__container">
+    <h2 class="sector__title">@nombreEvento</h2>
+    <table class="table sector__table">
+        <thead>
+            <tr>
+                <th>
+                    <h3>Nombre del sector</h3>
+                </th>
+                <th>
+                    Cantidad de asientos
+                </th>
+                <th>
+                    Tipo de asiento
+                </th>
+                <th>
+                    <button class="primary-btn2 text-uppercase enroll rounded-0">
+                        Añadir Sector
+                    </button>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr></tr>
+        </tbody>
+    </table>
+</div>

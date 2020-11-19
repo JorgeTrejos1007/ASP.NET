@@ -92,6 +92,20 @@ body {
     width:235px;
 }
 /*---------------*/
+
+/*Sector*/
+.sector__container {
+    display: block;
+    width: 700px;
+    height: auto;
+    background: #fff;
+    margin: 20px auto;
+    border: 1px solid #777777;
+}
+/*-----------*/
+
+
+
 /*Encuestas*/
 .encuestas__elements {
     display: flex;
