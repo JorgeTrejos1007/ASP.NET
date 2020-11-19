@@ -259,6 +259,12 @@ body {
     margin-right: 100px;
     border-radius:10px;
 }
+.event-image {
+    height: 350px;
+    width: 350px;
+    //margin-right: 100px;
+    //border-radius: 10px;
+}
 
 
 
@@ -1657,7 +1663,7 @@ button:focus {
         }
 
     .single_event .event_details {
-        background: rgba(0, 35, 71, 0.5);
+     //   background: rgba(0, 35, 71, 0.5);
         position: absolute;
         top: 0px;
         right: 0px;

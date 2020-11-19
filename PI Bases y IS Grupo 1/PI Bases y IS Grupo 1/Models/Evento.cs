@@ -43,8 +43,54 @@ namespace PIBasesISGrupo1.Models
         [Required(ErrorMessage = "Es necesario que ingrese su email para crear el evento")]
         [RegularExpression("^[_A-Za-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         [Display(Name = "Ingrese su email")]
-        public string emailCoordinador{ get; set; }
+        public string emailCoordinador { get; set; }
 
         public List<Sector> sectores { get; set; } = new List<Sector>();
+
+
+        public string retorneElNombreDelMes(int numero)
+        {
+            string nombreDelMes = "";
+            switch (numero.ToString())
+            {
+                case "1":
+                    nombreDelMes = "Enero";
+                    break;
+                case "2":
+                    nombreDelMes = "Febrero";
+                    break;
+                case "3":
+                    nombreDelMes = "Marzo";
+                    break;
+                case "4":
+                    nombreDelMes = "Abril";
+                    break;
+                case "5":
+                    nombreDelMes = "Mayo";
+                    break;
+                case "6":
+                    nombreDelMes = "Junio";
+                    break;
+                case "7":
+                    nombreDelMes = "Julio";
+                    break;
+                case "8":
+                    nombreDelMes = "Agosto";
+                    break;
+                case "9":
+                    nombreDelMes = "Septiembre";
+                    break;
+                case "10":
+                    nombreDelMes = "Octubre";
+                    break;
+                case "11":
+                    nombreDelMes = "Noviembre";
+                    break;
+                case "12":
+                    nombreDelMes = "Diciembre";
+                    break;
+            }
+            return nombreDelMes;
+        }
     }
 }
