@@ -15,6 +15,7 @@ namespace PIBasesISGrupo1.Pages.Comunidad
         private GraficoHandler grafico = new GraficoHandler();
         public void OnGet()
         {
+            TempData["GraficotopHablidadesPorPais"] = null;
             ObtenerTopCursos();
             ObtenerTiposUsuario();
             obtenerCantidadDeMiembrosPorPais();
@@ -63,8 +64,11 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             TempData["GraficoCantidadDeMiembrosPorPais"] = JsonConvert.SerializeObject(dataPoints);
 
         }
-        public void topHablidadesPorPais( string pais)
+        
+
+        public IActionResult OnPostObtenerHabilidaesYtiposDeUsuario(string pais)
         {
+            //topHablidadesPorPais(pais);
             List<DataPoint> dataPoints = new List<DataPoint>();
 
             List<Tuple<string, int>> topHablidadesPorPais = grafico.obtenerLasHabilidadesMasFrecuentesPorPais(pais);
@@ -73,15 +77,9 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             {
                 dataPoints.Add(new DataPoint(habilidad.Item1, habilidad.Item2));
             }
+            Tuple<List<DataPoint>, List<DataPoint>> datos = new Tuple<List<DataPoint>,List<DataPoint>>(dataPoints, dataPoints);
+            return new JsonResult(datos);
 
-            TempData["GraficotopHablidadesPorPais"] = JsonConvert.SerializeObject(dataPoints);
-
-        }
-
-        public void OnPostObtenerHabilidaesYtiposDeUsuario(string pais)
-        {
-
-            int a = 1;
         }
 
 

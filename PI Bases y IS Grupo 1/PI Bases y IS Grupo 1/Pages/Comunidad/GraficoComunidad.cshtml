@@ -27,6 +27,7 @@
 
         </div>
         <div id="cantPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
+        <div id="habilidadesPorPais"  style="height: 300px; width: 50%; margin-top:50px;"></div>
 
     </div>
 
@@ -35,7 +36,34 @@
 </body>
 <script>
 
-    function habilidades () {
+
+    function habilidadesPorPais(data) {
+
+
+            var chart = new CanvasJS.Chart("habilidadesPorPais", {
+                animationEnabled: true,
+                title: {
+                    text: "Habilidades",
+                    horizontalAlign: "left"
+                },
+                data: [{
+                    type: "doughnut",
+                    startAngle: 60,
+                    //innerRadius: 60,
+                    indexLabelFontSize: 17,
+                    indexLabel: "{label} - #percent%",
+                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                    dataPoints: data 
+                }]
+            });
+            chart.render();
+
+
+        
+            
+    }
+
+    function GraficoTopCursos () {
 
         var chart = new CanvasJS.Chart("topCursos", {
         animationEnabled: true,
@@ -59,7 +87,7 @@
         chart.render();
 
         }
-        habilidades();
+    GraficoTopCursos();
         function tipoUsuarios () {
             var chart = new CanvasJS.Chart("tipoUsuarios", {
 	            theme: "light2", // "light1", "light2", "dark1", "dark2"
@@ -82,7 +110,7 @@
             chart.render();
 
          }
- 
+
     tipoUsuarios();
 
     function cantPorPais () {
@@ -90,27 +118,29 @@
         var chart = new CanvasJS.Chart("cantPorPais", {
                 theme: "light2",
 	        animationEnabled: true,
-	
+
 	        title:{
 		        text:"Miembros por país"
 	        },
 	        axisX:{
 		        interval: 1
 	        },
-	   
+
             data: [{
                 click: onClick,
 		        type: "bar",
 		        name: "companies",
 		        axisYType: "secondary",
-		   
+
 		        dataPoints:  @Html.Raw(TempData["GraficoCantidadDeMiembrosPorPais"])
-		
+
 	        }]
         });
         chart.render();
         function onClick(e) {
+            
             //prueba(e.dataPoint.label);
+            var dataPointsA = []
             $.ajax({
                 type: "POST",
                 url: "GraficoComunidad?handler=ObtenerHabilidaesYtiposDeUsuario",
@@ -120,7 +150,8 @@
                 },
                 data: { "pais": e.dataPoint.label },
                 success: function (response) {
-
+                    
+                    habilidadesPorPais(response.Item1);
 
                 },
                 failure: function (response) {
@@ -131,14 +162,16 @@
                 }
 
             });
-           
+
+            
+
 
         }
 
     }
     cantPorPais();
 
-    
+
 
 
 </script>
