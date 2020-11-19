@@ -14,7 +14,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
     {
         [BindProperty]
         public Evento evento { get; set; }
-        
+
         [BindProperty]
         [Required(ErrorMessage = "Es necesario que ingreses una imagen del evento")]
         public IFormFile imagenEvento { get; set; }
@@ -27,13 +27,13 @@ namespace PIBasesISGrupo1.Pages.Eventos
         [BindProperty]
         [Required(ErrorMessage = "Es necesario que ingreses la hora del evento")]
         [Display(Name = "Ingrese la hora del evento")]
-
         public string hora { get; set; }
 
         public void OnGet()
         {
 
         }
+
         public IActionResult OnPostCrearEventoVirtual()
         {
             IActionResult vista;
@@ -53,6 +53,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
             return vista;
             
         }
+
         public IActionResult OnPostCrearSeccionEventoPresencial()
         {
             IActionResult vista;

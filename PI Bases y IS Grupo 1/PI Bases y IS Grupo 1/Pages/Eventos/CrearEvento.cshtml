@@ -38,7 +38,7 @@
             <br />
             <span asp-validation-for="@Model.evento.descripcionDelEvento" class="text-danger"></span>
             <label asp-for="@Model.evento.descripcionDelEvento" class="evento__label">Ingrese la descripcion del evento</label>
-            <textarea rows="5" cols="70" asp-for="@Model.evento.descripcionDelEvento" style="margin:auto;max-height:300px"></textarea>
+            <textarea rows="5" cols="70" asp-for="@Model.evento.descripcionDelEvento" style="margin:auto;max-height:150px"></textarea>
             <br />
 
             <span asp-validation-for="@Model.imagenEvento" class="text-danger"></span>
@@ -59,8 +59,8 @@
             </div>
 
             <div class="evento__type" id="Virtual" style="display:none">
+                <span asp-validation-for="@Model.evento.nombreCanalStream" class="text-danger"></span>
                 <div>
-                    <span asp-validation-for="@Model.evento.nombreCanalStream" class="text-danger"></span>
                     <label asp-for="@Model.evento.nombreCanalStream" class="evento__label">Ingrese el nombre del canal del stream:</label>
                     <input asp-for="@Model.evento.nombreCanalStream" class="evento__type-input" />
                     <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="CrearEventoVirtual">Crear Evento</button>
@@ -68,8 +68,8 @@
             </div>
 
             <div class="evento__type" id="Presencial" style="display:none">
+                <span asp-validation-for="@Model.evento.lugar" class="text-danger"></span>
                 <div>
-                    <span asp-validation-for="@Model.evento.lugar" class="text-danger"></span>
                     <label asp-for="@Model.evento.lugar" class="evento__label">Ingrese el nombre del lugar del evento:</label>
                     <input asp-for="@Model.evento.lugar" class="evento__type-input" />
                     <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="CrearSeccionEventoPresencial">Crear Sectores</button>
