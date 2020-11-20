@@ -24,6 +24,8 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             obtenerEducadoresConMasCursosCreados();
             obtenerEstudiantesCertificadosYnoCertificados();
             obtenerCantidadDeEventos();
+            obtenerCantidadCursosCreados();
+
         }
         public void ObtenerTopCursos()
         {
@@ -171,6 +173,13 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             dataPoints.Add(new DataPoint("Virtuales", Math.Round((cantidadEventosVirtuales / total) * 100)));
 
             TempData["GraficoCantidadEventos"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+
+        public void obtenerCantidadCursosCreados()
+        {
+
+            TempData["CantidadCursosCreados"] = grafico.obtenerCantidadCursosCreados();
 
         }
 

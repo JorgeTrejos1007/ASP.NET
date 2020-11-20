@@ -299,6 +299,16 @@ namespace PIBasesISGrupo1.Handler
 
 
         }
+        public int obtenerCantidadCursosCreados()
+        {
+            string consulta = " SELECT COUNT(1) AS cantidad FROM Curso";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            int totalCursosCreados = baseDeDatos.obtenerCantidadDeElementos(comando);
+
+            return totalCursosCreados;
+
+
+        }
 
 
     }
