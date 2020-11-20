@@ -3,12 +3,17 @@
 @{
     var cursosDisponibles = (List<string>)ViewData["cursos"];
      
-}}
+} 
 
 <!DOCTYPE HTML>
 <html>
 <head>
-
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="stylesheet" href="css/flaticon.css" />
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="css/themify-icons.css" />
+    <link rel="stylesheet" href="vendors/owl-carousel/owl.carousel.min.css" />
+    <link rel="stylesheet" href="vendors/nice-select/css/nice-select.css" />
     <script>
         window.onload = function () {
             document.getElementById("numdata").style.display = "block";
@@ -33,7 +38,7 @@
 
             function onClick(e) {
                 if (e.dataPoint.label == "Cursando") {
-                     
+
                     if (document.getElementById("chartContainer2").style.display === "none"  ) {
                         //document.getElementById("chartContainer2").hidden = false;
                         document.getElementById("chartContainer2").style.display = "block";
@@ -76,7 +81,7 @@
 
         .box {
             background: linear-gradient(#526494, #604484);
-            margin: 50px 70px ;
+            margin: 50px 70px;
             border-radius: 5px;
             width: 300px;
             text-align: center;
@@ -148,7 +153,7 @@
     <div>
         <form method="post" enctype="multipart/form-data">
             <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
-            <select class="border-0 habilidades-select single-input-primary " asp-for="@Model.cursosAFiltrar" multiple="multiple" size="@cursosDisponibles.Count" required>
+            <select class="border-0 idiomas-select single-input-primary " asp-for="@Model.cursosAFiltrar" multiple="multiple" size="@cursosDisponibles.Count" required>
                 @foreach (var curso in cursosDisponibles)
                 {
 
@@ -209,9 +214,22 @@
 
     </div>
 
-        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="js/owl-carousel-thumb.min.js"></script>
+    <script src="js/jquery.ajaxchimp.min.js"></script>
+    <script src="js/mail-script.js"></script>
+    <!--gmaps Js-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
+    <script src="js/gmaps.min.js"></script>
+    <script src="js/theme.js"></script>
 </body>
+
 </html>
 
 <script>
@@ -340,9 +358,7 @@
             },
             axisY: {
                 title: "Idiomas",
-                valueFormatString: "#0,,.",
-                suffix: "mn",
-                prefix: "$"
+                
             },
             data: [{
                 type: "splineArea",
@@ -380,8 +396,7 @@
             },
             data: [{
                 type: "pie",
-                showInLegend: true,
-                toolTipContent: "{label}: <strong>{y}%</strong>",
+                 toolTipContent: "{label}: <strong>{y}%</strong>",
                 indexLabel: "{label} - {y}%",
                 dataPoints: @Html.Raw(TempData["GraficoEstudiantes"])
             }]
@@ -400,16 +415,20 @@
     function topicosMasComunes() {
         var chart = new CanvasJS.Chart("topicos", {
             animationEnabled: true,
-            theme: "light2",
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
             title: {
                 text: "Topicos Frecuentes"
             },
+            axisY: {
+                title: "Cantidad de Cursos Relacioandos"
+            },
             data: [{
-                type: "line",
-                indexLabelFontSize: 16,
-                dataPoints:@Html.Raw(TempData["GraficoTopicos"])  
+                type: "column",
+               
+                dataPoints: @Html.Raw(TempData["GraficoTopicos"]) 
             }]
         });
+        
         chart.render();
 
     }

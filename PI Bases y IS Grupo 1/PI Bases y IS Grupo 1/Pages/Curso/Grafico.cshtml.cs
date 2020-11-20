@@ -69,7 +69,6 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
             TempData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
-            topicos = grafico.obtenerDatosTopicos();
             obtenerDatosDeMaterialesVistosDeUnCurso();
             obtenerDatosDeLasHabilidades(cursosAFiltrar);
             obtenerDatosDeLasPaises(cursosAFiltrar);
@@ -208,18 +207,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["HabilidadesEstudiantesCertificados"] = JsonConvert.SerializeObject(dataPoints);
 
         }
-        private void obtenerTopicosDeLosCursos(string[] cursos) {
-            List<DataPoint> dataPoints = new List<DataPoint>();
-            List<Tuple<string, List<string>>> topicosPorCurso = grafico.obtenerTopicosDeCursos(cursos);
-            foreach (var habilidad in topicosPorCurso)
-            {     
-
-                 
-            }
-            TempData["TopicosComunes"] = JsonConvert.SerializeObject(dataPoints);
-
-        }
-        
+         
 
 
 
