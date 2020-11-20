@@ -280,6 +280,25 @@ namespace PIBasesISGrupo1.Handler
 
 
         }
+        public int obtenerCantidadEventosPresenciales()
+        {
+            string consulta = " SELECT COUNT(nombreEventoFK) AS cantidad FROM Presencial";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            int totalCantidadEventosPresenciales = baseDeDatos.obtenerCantidadDeElementos(comando);
+
+            return totalCantidadEventosPresenciales;
+
+        }
+        public int obtenerCantidadEventosVirtuales()
+        {
+            string consulta = " SELECT COUNT(nombreEventoFK) AS cantidad FROM Virtual";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            int totalCantidadEventosVirtuales = baseDeDatos.obtenerCantidadDeElementos(comando);
+
+            return totalCantidadEventosVirtuales;
+
+
+        }
 
 
     }

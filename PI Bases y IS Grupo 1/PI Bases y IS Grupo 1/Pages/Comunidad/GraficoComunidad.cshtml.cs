@@ -23,6 +23,7 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             obtenerIdiomasFrencuentes();
             obtenerEducadoresConMasCursosCreados();
             obtenerEstudiantesCertificadosYnoCertificados();
+            obtenerCantidadDeEventos();
         }
         public void ObtenerTopCursos()
         {
@@ -135,9 +136,6 @@ namespace PIBasesISGrupo1.Pages.Comunidad
 
         }
 
-
-
-
         public IActionResult OnPostObtenerHabilidaesYtiposDeUsuario(string pais)
         {
             //topHablidadesPorPais(pais);
@@ -157,10 +155,22 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             }
 
 
-
-
             Tuple<List<DataPoint>, List<DataPoint>> datos = new Tuple<List<DataPoint>,List<DataPoint>>(habilidades, tiposDeUsuarios);
             return new JsonResult(datos);
+
+        }
+
+        public void obtenerCantidadDeEventos()
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            double cantidadEventosPresenciales = grafico.obtenerCantidadEventosPresenciales();
+            double cantidadEventosVirtuales = grafico.obtenerCantidadEventosVirtuales();
+            double total = cantidadEventosPresenciales + cantidadEventosVirtuales;
+
+            dataPoints.Add(new DataPoint("Presenciales", Math.Round((cantidadEventosPresenciales / total) * 100)));
+            dataPoints.Add(new DataPoint("Virtuales", Math.Round((cantidadEventosVirtuales / total) * 100)));
+
+            TempData["GraficoCantidadEventos"] = JsonConvert.SerializeObject(dataPoints);
 
         }
 

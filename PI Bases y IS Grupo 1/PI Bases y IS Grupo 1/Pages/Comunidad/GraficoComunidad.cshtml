@@ -33,14 +33,41 @@
         <div id="idiomasComunidad" style="height: 300px; width: 50%; margin-top:50px;"></div>
 
         <div id="cantPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
-        <div id="habilidadesPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
-        <div id="tiposDeUsuarioPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
+        <div id="habilidadesPorPais" style="height: 300px; width: 50%; margin-top:50px ;display: none;"></div>
+        <div id="tiposDeUsuarioPorPais" style="height: 300px; width: 50%; margin-top:50px;display: none;"></div>
+        <div id="cantEventos" style="height: 300px; width: 50%; margin-top:50px;"></div>
     </div>
 
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
 <script>
+
+    function cantidadEventos(){
+
+        var chart = new CanvasJS.Chart("cantEventos", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Eventos presenciales y virtuales"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 25,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(TempData["GraficoCantidadEventos"])
+            }]
+        });
+        chart.render();
+
+    }
+    cantidadEventos();
+
     function estudiantesCertifcadosYnoCertificados(){
 
         var chart = new CanvasJS.Chart("certificadosYnoCertifcados", {
@@ -106,14 +133,10 @@
                 }]
             });
             chart.render();
-
-
-        
-            
+         
     }
 
     function tiposDeUsuarioPorPais(data,pais) {
-
 
         var chart = new CanvasJS.Chart("tiposDeUsuarioPorPais", {
             animationEnabled: true,
@@ -133,9 +156,6 @@
             }]
         });
         chart.render();
-
-
-
 
     }
 
@@ -242,34 +262,39 @@
         });
         chart.render();
         function onClick(e) {
-            
-            //prueba(e.dataPoint.label);
-            var dataPointsA = []
-            $.ajax({
-                type: "POST",
-                url: "GraficoComunidad?handler=ObtenerHabilidaesYtiposDeUsuario",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: { "pais": e.dataPoint.label },
-                success: function (response) {
-                    
-                    habilidadesPorPais(response.Item1, e.dataPoint.label);
-                    tiposDeUsuarioPorPais(response.Item2, e.dataPoint.label);
+            if (document.getElementById("habilidadesPorPais").style.display === "none") {
 
-                },
-                failure: function (response) {
-                    alert('fallo');
-                },
-                error: function (response) {
-                    alert('error');
-                }
+                document.getElementById("habilidadesPorPais").style.display = "block";
+                document.getElementById("tiposDeUsuarioPorPais").style.display = "block";
 
-            });
+                $.ajax({
+                    type: "POST",
+                    url: "GraficoComunidad?handler=ObtenerHabilidaesYtiposDeUsuario",
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("XSRF-TOKEN",
+                            $('input:hidden[name="__RequestVerificationToken"]').val());
+                    },
+                    data: { "pais": e.dataPoint.label },
+                    success: function (response) {
 
-            
+                        habilidadesPorPais(response.Item1, e.dataPoint.label);
+                        tiposDeUsuarioPorPais(response.Item2, e.dataPoint.label);
 
+                    },
+                    failure: function (response) {
+                        alert('fallo');
+                    },
+                    error: function (response) {
+                        alert('error');
+                    }
+
+                });
+              
+            } else {
+                document.getElementById("habilidadesPorPais").style.display = "none";
+                document.getElementById("tiposDeUsuarioPorPais").style.display = "none";
+
+            }
 
         }
 
