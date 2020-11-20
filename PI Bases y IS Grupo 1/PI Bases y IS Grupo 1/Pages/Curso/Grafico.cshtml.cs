@@ -225,7 +225,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             //topHablidadesPorPais(pais);
             List<DataPoint> idiomas = new List<DataPoint>();
             List<Tuple<string, int>> idiomasPorCurso = grafico.obtenerIdiomasDeEstudiantePorCurso(cursos, idioma);
-            int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesConCiertaHabilidad();
+            int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesConCiertoIdioma();
             foreach (var porcentajeHabilidad in idiomasPorCurso)
             {
                 idiomas.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));

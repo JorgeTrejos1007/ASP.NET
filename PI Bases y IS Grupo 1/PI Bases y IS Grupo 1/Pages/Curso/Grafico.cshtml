@@ -22,7 +22,7 @@
 	            exportEnabled: true,
 	            animationEnabled: true,
 	            title: {
-		            text: "Estudiantes Certificados y no Certificados",
+		            text: "Certificados y no Certificados",
 		            fontSize: 21
 	            },
 	            data: [{
@@ -187,7 +187,7 @@
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="graficoIdiomas" style="height: 370px; width: 100%;"></div>
-            <div id="distribucionDeIdioma" style="height: 370px; width: 100%; display: none;"></div>
+            <div id="di" style="height: 370px; width: 100%; display: none;"></div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="topicos" style="height: 370px; width: 100%;"></div>
@@ -420,11 +420,11 @@
              @{ TempData["cursosFiltrados"] = cursos;}
           function onClick(e) {
 
-              if (document.getElementById("distribucionDeIdioma").style.display === "none") {
-                  document.getElementById("distribucionDeIdioma").style.display = "block";
+              if (document.getElementById("di").style.display === "none") {
+                  document.getElementById("di").style.display = "block";
                   $.ajax({
                       type: "POST",
-                      url: "Grafico?handler=OnPostObtenerIdiomasPorCurso",
+                      url: "Grafico?handler=ObtenerIdiomasPorCurso",
                       beforeSend: function (xhr) {
                           xhr.setRequestHeader("XSRF-TOKEN",
                               $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -434,7 +434,7 @@
                       },
                       success: function (response) {
 
-                          idiomaPorCurso(response, e.dataPoint.label);
+                          idiomasPorCurso(response, e.dataPoint.label);
 
 
                       },
@@ -448,7 +448,7 @@
                   });
               }
               else {
-                  document.getElementById("distribucionDeIdioma").style.display = "none";
+                  document.getElementById("di").style.display = "none";
               }
 
              
@@ -551,8 +551,7 @@
         }
     }
     function idiomasPorCurso(datos, idioma) {
-        alert("entro")
-        var chart = new CanvasJS.Chart("distribucionDeIdioma", {
+         var chart = new CanvasJS.Chart("di", {
             exportEnabled: true,
             animationEnabled: true,
             title: {
