@@ -22,6 +22,7 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             obtenerHabilidadesFrencuentes();
             obtenerIdiomasFrencuentes();
             obtenerEducadoresConMasCursosCreados();
+            obtenerEstudiantesCertificadosYnoCertificados();
         }
         public void ObtenerTopCursos()
         {
@@ -42,12 +43,19 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             List<DataPoint> dataPoints = new List<DataPoint>();
             
             List<Tuple<string, int>> tiposUsuario = grafico.obtenerTiposDeUsuarios();
-            int cantidadEstudiantes = grafico.obtenerCantidadEstudiantes();
+            double cantidadEstudiantes = grafico.obtenerCantidadEstudiantes();
+            double total = cantidadEstudiantes;
             foreach (var tipoUsuario in tiposUsuario)
             {
-                dataPoints.Add(new DataPoint(tipoUsuario.Item1, tipoUsuario.Item2));
+                total = total + tipoUsuario.Item2;
+               
             }
-            dataPoints.Add(new DataPoint("Estudiates", cantidadEstudiantes));
+
+            foreach (var tipoUsuario in tiposUsuario)
+            {
+                dataPoints.Add(new DataPoint(tipoUsuario.Item1, Math.Round((tipoUsuario.Item2/total)*100)));
+            }
+            dataPoints.Add(new DataPoint("Estudiantes", Math.Round((cantidadEstudiantes/total)*100)));
 
 
             TempData["GraficoTiposUsuario"] = JsonConvert.SerializeObject(dataPoints);
@@ -112,6 +120,21 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             TempData["GraficoEducadoresConMasCursosCreados"] = JsonConvert.SerializeObject(dataPoints);
 
         }
+
+        public void obtenerEstudiantesCertificadosYnoCertificados()
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            double cantidadDeEstudiantesCertificados = grafico.obtenerTotalDeEstudiantesCertificados();
+            double cantidadDeEstudiantesNoCertificados = grafico.obtenerTotalDeEstudiantesNoCertificados();
+            double total = cantidadDeEstudiantesCertificados + cantidadDeEstudiantesNoCertificados;
+
+            dataPoints.Add(new DataPoint("Certificados", Math.Round((cantidadDeEstudiantesCertificados/total)*100)));
+            dataPoints.Add(new DataPoint("No certificados", Math.Round((cantidadDeEstudiantesNoCertificados/total)*100)));
+
+            TempData["GraficoEstudiantesCertificadosYnoCertificados"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+
 
 
 

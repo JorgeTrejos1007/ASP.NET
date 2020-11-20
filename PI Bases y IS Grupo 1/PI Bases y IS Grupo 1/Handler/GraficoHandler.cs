@@ -259,7 +259,27 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
+        public int obtenerTotalDeEstudiantesCertificados()
+        {
+          
+            string consulta = "SELECT COUNT(1) FROM Certificado WHERE estado='Aprobado' ";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            int totalDeEstudiantesCertificados = baseDeDatos.obtenerCantidadDeElementos(comando);
+            return totalDeEstudiantesCertificados;
 
+        }
+
+
+        public int obtenerTotalDeEstudiantesNoCertificados()
+        {
+            string consulta = "SELECT COUNT(1) FROM Certificado WHERE estado!='Aprobado' ";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            int totalDeEstudiantesNoCertificados = baseDeDatos.obtenerCantidadDeElementos(comando);
+
+            return totalDeEstudiantesNoCertificados;
+
+
+        }
 
 
     }

@@ -8,12 +8,13 @@
     <h2>Estadísticas de la Comunidad</h2>
 </head>
 
-
 <body>
     @Html.AntiForgeryToken()
     <div class="row" style="margin-top:80px;">
         <div id="tipoUsuarios" class="col-lg-4 col-md-6"></div>
         <div id="educadoresComunidad" style="height: 300px; width: 50%; margin-top:50px;display: none"></div>
+        <div id="certificadosYnoCertifcados" style="height: 300px; width: 50%; margin-top:50px;display: none"></div>
+
         <div id="topCursos" class="col-lg-4 col-md-6"></div>
         <div id="topTopicosCursos" class="col-lg-4 col-md-6">
             <ul>
@@ -34,13 +35,37 @@
         <div id="cantPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
         <div id="habilidadesPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
         <div id="tiposDeUsuarioPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
-
     </div>
 
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
 <script>
+    function estudiantesCertifcadosYnoCertificados(){
+
+        var chart = new CanvasJS.Chart("certificadosYnoCertifcados", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Estudiantes certificados y no certificados"
+            },
+            data: [{
+                type: "pie",
+                startAngle: 25,
+                toolTipContent: "<b>{label}</b>: {y}%",
+                showInLegend: "true",
+                legendText: "{label}",
+                indexLabelFontSize: 16,
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(TempData["GraficoEstudiantesCertificadosYnoCertificados"])
+            }]
+        });
+        chart.render();
+
+    }
+
+
     function educadoresComunidad() {
 
         var chart = new CanvasJS.Chart("educadoresComunidad", {
@@ -173,8 +198,17 @@
                         document.getElementById("educadoresComunidad").style.display= "none";
 
                     }
+                } 
 
-                    
+                if (e.dataPoint.label == "Estudiantes") {
+                    if (document.getElementById("certificadosYnoCertifcados").style.display === "none") {
+
+                        document.getElementById("certificadosYnoCertifcados").style.display = "block";
+                        estudiantesCertifcadosYnoCertificados();
+                    } else {
+                        document.getElementById("certificadosYnoCertifcados").style.display = "none";
+
+                    }
                 } 
 
             }
