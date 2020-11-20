@@ -18,11 +18,13 @@ namespace PIBasesISGrupo1.Handler
     {
         private BaseDeDatosHandler baseDeDatos;
         int totalEstudiantes;
+        int totalDeEstudiantesConCiertaHabilidad;
         public GraficoHandler()
         {
 
             baseDeDatos = new BaseDeDatosHandler();
             totalEstudiantes = 0;
+            totalDeEstudiantesConCiertaHabilidad = 0;
 
         }
 
@@ -237,7 +239,39 @@ namespace PIBasesISGrupo1.Handler
             return topicos;
 
         }
+        public List<Tuple<string, int>> obtenerHabilidadesDeEstudiantePorCurso(string[] cursos,string habilidad)
+        {
 
+            List<Tuple<string, int>> habilidadPorCurso = new List<Tuple<string, int>>();
+            string consulta = " SELECT COUNT( DISTINCT emailEstudianteFK) AS Cantidad,nombreCursoFK" +
+            " FROM Certificado WHERE ( ";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += " ) AND emailEstudianteFK IN (SELECT emailFK FROM Habilidades"+
+             " WHERE(habilidadPK = @habilidad))   GROUP BY nombreCursoFK ";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@habilidad", habilidad);
+            totalDeEstudiantesConCiertaHabilidad = 0;
+            DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            {
+                totalDeEstudiantesConCiertaHabilidad += Convert.ToInt32(columnaCursosAprobados["Cantidad"]);
+                habilidadPorCurso.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return habilidadPorCurso;
+
+        }
+        public int obtenerTotalDeEstudiantesConCiertaHabilidad() {
+            return totalDeEstudiantesConCiertaHabilidad;
+        }
 
 
     }

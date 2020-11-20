@@ -39,6 +39,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             double total = estudiantesConCertificado.Count + estudiantesSinCertificado.Count;
             double totalConCertificado = estudiantesConCertificado.Count;
             double totalSinCertificado = estudiantesSinCertificado.Count;
+            TempData["cursosFiltrados"] = cursosAFiltrar;
             grafico = new GraficoHandler();
             if (totalConCertificado > 0)
             {
@@ -207,7 +208,20 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["HabilidadesEstudiantesCertificados"] = JsonConvert.SerializeObject(dataPoints);
 
         }
-         
+        public IActionResult OnPostObtenerHabilidadesPorCurso(string habilidad)
+        {
+            //topHablidadesPorPais(pais);
+            List<DataPoint> habilidades = new List<DataPoint>();
+            List<Tuple<string, int>> habilidadesPorCurso = grafico.obtenerHabilidadesDeEstudiantePorCurso((string [])TempData["cursosFiltrados"], habilidad);
+            int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesConCiertaHabilidad();
+            foreach (var porcentajeHabilidad in habilidadesPorCurso)
+            {
+                habilidades.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
+            }
+            return new JsonResult(habilidadesPorCurso);
+
+        }
+
 
 
 

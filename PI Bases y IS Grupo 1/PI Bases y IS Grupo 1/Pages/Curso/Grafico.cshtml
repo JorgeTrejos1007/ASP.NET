@@ -284,7 +284,8 @@
 		        title: "Cantidad de Personas"
 	        },
 	        data: [{
-		        type: "column",
+                type: "column",
+                click: onClick,
 		        showInLegend: false,
 		        legendMarkerColor: "grey",
 		        dataPoints:@Html.Raw(TempData["GraficoHabilidades"])
@@ -292,9 +293,10 @@
         });
           chart.render();
           function onClick(e) {
+             
             $.ajax({
                   type: "POST",
-                  url: "Grafico?handler=ObtenerHabilidaesPorCurso",
+                url: "Grafico?handler=ObtenerHabilidadesPorCurso",
                   beforeSend: function (xhr) {
                       xhr.setRequestHeader("XSRF-TOKEN",
                           $('input:hidden[name="__RequestVerificationToken"]').val());
@@ -302,8 +304,8 @@
                   data: { "habilidad": e.dataPoint.label },
                   success: function (response) {
 
-                      habilidadesPorPais(response.Item1, e.dataPoint.label);
-                      tiposDeUsuarioPorPais(response.Item2, e.dataPoint.label);
+                      habilidadesPorCurso(response, e.dataPoint.label);
+                       
 
                   },
                   failure: function (response) {
