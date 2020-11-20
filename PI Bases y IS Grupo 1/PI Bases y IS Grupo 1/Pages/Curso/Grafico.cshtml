@@ -181,8 +181,11 @@
         <div class="col-lg-4 col-md-6">
             <div id="graficoIdiomas" style="height: 370px; width: 100%;"></div>
         </div>
+        <div class="col-lg-4 col-md-6">
+            <div id="topicos" style="height: 370px; width: 100%;"></div>
+        </div>
         <div class="col-lg-4 col-md-6" style="text-align: center;">
-            <div id="numdata" style="display:none; text-align: center;"  class="col-lg-4 col-md-6" >
+            <div id="numdata" style="display:none; text-align: center;" class="col-lg-4 col-md-6">
 
                 <div id="totalEstudiantes" class="box">
                     <div class="box__header">
@@ -201,10 +204,10 @@
             </div>
             <div id="estudiantesEnCadaCurso" style="height: 370px; width: 100%; display:none"></div>
         </div>
-         
 
 
-        </div>
+
+    </div>
 
         <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
         <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
@@ -369,7 +372,7 @@
             exportEnabled: true,
             animationEnabled: true,
             title: {
-                text: "Estudiantes Por Curso"
+                text: "Distribucion de Estudiantes"
             },
             legend: {
                 cursor: "pointer",
@@ -394,6 +397,23 @@
 
         }
     }
+    function topicosMasComunes() {
+        var chart = new CanvasJS.Chart("topicos", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Topicos Frecuentes"
+            },
+            data: [{
+                type: "line",
+                indexLabelFontSize: 16,
+                dataPoints:@Html.Raw(TempData["GraficoTopicos"])  
+            }]
+        });
+        chart.render();
+
+    }
+    topicosMasComunes();
     
     
 

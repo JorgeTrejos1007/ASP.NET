@@ -76,7 +76,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             obtenerDatosDeLasHabilidadesFrecuentesDeEstdiantesCertificados(cursosAFiltrar);
             obtenerDatosDeLosIdiomas(cursosAFiltrar);
             obtenerDatosEstudiantesPorCurso(cursosAFiltrar);
-            obtenerTopicosDeLosCursos(cursosAFiltrar); 
+            topicosMasFrecuentes(cursosAFiltrar);
             return RedirectToPage("Grafico");
 
         }
@@ -148,18 +148,36 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["GraficoIdiomas"] = JsonConvert.SerializeObject(dataPoints);
 
         }
-        private void obtenerDatosEstudiantesPorCurso(string[] cursos) {
+        private void topicosMasFrecuentes(string[] cursos) {
+            List<Tuple<string, int>> topicosMasFrecuentes = grafico.obtenerTopicosMasFrecuentesDeCursos(cursos);
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            foreach (var topico in topicosMasFrecuentes)
+            {
+                dataPoints.Add(new DataPoint(topico.Item1, topico.Item2));
+            }
+
+
+            TempData["GraficoTopicos"] = JsonConvert.SerializeObject(dataPoints);
+
+        }
+       private void obtenerDatosEstudiantesPorCurso(string[] cursos) {
             List<DataPoint> dataPoints = new List<DataPoint>();
             List<Tuple<string, int>>  estudiantes= grafico.obtenerEstudiantesPorCurso(cursos);
+            List<string> topicos = new List<string>(); 
             int total = grafico.retornarTotalDeEstudiantesEnLosCursosFiltrados();
             foreach (var estudiante in estudiantes)
             {
+                if (!topicos.Contains(estudiante.Item1)) {
+                    topicos.Add(estudiante.Item1);
+                }
                 dataPoints.Add(new DataPoint(estudiante.Item1, ((double)estudiante.Item2/total) * 100));   
             }
 
 
             TempData["GraficoEstudiantes"] = JsonConvert.SerializeObject(dataPoints);
             TempData["numeroEstudiantes"] = total;
+
+
         }
 
         private void obtenerDatosDeLasPaises(string[] cursos)
@@ -194,9 +212,11 @@ namespace PIBasesISGrupo1.Pages.Curso
             List<DataPoint> dataPoints = new List<DataPoint>();
             List<Tuple<string, List<string>>> topicosPorCurso = grafico.obtenerTopicosDeCursos(cursos);
             foreach (var habilidad in topicosPorCurso)
-            {
+            {     
+
                  
             }
+            TempData["TopicosComunes"] = JsonConvert.SerializeObject(dataPoints);
 
         }
         

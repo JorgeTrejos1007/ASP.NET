@@ -211,7 +211,32 @@ namespace PIBasesISGrupo1.Handler
             return topicos;
 
         }
+        public List<Tuple<string, int>> obtenerTopicosMasFrecuentesDeCursos(string[] cursos)
+        {
+            BaseDeDatosHandler consultasBaseDatos = new BaseDeDatosHandler();
+            List<Tuple<string, int>> topicos = new List<Tuple<string, int>>();
+            string consulta = "SELECT     COUNT( nombreCursoFK) as Cantidad,nombreTopicoFK  FROM Contiene " +
+            " WHERE ";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
 
+            }
+            consulta += " group by nombreTopicoFK";
+            SqlCommand comando = consultasBaseDatos.crearComandoParaConsulta(consulta);
+            DataTable topHabilidades = consultasBaseDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            {
+                topicos.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreTopicoFK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return topicos;
+
+        }
 
 
 
