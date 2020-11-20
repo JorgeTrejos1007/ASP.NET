@@ -290,7 +290,37 @@
 		        dataPoints:@Html.Raw(TempData["GraficoHabilidades"])
 	        }]
         });
-        chart.render();
+          chart.render();
+          function onClick(e) {
+            $.ajax({
+                  type: "POST",
+                  url: "Grafico?handler=ObtenerHabilidaesPorCurso",
+                  beforeSend: function (xhr) {
+                      xhr.setRequestHeader("XSRF-TOKEN",
+                          $('input:hidden[name="__RequestVerificationToken"]').val());
+                  },
+                  data: { "habilidad": e.dataPoint.label },
+                  success: function (response) {
+
+                      habilidadesPorPais(response.Item1, e.dataPoint.label);
+                      tiposDeUsuarioPorPais(response.Item2, e.dataPoint.label);
+
+                  },
+                  failure: function (response) {
+                      alert('fallo');
+                  },
+                  error: function (response) {
+                      alert('error');
+                  }
+
+              });
+
+
+
+
+          }
+
+
 
       }
     habilidades();
