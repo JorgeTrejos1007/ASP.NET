@@ -41,14 +41,14 @@
             <div class="sector__type">
                 <div>
                     <label asp-for="@Model.sector.tipo" class="sector__label">Numerado</label>
-                    <input asp-for="@Model.sector.tipo" type="radio" value="Numerado" name="tipoAsiento" class="sector__input-type"/>
+                    <input asp-for="@Model.sector.tipo" type="radio" value="Numerado" id="tipoAsientoNumerado" onchange="tipoAsiento('Numerado')" class="sector__input-type" />
                 </div>
                 <div>
                     <label asp-for="@Model.sector.tipo" class="sector__label">No numerado</label>
-                    <input asp-for="@Model.sector.tipo" type="radio" value="No numerado" name="tipoAsiento" class="sector__input-type" />
+                    <input asp-for="@Model.sector.tipo" type="radio" value="No numerado" id="tipoAsientoNoNumerado" onchange="tipoAsiento('No numerado')" class="sector__input-type" />
                 </div>
             </div>
-
+            <input type="hidden" value="" id="tipoDeAsiento" />
             <input type="button" id="añadirSector" class="primary-btn2 text-uppercase enroll rounded-0" value="Añadir Sector" style="width:200px;margin:0 auto 20px auto" />
         </div>
         <table class="table sector__table">
@@ -68,11 +68,11 @@
                     </th>
                 </tr>
             </thead>
-            <tbody id="sector__table-rows">
-            </tbody>
+            <tbody id="sector__table-rows"></tbody>
         </table>
         <div>
-            <button type="submit" asp-page-handler="TerminarCrearSectores" class="primary-btn2 text-uppercase enroll rounded-0" style="width:200px;margin:0 0 20px 250px">Terminar</button>
+            <a href="~/Eventos/MostrarEventos" class="primary-btn2 text-uppercase enroll rounded-0" style="width:200px;margin:0 0 20px 250px">Terminar</a>
+            <button type="submit" asp-page-handler="TerminarCrearSectores" style="display:none"></button>
         </div>
     </form>
 </div>
@@ -82,6 +82,11 @@
         var elem = document.getElementById("sector__table-rows");
         elem.innerHTML += '<tr> <td> <p style="margin-left:70px;">' + nombreSector + '</p></td><td><p style="margin-left:100px;">' + cantidadAsientos + '</p></td><td><p style="margin-left:50px;">' + tipoAsiento + '</p></td></tr>';
     }
+
+    function tipoAsiento(tipoAsiento) {
+        document.getElementById("tipoDeAsiento").value = tipoAsiento;
+    }
+
 </script>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script type="text/javascript">
@@ -94,7 +99,7 @@
                     xhr.setRequestHeader("XSRF-TOKEN",
                         $('input:hidden[name="__RequestVerificationToken"]').val());
                 },
-                data: { "nombre": $("#nombreSector").val(), "cantidadDeAsientos": $("#cantidadDeAsientos").val(), "tipoAsiento": $('input[name=tipoAsiento]:checked').val()},
+                data: { "nombre": $("#nombreSector").val(), "cantidadDeAsientos": $("#cantidadDeAsientos").val(), "tipoAsiento": $("#tipoDeAsiento").val() },
                 success: function (response) {
                     if (response == "ErrorAlAñadirSector") {
                         document.getElementById("errorAñadirSector").style.display = "block";
@@ -103,8 +108,12 @@
                         if (response != "FaltanDatos") {
                             document.getElementById("errorAñadirSector").style.display = "none";
                             agregarSector(response.nombreDeSector, response.cantidadAsientos, response.tipo);
+                            document.getElementById("nombreSector").value = "";
+                            document.getElementById("cantidadDeAsientos").value = "";
+                            document.getElementById("tipoAsientoNumerado").checked = false;
+                            document.getElementById("tipoAsientoNumerado").checked = false;
                         }
-                    }                 
+                    }
                 }
             });
         });
