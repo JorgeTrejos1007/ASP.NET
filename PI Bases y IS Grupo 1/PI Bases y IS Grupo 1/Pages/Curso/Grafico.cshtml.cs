@@ -218,7 +218,7 @@ namespace PIBasesISGrupo1.Pages.Curso
             {
                 habilidades.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
             }
-            return new JsonResult(habilidadesPorCurso);
+            return new JsonResult(habilidades);
 
         }
 

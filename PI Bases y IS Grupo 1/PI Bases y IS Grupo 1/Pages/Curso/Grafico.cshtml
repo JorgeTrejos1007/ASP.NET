@@ -465,7 +465,35 @@
 
     }
     topicosMasComunes();
-    
+    function habilidadesPorCurso(datos, habilidad);{ 
+        var chart = new CanvasJS.Chart("estudiantesEnCadaCurso", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de " + habilidad
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                 toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: datos
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
     
 
      
