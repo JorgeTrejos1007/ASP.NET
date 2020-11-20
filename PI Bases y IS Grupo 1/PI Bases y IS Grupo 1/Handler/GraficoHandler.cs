@@ -160,7 +160,7 @@ namespace PIBasesISGrupo1.Handler
         {
 
             List<Tuple<string, int>> CantidadDeMiembrosPorPais = new List<Tuple<string, int>>();
-            string consulta = " SELECT COUNT(pais) AS Cantidad, pais FROM Usuario WHERE emailPK IN(SELECT emailMiembroFK FROM Miembro)"+
+            string consulta = " SELECT TOP 5 COUNT(pais) AS Cantidad, pais FROM Usuario WHERE emailPK IN(SELECT emailMiembroFK FROM Miembro)"+
                                 " GROUP BY pais ORDER BY COUNT(pais)DESC";
 
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
@@ -181,12 +181,81 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@pais", pais);
             DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
-            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            foreach (DataRow columnaTopHabilidades in topHabilidades.Rows)
             {
-                habilidades.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["habilidadPK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+                habilidades.Add(new Tuple<string, int>(Convert.ToString(columnaTopHabilidades["habilidadPK"]), Convert.ToInt32(columnaTopHabilidades["Cantidad"])));
 
             }
             return habilidades;
+
+        }
+
+        public List<Tuple<string, int>> obtenerTipoDeUsuarioPorPais(string pais)
+        {
+
+            List<Tuple<string, int>> tipoUsuario = new List<Tuple<string, int>>();
+            string consulta = " SELECT DISTINCT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK" +                             " FROM Rol WHERE emailUsuarioFK IN(SELECT emailPK FROM Usuario WHERE pais=@pais)" +
+                             " GROUP BY rolUsuarioPK";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@pais", pais);
+            DataTable TipoDeUsuarioPorPais = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaTipoDeUsuario in TipoDeUsuarioPorPais.Rows)
+            {
+                tipoUsuario.Add(new Tuple<string, int>(Convert.ToString(columnaTipoDeUsuario["rolUsuarioPK"]), Convert.ToInt32(columnaTipoDeUsuario["Cantidad"])));
+
+            }
+            return tipoUsuario;
+
+        }
+
+        public List<Tuple<string, int>> obtenerHabilidadesFrecuentesDeLaComunidad()
+        {
+
+            List<Tuple<string, int>> habilidades = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(habilidadPK) as cantidad, habilidadPK" +                             " FROM Habilidades" +
+                             " GROUP BY habilidadPK ORDER BY COUNT(habilidadPK)DESC";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable HabilidadesFrecuentes = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaHabilidadesFrecuentes in HabilidadesFrecuentes.Rows)
+            {
+                habilidades.Add(new Tuple<string, int>(Convert.ToString(columnaHabilidadesFrecuentes["habilidadPK"]), Convert.ToInt32(columnaHabilidadesFrecuentes["cantidad"])));
+
+            }
+            return habilidades;
+
+        }
+
+        public List<Tuple<string, int>> obtenerIdiomasFrecuentesDeLaComunidad()
+        {
+
+            List<Tuple<string, int>> idiomas = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(idiomaPK) as cantidad, idiomaPK" +                             "  FROM Idiomas" +
+                             "  GROUP BY idiomaPK ORDER BY COUNT(idiomaPK)DESC";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable idiomasFrecuentes = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaIdiomasFrecuentes in idiomasFrecuentes.Rows)
+            {
+                idiomas.Add(new Tuple<string, int>(Convert.ToString(columnaIdiomasFrecuentes["idiomaPK"]), Convert.ToInt32(columnaIdiomasFrecuentes["cantidad"])));
+
+            }
+            return idiomas;
+
+        }
+
+        public List<Tuple<string, int>> obtenerEducadoresConMasCursosCreados()
+        {
+
+            List<Tuple<string, int>> educadores = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(C.emailEducadorFK) as cantidad, U.nombre +' '+ U.primerApellido as nombreCompleto" +                             "  FROM Curso C JOIN Usuario U ON C.emailEducadorFK=U.emailPK WHERE C.estado='Creado'" +
+                             "  GROUP BY U.nombre,U.primerApellido ORDER BY COUNT(C.emailEducadorFK)DESC";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable idiomasFrecuentes = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaIdiomasFrecuentes in idiomasFrecuentes.Rows)
+            {
+                educadores.Add(new Tuple<string, int>(Convert.ToString(columnaIdiomasFrecuentes["nombreCompleto"]), Convert.ToInt32(columnaIdiomasFrecuentes["cantidad"])));
+
+            }
+            return educadores;
 
         }
 

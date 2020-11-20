@@ -13,6 +13,7 @@
     @Html.AntiForgeryToken()
     <div class="row" style="margin-top:80px;">
         <div id="tipoUsuarios" class="col-lg-4 col-md-6"></div>
+        <div id="educadoresComunidad" style="height: 300px; width: 50%; margin-top:50px;display: none"></div>
         <div id="topCursos" class="col-lg-4 col-md-6"></div>
         <div id="topTopicosCursos" class="col-lg-4 col-md-6">
             <ul>
@@ -26,8 +27,13 @@
             </ul>
 
         </div>
+
+        <div id="habilidadesComunidad" style="height: 300px; width: 50%; margin-top:50px;"></div>
+        <div id="idiomasComunidad" style="height: 300px; width: 50%; margin-top:50px;"></div>
+
         <div id="cantPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
-        <div id="habilidadesPorPais"  style="height: 300px; width: 50%; margin-top:50px;"></div>
+        <div id="habilidadesPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
+        <div id="tiposDeUsuarioPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
 
     </div>
 
@@ -35,16 +41,34 @@
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 </body>
 <script>
+    function educadoresComunidad() {
 
+        var chart = new CanvasJS.Chart("educadoresComunidad", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Top de educadores con mas cursos"
+            },
+            data: [{
+                type: "column",
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "inside",
+                dataPoints: @Html.Raw(TempData["GraficoEducadoresConMasCursosCreados"])
+            }]
+        });
+        chart.render();
+    }
 
-    function habilidadesPorPais(data) {
+    function habilidadesPorPais(data,pais) {
 
 
             var chart = new CanvasJS.Chart("habilidadesPorPais", {
                 animationEnabled: true,
+                theme: "light2",
                 title: {
-                    text: "Habilidades",
-                    horizontalAlign: "left"
+                    text: "Habilidades de " + pais,
+                    horizontalAlign: "center"
                 },
                 data: [{
                     type: "doughnut",
@@ -52,7 +76,7 @@
                     //innerRadius: 60,
                     indexLabelFontSize: 17,
                     indexLabel: "{label} - #percent%",
-                    toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                    //toolTipContent: "<b>{label}:</b> {y} (#percent%)",
                     dataPoints: data 
                 }]
             });
@@ -61,6 +85,33 @@
 
         
             
+    }
+
+    function tiposDeUsuarioPorPais(data,pais) {
+
+
+        var chart = new CanvasJS.Chart("tiposDeUsuarioPorPais", {
+            animationEnabled: true,
+            theme: "light2",
+            title: {
+                text: "Tipos de Usuario de " + pais,
+                horizontalAlign: "center"
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 60,
+                //innerRadius: 60,
+                indexLabelFontSize: 17,
+                indexLabel: "{label} - #percent%",
+                //toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                dataPoints: data
+            }]
+        });
+        chart.render();
+
+
+
+
     }
 
     function GraficoTopCursos () {
@@ -88,17 +139,20 @@
 
         }
     GraficoTopCursos();
+
         function tipoUsuarios () {
             var chart = new CanvasJS.Chart("tipoUsuarios", {
 	            theme: "light2", // "light1", "light2", "dark1", "dark2"
 	            exportEnabled: false,
-	            animationEnabled: true,
+                animationEnabled: true,
+               
 	            title: {
 		            text: "Tipos de usuario"
 	            },
 	            data: [{
 		            type: "pie",
-		            startAngle: 25,
+                    startAngle: 25,
+                    click: onClick,
 		            toolTipContent: "<b>{label}</b>: {y}%",
 		            showInLegend: "true",
 		            legendText: "{label}",
@@ -108,6 +162,22 @@
 	            }]
             });
             chart.render();
+            function onClick(e) {
+                
+                if (e.dataPoint.label == "Educador") {
+                    if (document.getElementById("educadoresComunidad").style.display === "none") {
+                        
+                        document.getElementById("educadoresComunidad").style.display= "block";
+                        educadoresComunidad();
+                    } else {
+                        document.getElementById("educadoresComunidad").style.display= "none";
+
+                    }
+
+                    
+                } 
+
+            }
 
          }
 
@@ -151,7 +221,8 @@
                 data: { "pais": e.dataPoint.label },
                 success: function (response) {
                     
-                    habilidadesPorPais(response.Item1);
+                    habilidadesPorPais(response.Item1, e.dataPoint.label);
+                    tiposDeUsuarioPorPais(response.Item2, e.dataPoint.label);
 
                 },
                 failure: function (response) {
@@ -171,7 +242,47 @@
     }
     cantPorPais();
 
+    function habilidadesComunidad() {
+        var chart = new CanvasJS.Chart("habilidadesComunidad", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Habilidades mas frecuentes de la comunidad"
+            },
+            data: [{
+                type: "bar",             
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "inside",
+                dataPoints: @Html.Raw(TempData["GraficoHabilidadesFrencuentes"])
+            }]
+        });
+        chart.render();
 
+    }
+    
+    habilidadesComunidad();
 
+    function idiomasComunidad() {
+        var chart = new CanvasJS.Chart("idiomasComunidad", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "idiomas mas frecuentes de la comunidad"
+            },
+            data: [{
+                type: "bar",
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "inside",
+                dataPoints: @Html.Raw(TempData["GraficoIdiomasFrencuentes"])
+            }]
+        });
+        chart.render();
 
+    }
+    idiomasComunidad();
+
+    
+    
 </script>
