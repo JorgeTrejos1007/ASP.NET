@@ -15,6 +15,7 @@ namespace PIBasesISGrupo1.Pages.Curso
         private CursoHandler accesoACursos;
         private GraficoHandler grafico = new GraficoHandler();
         [BindProperty]        public string[] cursosAFiltrar { get; set; }
+        public static string[] cursos;
         public string[] habilidades = new string[17]
                {
                     "Empatia","Saber escuchar","Liderazgo", "Flexibilidad","Optimismo", "Confianza","Honestidad",
@@ -32,14 +33,12 @@ namespace PIBasesISGrupo1.Pages.Curso
 
         }
         public IActionResult OnPost() {
-
+            cursos = cursosAFiltrar;
             List<DataPoint> dataPoints = new List<DataPoint>();
-            List<string> estudiantesConCertificado = grafico.obtenerEstudiantesCertificadosDeUnCurso(cursosAFiltrar[0]);
-            List<string> estudiantesSinCertificado = grafico.obtenerEstudiantesQueEstanCursandoUnCurso(cursosAFiltrar[0]);
-            double total = estudiantesConCertificado.Count + estudiantesSinCertificado.Count;
-            double totalConCertificado = estudiantesConCertificado.Count;
-            double totalSinCertificado = estudiantesSinCertificado.Count;
-            TempData["cursosFiltrados"] = cursosAFiltrar;
+            double totalConCertificado = (double)grafico.obtenerEstudiantesCertificadosDeUnCurso(cursos);
+            double totalSinCertificado = (double)grafico.obtenerEstudiantesQueEstanCursandoUnCurso(cursos);
+            double total=totalConCertificado+ totalSinCertificado;
+           TempData["cursosFiltrados"] = cursosAFiltrar;
             grafico = new GraficoHandler();
             if (totalConCertificado > 0)
             {
@@ -68,15 +67,15 @@ namespace PIBasesISGrupo1.Pages.Curso
                 dataPoints.Add(new DataPoint("Cursando", 0));
 
             }
-
+             
             TempData["Grafico"] = JsonConvert.SerializeObject(dataPoints);
             obtenerDatosDeMaterialesVistosDeUnCurso();
-            obtenerDatosDeLasHabilidades(cursosAFiltrar);
-            obtenerDatosDeLasPaises(cursosAFiltrar);
-            obtenerDatosDeLasHabilidadesFrecuentesDeEstdiantesCertificados(cursosAFiltrar);
+            obtenerDatosDeLasHabilidades(cursos);
+            obtenerDatosDeLasPaises(cursos);
+            obtenerDatosDeLasHabilidadesFrecuentesDeEstdiantesCertificados(cursos);
             obtenerDatosDeLosIdiomas(cursosAFiltrar);
-            obtenerDatosEstudiantesPorCurso(cursosAFiltrar);
-            topicosMasFrecuentes(cursosAFiltrar);
+            obtenerDatosEstudiantesPorCurso(cursos);
+            topicosMasFrecuentes(cursos);
             return RedirectToPage("Grafico");
 
         }
@@ -208,17 +207,30 @@ namespace PIBasesISGrupo1.Pages.Curso
             TempData["HabilidadesEstudiantesCertificados"] = JsonConvert.SerializeObject(dataPoints);
 
         }
-        public IActionResult OnPostObtenerHabilidadesPorCurso(string habilidad)
+        public IActionResult OnPostObtenerHabilidadesPorCurso( string habilidad)
         {
             //topHablidadesPorPais(pais);
             List<DataPoint> habilidades = new List<DataPoint>();
-            List<Tuple<string, int>> habilidadesPorCurso = grafico.obtenerHabilidadesDeEstudiantePorCurso((string [])TempData["cursosFiltrados"], habilidad);
+            List<Tuple<string, int>> habilidadesPorCurso = grafico.obtenerHabilidadesDeEstudiantePorCurso( cursos, habilidad);
             int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesConCiertaHabilidad();
             foreach (var porcentajeHabilidad in habilidadesPorCurso)
             {
                 habilidades.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
             }
             return new JsonResult(habilidades);
+
+        }
+        public IActionResult OnPostObtenerIdiomasPorCurso(string idioma)
+        {
+            //topHablidadesPorPais(pais);
+            List<DataPoint> idiomas = new List<DataPoint>();
+            List<Tuple<string, int>> idiomasPorCurso = grafico.obtenerIdiomasDeEstudiantePorCurso(cursos, idioma);
+            int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesConCiertaHabilidad();
+            foreach (var porcentajeHabilidad in idiomasPorCurso)
+            {
+                idiomas.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
+            }
+            return new JsonResult(idiomas);
 
         }
 

@@ -2,7 +2,7 @@
 @model PIBasesISGrupo1.Pages.Curso.GraficoModel
 @{
     var cursosDisponibles = (List<string>)ViewData["cursos"];
-     
+    var cursos = (string[])TempData["cursosFiltrados"];
 } 
 
 <!DOCTYPE HTML>
@@ -151,7 +151,7 @@
 <body>
 
     <div>
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" id="formCursos" enctype="multipart/form-data">
             <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
             <select class="border-0 idiomas-select single-input-primary " asp-for="@Model.cursosAFiltrar" multiple="multiple" size="@cursosDisponibles.Count" required>
                 @foreach (var curso in cursosDisponibles)
@@ -179,12 +179,15 @@
 
         <div class="col-lg-4 col-md-6">
             <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
+            <div id="distribucionDeHabilidad" style="height: 370px; width: 100%; display: none;"></div>
+             
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="graficoIdiomas" style="height: 370px; width: 100%;"></div>
+            <div id="distribucionDeIdioma" style="height: 370px; width: 100%; display: none;"></div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="topicos" style="height: 370px; width: 100%;"></div>
@@ -292,30 +295,41 @@
 	        }]
         });
           chart.render();
+           @{ TempData["cursosFiltrados"] = cursos;}
           function onClick(e) {
+
+              if (document.getElementById("distribucionDeHabilidad").style.display === "none") {
+                  document.getElementById("distribucionDeHabilidad").style.display = "block";
+                  $.ajax({
+                      type: "POST",
+                      url: "Grafico?handler=ObtenerHabilidadesPorCurso",
+                      beforeSend: function (xhr) {
+                          xhr.setRequestHeader("XSRF-TOKEN",
+                              $('input:hidden[name="__RequestVerificationToken"]').val());
+                      },
+                      data: {
+                          "habilidad": e.dataPoint.label
+                      },
+                      success: function (response) {
+
+                          habilidadesPorCurso(response, e.dataPoint.label);
+
+
+                      },
+                      failure: function (response) {
+                          alert('fallo');
+                      },
+                      error: function (response) {
+                          alert('error');
+                      }
+
+                  });
+              }
+              else {
+                  document.getElementById("distribucionDeHabilidad").style.display = "none";
+              }
+
              
-            $.ajax({
-                  type: "POST",
-                url: "Grafico?handler=ObtenerHabilidadesPorCurso",
-                  beforeSend: function (xhr) {
-                      xhr.setRequestHeader("XSRF-TOKEN",
-                          $('input:hidden[name="__RequestVerificationToken"]').val());
-                  },
-                  data: { "habilidad": e.dataPoint.label },
-                  success: function (response) {
-
-                      habilidadesPorCurso(response, e.dataPoint.label);
-                       
-
-                  },
-                  failure: function (response) {
-                      alert('fallo');
-                  },
-                  error: function (response) {
-                      alert('error');
-                  }
-
-              });
 
 
 
@@ -390,10 +404,11 @@
             },
             axisY: {
                 title: "Idiomas",
-                
+
             },
             data: [{
                 type: "splineArea",
+                click: onClick,
                 color: "rgba(54,158,173,.7)",
                 markerSize: 5,
                 xValueFormatString: "YYYY",
@@ -402,6 +417,47 @@
 	}]
         });
         chart.render();
+             @{ TempData["cursosFiltrados"] = cursos;}
+          function onClick(e) {
+
+              if (document.getElementById("distribucionDeIdioma").style.display === "none") {
+                  document.getElementById("distribucionDeIdioma").style.display = "block";
+                  $.ajax({
+                      type: "POST",
+                      url: "Grafico?handler=OnPostObtenerIdiomasPorCurso",
+                      beforeSend: function (xhr) {
+                          xhr.setRequestHeader("XSRF-TOKEN",
+                              $('input:hidden[name="__RequestVerificationToken"]').val());
+                      },
+                      data: {
+                          "idioma": e.dataPoint.label
+                      },
+                      success: function (response) {
+
+                          idiomaPorCurso(response, e.dataPoint.label);
+
+
+                      },
+                      failure: function (response) {
+                          alert('fallo');
+                      },
+                      error: function (response) {
+                          alert('error');
+                      }
+
+                  });
+              }
+              else {
+                  document.getElementById("distribucionDeIdioma").style.display = "none";
+              }
+
+             
+
+
+
+
+          }
+
     }
     idiomas();
     document.getElementById("totalEstudiantes").addEventListener("click", function () {
@@ -415,7 +471,7 @@
         }
     });
 
-    function estudiantesPorCurso() { 
+    function estudiantesPorCurso() {
         var chart = new CanvasJS.Chart("estudiantesEnCadaCurso", {
             exportEnabled: true,
             animationEnabled: true,
@@ -456,17 +512,17 @@
             },
             data: [{
                 type: "column",
-               
-                dataPoints: @Html.Raw(TempData["GraficoTopicos"]) 
+
+                dataPoints: @Html.Raw(TempData["GraficoTopicos"])
             }]
         });
-        
+
         chart.render();
 
     }
     topicosMasComunes();
-    function habilidadesPorCurso(datos, habilidad);{ 
-        var chart = new CanvasJS.Chart("estudiantesEnCadaCurso", {
+    function habilidadesPorCurso(datos, habilidad){
+        var chart = new CanvasJS.Chart("distribucionDeHabilidad", {
             exportEnabled: true,
             animationEnabled: true,
             title: {
@@ -494,9 +550,39 @@
 
         }
     }
-    
+    function idiomasPorCurso(datos, idioma) {
+        alert("entro")
+        var chart = new CanvasJS.Chart("distribucionDeIdioma", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de " + idioma
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: datos
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
 
-     
+        }
+    }
+
+
+
 
 
 

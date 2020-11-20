@@ -19,31 +19,67 @@ namespace PIBasesISGrupo1.Handler
         private BaseDeDatosHandler baseDeDatos;
         int totalEstudiantes;
         int totalDeEstudiantesConCiertaHabilidad;
+        int totalDeEstudiantesConCiertoIdioma;
         public GraficoHandler()
         {
 
             baseDeDatos = new BaseDeDatosHandler();
             totalEstudiantes = 0;
             totalDeEstudiantesConCiertaHabilidad = 0;
+            totalDeEstudiantesConCiertoIdioma = 0;
 
         }
 
 
-        public List<string> obtenerEstudiantesCertificadosDeUnCurso(string nombreCurso) {
-            string consulta = "SELECT DISTINCT emailEstudianteFK FROM Certificado WHERE nombreCursoFK=@nombreCurso AND estado='Aprobado';";
+        public int obtenerEstudiantesCertificadosDeUnCurso(string  []cursos) {
+            string consulta = "SELECT DISTINCT COUNT( emailEstudianteFK) AS Cantidad FROM Certificado " 
+            +" WHERE(";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += ") AND estado='Aprobado' ";
+            int totalCertificados = 0;
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
-            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
-            List<string> estudiantesConCertificado = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "emailEstudianteFK");
-            return estudiantesConCertificado;
+            DataTable estudiantesConCertificado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columnaCursosAprobados in estudiantesConCertificado.Rows)
+            {
+                totalCertificados= Convert.ToInt32(columnaCursosAprobados["Cantidad"]);
+
+            }
+               
+            return totalCertificados;
         }
 
-        public List<string> obtenerEstudiantesQueEstanCursandoUnCurso(string nombreCurso)
+        public int obtenerEstudiantesQueEstanCursandoUnCurso(string []cursos)
         {
-            string consulta = "SELECT DISTINCT emailEstudianteFK FROM Certificado WHERE nombreCursoFK=@nombreCurso AND estado<>'Aprobado';";
+            string consulta = "SELECT DISTINCT COUNT( emailEstudianteFK) AS Cantidad FROM Certificado "
+            + " WHERE(";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += ") AND estado !='Aprobado' ";
+            int totalCertificados = 0;
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
-            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
-            List<string> estudiantes = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "emailEstudianteFK");
-            return estudiantes;
+            DataTable estudiantesConCertificado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columnaCursosAprobados in estudiantesConCertificado.Rows)
+            {
+                totalCertificados = Convert.ToInt32(columnaCursosAprobados["Cantidad"]);
+
+            }
+
+            return totalCertificados;
         }
         public List<Tuple<string, int>> obtenerLasHabilidadesMasFrecuentes(string [] cursos){
 
@@ -99,21 +135,20 @@ namespace PIBasesISGrupo1.Handler
         }
         public List<Tuple<string, int>> obtenerLasHabilidadesMasFrecuentesDeEstudiantesCertificados(string[] cursos)
         {
-
-            List<Tuple<string, int>> habilidades = new List<Tuple<string, int>>();
-            string consulta = " SELECT TOP 5 COUNT(habilidadPK) AS Cantidad,habilidadPK" +
-            " FROM Habilidades WHERE emailFK IN (SELECT emailEstudianteFK FROM Certificado " +
-            " WHERE estado='Aprobado' AND (";
+           List<Tuple<string, int>> habilidades = new List<Tuple<string, int>>();
+            string consulta = "  select COUNT(Distinct h.emailFK) AS Cantidad,h.habilidadPK  AS habilidadPK FROM Habilidades H " +
+           "join Certificado C ON C.emailEstudianteFK = H.emailFK " +
+            "   WHERE C.estado = 'Aprobado' AND (";
             for (int curso = 0; curso < cursos.Length; ++curso)
             {
-                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                consulta += " C.nombreCursoFK = '" + cursos[curso] + "'";
                 if (curso + 1 < cursos.Length)
                 {
                     consulta += " OR ";
                 }
 
             }
-            consulta += ")) GROUP BY habilidadPK  ORDER BY COUNT(habilidadPK)DESC";
+            consulta += ") GROUP BY H.habilidadPK ";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
             foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
@@ -272,6 +307,41 @@ namespace PIBasesISGrupo1.Handler
         public int obtenerTotalDeEstudiantesConCiertaHabilidad() {
             return totalDeEstudiantesConCiertaHabilidad;
         }
+        public List<Tuple<string, int>> obtenerIdiomasDeEstudiantePorCurso(string[] cursos, string idioma)
+        {
+
+            List<Tuple<string, int>> habilidadPorCurso = new List<Tuple<string, int>>();
+            string consulta = " SELECT COUNT( DISTINCT emailEstudianteFK) AS Cantidad,nombreCursoFK" +
+            " FROM Certificado WHERE ( ";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += " ) AND emailEstudianteFK IN (SELECT emailFK FROM Idiomas" +
+             " WHERE(idiomaPK = @idioma))   GROUP BY nombreCursoFK ";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@idioma", idioma);
+            totalDeEstudiantesConCiertoIdioma = 0;
+            DataTable topHabilidades = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
+            {
+                totalDeEstudiantesConCiertoIdioma += Convert.ToInt32(columnaCursosAprobados["Cantidad"]);
+                habilidadPorCurso.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return habilidadPorCurso;
+
+        }
+        public int obtenerTotalDeEstudiantesConCiertoIdioma()
+        {
+            return totalDeEstudiantesConCiertoIdioma;
+        }
+
 
 
     }
