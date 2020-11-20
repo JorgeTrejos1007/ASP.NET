@@ -184,6 +184,7 @@
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
+            <div id="distribucionDePaisPorCurso" style="height: 370px; width: 100%; display: none;"></div>
         </div>
         <div class="col-lg-4 col-md-6">
             <div id="graficoIdiomas" style="height: 370px; width: 100%;"></div>
@@ -363,6 +364,7 @@
             },
             data: [{
                 type: "bar",
+                click: onClick,
                 axisYType: "secondary",
                 yValueFormatString: "#",
                 indexLabel: "{y}",
@@ -371,6 +373,40 @@
               }]
         });
         chart.render();
+         @{ TempData["cursosFiltrados"] = cursos;}
+          function onClick(e) {
+              if (document.getElementById("distribucionDePaisPorCurso").style.display === "none") {
+                  document.getElementById("distribucionDePaisPorCurso").style.display = "block";
+                  $.ajax({
+                      type: "POST",
+                      url: "Grafico?handler=ObtenerDistribucionDePaisPorCurso",
+                      beforeSend: function (xhr) {
+                          xhr.setRequestHeader("XSRF-TOKEN",
+                              $('input:hidden[name="__RequestVerificationToken"]').val());
+                      },
+                      data: {
+                          "pais": e.dataPoint.label
+                      },
+                      success: function (response) {
+
+                          distribucionDePaisPorCurso(response, e.dataPoint.label);
+
+
+                      },
+                      failure: function (response) {
+                          alert('fallo');
+                      },
+                      error: function (response) {
+                          alert('error');
+                      }
+
+                  });
+              }
+              else {
+                  document.getElementById("distribucionDePaisPorCurso").style.display = "none";
+              }
+           }
+
 
     }
     paises()
@@ -556,6 +592,35 @@
             animationEnabled: true,
             title: {
                 text: "Distribucion de " + idioma
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: datos
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
+    function distribucionDePaisPorCurso(datos, pais) {
+        var chart = new CanvasJS.Chart("distribucionDePaisPorCurso", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de " + pais
             },
             legend: {
                 cursor: "pointer",

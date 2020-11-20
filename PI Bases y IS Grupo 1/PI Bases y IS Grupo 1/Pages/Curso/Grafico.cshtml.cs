@@ -233,6 +233,19 @@ namespace PIBasesISGrupo1.Pages.Curso
             return new JsonResult(idiomas);
 
         }
+        public IActionResult OnPostObtenerDistribucionDePaisPorCurso(string pais)
+        {
+            //topHablidadesPorPais(pais);
+            List<DataPoint> distribucionPorCurso = new List<DataPoint>();
+            List<Tuple<string, int>> idiomasPorCurso = grafico.obtenerDistribucionDePaisPorCurso(cursos, pais);
+            int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesDeEsePais();
+            foreach (var porcentajeHabilidad in idiomasPorCurso)
+            {
+                distribucionPorCurso.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
+            }
+            return new JsonResult(distribucionPorCurso);
+
+        }
 
 
 

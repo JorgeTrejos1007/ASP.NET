@@ -20,6 +20,7 @@ namespace PIBasesISGrupo1.Handler
         int totalEstudiantes;
         int totalDeEstudiantesConCiertaHabilidad;
         int totalDeEstudiantesConCiertoIdioma;
+        int totalEstudiantesPorPaisEnCursos= 0;
         public GraficoHandler()
         {
 
@@ -27,6 +28,7 @@ namespace PIBasesISGrupo1.Handler
             totalEstudiantes = 0;
             totalDeEstudiantesConCiertaHabilidad = 0;
             totalDeEstudiantesConCiertoIdioma = 0;
+            totalEstudiantesPorPaisEnCursos = 0;
 
         }
 
@@ -341,7 +343,40 @@ namespace PIBasesISGrupo1.Handler
         {
             return totalDeEstudiantesConCiertoIdioma;
         }
+        public List<Tuple<string, int>> obtenerDistribucionDePaisPorCurso(string[] cursos, string pais)
+        {
 
+            List<Tuple<string, int>> distribucionDeEstudiantes = new List<Tuple<string, int>>();
+            string consulta = "SELECT     COUNT(  DISTINCT emailEstudianteFK) as Cantidad,nombreCursoFK  FROM Certificado     " +
+            " WHERE (";
+            for (int curso = 0; curso < cursos.Length; ++curso)
+            {
+                consulta += " nombreCursoFK = '" + cursos[curso] + "'";
+                if (curso + 1 < cursos.Length)
+                {
+                    consulta += " OR ";
+                }
+
+            }
+            consulta += ") AND emailEstudianteFK IN (SELECT emailPK FROM Usuario"+  
+            " WHERE PAIS = @pais ) group by nombreCursoFK";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@pais", pais);
+            DataTable estudiantesPorCurso = baseDeDatos.crearTablaConsulta(comando);
+            totalEstudiantesPorPaisEnCursos = 0;
+            foreach (DataRow columnaCursosAprobados in estudiantesPorCurso.Rows)
+            {
+                totalEstudiantesPorPaisEnCursos += Convert.ToInt32(columnaCursosAprobados["Cantidad"]);
+                distribucionDeEstudiantes.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+
+            }
+            return distribucionDeEstudiantes;
+
+        }
+        public int obtenerTotalDeEstudiantesDeEsePais()
+        {
+            return totalEstudiantesPorPaisEnCursos;
+        }
 
 
     }
