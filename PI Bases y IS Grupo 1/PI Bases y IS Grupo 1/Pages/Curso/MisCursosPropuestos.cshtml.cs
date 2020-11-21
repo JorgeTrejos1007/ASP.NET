@@ -20,6 +20,8 @@ namespace PIBasesISGrupo1.Pages.Curso
 
             ViewData["MisCursosPropuestos"] = cursoHandler.obtenerMisCursosPropuestos(datosDelMiembro.email);
 
+            MiembroHandler accesoDatos = new MiembroHandler();
+            ViewData["firmaEducador"] = accesoDatos.obtenerFirmaEducador(datosDelMiembro.email);
         }
     }
 }

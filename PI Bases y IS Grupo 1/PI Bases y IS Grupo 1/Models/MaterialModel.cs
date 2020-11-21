@@ -33,5 +33,7 @@ namespace PIBasesISGrupo1.Models
         public byte[] archivo { get; set; }
 
         public string tipoArchivo { get; set; }
+
+        public int visto { get; set; }
     }
 }

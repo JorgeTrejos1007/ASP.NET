@@ -1,0 +1,79 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.CrearCertificadoModel
+@{
+    ViewData["Title"] = "CrearCertificado";
+    var firma = (byte[])ViewData["firma"];
+}
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
+    </script>
+
+    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
+    </script>
+
+</head>
+
+<div class="certificado__container" id="certificado">
+    <div class="certificado__elements">
+        <p class="certificado__title">Certificado de finalización</p>
+        <br />
+        <p class="certificado__content">POR MEDIO DEL PRESENTE, SE CONFIRMA QUE</p>
+        <p class="certificado__ownerName">Tomás Navarro</p>
+        <br />
+        <p class="certificado__content">HA FINALIZADO SATISFACTORIAMENTE</p>
+        <p class="certificado__content certificado__content-lessMargin">EL PROGRAMA DE EXCELENCIA EN NEGOCIOS</p>
+        <div class="certificado__members">
+            <div>
+                
+                <p class="certificado__members__line"></p>
+                <p class="certificado__members__information">PATRICIA SAN JUAN, COORDINADORA DEL PROGRAMA</p>
+            </div>
+            <div>
+                
+                <p class="certificado__members__line"></p>
+                <p class="certificado__members__information">3 DE ABRIL DE 2012</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<form method="post">
+    <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
+    <button id="btn-Convert-Html2Image" type="submit" asp-page-handler="AprobarCertificado" onclick="myFunction()" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">
+        Download
+    </button>
+    </form>
+
+
+
+
+
+    <script>
+        
+
+        html2canvas($('#certificado'), {
+            onrendered: function (canvas) {
+                var dataURL = canvas.toDataURL();
+                document.getElementById("informacionImagen").value = dataURL;
+            }
+        });
+        $('#btn-Convert-Html2Image').click(function () {
+
+            /*
+                html2canvas($('#certificado'),
+                    {
+                        onrendered: function (canvas) {
+                            var a = document.createElement('a');
+                            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
+                            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+                            a.download = 'Certificado.png';
+                            a.click();
+                        }
+                    });
+                    */
+        });
+
+    </script>

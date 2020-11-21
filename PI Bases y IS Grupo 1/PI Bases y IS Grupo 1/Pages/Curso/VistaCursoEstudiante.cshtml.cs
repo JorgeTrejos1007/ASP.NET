@@ -14,13 +14,21 @@ namespace PIBasesISGrupo1.Pages.Curso
     {
         [BindProperty]
         public List<SeccionModel> Secciones { get; set; }
+        public Miembro miembroEnSesion;
+        CursoHandler accesoDatos = new CursoHandler();
         public IActionResult OnGet(String nombreCurso)
         {
+
             try
             {
-                CursoHandler accesoDatos = new CursoHandler();
-                var miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                
+                 miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+                if (miembroEnSesion==null)
+                {
+                    miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Estudiante");
+                }
                 var comprobarCurso = accesoDatos.obtenerMisCursosMatriculados(miembroEnSesion.email);
+                ViewData["email"] = miembroEnSesion.email;
                 bool nombreCursoValido = false;
                 foreach (var item in (List<Tuple<string, int>>)comprobarCurso)
                 {
@@ -37,9 +45,16 @@ namespace PIBasesISGrupo1.Pages.Curso
 
                     foreach (var item in Secciones)
                     {
-                        item.listaMateriales = accesoDatos.obtenerMaterialDeUnaSeccion(item.nombreSeccion, nombreCurso);
+                        item.listaMateriales = accesoDatos.obtenerMaterialesDeUnaSeccionParaEstudiante(nombreCurso, item.nombreSeccion, miembroEnSesion.email);
                     }
+
+                    ViewData["cantidadMaterialVisto"] = accesoDatos.obtenerCantidadMaterialVistoPorEstudiante(nombreCurso, miembroEnSesion.email);
+
+                    ViewData["cantidadMaterialTotal"] = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreCurso, miembroEnSesion.email);
+
+             
                     return Page();
+
                 }
                 else
                 {
@@ -52,5 +67,30 @@ namespace PIBasesISGrupo1.Pages.Curso
             }
 
         }
+        public IActionResult OnPostMarcarMaterialVisto(string nombreMaterial , string nombreSeccion, string nombreDeCurso,string emailEstudiante) {
+            
+
+            bool exito= accesoDatos.marcarMaterial(nombreMaterial, nombreSeccion, nombreDeCurso, emailEstudiante);
+
+            int cantidadMaterialVisto = accesoDatos.obtenerCantidadMaterialVistoPorEstudiante(nombreDeCurso, emailEstudiante);
+
+            int cantidadMaterialTotal = accesoDatos.obtenerCantidadMaterialPorEstudiante(nombreDeCurso, emailEstudiante);
+
+            Tuple<int, int> materialTotalYvisto = new Tuple<int, int>(cantidadMaterialTotal, cantidadMaterialVisto);
+
+
+
+            return new JsonResult(materialTotalYvisto);
+        }
+
+
+       
+
+        public void OnPostEmitirCertificado(string nombreDeCurso, string emailEstudiante) {
+
+            accesoDatos.asignarCertificado(nombreDeCurso, emailEstudiante);
+
+        }
+
     }
 }

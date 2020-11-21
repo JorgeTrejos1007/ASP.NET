@@ -88,6 +88,31 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="/Miembros/DesplegarMiembros">Miembros</a>
                             </li>
+                            @if (miembroEnSesion != null)
+                            {
+                            <li class="nav-item submenu dropdown">
+                                <a href="#"
+                                   class="nav-link dropdown-toggle"
+                                   data-toggle="dropdown"
+                                   role="button"
+                                   aria-haspopup="true"
+                                   aria-expanded="false">Certificados</a>
+                                <ul class="dropdown-menu">
+                                    @if (filtros.verificarRol(miembroEnSesion.email, "Coordinador"))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Certificado/AprobarCertificado">Aprobar</a>
+                                        </li>
+                                    }
+                                    @if (estudianteEnSesion != null || miembroEnSesion != null)
+                                    {
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="/Certificado/MisCertificados">Mis Certificados</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </li>
+                            }
                             <li class="nav-item submenu dropdown">
                                 <a href="#" id="cursos"
                                    class="nav-link dropdown-toggle"
@@ -106,7 +131,7 @@
                                                 <a class="nav-link" href="/Curso/ProponerCurso">Proponer</a>
                                             </li>
 
-                                            if (filtros.verificarRol(miembroEnSesion.email, "Miembro de Nucleo"))
+                                            if (filtros.verificarRol(miembroEnSesion.email, "Miembro de Nucleo","Coordinador"))
                                             {
                                                 <li class="nav-item">
                                                     <a class="nav-link" href="/Curso/AprobarCurso">Aprobar</a>
@@ -156,7 +181,7 @@
                                         <a class="nav-link" href="/Catalogos/EditarCatalogo">Catalago</a>
                                     </li>
 
-                                    if (filtros.verificarRol(miembroEnSesion.email, "Miembro de Nucleo"))
+                                    if (filtros.verificarRol(miembroEnSesion.email, "Miembro de Nucleo","Coordinador"))
                                     {
                                         <li class="nav-item">
                                             <a class="nav-link" href="/Encuestas/PaginaInicioEncuesta">Encuestas</a>

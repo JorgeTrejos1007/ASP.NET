@@ -1,0 +1,52 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Miembros.RegistrarFirmaModel
+@{
+    ViewData["Title"] = "RegistrarFirma";
+}
+
+
+<style type="text/css">
+
+    body {
+        background-image: url("/img/registro/jeshoots-com-pUAM5hPaCRI-unsplash.jpg");
+        background-size: 100%;
+    }
+
+    .center-login {
+        margin: 0;
+        margin-left: 30%;
+    }
+
+    .left-login {
+        text-align: left;
+    }
+</style>
+
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content center">
+        <div class="modal-header">
+            <div class="center-login">
+                <img class="logo-2" src="~/img/logo.png" alt="" />
+            </div>
+        </div>
+        <div class="modal-body">
+            <h1 class="modal-title">Registrar Firma</h1>
+            <form class="form_area"
+                  id="myForm"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                </br>
+                <label for="file-upload" class="subir">
+                    <i class="fas fa-cloud-upload-alt"></i> Para poder crear el curso, se le solicita que por favor suba su firma, en formato png o jpg.
+                </label>
+                <input asp-for="@Model.firma" type="file" class="btn btn alert-info" /></br></br>
+
+                <div class="center-login">
+                    <button class="primary-btn" asp-page-handler="AgregarFirma">Añadir firma</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

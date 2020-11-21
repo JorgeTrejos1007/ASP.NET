@@ -134,7 +134,7 @@ namespace PIBasesISGrupo1.Handler
         {
             List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>> cursos = new List<Tuple<Cursos, Miembro, List<Tuple<string, string>>>>();
             string consultaCategorias = "SELECT C.nombrePK AS nombreCurso,C.estado AS estado,C.precio AS precio," +
-                " C.emailEducadorFK AS emailEducador,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
+                " C.emailEducadorFK AS emailEducador,C.version AS version ,C.tipoDocumentoInformativo AS tipoDocumento,C.documentoInformativo AS documento,E.nombre AS nombreEducador,E.primerApellido AS primerApellido,E.segundoApellido AS segundoApellido " +
             "FROM Curso C JOIN Usuario E ON C.emailEducadorFK = E.emailPK " + "WHERE estado='Creado'";
             string consultaTopicos = "SELECT c.nombreCursoFK AS nombreCurso,T.nombreTopicoPK AS topico,Cat.nombreCategoriaPK AS category" +
             " FROM Curso Cu Join  Contiene C ON Cu.nombrePK = C.nombreCursoFK" +
@@ -154,7 +154,8 @@ namespace PIBasesISGrupo1.Handler
                     precio = Convert.ToDouble(columna["precio"]),
                     emailDelEducador = Convert.ToString(columna["emailEducador"]),
                     byteArrayDocument = (byte[])columna["documento"],
-                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"])
+                    tipoDocInformativo = Convert.ToString(columna["tipoDocumento"]),
+                    version= (int)columna["version"]
                 };
                 catalogo = new List<Tuple<string, string>>();
                 foreach (DataRow columnaTopicos in tableTopicos.Rows)
@@ -342,6 +343,7 @@ namespace PIBasesISGrupo1.Handler
         {
             List<MaterialModel> materiales = new List<MaterialModel>();
             string consulta = "SELECT * FROM Material WHERE nombreSeccionFK = @nombreSeccion AND nombreCursoFK = @nombreCurso";
+
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
@@ -357,13 +359,53 @@ namespace PIBasesISGrupo1.Handler
                     nombreDeSeccion = Convert.ToString(columna["nombreSeccionFK"]),
                     nombreMaterial = Convert.ToString(columna["nombreMaterialPK"]),
                     tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
+                    
                 });
 
             }
             return materiales;
         }
 
-        public List<string> obtenerMisCursosDisponibles(string emailDelUsuario)        {            List<string> cursos = new List<string>();            string consulta = "SELECT nombreCursoFK FROM Inscribirse WHERE emailEstudianteFK=@emailDelUsuario;";            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);            comandoParaConsulta.Parameters.AddWithValue("@emailDelUsuario", emailDelUsuario);            cursos = baseDeDatos.obtenerDatosDeColumna(comandoParaConsulta, "nombreCursoFK");            return cursos;        }
+        public List<MaterialModel> obtenerMaterialesDeUnaSeccionParaEstudiante( string nombreCurso, string nombreSeccion, string email)
+        {
+            List<MaterialModel> materiales = new List<MaterialModel>();
+            string consulta = "SELECT M.nombreMaterialPK, M.nombreSeccionFK, M.nombreCursoFK, M.material, M.tipoArchivo, HC.visto "+
+                               " FROM Material M JOIN HaCubierto HC "+
+                               " ON M.nombreCursoFK= HC.nombreCursoFK AND M.nombreSeccionFK = HC.nombreSeccionFK AND M.nombreMaterialPK = HC.nombreMaterialFK "+
+                               " WHERE HC.emailEstudianteFK=@email AND HC.nombreCursoFK = @nombreCurso AND HC.nombreSeccionFK= @nombreSeccion";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
+
+            DataTable tablaResultado = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                materiales.Add(
+                new MaterialModel
+                {
+                    archivo = (byte[])columna["material"],
+                    nombreDeCurso = Convert.ToString(columna["nombreCursoFK"]),
+                    nombreDeSeccion = Convert.ToString(columna["nombreSeccionFK"]),
+                    nombreMaterial = Convert.ToString(columna["nombreMaterialPK"]),
+                    tipoArchivo = Convert.ToString(columna["tipoArchivo"]),
+                    visto=Convert.ToInt32(columna["visto"])
+                });
+
+            }
+            return materiales;
+        }
+
+        public List<Tuple<string, int>> obtenerMisCursos(string emailDelEstudiante)        {                        List <Tuple<string, int>> misCursos = obtenerMisCursosMatriculados(emailDelEstudiante);
+            List<Tuple<string, int>> cursosAprobados = obtenerCursosAprobados(emailDelEstudiante);
+
+            misCursos.AddRange(cursosAprobados);
+
+
+            
+
+            return misCursos;        }
 
         public bool borrarMaterial(MaterialModel material)
         {
@@ -546,6 +588,72 @@ namespace PIBasesISGrupo1.Handler
             return exito;
 
         }
+
+        public bool marcarMaterial(string nombreMaterial, string nombreSeccion, string nombreCurso, string email) {
+            SqlCommand consultaParaMarcarMaterial = baseDeDatos.crearComandoParaConsulta("SP_Marcar_Material");
+            consultaParaMarcarMaterial.CommandType = CommandType.StoredProcedure;
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@emailEstudiante", email);
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@nombreSeccion", nombreSeccion);
+            consultaParaMarcarMaterial.Parameters.AddWithValue("@nombreMaterial", nombreMaterial);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(consultaParaMarcarMaterial);
+            return exito;
+        }
+
+        public int obtenerCantidadMaterialVistoPorEstudiante(string nombreDeCurso , string emailEstudiante) {
+            string consulta = "SELECT COUNT(1) as Cantidad FROM HaCubierto WHERE emailEstudianteFK=@emailEstudiante " +
+                "AND nombreCursoFK=@nombreCurso AND visto=1 ";
+            SqlCommand consultaParaObtenerCantidadMaterialVistol = baseDeDatos.crearComandoParaConsulta(consulta);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@nombreCurso", nombreDeCurso);
+
+            int cantidad = baseDeDatos.obtenerCantidadDeElementos(consultaParaObtenerCantidadMaterialVistol);
+
+
+            return cantidad;
+        }
+
+        public int obtenerCantidadMaterialPorEstudiante(string nombreDeCurso, string emailEstudiante)
+        {
+            string consulta = "SELECT COUNT(1) FROM HaCubierto WHERE emailEstudianteFK=@emailEstudiante " +
+                "AND nombreCursoFK=@nombreCurso ";
+            SqlCommand consultaParaObtenerCantidadMaterialVistol = baseDeDatos.crearComandoParaConsulta(consulta);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            consultaParaObtenerCantidadMaterialVistol.Parameters.AddWithValue("@nombreCurso", nombreDeCurso);
+    
+            int cantidad = baseDeDatos.obtenerCantidadDeElementos(consultaParaObtenerCantidadMaterialVistol);
+
+            return cantidad;
+        }
+
+        public bool asignarCertificado(string nombreCurso, string emailEstudiante)
+        {
+            SqlCommand consultaParaAsignarCertificado = baseDeDatos.crearComandoParaConsulta("SP_Actualizar_Estudiante_En_Tabla_Certificado");
+            consultaParaAsignarCertificado.CommandType = CommandType.StoredProcedure;
+            consultaParaAsignarCertificado.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            consultaParaAsignarCertificado.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(consultaParaAsignarCertificado);
+            return exito;
+        }
+
+        public List<Tuple<string, int>> obtenerCursosAprobados(string emailEstudiante)
+        {
+            List<Tuple<string, int>> cursosAprobados = new List<Tuple<string, int>>();
+            string consulta = "SELECT nombreCursoFK, version FROM Certificado WHERE emailEstudianteFK=@emailDelEstudiante;";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailDelEstudiante", emailEstudiante);
+            DataTable tablaCursosAprobados = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            foreach (DataRow columnaCursosAprobados in tablaCursosAprobados.Rows)
+            {
+                cursosAprobados.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["version"])));
+
+            }
+            return cursosAprobados;
+
+            
+        }
+
+
 
     }
 }
