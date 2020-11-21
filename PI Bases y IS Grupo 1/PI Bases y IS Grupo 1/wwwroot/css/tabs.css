@@ -16,8 +16,8 @@
 
 ul.tabs {
     width: 100%;
-    background: #6d90b3;
-    color: #002347;
+    background: #002347;
+    color: #fdc632;
     list-style: none;
     display: flex;
 }
@@ -27,7 +27,7 @@ ul.tabs {
     }
 
         ul.tabs li a {
-            color: #fff;
+            color: #fdc632;
             text-decoration: none;
             font-size: 16px;
             text-align: center;
@@ -36,8 +36,8 @@ ul.tabs {
         }
 
 .active {
-    background: #002347;
-    color: white;
+    background: #013364;
+    color: #fdc632;
 }
 
 ul.tabs li a .tab-text {

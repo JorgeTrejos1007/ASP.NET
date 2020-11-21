@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace PIBasesISGrupo1.Pages.Eventos
 {
-    public class RegistrarmeEnEventoModel : PageModel
+    public class RegistrarmeEnEventoPresencialNumeradoModel : PageModel
     {
         public void OnGet()
         {

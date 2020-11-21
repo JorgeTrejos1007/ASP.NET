@@ -1,0 +1,66 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.RegistrarmeEnEventoPresencialNumeradoModel
+@{
+    ViewData["Title"] = "RegistrarmeEnEventoPresencialNumerado";
+}
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
+    <style type="text/css">
+
+        body {
+            background-image: url("~/img/event/evento3.jpg");
+            background-size: 100%;
+        }
+
+        ul.tabs li {
+            width: 33%;
+        }
+    </style>
+</head>
+<body>
+    <div class="cursos-container-2">
+        <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;">
+            <div class="col-lg-12 right-contents">
+                <div style="background-color:#002347; height:70px;">
+                    <h2 class="title_color align-content-lg-center centrar" style="color:#fdc632; padding:1%;">Los tacacos en concierto</h2>
+                </div>
+                <hr class="new5">
+                <ul>
+                    <li>
+                        <a class="justify-content-between d-flex">
+                            <p>Lugar</p>
+                            <span class="or">Centro de Eventos pedregal</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="justify-content-between d-flex">
+                            <p>Hora </p>
+                            <span>17:00</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <ul class="tabs">
+            <li><a href="#tab1"><span class="tab-text "> 1. Cantidad de asientos </span></a></li>
+            <li><a href="#tab2"><span class="tab-text "> 2. Elija sus asientos </span></a></li>
+            <li><a href="#tab3"><span class="tab-text "> 3. Confirme registro </span></a></li>
+        </ul>
+        <div class="secciones">
+            <article id="tab1">
+            </article>
+            <article id="tab2"></article>
+            <article id="tab3"></article>
+        </div>
+    </div>
+    <script src="~/js/tabs.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
+</body>
