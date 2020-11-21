@@ -49,6 +49,39 @@ namespace PIBasesISGrupo1.Handler
             }
             return listaDeCertificados;
         }
+        public List<Certificado> obtenerCertificados (string emailEstudiante)
+        {
+            List<Certificado> listaDeCertificados = new List<Certificado>();
+            string consulta = "SELECT C.fechaEmitido AS 'fecha',C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'" +
+             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante', Ed.Firma as 'firmaEducador', Coord.Firma as 'firmaCoordinador'" +
+             "FROM Certificado C " +
+             "JOIN Curso Cur ON C.nombreCursoFK = Cur.nombrePK " +
+             "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
+             "JOIN Usuario E ON Cur.emailEducadorFK = E.emailPK " +
+             "JOIN Educador Ed ON Ed.emailEducadorFK = Cur.emailEducadorFK " +
+             "JOIN Coordinador Coord ON C.emailCoordinadorFK = Coord.emailCoordinadorFK " +
+             "WHERE C.estado = 'Aprobado' AND emailEstudianteFK = @email; ";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@email", emailEstudiante);
+            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
+            Certificado certificadoTemporal;
+            foreach (DataRow columna in tablaCurso.Rows)
+            {
+                certificadoTemporal = new Certificado
+                {
+                    emailEstudiante = Convert.ToString(columna["emailEstudiante"]),
+                    nombreCurso = Convert.ToString(columna["nombreCurso"]),
+                    nombreEducador = Convert.ToString(columna["nombreEducador"]),
+                    nombreEstudiante = Convert.ToString(columna["nombreEstudiante"]),
+                    firmaEducador = Convert.IsDBNull(columna["firmaEducador"]) ? null : (byte[])columna["firmaEducador"],
+                    firmaCoordinador= Convert.IsDBNull(columna["firmaCoordinador"]) ? null : (byte[])columna["firmaCoordinador"],
+                    fecha = Convert.ToString(columna["fecha"])
+
+                };
+                listaDeCertificados.Add(certificadoTemporal);
+            }
+            return listaDeCertificados;
+        }
 
         public List<Certificado> obtenerMisCertificados(string email)
         {

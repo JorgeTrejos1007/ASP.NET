@@ -44,11 +44,11 @@ body {
 /*Certificado*/
 
 .certificado__container {
-    margin: 30px auto;
+    margin: 50px auto;
     width: 700px;
     height: auto;
     background: #618597;
-    border: 3px solid #fff;
+    border: 3px solid #005eff;
     outline: 3px solid #618597;
     -webkit-box-shadow: 0px 9px 22px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 9px 22px 0px rgba(0,0,0,0.75);
@@ -75,8 +75,9 @@ body {
 
 .certificado__ownerName {
     font-size: 25px;
+    font-style: italic;
 }
-
+ 
 .certificado__content-lessMargin {
     margin-top: -15px;
 }
@@ -84,6 +85,7 @@ body {
 .certificado__members {
     display: flex;
     justify-content: center;
+    font-style: oblique;
 }
 
     .certificado__members div {

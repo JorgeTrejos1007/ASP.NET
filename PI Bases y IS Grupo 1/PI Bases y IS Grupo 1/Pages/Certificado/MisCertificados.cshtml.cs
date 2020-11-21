@@ -15,12 +15,14 @@ namespace PIBasesISGrupo1.Pages.Certificado
 {
     public class MisCertificadosModel : PageModel
     {
+        
         public void OnGet()
         {
-             Miembro datosDelEstudiante = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
-             CertificadoHandler accesoAlCertificado = new CertificadoHandler();
-            ViewData["Certificados"] = accesoAlCertificado.obtenerMisCertificados(datosDelEstudiante.email);
-
+            Miembro datosDelEstudiante = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+            CertificadoHandler accesoAlCertificado = new CertificadoHandler();
+            ViewData["Certificados"] = accesoAlCertificado.obtenerCertificados(datosDelEstudiante.email);
+            
         }
+       
     }
 }
