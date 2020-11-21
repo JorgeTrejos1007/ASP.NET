@@ -1,6 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Firefox;
+using System;
+
 namespace UnitTestPIBasesIngeGrupo1.UITesting
 {
     [TestClass]
@@ -12,7 +15,7 @@ namespace UnitTestPIBasesIngeGrupo1.UITesting
         {
             ///Arrange
             ///Crea el driver de Chrome
-            driver = new ChromeDriver();
+            driver = new ChromeDriver(Environment.CurrentDirectory);
             string URL = "https://localhost:44326/";
             ///Pone la pantalla en full screen
             driver.Manage().Window.Maximize();
