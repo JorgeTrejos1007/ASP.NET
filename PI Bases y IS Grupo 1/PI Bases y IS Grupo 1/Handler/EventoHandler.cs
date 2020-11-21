@@ -257,6 +257,314 @@ namespace PIBasesISGrupo1.Handler
             return asientosDisponibles;
         }
 
+        public bool transaccionReservarAsientosNumerados (InformacionDeRegistroEnEvento asientos, string emailComprador)
+        {
+            bool exito = false;
+
+            string consulta = "SET IMPLICIT_TRANSACTIONS ON";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "BEGIN TRAN";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            consulta = crearConsultaDinamicaVerificarAsientosDeseadosEstanDisponibles(asientos);
+
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreDeSector", asientos.nombreSector);
+            comando.Parameters.AddWithValue("@emailCoordinador", asientos.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", asientos.nombreEvento);
+            comando.Parameters.AddWithValue("@fechaYHora", asientos.fechaYHora);
+
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
+            for (int i = 0; i < asientos.asientosDeseados.Count; i++)
+            {
+                comando.Parameters.AddWithValue("@" + parametro + numeroDeParametro.ToString(), asientos.asientosDeseados[i]);
+                numeroDeParametro = numeroDeParametro + 1;
+            }
+
+            conexion.Open();
+            Int32 cantidadDeAsientosDeseadosDisponibles = (Int32)comando.ExecuteScalar();
+            conexion.Close();
+
+            if (cantidadDeAsientosDeseadosDisponibles != asientos.asientosDeseados.Count) {
+                exito = false;
+                consulta = "ROLLBACK";
+                comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+                try
+                {
+                    exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+                }
+                catch
+                {
+                    return exito;
+                }
+            }
+
+            consulta = crearConsultaDinamicaParaReservarAsientosDisponibles(asientos, emailComprador);
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreDeSector", asientos.nombreSector);
+            comando.Parameters.AddWithValue("@emailCoordinador", asientos.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", asientos.nombreEvento);
+            comando.Parameters.AddWithValue("@fechaYHora", asientos.fechaYHora);
+
+            parametro = "parametro";
+            numeroDeParametro = 1;
+            for (int i = 0; i < asientos.asientosDeseados.Count; i++)
+            {
+                comando.Parameters.AddWithValue("@" + parametro + numeroDeParametro.ToString(), asientos.asientosDeseados[i]);
+                numeroDeParametro = numeroDeParametro + 1;
+            }
+
+            exito = false;
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "COMMIT TRAN";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "SET IMPLICIT_TRANSACTIONS OFF";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            return exito;
+        }
+
+        public string crearConsultaDinamicaParaReservarAsientosDisponibles(InformacionDeRegistroEnEvento asientos, string emailComprador)
+        {
+            string consulta = "UPDATE AsientoNumerado SET estado = 'Reservado', emailCompradorFK = " + emailComprador +
+                              "WHERE(nombreDeSectorFK = @nombreDeSector AND emailCoordinadorFK = @emailCoordinador " +
+                              "AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora) " +
+                              "AND( ";
+
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
+
+            for (int iterador = 0; iterador < asientos.asientosDeseados.Count; iterador++)
+            {
+                if (iterador < asientos.asientosDeseados.Count - 1)
+                {
+                    consulta += "numero = @" + parametro + numeroDeParametro.ToString() + " OR ";
+                    numeroDeParametro = numeroDeParametro + 1;
+                }
+                else
+                {
+                    consulta += "numero = @" + parametro + numeroDeParametro.ToString() + " )";
+                }
+            }
+
+            return consulta;
+        }
+
+        public string crearConsultaDinamicaVerificarAsientosDeseadosEstanDisponibles(InformacionDeRegistroEnEvento asientos) {
+            string consulta = "SELECT COUNT(numero) FROM AsientoNumerado WHERE(nombreDeSectorFK = @nombreDeSector AND emailCoordinadorFK = @emailCoordinador " +
+                              "AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND estado = 'No reservado') " +
+                              "AND( ";
+
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
+
+            for (int iterador = 0; iterador < asientos.asientosDeseados.Count; iterador++) {
+                if (iterador < asientos.asientosDeseados.Count-1)
+                {
+                    consulta += "numero = @" + parametro + numeroDeParametro.ToString() + " OR ";
+                    numeroDeParametro = numeroDeParametro + 1;
+                }
+                else
+                {
+                    consulta += "numero = @" + parametro + numeroDeParametro.ToString() + " )";
+                }
+            }
+
+            return consulta;
+        }
+
+        /*public bool transaccionReservarAsientosNoNumerados(InformacionDeRegistroEnEvento asientos, string emailComprador)
+        {
+            bool exito = false;
+
+            string consulta = "SET IMPLICIT_TRANSACTIONS ON";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "BEGIN TRAN";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            consulta = crearConsultaDinamicaVerificarAsientosDeseadosEstanDisponibles(asientos);
+
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreDeSector", asientos.nombreSector);
+            comando.Parameters.AddWithValue("@emailCoordinador", asientos.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", asientos.nombreEvento);
+            comando.Parameters.AddWithValue("@fechaYHora", asientos.fechaYHora);
+
+            string parametro = "parametro";
+            int numeroDeParametro = 1;
+            for (int i = 0; i < asientos.asientosDeseados.Count; i++)
+            {
+                comando.Parameters.AddWithValue("@" + parametro + numeroDeParametro.ToString(), asientos.asientosDeseados[i]);
+                numeroDeParametro = numeroDeParametro + 1;
+            }
+
+            conexion.Open();
+            Int32 cantidadDeAsientosDeseadosDisponibles = (Int32)comando.ExecuteScalar();
+            conexion.Close();
+
+            if (cantidadDeAsientosDeseadosDisponibles != asientos.asientosDeseados.Count)
+            {
+                exito = false;
+                consulta = "ROLLBACK";
+                comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+                try
+                {
+                    exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+                }
+                catch
+                {
+                    return exito;
+                }
+            }
+
+            consulta = crearConsultaDinamicaParaReservarAsientosDisponibles(asientos, emailComprador);
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreDeSector", asientos.nombreSector);
+            comando.Parameters.AddWithValue("@emailCoordinador", asientos.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", asientos.nombreEvento);
+            comando.Parameters.AddWithValue("@fechaYHora", asientos.fechaYHora);
+
+            parametro = "parametro";
+            numeroDeParametro = 1;
+            for (int i = 0; i < asientos.asientosDeseados.Count; i++)
+            {
+                comando.Parameters.AddWithValue("@" + parametro + numeroDeParametro.ToString(), asientos.asientosDeseados[i]);
+                numeroDeParametro = numeroDeParametro + 1;
+            }
+
+            exito = false;
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "COMMIT TRAN";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            exito = false;
+            consulta = "SET IMPLICIT_TRANSACTIONS OFF";
+            comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            try
+            {
+                exito = baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
+            }
+            catch
+            {
+                return exito;
+            }
+
+            return exito;
+        }*/
+
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
