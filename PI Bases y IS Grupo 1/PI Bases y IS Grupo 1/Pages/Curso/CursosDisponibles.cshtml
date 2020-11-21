@@ -5,10 +5,10 @@
     var listaDeCursos = (List<Tuple<PIBasesISGrupo1.Models.Cursos, PIBasesISGrupo1.Models.Miembro, List<Tuple<string, string>>>>)ViewData["CursosDisponibles"];
     var usuarioEnSesion = true;
     var miEmail = (string)ViewData["miEmail"];
-    var cursosMatriculados = (List<string>)ViewData["cursosMatriculados"];
+    var misCursos = (List<Tuple<string, int>>)ViewData["misCursos"];
    
 
-    if (cursosMatriculados == null)
+    if (misCursos == null)
     {
         usuarioEnSesion = false;
     }
@@ -62,7 +62,9 @@
                 var curso = infoCursos.Item1;
                 var educador = infoCursos.Item2;
 
-                if (curso.emailDelEducador == miEmail || (usuarioEnSesion && cursosMatriculados.Contains(curso.nombre) == true))
+                var nombreYversionCurso = new Tuple<string, int>(curso.nombre, curso.version);
+
+                if (curso.emailDelEducador == miEmail || (usuarioEnSesion && misCursos.Contains(nombreYversionCurso) == true))
                 {
 
                     mostrar = false;
@@ -76,6 +78,15 @@
                             <h4 class="title_color align-content-lg-center centrar">@curso.nombre</h4>
                             <hr class="new5">
                             <ul>
+                                <li>
+                                    <a class="justify-content-between d-flex" href="#">
+                                        <p>Version</p>
+                                        <span class="or">@curso.version</span>
+
+                                    </a>
+                                </li>
+
+
                                 <li>
                                     <a class="justify-content-between d-flex" href="#">
                                         <p>Educador</p>
@@ -103,13 +114,13 @@
                                         @{
                                             var topicos = "";
 
-                                            @foreach (var infoTopicos in infoCursos.Item3)
-                                            {
-                                                topicos = topicos + " " + infoTopicos.Item1;
+                    @foreach (var infoTopicos in infoCursos.Item3)
+                    {
+                        topicos = topicos + " " + infoTopicos.Item1;
 
 
-                                            }
-                                        }
+                    }
+                }
                                         <span class="or"> @topicos </span>
                                     </a>
                                 </li>

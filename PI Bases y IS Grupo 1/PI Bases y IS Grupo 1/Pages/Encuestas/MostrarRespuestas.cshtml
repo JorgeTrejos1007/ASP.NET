@@ -6,22 +6,22 @@
     var listaConteoRespuestasPorPregunta = (List<int>)ViewData["listaConteoRespuestasPorPregunta"];
 }
 <script>
-    function animacionResultados(cantidadRespuestasPorPregunta, cantidadRespuestasDeLaOpcion, nombreOpcion) {
+    function animacionResultados(cantidadMaterialTotal, cantidadMaterialVisto, nombreOpcion) {
         var elem = document.getElementById(nombreOpcion);
         var width = 1;
         var id = setInterval(frame, 1);
         function frame() {
-            if (width >= (cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) {
+            if (width >= (cantidadMaterialVisto / cantidadMaterialTotal) * 100) {
                 clearInterval(id);
             } else {
                 width++;
                 elem.style.width = width + "%";
-                elem.innerHTML = parseInt((cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) + "% (" + cantidadRespuestasDeLaOpcion + ")";
+                elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
             }
         }
-        if (cantidadRespuestasDeLaOpcion == 0) {
+        if (cantidadMaterialVisto == 0) {
             elem.style.background = "#777777";
-            elem.innerHTML = parseInt((cantidadRespuestasDeLaOpcion / cantidadRespuestasPorPregunta) * 100) + "% (" + cantidadRespuestasDeLaOpcion + ")";
+            elem.innerHTML = parseInt((cantidadMaterialVisto / cantidadMaterialTotal) * 100) + "% (" + cantidadMaterialVisto + ")";
         }
     }
 </script>

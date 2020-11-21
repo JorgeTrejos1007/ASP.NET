@@ -9,7 +9,7 @@
 @if (showBanner)
 {
     <div id="cookieConsent" class="alert alert-info alert-dismissible fade show" role="alert">
-        Use this space to summarize your privacy and cookie use policy. 
+        Use this space to summarize your privacy and cookie use policy.
         <button type="button" id="botonCookies" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
             <span aria-hidden="true">Accept</span>
         </button>
@@ -17,14 +17,14 @@
     <script>
         (function () {
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
- 
-                document.cookie = button.dataset.cookieString;
-                
-                document.getElementById("botonCookies").hidden = true;
-                document.getElementById("cookieConsent").hidden = true;
-                
 
-        
+            document.cookie = button.dataset.cookieString;
+
+            document.getElementById("botonCookies").hidden = true;
+            document.getElementById("cookieConsent").hidden = true;
+
+
+
         })();
     </script>
 }
