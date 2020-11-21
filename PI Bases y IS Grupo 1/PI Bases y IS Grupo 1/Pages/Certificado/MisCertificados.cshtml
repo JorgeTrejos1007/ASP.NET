@@ -4,10 +4,6 @@
     ViewData["Title"] = "Mis Certificado";
     var email = (string)ViewData["email"];
     var certificados = (List<PIBasesISGrupo1.Models.Certificados>)ViewData["Certificados"];
-    var firmaCoordinador = "s";
-    var firmaEducador = "s";
-
-
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
@@ -25,45 +21,44 @@
         }
     </style>
 </head>
- 
-    <table class="table certificado__table">
-        <thead>
+
+<table class="table certificado__table">
+    <thead>
+        <tr>
+            <th>
+                <h3>Curso</h3>
+            </th>
+
+            <th>
+                <h3>Version</h3>
+            </th>
+            <th>
+                <h3>Educador</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        @foreach (var certificado in certificados)
+        {
+
             <tr>
-                <th>
-                    <h3>Curso</h3>
-                </th>
+                <td>
+                    <p>@certificado.nombreCurso</p>
+                </td>
+                <td>
+                    <p>@certificado.version</p>
+                </td>
+                <td>
+                    <p>@certificado.nombreEducador</p>
+                </td>
+                <td>
 
-                <th>
-                    <h3>Version</h3>
-                </th>
-                <th>
-                    <h3>Educador</h3>
-                </th>
-                <th></th>
+                    <form method="post" asp-for asp-route-fecha="@certificado.fecha" asp-route-emailCoordinador="@certificado.emailCoordinador" asp-route-emailEducador="@certificado.emailEducador" asp-route-nombreEstudiante="@certificado.nombreEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-nombreEducador="@certificado.nombreEducador">
+                        <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">Ver Certificado</button>
+                    </form>
+                </td>
             </tr>
-        </thead>
-        <tbody style="text-align:center;">
-            @foreach (var certificado in certificados)
-            {
-
-                <tr>
-                    <td>
-                        <p>@certificado.nombreCurso</p>
-                    </td>
-                    <td>
-                        <p>@certificado.version</p>
-                    </td>
-                    <td>
-                        <p>@certificado.nombreEducador</p>
-                    </td>
-                    <td>
-                         
-                        <form method="post" asp-for  asp-route-fecha="@certificado.fecha" asp-route-emailCoordinador ="@certificado.emailCoordinador" asp-route-emailEducador ="@certificado.emailEducador" asp-route-nombreEstudiante="@certificado.nombreEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-nombreEducador ="@certificado.nombreEducador">
-                             <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">Ver Certificado</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-    }
+        }
+    </tbody>
+</table>
