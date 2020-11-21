@@ -21,5 +21,7 @@ namespace PIBasesISGrupo1.Models
         [Display(Name = "Ingrese la cantidad de asientos")]
         [RegularExpression(@"^[1-9][0-9]*$", ErrorMessage = "Por favor ingrese solo numeros")]
         public int cantidadAsientos { get; set; }
+
+        List<int> asientosDisponibles { get; set; } = new List<int>();
     }
 }

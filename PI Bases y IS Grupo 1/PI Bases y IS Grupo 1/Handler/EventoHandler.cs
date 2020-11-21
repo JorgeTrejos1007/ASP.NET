@@ -170,6 +170,7 @@ namespace PIBasesISGrupo1.Handler
                 evento.lugar = Convert.ToString(columna["nombreCanal"]);
                 evento.tipo = "Virtual";
             }
+
             return evento;
         }
 
@@ -200,6 +201,60 @@ namespace PIBasesISGrupo1.Handler
                 evento.tipo = "Presencial";
             }
             return evento;
+        }
+
+        public List<Sector> obtenerSectoresEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            List<Sector> listaSectores = new List<Sector>();
+
+            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                listaSectores.Add(
+                new Sector
+                {
+                    nombreDeSector = Convert.ToString(columna["nombreDeSectorPK"]),
+                    tipo = Convert.ToString(columna["tipo"]),
+                    cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"])
+                });
+            }
+
+            return listaSectores;
+        }
+
+        public List<int> cantidadAsientosDisponiblesEnSector(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
+        {
+            List<int> asientosDisponibles = new List<int> ();
+
+            string consulta = "SELECT numero FROM AsientoNumerado " +
+                              "WHERE estado = 'No reservado' AND nombreDeSectorFK = @nombreSector AND emailCoordinadorFK = @email " +
+                              "AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSector", nombreSector);
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                asientosDisponibles.Add(Convert.ToInt32(columna["numero"]));
+            }
+
+            return asientosDisponibles;
         }
 
         private byte[] obtenerBytes(IFormFile archivo)
