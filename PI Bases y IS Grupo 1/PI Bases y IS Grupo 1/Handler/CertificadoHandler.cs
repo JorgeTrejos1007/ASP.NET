@@ -29,7 +29,7 @@ namespace PIBasesISGrupo1.Handler
              "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
              "JOIN Usuario E ON Cur.emailEducadorFK = E.emailPK " +
              "JOIN Educador Ed ON Ed.emailEducadorFK = Cur.emailEducadorFK " +
-             "WHERE C.estado = 'No Aprobado'; ";
+             "WHERE C.estado = 'Completado'; ";
             SqlCommand comando= baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
             Certificado certificadoTemporal;
