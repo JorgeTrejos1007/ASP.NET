@@ -11,15 +11,16 @@
     </script>
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
     </script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Abhaya+Libre:wght@400;800&family=Source+Serif+Pro:ital,wght@0,400;0,900;1,400&display=swap" rel="stylesheet">
     <style>
+        .certificado__container {
+            font-family: 'Abhaya Libre', serif;
+        }
 
         .certifica {
             text-align: center;
         }
-        #subtitulo {
-            font-family: Chancery L;
-        }
- 
     </style>
 </head>
 
@@ -29,15 +30,24 @@
 <div class="certificado__container" id="certificado">
      
     <div class="certificado__elements">
+        <br />
         <img class="logo-2" src="/img/logo.png" alt="">
         <br />
-        <p id="subtitulo" class="certificado__content">Este certificado se otorga a</p>
-        <p id="subtitulo" class="certificado__ownerName"><strong>@certificado.nombreEstudiante</strong></p>
-        <p class="certificado__content">Por completar con exito el curso de</p>
-        <p class="certificado__content certificado__content-lessMargin">@certificado.nombreCurso</p>
-        <p class="certificado__content">Impartido por: @certificado.nombreEducador</p>
-        <p class="certificado__content">
-            Fecha de Emision @certificado.fecha.Substring(0, 2)-@certificado.fecha.Substring(3, 2)-@certificado.fecha.Substring(6, 4)
+        <br />
+        <p class="certificado__content-title">Certificado de Finalización</p>
+        <br />
+        <div style="display:inline-block">
+            <p class="certificado__ownerName">@certificado.nombreEstudiante</p>
+            <p class="certificado__members__line" style="margin-bottom:15px;"></p>
+        </div>
+        <p class="certificado__content">A completado con exito el curso de</p>
+        <br />
+        <p class="certificado__content-courseName">@certificado.nombreCurso</p>
+        <p class="certificado__content">Impartido por:</p>
+        <p class="certificado__content-teacher">@certificado.nombreEducador</p>
+        <p class="certificado__content">En la fecha:</p>
+        <p class="certificado__content-date">
+            @certificado.fecha.Substring(0, 2)-@certificado.fecha.Substring(3, 2)-@certificado.fecha.Substring(6, 4)
         </p>
         <div class="certificado__members">
             <div>
@@ -53,12 +63,9 @@
             </div>
         </div>
         <br />
-        <br />
-        <br />
     </div>
 </div>
-     
-            <button type="submit" onclick="html2canvas" class="primary-btn2 text-uppercase enroll rounded-0" href="#"  style="position:relative;left:0%;bottom:130px">Firmar</button>
+            <button type="submit" onclick="html2canvas" class="primary-btn2 text-uppercase enroll rounded-0" href="#" style="margin-left:45%">Firmar</button>
          
     
     <script>

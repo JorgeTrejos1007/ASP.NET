@@ -45,7 +45,7 @@ body {
 
 .certificado__container {
     margin: 50px auto;
-    width: 700px;
+    width: 1000px;
     height: auto;
     background: #618597;
     border: 3px solid #005eff;
@@ -68,24 +68,37 @@ body {
     margin-top: 20px;
     font-size: 23px;
 }
+.certificado__content-title {
+    font-size: 50px;
+    font-style:italic;
+}
 
 .certificado__content {
-    font-size: 15px;
+    font-size: 20px;
+}
+.certificado__content-teacher {
+    font-size: 30px;
+    font-family: 'Source Serif Pro', serif;
 }
 
 .certificado__ownerName {
-    font-size: 25px;
-    font-style: italic;
+    font-size: 35px;
+    font-family: 'Source Serif Pro', serif;
 }
- 
-.certificado__content-lessMargin {
+
+.certificado__content-courseName {
     margin-top: -15px;
+    font-size: 30px;
+    font-family: 'Source Serif Pro', serif;
+}
+.certificado__content-date {
+    font-size: 25px;
+    font-family: 'Source Serif Pro', serif;
 }
 
 .certificado__members {
     display: flex;
     justify-content: center;
-    font-style: oblique;
 }
 
     .certificado__members div {
@@ -99,7 +112,8 @@ body {
 }
 
 .certificado__members__information {
-    font-size: 15px;
+    font-size: 20px;
+    font-style:italic;
 }
 
 
