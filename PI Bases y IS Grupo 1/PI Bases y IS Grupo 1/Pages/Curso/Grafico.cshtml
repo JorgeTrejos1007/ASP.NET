@@ -150,29 +150,33 @@
     </style>
 </head>
 <body>
+    <br>
+    <h2>Estadísticas de la Comunidad</h2>
 
     <div style="margin-left:70px; margin-right: 70px;">
-        <form method="post" id="formCursos" enctype="multipart/form-data">
-            <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
-            <select style="width: 390px;" class="mul-select" asp-for="@Model.cursosAFiltrar" multiple size="@cursosDisponibles.Count" required>
-                @foreach (var curso in cursosDisponibles)
-                {
+        <div style="margin-left:30%; margin-bottom: 30px; margin-top:30px;">
+            <form method="post" id="formCursos" enctype="multipart/form-data">
+                <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
+                <select style="width: 390px;" class="mul-select" asp-for="@Model.cursosAFiltrar" multiple size="@cursosDisponibles.Count" required>
+                    @foreach (var curso in cursosDisponibles)
+                    {
 
-                    <option value="@curso">@curso</option>
+                        <option value="@curso">@curso</option>
 
-                    <br>
-                }
-            </select>
+                        <br>
+                    }
+                </select>
 
-            <input type="submit" value="Filtrar" class="primary-btn2 text-uppercase enroll rounded-0" aps-page-handler="OnPost" />
+                <input type="submit" value="Filtrar" class="primary-btn2 text-uppercase enroll rounded-0" aps-page-handler="OnPost" />
 
-        </form>
+            </form>
+        </div>
 
         <div class="row">
             <div class="col-lg-4 col-md-6">
                 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
-                <div id="chartContainer2" style="height: 370px; width: 100%; display: none;"></div>
-                <div id="habilidadesEstudiantes1" style="height: 370px; width: 100%; display: none;"></div>
+                <div id="chartContainer2" style="margin-top:50px;height: 370px; width: 100%; display: none;"></div>
+                <div id="habilidadesEstudiantes1" style="margin-top:50px;height: 370px; width: 100%; display: none;"></div>
 
 
 
@@ -180,21 +184,21 @@
 
             <div class="col-lg-4 col-md-6">
                 <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
-                <div id="distribucionDeHabilidad" style="height: 370px; width: 100%; display: none;"></div>
+                <div id="distribucionDeHabilidad" style="margin-top:50px;height: 370px; width: 100%; display: none;"></div>
 
             </div>
             <div class="col-lg-4 col-md-6">
                 <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
-                <div id="distribucionDePaisPorCurso" style="height: 370px; width: 100%; display: none;"></div>
+                <div id="distribucionDePaisPorCurso" style="margin-top:50px; height: 370px; width: 100%; display: none;"></div>
             </div>
-            <div class="col-lg-4 col-md-6">
-                <div id="graficoIdiomas" style="height: 370px; width: 100%;"></div>
-                <div id="di" style="height: 370px; width: 100%; display: none;"></div>
+            <div class="col-lg-4 col-md-6" style="margin-top:50px;margin-bottom:50px;">
+                <div id="graficoIdiomas" style="margin-bottom:50px;height: 370px; width: 100%;"></div>
+                <div id="di" style="margin-top:50px;margin-bottom:50px; height: 370px; width: 100%; display: none;"></div>
             </div>
-            <div class="col-lg-4 col-md-6">
+            <div class="col-lg-4 col-md-6" style="margin-top:50px;margin-bottom:50px;">
                 <div id="topicos" style="height: 370px; width: 100%;"></div>
             </div>
-            <div class="col-lg-4 col-md-6" style="text-align: center;">
+            <div class="col-lg-4 col-md-6" style="margin-top:50px; margin-bottom:50px;text-align: center;">
                 <div id="numdata" style="display:none; text-align: center;" class="col-lg-4 col-md-6">
 
                     <div id="totalEstudiantes" class="box">
@@ -221,7 +225,7 @@
     </div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-  
+
 </body>
 
 </html>
