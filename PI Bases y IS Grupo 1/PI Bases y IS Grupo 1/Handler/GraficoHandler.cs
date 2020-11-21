@@ -194,7 +194,7 @@ namespace PIBasesISGrupo1.Handler
         {
 
             List<Tuple<string, int>> tipoUsuario = new List<Tuple<string, int>>();
-            string consulta = " SELECT DISTINCT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK" +                             " FROM Rol WHERE emailUsuarioFK IN(SELECT emailPK FROM Usuario WHERE pais=@pais)" +
+            string consulta = " SELECT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK" +                             " FROM Rol WHERE emailUsuarioFK IN(SELECT emailPK FROM Usuario WHERE pais=@pais)" +
                              " GROUP BY rolUsuarioPK";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@pais", pais);
@@ -309,6 +309,19 @@ namespace PIBasesISGrupo1.Handler
 
 
         }
+
+        public int obtenerCantidadDeIdiomas()
+        {
+            string consulta = " SELECT COUNT( DISTINCT idiomaPK) FROM Idiomas";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            int totalDeIdiomas = baseDeDatos.obtenerCantidadDeElementos(comando);
+
+            return totalDeIdiomas;
+
+
+        }
+
+
 
 
     }

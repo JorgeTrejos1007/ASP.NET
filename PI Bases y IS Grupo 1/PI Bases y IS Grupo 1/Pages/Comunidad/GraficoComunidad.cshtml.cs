@@ -15,7 +15,7 @@ namespace PIBasesISGrupo1.Pages.Comunidad
         private GraficoHandler grafico = new GraficoHandler();
         public void OnGet()
         {
-            
+            obtenerCantidadDeIdiomas();
             ObtenerTopCursos();
             ObtenerTiposUsuario();
             obtenerCantidadDeMiembrosPorPais();
@@ -180,6 +180,13 @@ namespace PIBasesISGrupo1.Pages.Comunidad
         {
 
             TempData["CantidadCursosCreados"] = grafico.obtenerCantidadCursosCreados();
+
+        }
+
+        public void obtenerCantidadDeIdiomas()
+        {
+
+            TempData["CantidadIdiomas"] = grafico.obtenerCantidadDeIdiomas();
 
         }
 

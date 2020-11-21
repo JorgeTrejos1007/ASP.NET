@@ -95,7 +95,7 @@
         @Html.AntiForgeryToken()
         <div class="row" style="margin-top:80px;">
             <div id="tipoUsuarios" class="col-lg-4 col-md-6"style="margin-left:5px;"></div>
-            <div id="cantEventos" class="col-lg-4 col-md-6" style="margin-left:50px; margin-right:80px;"></div>
+            <div id="cantEventos" class="col-lg-4 col-md-6" style="margin-left:50px; margin-right:50px;"></div>
             <div style=" flex:0 0 33%;  max-width:250px;">
                 <div id="totalCursosCreados" class="box" >
                     <div class="box__header">
@@ -111,13 +111,13 @@
 
                     </div>
                 </div>
-                <div id="totalCursosCreados" class="box" >
+                <div id="totalIdiomas" class="box" >
                     <div class="box__header">
-                        <h3 class="box__header-title">Cursos Creados</h3>
+                        <h3 class="box__header-title">Total de Idiomas</h3>
                     </div>
                     <div class="box__body">
                         <div class="stats stats--main">
-                            <div class="stats__amount" style="text-align: center;">@TempData["CantidadCursosCreados"]</div>
+                            <div class="stats__amount" style="text-align: center;">@TempData["CantidadIdiomas"]</div>
 
 
                         </div>
@@ -146,9 +146,9 @@
 
 
                 <div id="habilidadesComunidad" style="height: 300px;  width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
-                <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
+                <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;display: none;"></div>
 
-                <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:25%; margin-top:50px;"></div>
+                <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
                 <div id="habilidadesPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
                 <div id="tiposDeUsuarioPorPais" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
 
@@ -174,6 +174,19 @@
         } else {
             document.getElementById("topTopicosCursos").style.display = "none";
             document.getElementById("topCursos").style.display = "none";
+        }
+    });
+
+    document.getElementById("totalIdiomas").addEventListener("click", function () {
+        if (document.getElementById("idiomasComunidad").style.display === "none") {
+
+            document.getElementById("idiomasComunidad").style.display = "block";
+           
+            idiomasComunidad();
+                
+        } else {
+            document.getElementById("idiomasComunidad").style.display = "none";
+            
         }
     });
 
@@ -475,7 +488,7 @@
         chart.render();
 
     }
-    idiomasComunidad();
+    
 
     
     
