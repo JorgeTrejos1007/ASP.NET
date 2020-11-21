@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PIBasesISGrupo1.Models
 {
-    public class Certificado
+    public class Certificados
     {
         public int idCertificado { get; set; }
         public string nombreCurso { get; set; }
@@ -13,6 +13,8 @@ namespace PIBasesISGrupo1.Models
         public string nombreEstudiante { get; set; }
         public byte[] firmaEducador { get; set; }
         public byte[] firmaCoordinador { get; set; }
+        public string emailEducador { get; set; }
+        public string emailCoordinador { get; set; }
         public string imagenCertificado { get; set; }
         public string fecha { get; set; }
         public string emailEstudiante { get; set; }

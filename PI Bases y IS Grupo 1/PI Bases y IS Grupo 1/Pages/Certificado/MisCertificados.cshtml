@@ -3,8 +3,11 @@
 @{
     ViewData["Title"] = "Mis Certificado";
     var email = (string)ViewData["email"];
-    var certificados = (List<PIBasesISGrupo1.Models.Certificado>)ViewData["Certificados"];
-     
+    var certificados = (List<PIBasesISGrupo1.Models.Certificados>)ViewData["Certificados"];
+    var firmaCoordinador = "s";
+    var firmaEducador = "s";
+
+
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
@@ -16,59 +19,51 @@
         .certifica {
             text-align: center;
         }
+
         #subtitulo {
             font-family: Chancery L;
         }
- 
     </style>
 </head>
+ 
+    <table class="table certificado__table">
+        <thead>
+            <tr>
+                <th>
+                    <h3>Curso</h3>
+                </th>
 
-@foreach (var certificado in certificados)
-{
+                <th>
+                    <h3>Version</h3>
+                </th>
+                <th>
+                    <h3>Educador</h3>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody style="text-align:center;">
+            @foreach (var certificado in certificados)
+            {
 
-<div class="certificado__container" id="certificado">
-     
-    <div class="certificado__elements">
-        <img class="logo-2" src="/img/logo.png" alt="">
-        <br />
-        <p id="subtitulo" class="certificado__content">Este certificado se otorga a</p>
-        <p id="subtitulo" class="certificado__ownerName"><strong>@certificado.nombreEstudiante</strong></p>
-        <p class="certificado__content">Por completar con exito el curso de</p>
-        <p class="certificado__content certificado__content-lessMargin">@certificado.nombreCurso</p>
-        <p class="certificado__content">Impartido por: @certificado.nombreEducador</p>
-        <p class="certificado__content">
-            Fecha de Emision @certificado.fecha.Substring(0, 2)-@certificado.fecha.Substring(3, 2)-@certificado.fecha.Substring(6, 4)
-        </p>
-        <div class="certificado__members">
-            <div>
-                <img src="data:image/png;base64,@(Convert.ToBase64String(certificado.firmaCoordinador))" style="width:200px;height:100px" />
-                <p class="certificado__members__line"></p>
-                <p class="certificado__members__information">Firma coordinador</p>
-            </div>
-
-            <div>
-                <img src="data:image/png;base64,@(Convert.ToBase64String(certificado.firmaEducador))" style="width:200px;height:100px" />
-                <p class="certificado__members__line"></p>
-                <p class="certificado__members__information">Firma Educador</p>
-            </div>
-        </div>
-        <br />
-        <br />
-        <br />
-    </div>
-</div>
-     
-            <button type="submit" onclick="html2canvas" class="primary-btn2 text-uppercase enroll rounded-0" href="#"  style="position:relative;left:0%;bottom:130px">Firmar</button>
-         
-    
-    <script>
-
-        html2canvas($('#certificado'), {
-            onrendered: function (canvas) {
-                var dataURL = canvas.toDataURL();
-                document.getElementById("informacionImagen").value = dataURL;
+                <tr>
+                    <td>
+                        <p>@certificado.nombreCurso</p>
+                    </td>
+                    <td>
+                        <p>@certificado.version</p>
+                    </td>
+                    <td>
+                        <p>@certificado.nombreEducador</p>
+                    </td>
+                    <td>
+                         
+                        <form method="post" asp-for  asp-route-fecha="@certificado.fecha" asp-route-emailCoordinador ="@certificado.emailCoordinador" asp-route-emailEducador ="@certificado.emailEducador" asp-route-nombreEstudiante="@certificado.nombreEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-nombreEducador ="@certificado.nombreEducador">
+                             <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">Ver Certificado</button>
+                        </form>
+                    </td>
+                </tr>
             }
-        });
-
-    </script>
-}
+        </tbody>
+    </table>
+    }

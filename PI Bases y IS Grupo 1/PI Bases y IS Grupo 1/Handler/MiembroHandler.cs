@@ -438,7 +438,8 @@ namespace PIBasesISGrupo1.Handler
             byte[] firma = null;
             if ((lectorDeDatos["firma"]) != DBNull.Value) {
                 firma = (byte[])(lectorDeDatos["firma"]);
-            }              
+            }
+            conexion.Close();
             return firma;
         }
         public bool agregarFirmaEducador(string emailEducador, IFormFile firma)
@@ -466,6 +467,7 @@ namespace PIBasesISGrupo1.Handler
             {
                 firma = (byte[])(lectorDeDatos["firma"]);
             }
+            conexion.Close();
             return firma;
         }
         public bool agregarFirmaCoordinador(string emailCoordinador, IFormFile firma)

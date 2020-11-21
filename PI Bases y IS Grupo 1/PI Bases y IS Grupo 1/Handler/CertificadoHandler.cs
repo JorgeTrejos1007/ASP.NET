@@ -20,8 +20,8 @@ namespace PIBasesISGrupo1.Handler
            baseDeDatos = new BaseDeDatosHandler();
         }
 
-        public List<Certificado> obtenerCertificadosNoAprobados(){
-            List<Certificado> listaDeCertificados = new List<Certificado>();
+        public List<Certificados> obtenerCertificadosNoAprobados(){
+            List<Certificados> listaDeCertificados = new List<Certificados>();
             string consulta = "SELECT c.version AS 'version', C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'"+ 
              ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante' "+
              "FROM Certificado C " +
@@ -32,10 +32,10 @@ namespace PIBasesISGrupo1.Handler
              "WHERE C.estado = 'Completado'; ";
             SqlCommand comando= baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
-            Certificado certificadoTemporal;
+            Certificados certificadoTemporal;
             foreach (DataRow columna in tablaCurso.Rows)
             {
-                certificadoTemporal = new Certificado
+                certificadoTemporal = new Certificados
                 {
                     emailEstudiante = Convert.ToString(columna["emailEstudiante"]),
                     nombreCurso = Convert.ToString(columna["nombreCurso"]),
@@ -49,11 +49,12 @@ namespace PIBasesISGrupo1.Handler
             }
             return listaDeCertificados;
         }
-        public List<Certificado> obtenerCertificados (string emailEstudiante)
+
+        public List<Certificados> obtenerMisCertificados(string emailEstudiante)
         {
-            List<Certificado> listaDeCertificados = new List<Certificado>();
+            List<Certificados> listaDeCertificados = new List<Certificados>();
             string consulta = "SELECT C.fechaEmitido AS 'fecha',C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'" +
-             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante', Ed.Firma as 'firmaEducador', Coord.Firma as 'firmaCoordinador'" +
+             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante', Ed.emailEducadorFK as 'firmaEducador', C.emailCoordinadorFK as 'firmaCoordinador', C.version AS 'version' " +
              "FROM Certificado C " +
              "JOIN Curso Cur ON C.nombreCursoFK = Cur.nombrePK " +
              "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
@@ -64,18 +65,19 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@email", emailEstudiante);
             DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
-            Certificado certificadoTemporal;
+            Certificados certificadoTemporal;
             foreach (DataRow columna in tablaCurso.Rows)
             {
-                certificadoTemporal = new Certificado
+                certificadoTemporal = new Certificados
                 {
                     emailEstudiante = Convert.ToString(columna["emailEstudiante"]),
                     nombreCurso = Convert.ToString(columna["nombreCurso"]),
                     nombreEducador = Convert.ToString(columna["nombreEducador"]),
                     nombreEstudiante = Convert.ToString(columna["nombreEstudiante"]),
-                    firmaEducador = Convert.IsDBNull(columna["firmaEducador"]) ? null : (byte[])columna["firmaEducador"],
-                    firmaCoordinador= Convert.IsDBNull(columna["firmaCoordinador"]) ? null : (byte[])columna["firmaCoordinador"],
-                    fecha = Convert.ToString(columna["fecha"])
+                    emailEducador = Convert.ToString(columna["firmaEducador"])  ,
+                    emailCoordinador = Convert.ToString(columna["firmaCoordinador"])  ,
+                    fecha = Convert.ToString(columna["fecha"]),
+                    version = Convert.ToInt32(columna["version"])
 
                 };
                 listaDeCertificados.Add(certificadoTemporal);
@@ -83,29 +85,6 @@ namespace PIBasesISGrupo1.Handler
             return listaDeCertificados;
         }
 
-        public List<Certificado> obtenerMisCertificados(string email)
-        {
-            List<Certificado> listaDeCertificados = new List<Certificado>();
-            string consulta = "SELECT imagenCertificado "+
-                "FROM Certificado " +
-                "WHERE  estado  = 'Aprobado'  AND  emailEstudianteFK= @email; ";
-            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
-            comando.Parameters.AddWithValue("@email", email);
-            DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
-            Certificado certificadoTemporal;
-            foreach (DataRow columna in tablaCurso.Rows)
-            {
-                certificadoTemporal = new Certificado
-                {
-                     
-                    imagenCertificado = Convert.IsDBNull(columna["imagenCertificado"]) ? null : (string)(columna["imagenCertificado"]) 
-                    
-
-                };
-                listaDeCertificados.Add(certificadoTemporal);
-            }
-            return listaDeCertificados;
-        }
         public bool aprobarCertificado(string emailEstudiante, string nombreCurso, string emailCoordinador ,int version) {
             string consulta = "UPDATE Certificado SET estado= 'Aprobado'," +
                 " emailCoordinadorFK = @emailCoordinador,fechaEmitido=GETDATE()" +
