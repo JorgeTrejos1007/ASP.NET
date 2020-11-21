@@ -9,14 +9,16 @@
 
         .box {
             background: linear-gradient(#526494, #604484);
-            margin: 50px 70px;
+           margin-bottom: 20px;
+           margin-top:20px;
             border-radius: 5px;
-            width: 300px;
+            width: 250px;
+            height: 125px;
             text-align: center;
         }
 
         .box__header {
-            padding: 15px 25px;
+            padding: 8px 25px;
             position: relative;
         }
 
@@ -74,61 +76,91 @@
         .stats--main .stats__amount {
             font-size: 54px;
         }
+
+        body {
+            
+            background-color: #e0efff;
+            background-size: 100%;
+        }
+
     </style>
 
-    <h2>Estadísticas de la Comunidad</h2>
+    
 </head>
 
 <body>
-    @Html.AntiForgeryToken()
-    <div class="row" style="margin-top:80px;">
-        <div id="tipoUsuarios" class="col-lg-4 col-md-6"></div>
-        <div id="cantEventos"  class="col-lg-4 col-md-6"></div>
-        <div id="totalCursosCreados" class="box">
-            <div class="box__header">
-                <h3 class="box__header-title">Cursos Creados</h3>
-            </div>
-            <div class="box__body">
-                <div class="stats stats--main">
-                    <div class="stats__amount" style="text-align: center;">@TempData["CantidadCursosCreados"]</div>
+    <br>
+    <h2>Estadísticas de la Comunidad</h2>
+    <div style="margin-left:100px; margin-right: 35px;">
+        @Html.AntiForgeryToken()
+        <div class="row" style="margin-top:80px;">
+            <div id="tipoUsuarios" class="col-lg-4 col-md-6"style="margin-left:5px;"></div>
+            <div id="cantEventos" class="col-lg-4 col-md-6" style="margin-left:50px; margin-right:80px;"></div>
+            <div style=" flex:0 0 33%;  max-width:250px;">
+                <div id="totalCursosCreados" class="box" >
+                    <div class="box__header">
+                        <h3 class="box__header-title">Cursos Creados</h3>
+                    </div>
+                    <div class="box__body">
+                        <div class="stats stats--main">
+                            <div class="stats__amount" style="text-align: center;">@TempData["CantidadCursosCreados"]</div>
 
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <div id="totalCursosCreados" class="box" >
+                    <div class="box__header">
+                        <h3 class="box__header-title">Cursos Creados</h3>
+                    </div>
+                    <div class="box__body">
+                        <div class="stats stats--main">
+                            <div class="stats__amount" style="text-align: center;">@TempData["CantidadCursosCreados"]</div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+                <div id="topCursos" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;  display: none"></div>
+                <div id="topTopicosCursos" style="height: 300px; width: 45%; margin-top:50px; margin-left:20px; margin-right:20px; display: none; background-color:white; padding:20px; ">
+                    <ul>
+                        <h3 style="text-align:left;">Tópicos más buscados según cursos</h3>
+                        @{
+                            foreach (var topico in topTopicos)
+                            {
+                                <li>@topico</li>
+                            }
+                        }
+                    </ul>
 
                 </div>
 
+                <div id="educadoresComunidad" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
+                <div id="certificadosYnoCertifcados" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
+
+
+
+                <div id="habilidadesComunidad" style="height: 300px;  width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
+                <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
+
+                <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:25%; margin-top:50px;"></div>
+                <div id="habilidadesPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
+                <div id="tiposDeUsuarioPorPais" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
 
             </div>
-        </div>
-        <div id="topCursos" style="height: 300px; width: 50%; margin-top:50px;display: none"></div>
-        <div id="topTopicosCursos" style="height: 300px; width: 50%; margin-top:50px; display: none" ">
-            <ul>
-                <h3 style="text-align:left;">Tópicos más buscados según cursos</h3>
-                @{
-                    foreach (var topico in topTopicos)
-                    {
-                        <li>@topico</li>
-                    }
-                }
-            </ul>
+
+            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 
         </div>
-
-        <div id="educadoresComunidad" style="height: 300px; width: 50%; margin-top:50px;display: none"></div>
-        <div id="certificadosYnoCertifcados" style="height: 300px; width: 50%; margin-top:50px;display: none"></div>
-
-
-
-        <div id="habilidadesComunidad" style="height: 300px; width: 50%; margin-top:50px;"></div>
-        <div id="idiomasComunidad" style="height: 300px; width: 50%; margin-top:50px;"></div>
-
-        <div id="cantPorPais" style="height: 300px; width: 50%; margin-top:50px;"></div>
-        <div id="habilidadesPorPais" style="height: 300px; width: 50%; margin-top:50px ;display: none;"></div>
-        <div id="tiposDeUsuarioPorPais" style="height: 300px; width: 50%; margin-top:50px;display: none;"></div>
+</body>
 
     </div>
-
-    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-</body>
 <script>
 
 
@@ -355,7 +387,7 @@
 
             data: [{
                 click: onClick,
-		        type: "bar",
+		        type: "column",
 		        name: "companies",
 		        axisYType: "secondary",
 
@@ -431,7 +463,7 @@
             exportEnabled: false,
             theme: "light2",
             title: {
-                text: "idiomas mas frecuentes de la comunidad"
+                text: "Idiomas mas frecuentes de la comunidad"
             },
             data: [{
                 type: "bar",
