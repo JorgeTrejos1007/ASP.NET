@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.IO;
 
 namespace UnitTestPIBasesIngeGrupo1.UITesting
 {
@@ -12,7 +13,7 @@ namespace UnitTestPIBasesIngeGrupo1.UITesting
     {
         IWebDriver driver;
         [TestMethod]
-        public void TestMethod1()
+        public void pruebaDeVerMaterial()
         {
             ///Arrange
             ///Crea el driver de Chrome
@@ -34,20 +35,21 @@ namespace UnitTestPIBasesIngeGrupo1.UITesting
             IWebElement cursos = driver.FindElement(By.Id("cursos"));
             cursos.Click();
             new WebDriverWait(driver, TimeSpan.FromSeconds(2)).Until(ExpectedConditions.ElementToBeClickable(By.Id("cursosInscritos")));
-
-
-
             driver.FindElement(By.Id("cursosInscritos")).Click();
+            IWebElement cursoElejido = driver.FindElement(By.Id("botonParaPerfil"));
+            cursoElejido.Click();
+            IWebElement seccion = driver.FindElement(By.Id("seccion"));
+            seccion.Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(2)).Until(ExpectedConditions.ElementToBeClickable(By.Id("material")));
+            IWebElement material = driver.FindElement(By.Id("material"));
+            var archivo = material.GetAttribute("href");
+            driver.Navigate().GoToUrl(archivo);
+           
 
-
-            /*WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
-            IWebElement cursosInscritos=wait.Until(e=>e.FindElement(By.Id("cursosInscritos")));
-            cursosInscritos.Click();*/
-            //IWebElement cursosInscritos = driver.FindElement(By.Id("cursosInscritos"));
-            //cursosInscritos.Click();
-            ///Assert
 
         }
+
+
 
         [TestCleanup]
         public void TearDown()

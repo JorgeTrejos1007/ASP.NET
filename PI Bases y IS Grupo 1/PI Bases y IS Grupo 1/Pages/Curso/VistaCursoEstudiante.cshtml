@@ -25,15 +25,15 @@
                 foreach (var item in @Model.Secciones)
                 {
 
-                    <button class="accordion">@item.nombreSeccion</button>
+                    <button id="seccion" class="accordion">@item.nombreSeccion</button>
 
                     <div class="panel" style="background-color:#ccc;">
 
                         @{ foreach (var material in item.listaMateriales)
                             {
-                                <p>
-                                    <a href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
-                                        <span class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
+                                <p >
+                                    <a  id="material" href="data:@material.tipoArchivo;base64,@(Convert.ToBase64String(material.archivo))" download="@material.nombreMaterial">
+                                        <span  class="or">@material.nombreMaterial <i class="ti-download" aria-hidden="false"></i></span>
                                     </a>
                                     <br>
                                 </p>
