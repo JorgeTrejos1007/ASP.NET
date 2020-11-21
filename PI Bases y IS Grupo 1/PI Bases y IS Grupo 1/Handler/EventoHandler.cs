@@ -144,6 +144,64 @@ namespace PIBasesISGrupo1.Handler
             return eventos;
         }
 
+        public Evento obtenerUnEventoVirtual(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            Evento evento = new Evento();
+            string consulta = "SELECT Evento.*, Virtual.nombreCanal FROM Evento JOIN Virtual " +
+                              "ON Evento.emailCoordinadorFK = Virtual.emailCoordinadorFK AND Evento.nombreEventoPK = Virtual.nombreEventoFK AND Evento.fechaYHoraPK = Virtual.fechaYHoraFK " +
+                              "WHERE Evento.emailCoordinadorFK = @email AND Evento.nombreEventoPK = @nombreEvento AND Evento.fechaYHoraPK = @fechaYHora";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                evento.emailCoordinador = Convert.ToString(columna["emailCoordinadorFK"]);
+                evento.nombre = Convert.ToString(columna["nombreEventoPK"]);
+                evento.fechaYHora = Convert.ToDateTime(columna["fechaYHoraPK"]);
+                evento.descripcionDelEvento = Convert.ToString(columna["descripcion"]);
+                evento.arrayArchivoImagen = (byte[])columna["imagen"];
+                evento.tipoArchivoImagen = Convert.ToString(columna["TipoArchivoImagen"]);
+                evento.lugar = Convert.ToString(columna["nombreCanal"]);
+                evento.tipo = "Virtual";
+            }
+            return evento;
+        }
+
+        public Evento obtenerUnEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            Evento evento = new Evento();
+            string consulta = "SELECT Evento.*, Presencial.lugar FROM Evento JOIN Presencial " +
+                              "ON Evento.emailCoordinadorFK = Presencial.emailCoordinadorFK AND Evento.nombreEventoPK = Presencial.nombreEventoFK AND Evento.fechaYHoraPK = Presencial.fechaYHoraFK " +
+                              "WHERE Evento.emailCoordinadorFK = @email AND Evento.nombreEventoPK = @nombreEvento AND Evento.fechaYHoraPK = @fechaYHora";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                evento.emailCoordinador = Convert.ToString(columna["emailCoordinadorFK"]);
+                evento.nombre = Convert.ToString(columna["nombreEventoPK"]);
+                evento.fechaYHora = Convert.ToDateTime(columna["fechaYHoraPK"]);
+                evento.descripcionDelEvento = Convert.ToString(columna["descripcion"]);
+                evento.arrayArchivoImagen = (byte[])columna["imagen"];
+                evento.tipoArchivoImagen = Convert.ToString(columna["TipoArchivoImagen"]);
+                evento.lugar = Convert.ToString(columna["lugar"]);
+                evento.tipo = "Presencial";
+            }
+            return evento;
+        }
+
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
