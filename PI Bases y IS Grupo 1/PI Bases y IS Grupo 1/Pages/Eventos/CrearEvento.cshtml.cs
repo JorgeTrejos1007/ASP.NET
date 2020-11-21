@@ -16,7 +16,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
         public Evento evento { get; set; }
 
         [BindProperty]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg)$", ErrorMessage = "Ingrese una imagen png o jpg")]
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:()])+(.png|.jpg)$", ErrorMessage = "Ingrese una imagen png o jpg")]
         [Required(ErrorMessage = "Es necesario que ingreses una imagen del evento")]
         public IFormFile imagenEvento { get; set; }
 
@@ -42,30 +42,33 @@ namespace PIBasesISGrupo1.Pages.Eventos
         {
             IActionResult vista;
             try
-            {
-                Miembro datosDelMiembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
-                evento.emailCoordinador = datosDelMiembro.email;
+            {               
                 evento.fechaYHora = Convert.ToDateTime(concatenarFechaYHora(fecha, hora));
-                EventoHandler accesoDatos = new EventoHandler();
-                if (accesoDatos.registrarEvento(evento, imagenEvento))
-                {
-                    if (accesoDatos.registrarEventoVirtual(evento))
+                if (fechaYHoraValida(evento.fechaYHora)) {
+                    Miembro datosDelMiembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, User.Identity.Name);
+                    evento.emailCoordinador = datosDelMiembro.email;
+                    EventoHandler accesoDatos = new EventoHandler();
+                    if (accesoDatos.registrarEvento(evento, imagenEvento))
                     {
-                        vista = Redirect("~/Eventos/MostrarEventos");
+                        if (accesoDatos.registrarEventoVirtual(evento))
+                        {
+                            vista = Redirect("~/Eventos/MostrarEventos");
+                        }
+                        else
+                        {
+                            vista = Redirect("~/Eventos/CrearEvento");
+                        }
                     }
                     else
                     {
                         vista = Redirect("~/Eventos/CrearEvento");
+                        TempData["MensajeError"] = "Este evento ya fue creado anteriormente";
                     }
                 }
                 else
                 {
                     vista = Redirect("~/Eventos/CrearEvento");
-                    TempData["MensajeError"] = "Este evento ya fue creado anteriormente";
                 }
-
-
-
             }
             catch
             {
@@ -104,20 +107,10 @@ namespace PIBasesISGrupo1.Pages.Eventos
             return fecha + " " + hora;
         }
 
-        public bool tipoImagenValido(IFormFile imagen)
-        {
-            bool tipoValido = false;
-            if ((imagen != null) && ((imagen.ContentType == "image/jpeg" || imagen.ContentType == "image/png")))
-            {
-                tipoValido = true;
-            }
-            return tipoValido;
-        }
-
         public bool fechaYHoraValida(DateTime fechaYHora)
         {
             bool fechaValida = false;
-            if (fechaYHora >= DateTime.UtcNow)
+            if (fechaYHora > DateTime.UtcNow)
             {
                 fechaValida = true;
             }

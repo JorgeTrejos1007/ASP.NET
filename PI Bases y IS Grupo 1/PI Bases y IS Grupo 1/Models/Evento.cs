@@ -18,7 +18,7 @@ namespace PIBasesISGrupo1.Models
         public DateTime fechaYHora { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingreses la información sobre el evento")]
-        [RegularExpression(@"^\s*[a-zA-Z0-9][a-zA-Z-0-9\s]*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [RegularExpression(@"^\s*[a-zA-Z0-9\s_\\,.;@#$%!¡?¿\-:()]*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         [Display(Name = "Ingrese informacion del evento")]
         public string descripcionDelEvento{ get; set; }
 
@@ -33,7 +33,7 @@ namespace PIBasesISGrupo1.Models
 
         [Required(ErrorMessage = "Es necesario que ingrese el lugar donde será el evento")]
         [Display(Name = "Ingrese la direccion de dónde se va a llevar a cabo el evento")]
-        [RegularExpression(@"^\s*[a-zA-Z0-9][a-zA-Z-0-9\s]*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [RegularExpression(@"^\s*[a-zA-Z0-9][a-zA-Z-0-9\s_\\.,;¿!¡$%#&@\-:()]*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         public string lugar { get; set; }
 
         [Required(ErrorMessage = "Es necesario que elija el tipo de evento")]
