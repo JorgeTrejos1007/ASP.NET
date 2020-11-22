@@ -46,11 +46,11 @@ namespace PIBasesISGrupo1.Pages.Eventos
         public void OnPost () {
             // datos de prueba
             InformacionDeRegistroEnEvento info = new InformacionDeRegistroEnEvento();
-            info.nombreEvento = "Standup comedy con Ronny  se puede quedar 5 minutitos mas";
+            info.nombreEvento = "Adriancito con Daddy Yankee en concierto";
             info.emailCoordinador = "stevegc112016@gmail.com";
-            info.nombreSector = "Altair";
-            info.fechaYHora = Convert.ToDateTime("2020-11-27 18:00:00.000");
-            info.tipoDeSector = "Numerado";
+            info.nombreSector = "China";
+            info.fechaYHora = Convert.ToDateTime("2020-12-05 18:13:00.000");
+            info.tipoDeSector = "No numerado";
             info.cantidadAsientos = 1;
             List<int> asientos = new List<int>();
             asientos.Add(1);
