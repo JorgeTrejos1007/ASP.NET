@@ -109,7 +109,8 @@
 
                                                 </p>
                                                 <div class="center-event" style="margin-top:-2%;">
-                                                    <a href="#" class="primary-btn rounded-0  white_bg_btn" style="color:#002347">Registrarme</a>
+                                                    <a asp-page="./RegistrarmeEnEventoPresencial" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-nombreEvento="@evento.nombre" asp-route-fechaYHora="@Convert.ToString(evento.fechaYHora)"
+                                                    asp-route-lugar="@evento.lugar" class="primary-btn rounded-0  white_bg_btn" style="color:#002347">Registrarme</a>
                                                 </div>
                                             </div>
                                         </div>

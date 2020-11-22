@@ -10,7 +10,9 @@ namespace PIBasesISGrupo1.Models
         public string nombreEvento { get; set; }
         public DateTime fechaYHora { get; set; }
         public string emailCoordinador { get; set; }
+        public string tipoDeSector { get; set; }
         public string nombreSector { get; set; }
         public List<int> asientosDeseados { get; set; } = new List<int>();
+        public int cantidadAsientos { get; set; }
     }
 }
