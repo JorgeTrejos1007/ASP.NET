@@ -206,18 +206,15 @@ namespace PIBasesISGrupo1.Handler
         public List<Sector> obtenerSectoresEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
         {
             List<Sector> listaSectores = new List<Sector>();
-
-            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector " +
-                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora";
+            string fecha = fechaYHora.ToString();
+            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector WHERE emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
-
-            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
-            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fecha);
 
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
-
             foreach (DataRow columna in consultaFormatoTabla.Rows)
             {
                 listaSectores.Add(
@@ -228,11 +225,10 @@ namespace PIBasesISGrupo1.Handler
                     cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"])
                 });
             }
-
             return listaSectores;
         }
 
-        public List<int> cantidadAsientosDisponiblesEnSector(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
+        public List<int> asientosNumeradosDisponiblesEnSector(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
         {
             List<int> asientosDisponibles = new List<int> ();
 
