@@ -5,7 +5,7 @@
     var nombreEvento = (string)ViewData["nombreEvento"];
     var lugarEvento = (string)ViewData["lugarEvento"];
     var emailCoordinador = (string)ViewData["emailCoordinador"];
-    var fechaYHora = (DateTime)ViewData["fechaEvento"];
+    var fechaYHora = (DateTime)ViewData["fechaYHora"];
     var listaSectores = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectores"];
 }
 
@@ -54,7 +54,7 @@
                     <li>
                         <a class="justify-content-between d-flex">
                             <p>Fecha: </p>
-                            <span>@fechaYHora</span>
+                            <span>@fechaYHora.ToString()</span>
                         </a>
                     </li>
                 </ul>
@@ -115,7 +115,7 @@
                                 <div class="login-form">
                                     <form method="post">
                                         <!--Aqui va lo de elegir ubicacion de sus asientos-->
-
+                             
                                         <div class=" input-group mt-10">                     
                                             <span asp-validation-for="@Model.evento.sectores" class="text-danger"></span>
                                             <select class="border-0  sector-select single-input-primary" asp-for="@Model.evento.sectores" required>

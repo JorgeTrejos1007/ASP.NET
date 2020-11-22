@@ -24,10 +24,16 @@ namespace PIBasesISGrupo1.Pages.Eventos
         {
             string emailCoordinador = (string)TempData["emailCoordinador"];
             string nombreEvento = (string)TempData["nombreEvento"];
-            string fechaYHora = (string)TempData["fechaEvento"];
+            DateTime fechaYHora = (DateTime)TempData["fechaEvento"];
             string lugar = (string)TempData["lugarEvento"];
 
+            ViewData["nombreEvento"] = nombreEvento;
+            ViewData["fechaYHora"] = fechaYHora;
+            ViewData["lugar"] = lugar;
+            ViewData["emailCoordinador"] = emailCoordinador;
             DateTime fecha = Convert.ToDateTime(fechaYHora);
+            ViewData["listaSectores"] = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
+
             sectores = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
 
             for (int index = 0; index < sectores.Count; index++) {
