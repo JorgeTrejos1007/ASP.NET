@@ -432,14 +432,22 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@emailEducador", emailEducador);
-            conexion.Open();
-            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
-            lectorDeDatos.Read();
             byte[] firma = null;
-            if ((lectorDeDatos["firma"]) != DBNull.Value) {
-                firma = (byte[])(lectorDeDatos["firma"]);
+            try
+            {
+                conexion.Open();
+                SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+                lectorDeDatos.Read();
+               if ((lectorDeDatos["firma"]) != DBNull.Value)
+                {
+                    firma = (byte[])(lectorDeDatos["firma"]);
+                }
+                conexion.Close();
             }
-            conexion.Close();
+            catch (Exception e) {
+                conexion.Close();
+            }
+            
             return firma;
         }
         public bool agregarFirmaEducador(string emailEducador, IFormFile firma)
@@ -459,15 +467,24 @@ namespace PIBasesISGrupo1.Handler
             SqlCommand comandoParaConsulta = new SqlCommand(consulta, conexion);
             SqlDataAdapter adaptadorParaTabla = new SqlDataAdapter(comandoParaConsulta);
             comandoParaConsulta.Parameters.AddWithValue("@emailCoordinador", emailCoordinador);
-            conexion.Open();
-            SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
-            lectorDeDatos.Read();
             byte[] firma = null;
-            if ((lectorDeDatos["firma"]) != DBNull.Value)
+            try
             {
-                firma = (byte[])(lectorDeDatos["firma"]);
+                conexion.Open();
+                SqlDataReader lectorDeDatos = comandoParaConsulta.ExecuteReader();
+                lectorDeDatos.Read();
+                if ((lectorDeDatos["firma"]) != DBNull.Value)
+                {
+                    firma = (byte[])(lectorDeDatos["firma"]);
+                }
+                conexion.Close();
             }
-            conexion.Close();
+            catch (Exception e)
+            {
+                conexion.Close();
+            }
+
+
             return firma;
         }
         public bool agregarFirmaCoordinador(string emailCoordinador, IFormFile firma)

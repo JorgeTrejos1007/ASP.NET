@@ -19,8 +19,15 @@ namespace PIBasesISGrupo1.Pages.Certificado
         public void OnGet()
         {
             MiembroHandler accesoAMiembro = new MiembroHandler();
-            TempData["firmaEducador"] = accesoAMiembro.obtenerFirmaEducador((string)TempData["emailEducador"]);
-            TempData["firmaCoordinador"] = accesoAMiembro.obtenerFirmaCoordinador((string)TempData["emailCoordinador"]);
+            try
+            {
+                TempData["firmaEducador"] = accesoAMiembro.obtenerFirmaEducador((string)TempData["emailEducador"]);
+                TempData["firmaCoordinador"] = accesoAMiembro.obtenerFirmaCoordinador((string)TempData["emailCoordinador"]);
+            }
+            catch (ExecutionEngineException e)
+            {
+                Redirect("Error");
+            }
         }
     }
 }
