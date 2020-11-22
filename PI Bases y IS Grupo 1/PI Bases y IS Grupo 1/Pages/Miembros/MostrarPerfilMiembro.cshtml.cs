@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.MotorSimilitudes;
+using Newtonsoft.Json;
+
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -52,10 +54,13 @@ namespace PIBasesISGrupo1.Pages.Miembros
             }
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
         }
+        public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
+        {
+            string emailMiembroEnSesion = "stevegc112016@gmail.com";
+            return new JsonResult(emailMiembroEnSesion); ;
+        }
     }
-    public IActionResult OnPostActualizarLikesDelMiembro(string ) {
-        string emailMiembroEnSesion = "stevegc112016@gmail.com";
-        return Page();
-    }
+    
+     
 
 }
