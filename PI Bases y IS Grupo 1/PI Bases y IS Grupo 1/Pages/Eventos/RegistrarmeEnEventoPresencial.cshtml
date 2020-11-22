@@ -2,6 +2,11 @@
 @model PIBasesISGrupo1.Pages.Eventos.RegistrarmeEnEventoPresencialNumeradoModel
 @{
     ViewData["Title"] = "RegistrarmeEnEventoPresencialNumerado";
+    var nombreEvento = (string)ViewData["nombreEvento"];
+    var lugarEvento = (string)ViewData["lugarEvento"];
+    var emailCoordinador = (string)ViewData["emailCoordinador"];
+    var fechaYHora = (DateTime)ViewData["fechaEvento"];
+    var listaSectores = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectores"];
 }
 
 
@@ -20,6 +25,7 @@
         ul.tabs li {
             width: 33%;
         }
+
         .center-login {
             margin: 0;
             margin-left: 30%;
@@ -35,20 +41,20 @@
         <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;">
             <div class="col-lg-12 right-contents">
                 <div style="background-color:#002347; height:70px;">
-                    <h2 class="title_color align-content-lg-center centrar" style="color:#fdc632; padding:1%;">Los tacacos en concierto</h2>
+                    <h2 class="title_color align-content-lg-center centrar" style="color:#fdc632; padding:1%;">@nombreEvento</h2>
                 </div>
                 <hr class="new5">
                 <ul>
                     <li>
                         <a class="justify-content-between d-flex">
                             <p>Lugar</p>
-                            <span class="or">Centro de Eventos pedregal</span>
+                            <span class="or">@lugarEvento</span>
                         </a>
                     </li>
                     <li>
                         <a class="justify-content-between d-flex">
-                            <p>Hora </p>
-                            <span>17:00</span>
+                            <p>Fecha: </p>
+                            <span>@fechaYHora</span>
                         </a>
                     </li>
                 </ul>
@@ -73,29 +79,71 @@
                         </div>
                         <div class="modal-body">
                             <div style="">
-                            <h2 class="modal-title">Seleccione la cantidad de asientos que desea reservar</h2>
-                            <div class="login-form">
-                                <form method="post">
+                                <h2 class="modal-title">Seleccione la cantidad de asientos que desea reservar</h2>
+                                <div class="login-form">
+                                    <form method="post">
 
-                                    <input id="cantidadDeAsientos" class="sector__input" />
-                                    <br>
-                                    <div class="center-login">
-                                        <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
-                                        <a href="#tab2"></a>
+                                        <input id="cantidadDeAsientos" class="sector__input" />
+                                        <br>
+                                        <div class="center-login">
+                                            <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
+                                            <a href="#tab2"></a>
+                                        </div>
 
+                                        <br>
 
-                                    </div>
-
-                                    <br>
-
-                                </form>
+                                    </form>
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </article>
-            <article id="tab2"></article>
+            <article id="tab2">
+
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content center">
+                        <div class="modal-header">
+                            <div class="center-login">
+                                <img class="logo-2" src="~/img/logo.png" alt="" />
+                            </div>
+                        </div>
+                        <div class="modal-body">
+                            <div>
+                                <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
+                                <div class="login-form">
+                                    <form method="post">
+                                        <!--Aqui va lo de elegir ubicacion de sus asientos-->
+
+                                        <div class=" input-group mt-10">                     
+                                            <span asp-validation-for="@Model.evento.sectores" class="text-danger"></span>
+                                            <select class="border-0  sector-select single-input-primary" asp-for="@Model.evento.sectores" required>
+                                                @foreach (var sector in listaSectores)
+                                                {
+                                                    <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
+
+
+                                                }
+                                            </select>
+                                        </div>
+
+                                        <br>
+                                        <div class="center-login">
+                                            <a class="primary-btn text-uppercase enroll" href="#tab3"> Siguiente</a>
+                                            <a href="#tab3"></a>
+                                        </div>
+
+                                        <br>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
             <article id="tab3"></article>
             <form method="post">
                 <input type="submit" value="Submit">
