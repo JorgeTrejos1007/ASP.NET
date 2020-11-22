@@ -116,7 +116,7 @@ namespace PIBasesISGrupo1.Handler
             return idiomas.ToArray();
         }
         
-        private string[] obtenerHabilidades(string email)
+        public string[] obtenerHabilidades(string email)
         {
             List<string> habilidades = new List<string>();
 
