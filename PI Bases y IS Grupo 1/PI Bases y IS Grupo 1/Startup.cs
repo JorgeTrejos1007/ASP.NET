@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-
+using Newtonsoft.Json.Serialization;
 
 namespace PIBasesISGrupo1
 {
@@ -40,7 +40,11 @@ namespace PIBasesISGrupo1
             services.AddDistributedMemoryCache();
             services.AddSession();
             services.AddMemoryCache();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc()
+                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                 .AddJsonOptions(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+            services.AddAntiforgery(o => o.HeaderName = "XSRF-TOKEN");
+
             services.AddAuthentication(options =>
              {
                  options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
