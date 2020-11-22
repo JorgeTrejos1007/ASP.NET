@@ -68,8 +68,9 @@
 
 
 <html>
+@Html.AntiForgeryToken()
 <br>
- 
+
 <div class="member-container">
     <body id="top">
         <div class="center-perfil">
@@ -230,7 +231,7 @@
     function myAjax(emailDelMiembro) {
         $.ajax({
             type: "POST",
-            url: "Miembros?handler=ActualizarLikesDelMiembro",
+            url: "MostrarPerfilMiembro?handler=ActualizarLikesDelMiembro",
             beforeSend: function (xhr) {
                 xhr.setRequestHeader("XSRF-TOKEN",
                     $('input:hidden[name="__RequestVerificationToken"]').val());
