@@ -5,16 +5,26 @@
 }
 
 <header>
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <style>
 
         .center-perfil {
             //margin: 0;
             margin-left: 10%;
             margin-right: 20%;
         }
+         .fa {
+             font-size: 50px;
+             cursor: pointer;
+             user-select: none;
+         }
+
+             .fa:hover {
+                 color: darkblue;
+             }
 
         .testi_item {
-            background-color:white;
+            background-color: white;
             width: 1200px;
             padding: 50px 55px;
             margin-bottom: 200px;
@@ -26,21 +36,25 @@
             -o-transition: all 0.3s ease 0s;
             transition: all 0.3s ease 0s;
         }
+
         .member_img-perfil {
             height: 300px;
             width: 300px;
             margin-right: 100px;
             border-radius: 10px;
         }
+
         .main_title {
-            margin-bottom:2%;
-            padding-left:4%;
+            margin-bottom: 2%;
+            padding-left: 4%;
         }
+
         .testi_text {
-            margin-left:5%;
+            margin-left: 5%;
         }
+
         .member-container {
-            margin-top:1%;
+            margin-top: 1%;
         }
     </style>
     <style type="text/css">
@@ -55,7 +69,7 @@
 
 <html>
 <br>
-
+ 
 <div class="member-container">
     <body id="top">
         <div class="center-perfil">
@@ -81,6 +95,8 @@
                                     <img class="member_img-perfil" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
                                 }
                             }
+                            <div style="text-align:center;align-content:center"></div>
+                            <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
                         </div>
                         <div class="col-lg-8">
                             <div class="testi_text">
@@ -205,3 +221,8 @@
 </div>
 
 </html>
+<script>
+    function myFunction(x) {
+        x.classList.toggle("fa-thumbs-down");
+    }
+</script>
