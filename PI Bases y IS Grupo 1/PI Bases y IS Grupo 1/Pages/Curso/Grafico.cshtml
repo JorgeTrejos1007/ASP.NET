@@ -1,0 +1,654 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Curso.GraficoModel
+@{
+    var cursosDisponibles = (List<string>)ViewData["cursos"];
+    var cursos = (string[])TempData["cursosFiltrados"];
+} 
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+        window.onload = function () {
+            document.getElementById("numdata").style.display = "block";
+            var chart = new CanvasJS.Chart("chartContainer", {
+	            theme: "light2", // "light1", "light2", "dark1", "dark2"
+	            exportEnabled: true,
+	            animationEnabled: true,
+	            title: {
+		            text: "Certificados y no Certificados",
+		            fontSize: 21
+	            },
+	            data: [{
+                    type: "pie",
+                    click: onClick,
+		            startAngle: 160,
+		            toolTipContent: "<b>{label}</b>: {y}%",
+		            indexLabel: "{label} - {y}%",
+		            dataPoints: @Html.Raw(TempData["Grafico"])
+	            }]
+            });
+            chart.render();
+
+            function onClick(e) {
+                if (e.dataPoint.label == "Cursando") {
+
+                    if (document.getElementById("chartContainer2").style.display === "none"  ) {
+                        //document.getElementById("chartContainer2").hidden = false;
+                        document.getElementById("chartContainer2").style.display = "block";
+                        if (document.getElementById("habilidadesEstudiantes1").style.display === "block") {
+                            document.getElementById("habilidadesEstudiantes1").style.display = "none";
+                        }
+                        graficoDeMaterialesVistos()
+
+                    } else {
+                        document.getElementById("chartContainer2").style.display = "none";
+                    }
+
+
+
+                }
+                else if (e.dataPoint.label == "Certificados") {
+                    if (document.getElementById("habilidadesEstudiantes1").style.display === "none") {
+                        //document.getElementById("chartContainer2").hidden = false;
+
+                        document.getElementById("habilidadesEstudiantes1").style.display = "block";
+                        if (document.getElementById("chartContainer2").style.display === "block") {
+                            document.getElementById("chartContainer2").style.display = "none";
+                        }
+                        habilidadesCertificados()
+                    } else {
+                        document.getElementById("habilidadesEstudiantes1").style.display = "none";
+                    }
+
+
+                }
+
+
+             }
+
+
+        }
+    </script>
+    <style>
+
+
+        .box {
+            background: linear-gradient(#526494, #604484);
+            margin: 50px 70px;
+            border-radius: 5px;
+            width: 300px;
+            text-align: center;
+        }
+
+        .box__header {
+            padding: 15px 25px;
+            position: relative;
+        }
+
+        .box__header-title {
+            color: #fff;
+            font-size: 18px;
+        }
+
+        .box__body {
+            padding: 0 25px;
+        }
+
+        /* STATS */
+
+        .stats {
+            color: #fff;
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .stats__amount {
+            font-size: 42px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .stats__caption {
+            font-size: 18px;
+        }
+
+        .stats__change {
+            position: absolute;
+            top: 10px;
+            right: 0;
+            text-align: right;
+            color: #b1b7c8;
+        }
+
+        .stats__value {
+            font-size: 18px;
+        }
+
+        .stats__period {
+            font-size: 14px;
+        }
+
+        .stats__value--positive {
+            color: #aedc6f;
+        }
+
+        .stats__value--negative {
+            color: #fb5055;
+        }
+
+        .stats--main .stats__amount {
+            font-size: 54px;
+        }
+
+        body {
+            background-color: #e0efff;
+            background-size: 100%;
+        }
+
+
+    </style>
+</head>
+<body>
+    <br>
+    <h2>Estadísticas de los Cursos</h2>
+
+    <div style="margin-left:70px; margin-right: 70px;">
+        <div style="margin-left:30%; margin-bottom: 30px; margin-top:30px;">
+            <form method="post" id="formCursos" enctype="multipart/form-data">
+                <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
+                <select style="width: 390px;" class="mul-select" asp-for="@Model.cursosAFiltrar" multiple size="@cursosDisponibles.Count" required>
+                    @foreach (var curso in cursosDisponibles)
+                    {
+
+                        <option value="@curso">@curso</option>
+
+                        <br>
+                    }
+                </select>
+
+                <input type="submit" value="Filtrar" class="primary-btn2 text-uppercase enroll rounded-0" aps-page-handler="OnPost" />
+
+            </form>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+                <div id="chartContainer2" style="margin-top:50px;height: 370px; width: 100%; display: none;"></div>
+                <div id="habilidadesEstudiantes1" style="margin-top:50px;height: 370px; width: 100%; display: none;"></div>
+
+
+
+            </div>
+
+            <div class="col-lg-4 col-md-6">
+                <div id="habilidadesEstudiantes" style="height: 370px; width: 100%;"></div>
+                <div id="distribucionDeHabilidad" style="margin-top:50px;height: 370px; width: 100%; display: none;"></div>
+
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div id="paisesEstudiantes" style="height: 370px; width: 100%;"></div>
+                <div id="distribucionDePaisPorCurso" style="margin-top:50px; height: 370px; width: 100%; display: none;"></div>
+            </div>
+            <div class="col-lg-4 col-md-6" style="margin-top:50px;margin-bottom:50px;">
+                <div id="graficoIdiomas" style="margin-bottom:50px;height: 370px; width: 100%;"></div>
+                <div id="di" style="margin-top:50px;margin-bottom:50px; height: 370px; width: 100%; display: none;"></div>
+            </div>
+            <div class="col-lg-4 col-md-6" style="margin-top:50px;margin-bottom:50px;">
+                <div id="topicos" style="height: 370px; width: 100%;"></div>
+            </div>
+            <div class="col-lg-4 col-md-6" style="margin-top:50px; margin-bottom:50px;text-align: center;">
+                <div id="numdata" style="display:none; text-align: center;" class="col-lg-4 col-md-6">
+
+                    <div id="totalEstudiantes" class="box">
+                        <div class="box__header">
+                            <h3 class="box__header-title">Estudiantes Matriculados</h3>
+                        </div>
+                        <div class="box__body">
+                            <div class="stats stats--main">
+                                <div class="stats__amount" style="text-align: center;">@TempData["numeroEstudiantes"]</div>
+
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <div id="estudiantesEnCadaCurso" style="height: 370px; width: 100%; display:none"></div>
+            </div>
+
+
+
+        </div>
+    </div>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+     
+
+</body>
+
+</html>
+
+<script>
+
+
+
+    function graficoDeMaterialesVistos() {
+
+        var chart = new CanvasJS.Chart("chartContainer2", {
+            theme: "light2",
+            exportFileName: "Doughnut Chart",
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Porcentaje De Avance De Los Estudiantes"
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "doughnut",
+                innerRadius: 90,
+                showInLegend: false,
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(TempData["GraficoMateriales"])
+
+            }]
+        });
+        chart.render();
+
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+        }
+
+    }
+
+      function habilidades () {
+
+          var chart = new CanvasJS.Chart("habilidadesEstudiantes", {
+	        animationEnabled: true,
+	        theme: "light2", // "light1", "light2", "dark1", "dark2"
+	        title:{
+		        text: "Habilidades mas Frecuentes"
+	        },
+	        axisY: {
+		        title: "Cantidad de Personas"
+	        },
+	        data: [{
+                type: "column",
+                click: onClick,
+		        showInLegend: false,
+		        legendMarkerColor: "grey",
+		        dataPoints:@Html.Raw(TempData["GraficoHabilidades"])
+	        }]
+        });
+          chart.render();
+           @{ TempData["cursosFiltrados"] = cursos;}
+          function onClick(e) {
+
+              if (document.getElementById("distribucionDeHabilidad").style.display === "none") {
+                  document.getElementById("distribucionDeHabilidad").style.display = "block";
+                  $.ajax({
+                      type: "POST",
+                      url: "Grafico?handler=ObtenerHabilidadesPorCurso",
+                      beforeSend: function (xhr) {
+                          xhr.setRequestHeader("XSRF-TOKEN",
+                              $('input:hidden[name="__RequestVerificationToken"]').val());
+                      },
+                      data: {
+                          "habilidad": e.dataPoint.label
+                      },
+                      success: function (response) {
+
+                          habilidadesPorCurso(response, e.dataPoint.label);
+
+
+                      },
+                      failure: function (response) {
+                          alert('fallo');
+                      },
+                      error: function (response) {
+                          alert('error');
+                      }
+
+                  });
+              }
+              else {
+                  document.getElementById("distribucionDeHabilidad").style.display = "none";
+              }
+
+             
+
+
+
+
+          }
+
+
+
+      }
+    habilidades();
+
+    function paises() {
+
+        var chart = new CanvasJS.Chart("paisesEstudiantes", {
+            theme: "light2", //"light1", "light2", "dark1"
+            animationEnabled: true,
+            exportEnabled: true,
+            title: {
+                text: "Top de Paises"
+            },
+            axisX: {
+                margin: 10,
+                labelPlacement: "inside",
+                tickPlacement: "inside"
+            },
+            axisY2: {
+
+                titleFontSize: 14,
+                includeZero: false,
+
+            },
+            data: [{
+                type: "bar",
+                click: onClick,
+                axisYType: "secondary",
+                yValueFormatString: "#",
+                indexLabel: "{y}",
+                dataPoints: @Html.Raw(TempData["GraficoPaises"])
+
+              }]
+        });
+        chart.render();
+         @{ TempData["cursosFiltrados"] = cursos;}
+          function onClick(e) {
+              if (document.getElementById("distribucionDePaisPorCurso").style.display === "none") {
+                  document.getElementById("distribucionDePaisPorCurso").style.display = "block";
+                  $.ajax({
+                      type: "POST",
+                      url: "Grafico?handler=ObtenerDistribucionDePaisPorCurso",
+                      beforeSend: function (xhr) {
+                          xhr.setRequestHeader("XSRF-TOKEN",
+                              $('input:hidden[name="__RequestVerificationToken"]').val());
+                      },
+                      data: {
+                          "pais": e.dataPoint.label
+                      },
+                      success: function (response) {
+
+                          distribucionDePaisPorCurso(response, e.dataPoint.label);
+
+
+                      },
+                      failure: function (response) {
+                          alert('fallo');
+                      },
+                      error: function (response) {
+                          alert('error');
+                      }
+
+                  });
+              }
+              else {
+                  document.getElementById("distribucionDePaisPorCurso").style.display = "none";
+              }
+           }
+
+
+    }
+    paises()
+     function habilidadesCertificados () {
+
+          var chart = new CanvasJS.Chart("habilidadesEstudiantes1", {
+	        animationEnabled: true,
+	        theme: "light2", // "light1", "light2", "dark1", "dark2"
+	        title:{
+		        text: "Habilidades mas Frecuentes"
+	        },
+	        axisY: {
+		        title: "Cantidad de Personas"
+	        },
+	        data: [{
+		        type: "column",
+		        showInLegend: false,
+		        legendMarkerColor: "grey",
+		        dataPoints:@Html.Raw(TempData["HabilidadesEstudiantesCertificados"])
+	        }]
+        });
+        chart.render();
+
+    }
+    function idiomas() {
+
+        var chart = new CanvasJS.Chart("graficoIdiomas", {
+            animationEnabled: true,
+            title: {
+                text: "Idiomas Frecuentes"
+            },
+            axisY: {
+                title: "Idiomas",
+
+            },
+            data: [{
+                type: "column",
+                click: onClick,
+                markerSize: 5,
+                xValueFormatString: "YYYY",
+                yValueFormatString: "#,##0.##",
+                dataPoints: @Html.Raw(TempData["GraficoIdiomas"])
+	}]
+        });
+        chart.render();
+             @{ TempData["cursosFiltrados"] = cursos;}
+          function onClick(e) {
+
+              if (document.getElementById("di").style.display === "none") {
+                  document.getElementById("di").style.display = "block";
+                  $.ajax({
+                      type: "POST",
+                      url: "Grafico?handler=ObtenerIdiomasPorCurso",
+                      beforeSend: function (xhr) {
+                          xhr.setRequestHeader("XSRF-TOKEN",
+                              $('input:hidden[name="__RequestVerificationToken"]').val());
+                      },
+                      data: {
+                          "idioma": e.dataPoint.label
+                      },
+                      success: function (response) {
+
+                          idiomasPorCurso(response, e.dataPoint.label);
+
+
+                      },
+                      failure: function (response) {
+                          alert('fallo');
+                      },
+                      error: function (response) {
+                          alert('error');
+                      }
+
+                  });
+              }
+              else {
+                  document.getElementById("di").style.display = "none";
+              }
+
+             
+
+
+
+
+          }
+
+    }
+    idiomas();
+    document.getElementById("totalEstudiantes").addEventListener("click", function () {
+        if (document.getElementById("estudiantesEnCadaCurso").style.display === "none") {
+            //document.getElementById("chartContainer2").hidden = false;
+            document.getElementById("estudiantesEnCadaCurso").style.display = "block";
+            estudiantesPorCurso()
+
+        } else {
+            document.getElementById("estudiantesEnCadaCurso").style.display = "none";
+        }
+    });
+
+    function estudiantesPorCurso() {
+        var chart = new CanvasJS.Chart("estudiantesEnCadaCurso", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de Estudiantes"
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                 toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: @Html.Raw(TempData["GraficoEstudiantes"])
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
+    function topicosMasComunes() {
+        var chart = new CanvasJS.Chart("topicos", {
+            animationEnabled: true,
+            theme: "light2", // "light1", "light2", "dark1", "dark2"
+            title: {
+                text: "Topicos Frecuentes"
+            },
+            axisY: {
+                title: "Cantidad de Cursos Relacioandos"
+            },
+            data: [{
+                type: "column",
+
+                dataPoints: @Html.Raw(TempData["GraficoTopicos"])
+            }]
+        });
+
+        chart.render();
+
+    }
+    topicosMasComunes();
+    function habilidadesPorCurso(datos, habilidad){
+        var chart = new CanvasJS.Chart("distribucionDeHabilidad", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de " + habilidad
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                 toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: datos
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
+    function idiomasPorCurso(datos, idioma) {
+         var chart = new CanvasJS.Chart("di", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de " + idioma
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: datos
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
+    function distribucionDePaisPorCurso(datos, pais) {
+        var chart = new CanvasJS.Chart("distribucionDePaisPorCurso", {
+            exportEnabled: true,
+            animationEnabled: true,
+            title: {
+                text: "Distribucion de " + pais
+            },
+            legend: {
+                cursor: "pointer",
+                itemclick: explodePie
+            },
+            data: [{
+                type: "pie",
+                toolTipContent: "{label}: <strong>{y}%</strong>",
+                indexLabel: "{label} - {y}%",
+                dataPoints: datos
+            }]
+        });
+        chart.render();
+        function explodePie(e) {
+            if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+            } else {
+                e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+            }
+            e.chart.render();
+
+        }
+    }
+
+
+
+
+
+
+
+
+</script>
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
