@@ -52,7 +52,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 TempData["lugarEvento"] = evento.lugar;
                 TempData["fechaEvento"] = evento.fechaYHora;
                 TempData["emailCoordinador"] = evento.emailCoordinador;              
-                vista = Redirect("~/Eventos/RegistrarmeEnEventoPresencialNumerado");
+                vista = Redirect("~/Eventos/RegistrarmeEnEventoPresencial");
             }
             catch
             {

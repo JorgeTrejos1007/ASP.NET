@@ -11,14 +11,22 @@ namespace PIBasesISGrupo1.Pages.Eventos
 {
     public class RegistrarmeEnEventoPresencialNumeradoModel : PageModel
     {
+        [BindProperty]
+        public Evento evento { get; set; }
+
         EventoHandler baseDeDatosHandler = new EventoHandler();
         List<Sector> sectores = new List<Sector>();
 
         [BindProperty]
-        InformacionDeRegistroEnEvento registro { get; set; }
+        public InformacionDeRegistroEnEvento registro { get; set; }
 
-        public void OnGet(string emailCoordinador, string nombreEvento, string fechaYHora, string lugar)
+        public void OnGet()
         {
+            string emailCoordinador = (string)TempData["emailCoordinador"];
+            string nombreEvento = (string)TempData["nombreEvento"];
+            string fechaYHora = (string)TempData["fechaEvento"];
+            string lugar = (string)TempData["lugarEvento"];
+
             DateTime fecha = Convert.ToDateTime(fechaYHora);
             sectores = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
 
