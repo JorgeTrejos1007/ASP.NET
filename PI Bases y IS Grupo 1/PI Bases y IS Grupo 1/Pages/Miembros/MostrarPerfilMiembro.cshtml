@@ -224,5 +224,32 @@
 <script>
     function myFunction(x,emailDelMiembro) {
         x.classList.toggle("fa-thumbs-down");
+        $.ajax({
+            type: "POST",
+            url: "Miembros?handler=ActualizarLikesDelMiembro",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: {
+                "emailDelPerfilActual": emailDelMiembro
+            },
+            success: function (response) {
+
+                actualizaLikesDelMiembro(response);
+
+
+            },
+            failure: function (response) {
+                alert('fallo');
+            },
+            error: function (response) {
+                alert('error');
+            }
+
+        });
+    }
+    function actualizaLikesDelMiembro(response) {
+        alert("hola");
     }
 </script>

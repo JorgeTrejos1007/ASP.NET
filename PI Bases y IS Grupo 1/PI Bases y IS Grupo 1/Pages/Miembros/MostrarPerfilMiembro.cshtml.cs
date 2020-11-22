@@ -52,5 +52,10 @@ namespace PIBasesISGrupo1.Pages.Miembros
             }
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
         }
-    }    
+    }
+    public IActionResult OnPostActualizarLikesDelMiembro(string ) {
+        string emailMiembroEnSesion = "stevegc112016@gmail.com";
+        return Page();
+    }
+
 }
