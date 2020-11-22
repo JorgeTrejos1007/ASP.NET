@@ -43,27 +43,41 @@ namespace PIBasesISGrupo1.Pages.Eventos
             }
         }
 
-        public void OnPost () {
+        public IActionResult OnPost () {
+            IActionResult vista;
+
             // datos de prueba
             InformacionDeRegistroEnEvento info = new InformacionDeRegistroEnEvento();
-            info.nombreEvento = "Adriancito con Daddy Yankee en concierto";
+            info.nombreEvento = "Standup comedy con Ronny  se puede quedar 5 minutitos mas";
             info.emailCoordinador = "stevegc112016@gmail.com";
-            info.nombreSector = "China";
-            info.fechaYHora = Convert.ToDateTime("2020-12-05 18:13:00.000");
-            info.tipoDeSector = "No numerado";
-            info.cantidadAsientos = 1;
+            info.nombreSector = "Altair";
+            info.fechaYHora = Convert.ToDateTime("2020-11-27 18:00:00.000");
+            info.tipoDeSector = "Numerado";
+            //info.cantidadAsientos = 10;
             List<int> asientos = new List<int>();
-            asientos.Add(1);
+            asientos.Add(2);
+            asientos.Add(4);
+            asientos.Add(5);
             info.asientosDeseados = asientos;
+
+            vista = Redirect("~/index");
 
             if (info.tipoDeSector == "Numerado") {
                 var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 bool exito = baseDeDatosHandler.transaccionReservarAsientosNumerados(info, miembro.email);
+                if (exito == false) {
+                    vista = Redirect("~/index");
+                }
             }
             else
             {
                 bool exito = baseDeDatosHandler.transaccionReservarAsientosNoNumerados(info);
+                if (exito == false) {
+                    vista = Redirect("~/index");
+                }
             }
+
+            return vista;
         }
     }
 }

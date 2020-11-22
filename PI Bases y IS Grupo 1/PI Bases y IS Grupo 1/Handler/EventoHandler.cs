@@ -264,14 +264,63 @@ namespace PIBasesISGrupo1.Handler
 
             string consulta = "SET IMPLICIT_TRANSACTIONS ON \n" +
                               "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ \n" +
-                              "BEGIN TRAN \n" +
-                              "UPDATE Sector SET numeroDeAsientos = numeroDeAsientos - @numeroDeAsientos WHERE nombreDeSectorPK = @nombreDeSector \n" +
-                              "AND emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora \n" +
-                              "COMMIT TRAN \n" +
-                              "COMMIT TRAN \n" +
-                              "SET IMPLICIT_TRANSACTIONS OFF";
+                              "BEGIN TRAN";
 
             SqlCommand comando = new SqlCommand(consulta, conexion);
+            try
+            {
+                exito = comando.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            consulta = "SELECT numeroDeAsientos FROM Sector WHERE nombreDeSectorPK = @nombreDeSector " +
+                       "AND emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora";
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreDeSector", cantidadAsientosDeseados.nombreSector);
+            comando.Parameters.AddWithValue("@emailCoordinador", cantidadAsientosDeseados.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", cantidadAsientosDeseados.nombreEvento);
+            comando.Parameters.AddWithValue("@fechaYHora", cantidadAsientosDeseados.fechaYHora);
+
+            int cantidadAsientosBD = 0;
+            exito = false;
+            try
+            {
+                cantidadAsientosBD = (int)comando.ExecuteScalar();
+                exito = true;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            if (cantidadAsientosBD < cantidadAsientosDeseados.cantidadAsientos) {
+                exito = false;
+                consulta = "ROLLBACK";
+                comando = new SqlCommand(consulta, conexion);
+                try
+                {
+                    exito = comando.ExecuteNonQuery() >= 1;
+                    exito = false;
+                    return exito;
+                }
+                catch
+                {
+                    return exito;
+                }
+            }
+
+            consulta = "UPDATE Sector SET numeroDeAsientos = numeroDeAsientos - @numeroDeAsientos WHERE nombreDeSectorPK = @nombreDeSector \n" +
+                       "AND emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora \n" +
+                       "COMMIT TRAN \n" +
+                       "COMMIT TRAN \n" +
+                       "SET IMPLICIT_TRANSACTIONS OFF";
+
+            comando = new SqlCommand(consulta, conexion);
 
             comando.Parameters.AddWithValue("@numeroDeAsientos", cantidadAsientosDeseados.cantidadAsientos);
             comando.Parameters.AddWithValue("@nombreDeSector", cantidadAsientosDeseados.nombreSector);
@@ -289,7 +338,7 @@ namespace PIBasesISGrupo1.Handler
             }
 
             conexion.Close();
-            return exito;
+            return true;
         }
 
         public bool transaccionReservarAsientosNumerados (InformacionDeRegistroEnEvento asientos, string emailComprador)
@@ -415,7 +464,7 @@ namespace PIBasesISGrupo1.Handler
 
             conexion.Close();
 
-            return exito;
+            return true;
         }
 
         private string crearConsultaDinamicaParaReservarAsientosDisponibles(InformacionDeRegistroEnEvento asientos, string emailComprador)
