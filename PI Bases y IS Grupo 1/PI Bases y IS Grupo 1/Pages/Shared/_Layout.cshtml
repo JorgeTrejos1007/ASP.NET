@@ -44,7 +44,7 @@
                 tokenSeparators: ['/', ',', ';']
             });
         });
-       
+
     </script>
     <script>
         $(document).ready(function () {
@@ -83,17 +83,12 @@
                     <div class="collapse navbar-collapse offset"
                          id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Index">Inicio</a>
-                            </li>
+                             
                             <li class="nav-item">
                                 <a class="nav-link" href="/Noticias">Noticias</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/Miembros/DesplegarMiembros">Miembros</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/Curso/Grafico">Analitica</a>
                             </li>
                             @if (miembroEnSesion != null)
                             {
@@ -119,6 +114,26 @@
                                         }
                                     </ul>
                                 </li>
+                                @if (filtros.verificarRol(miembroEnSesion.email, "Coordinador"))
+                                {
+                                    <li class="nav-item submenu dropdown">
+                                        <a href="#"
+                                           class="nav-link dropdown-toggle"
+                                           data-toggle="dropdown"
+                                           role="button"
+                                           aria-haspopup="true"
+                                           aria-expanded="false">Analitica</a>
+                                        <ul class="dropdown-menu">
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/Curso/Grafico">Cursos</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/Comunidad/GraficoComunidad">Comunidad</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                }
+
                             }
                             <li class="nav-item submenu dropdown">
                                 <a href="#"

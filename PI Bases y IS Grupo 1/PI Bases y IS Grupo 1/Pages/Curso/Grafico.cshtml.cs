@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
+using PIBasesISGrupo1.Filters;
+
 namespace PIBasesISGrupo1.Pages.Curso
 {
+    [PermisosDeVista("Coordinador")]
     public class GraficoModel : PageModel
     {
         // GET: Home
@@ -162,12 +165,12 @@ namespace PIBasesISGrupo1.Pages.Curso
        private void obtenerDatosEstudiantesPorCurso(string[] cursos) {
             List<DataPoint> dataPoints = new List<DataPoint>();
             List<Tuple<string, int>>  estudiantes= grafico.obtenerEstudiantesPorCurso(cursos);
-            List<string> topicos = new List<string>(); 
+            List<string> cantidadTotal = new List<string>(); 
             int total = grafico.retornarTotalDeEstudiantesEnLosCursosFiltrados();
             foreach (var estudiante in estudiantes)
             {
-                if (!topicos.Contains(estudiante.Item1)) {
-                    topicos.Add(estudiante.Item1);
+                if (!cantidadTotal.Contains(estudiante.Item1)) {
+                    cantidadTotal.Add(estudiante.Item1);
                 }
                 dataPoints.Add(new DataPoint(estudiante.Item1, ((double)estudiante.Item2/total) * 100));   
             }
@@ -225,10 +228,10 @@ namespace PIBasesISGrupo1.Pages.Curso
             //topHablidadesPorPais(pais);
             List<DataPoint> idiomas = new List<DataPoint>();
             List<Tuple<string, int>> idiomasPorCurso = grafico.obtenerIdiomasDeEstudiantePorCurso(cursos, idioma);
-            int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesConCiertoIdioma();
+            int totalDeEstudiantesConDichoIdioma = grafico.obtenerTotalDeEstudiantesConCiertoIdioma();
             foreach (var porcentajeHabilidad in idiomasPorCurso)
             {
-                idiomas.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
+                idiomas.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichoIdioma) * 100));
             }
             return new JsonResult(idiomas);
 
@@ -239,9 +242,9 @@ namespace PIBasesISGrupo1.Pages.Curso
             List<DataPoint> distribucionPorCurso = new List<DataPoint>();
             List<Tuple<string, int>> idiomasPorCurso = grafico.obtenerDistribucionDePaisPorCurso(cursos, pais);
             int totalDeEstudiantesConDichaHabilidad = grafico.obtenerTotalDeEstudiantesDeEsePais();
-            foreach (var porcentajeHabilidad in idiomasPorCurso)
+            foreach (var porcentaje in idiomasPorCurso)
             {
-                distribucionPorCurso.Add(new DataPoint(porcentajeHabilidad.Item1, ((double)porcentajeHabilidad.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
+                distribucionPorCurso.Add(new DataPoint(porcentaje.Item1, ((double)porcentaje.Item2 / totalDeEstudiantesConDichaHabilidad) * 100));
             }
             return new JsonResult(distribucionPorCurso);
 

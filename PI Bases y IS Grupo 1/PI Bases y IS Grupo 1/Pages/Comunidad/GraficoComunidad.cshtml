@@ -97,10 +97,10 @@
     <div style="margin-left:100px; margin-right: 35px;">
         @Html.AntiForgeryToken()
         <div class="row" style="margin-top:80px;">
-            <div id="tipoUsuarios" class="col-lg-4 col-md-6"style="margin-left:5px;"></div>
+            <div id="tipoUsuarios" class="col-lg-4 col-md-6" style="margin-left:5px;"></div>
             <div id="cantEventos" class="col-lg-4 col-md-6" style="margin-left:50px; margin-right:50px;"></div>
             <div style=" flex:0 0 33%;  max-width:250px;">
-                <div id="totalCursosCreados" class="box" >
+                <div id="totalCursosCreados" class="box">
                     <div class="box__header">
                         <h3 class="box__header-title">Cursos Creados</h3>
                     </div>
@@ -114,7 +114,7 @@
 
                     </div>
                 </div>
-                <div id="totalIdiomas" class="box" >
+                <div id="totalIdiomas" class="box">
                     <div class="box__header">
                         <h3 class="box__header-title">Total de Idiomas</h3>
                     </div>
@@ -129,41 +129,41 @@
                     </div>
                 </div>
             </div>
-                <div id="topCursos" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;  display: none"></div>
-                <div id="topTopicosCursos" style="height: 300px; width: 45%; margin-top:50px; margin-left:20px; margin-right:20px; display: none; background-color:white; padding:20px; ">
-                    <ul>
-                        <h3 style="text-align:left;">Tópicos más buscados según cursos</h3>
-                        @{
-                            foreach (var topico in topTopicos)
-                            {
-                                <li>@topico</li>
-                            }
+            <div id="topCursos" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;  display: none"></div>
+            <div id="topTopicosCursos" style="height: 300px; width: 45%; margin-top:50px; margin-left:20px; margin-right:20px; display: none; background-color:white; padding:20px; ">
+                <ul>
+                    <h3 style="text-align:left;">Tópicos más buscados según cursos</h3>
+                    @{
+                        foreach (var topico in topTopicos)
+                        {
+                            <li>@topico</li>
                         }
-                    </ul>
-
-                </div>
-
-                <div id="educadoresComunidad" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
-                <div id="certificadosYnoCertifcados" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
-
-
-
-                <div id="habilidadesComunidad" style="height: 300px;  width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
-                <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;display: none;"></div>
-
-                <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;"></div>
-                <div id="habilidadesPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
-                <div id="tiposDeUsuarioPorPais" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
+                    }
+                </ul>
 
             </div>
 
-            <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-            <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+            <div id="educadoresComunidad" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
+            <div id="certificadosYnoCertifcados" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
+
+
+
+            <div id="habilidadesComunidad" style="height: 300px;  width: 45%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
+            <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;display: none;"></div>
+
+            <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
+            <div id="habilidadesPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
+            <div id="tiposDeUsuarioPorPais" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
 
         </div>
-</body>
+
+        <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+        <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 
     </div>
+     
+</body>
+ 
 <script>
 
 

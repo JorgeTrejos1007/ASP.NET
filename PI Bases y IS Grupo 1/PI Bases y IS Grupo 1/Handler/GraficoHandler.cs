@@ -165,7 +165,7 @@ namespace PIBasesISGrupo1.Handler
         {
 
             List<Tuple<string, int>> idiomas = new List<Tuple<string, int>>();
-            string consulta = " SELECT TOP 15 COUNT(idiomaPK) AS Cantidad,idiomaPK" +
+            string consulta = " SELECT TOP 5 COUNT(idiomaPK) AS Cantidad,idiomaPK" +
             " FROM Idiomas WHERE emailFK IN (SELECT emailEstudianteFK FROM Certificado " +
             " WHERE (";
             for (int curso = 0; curso < cursos.Length; ++curso)
@@ -544,7 +544,7 @@ namespace PIBasesISGrupo1.Handler
         public List<Tuple<string, int>> obtenerIdiomasDeEstudiantePorCurso(string[] cursos, string idioma)
         {
 
-            List<Tuple<string, int>> habilidadPorCurso = new List<Tuple<string, int>>();
+            List<Tuple<string, int>> idiomaPorCurso = new List<Tuple<string, int>>();
             string consulta = " SELECT COUNT( DISTINCT emailEstudianteFK) AS Cantidad,nombreCursoFK" +
             " FROM Certificado WHERE ( ";
             for (int curso = 0; curso < cursos.Length; ++curso)
@@ -565,10 +565,10 @@ namespace PIBasesISGrupo1.Handler
             foreach (DataRow columnaCursosAprobados in topHabilidades.Rows)
             {
                 totalDeEstudiantesConCiertoIdioma += Convert.ToInt32(columnaCursosAprobados["Cantidad"]);
-                habilidadPorCurso.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
+                idiomaPorCurso.Add(new Tuple<string, int>(Convert.ToString(columnaCursosAprobados["nombreCursoFK"]), Convert.ToInt32(columnaCursosAprobados["Cantidad"])));
 
             }
-            return habilidadPorCurso;
+            return idiomaPorCurso;
 
         }
         public int obtenerTotalDeEstudiantesConCiertoIdioma()

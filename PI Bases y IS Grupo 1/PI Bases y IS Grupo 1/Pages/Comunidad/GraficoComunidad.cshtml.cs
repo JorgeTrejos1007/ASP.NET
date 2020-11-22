@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Newtonsoft.Json;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Comunidad
 {
+
+    [PermisosDeVista("Coordinador")]
     public class GraficoComunidadModel : PageModel
     {
         private GraficoHandler grafico = new GraficoHandler();
