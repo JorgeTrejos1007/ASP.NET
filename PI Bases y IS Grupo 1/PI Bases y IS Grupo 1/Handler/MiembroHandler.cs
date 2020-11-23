@@ -443,7 +443,7 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
         public int obtenerLikesTotalesDeMiembro(string emailMiembro) {
-            string consulta = "SELECT COUNT(*) AS likes FROM Vota WHERE emailMiembroQueRecibeLikeFK=@email;";
+            string consulta = "SELECT COUNT(*) AS likes FROM Vota WHERE emailMiembroQueRecibeLikeFK= '"+emailMiembro+"';";
             DataTable tablaResultado = crearTablaConsulta(consulta);
             int likes = 0;
             foreach (DataRow columna in tablaResultado.Rows)

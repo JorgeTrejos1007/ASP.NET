@@ -53,7 +53,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 informacionDePerfilesMasSimilares.Add(accesoDatos.obtenerDatosDeUnMiembro(correosDePerfilesMasSimilares[index]));
             }
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
-            ViewData["misLikes"] = accesoDatos.obtenerLikesTotalesDeMiembro(email);
+            ViewData["misLikes"] = accesoDatos.obtenerLikesTotalesDeMiembro(miembro.email);
         }
         public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
         {
