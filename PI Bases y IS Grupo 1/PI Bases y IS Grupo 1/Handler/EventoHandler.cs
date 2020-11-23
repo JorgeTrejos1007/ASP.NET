@@ -517,15 +517,15 @@ namespace PIBasesISGrupo1.Handler
             return consulta;
         }
 
-        public string obtenerNombreCanalDeStream(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        public string obtenerNombreCanalDeStream(string email, string nombreEvento, DateTime fechaYHora)
         {
-            string nombreCanal = "";
+            string nombreC = "";
             string consulta = "SELECT nombreCanal FROM Virtual WHERE emailCoordinadorFK = @email AND " +
                               "fechaYHoraFK = @fechaYHora AND nombreEventoFK = @nombreEvento";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
 
-            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@email", email);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
             comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
 
@@ -533,10 +533,10 @@ namespace PIBasesISGrupo1.Handler
 
             foreach (DataRow columna in consultaFormatoTabla.Rows)
             {
-                nombreCanal = Convert.ToString(columna["nombreCanal"]);
+                nombreC = Convert.ToString(columna["nombreCanal"]);
             }
 
-            return nombreCanal;
+            return nombreC;
         }
 
         private byte[] obtenerBytes(IFormFile archivo)

@@ -12,14 +12,13 @@ namespace PIBasesISGrupo1.Pages.Eventos
     {
         EventoHandler eventoHandler = new EventoHandler();
 
-        public void OnGet(string nombreE, string fecha, string email)
+        public void OnGet(string nombreE, string nombreCanal)
         {
             nombreE = "Evento de prueba"; 
             TempData["nombreEvento"] = nombreE;
 
-            fecha = "2020-12-02 13:00:00.000";
-            email = "stevegc112016@gmail.com";
-            TempData["nombreCanal"] = eventoHandler.obtenerNombreCanalDeStream(email, nombreE, Convert.ToDateTime(fecha));
+            nombreCanal = "auronplay";
+            TempData["nombreCanal"] = nombreCanal;
         }
     }
 }

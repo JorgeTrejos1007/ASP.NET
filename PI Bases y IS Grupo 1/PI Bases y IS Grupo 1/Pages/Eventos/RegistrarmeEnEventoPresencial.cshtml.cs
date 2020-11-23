@@ -28,6 +28,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
             string nombreEvento = (string)TempData["nombreEvento"];
             DateTime fechaYHora = (DateTime)TempData["fechaEvento"];
             string lugar = (string)TempData["lugarEvento"];
+            TempData["nombreLugar"] = lugar;
 
             ViewData["nombreEvento"] = nombreEvento;
             ViewData["fechaYHora"] = fechaYHora;
@@ -50,17 +51,17 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
             // datos de prueba
             InformacionDeRegistroEnEvento info = new InformacionDeRegistroEnEvento();
-            info.nombreEvento = "Standup comedy con Ronny  se puede quedar 5 minutitos mas";
+            info.nombreEvento = "Adriancito con Daddy Yankee en concierto";
             info.emailCoordinador = "stevegc112016@gmail.com";
-            info.nombreSector = "Altair";
-            info.fechaYHora = Convert.ToDateTime("2020-11-27 18:00:00.000");
-            info.tipoDeSector = "Numerado";
-            //info.cantidadAsientos = 10;
-            List<int> asientos = new List<int>();
+            info.nombreSector = "China";
+            info.fechaYHora = Convert.ToDateTime("2020-11-25 17:13:00.000");
+            info.tipoDeSector = "No numerado";
+            info.cantidadAsientos = 3;
+            /*List<int> asientos = new List<int>();
             asientos.Add(2);
             asientos.Add(4);
             asientos.Add(5);
-            info.asientosDeseados = asientos;
+            info.asientosDeseados = asientos;*/
 
             var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
             vista = Redirect("~/index");
@@ -88,24 +89,28 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 mail.To.Add(miembro.email);
                 mail.Subject = "Entradas para el evento " + info.nombreEvento;
 
+
+                mail.Body = "Hola, has sido registrado en un evento. Los detalles de tu registro se muestran a continuación:\n\n";
+                mail.Body += "Evento: " + info.nombreEvento + ".\n";
+                mail.Body += "Sector: " + info.nombreSector + ".\n";
+
                 if (info.tipoDeSector == "Numerado")
                 {
-                    mail.Body = "Hola, has sido registrado en un evento. Los detalles de tu registro se muestran a continuación:\n\n";
-                    mail.Body += "Evento: " + info.nombreEvento + ".\n";
-                    mail.Body += "Sector: " + info.nombreSector + ".\n";
                     mail.Body += "Asientos: ";
-                    for (int index = 0; index < info.asientosDeseados.Count; index++) {
+                    for (int index = 0; index < info.asientosDeseados.Count; index++)
+                    {
                         mail.Body += info.asientosDeseados[index].ToString() + " ";
                     }
-                    mail.Body += ".\n Fecha: " + info.fechaYHora.Date.ToString() + ".\n";
-                    mail.Body += "Hora: " + info.fechaYHora.Hour.ToString() + ":" + info.fechaYHora.Minute.ToString();
-                    mail.Body += "Lugar: " + (string)TempData["nombreLugar"] + ".\n\n";
-                    mail.Body += "Presente este correo en la entrada el día del evento para poder ingresar.\n Te esperamos!"; 
                 }
                 else
                 {
-
+                    mail.Body += "Cantidad de asientos: " + info.cantidadAsientos.ToString();
                 }
+
+                mail.Body += ".\n Fecha: " + info.fechaYHora.Date.ToString() + ".\n";
+                mail.Body += "Hora: " + info.fechaYHora.Hour.ToString() + ":" + info.fechaYHora.Minute.ToString();
+                mail.Body += "Lugar: " + (string)TempData["nombreLugar"] + ".\n\n";
+                mail.Body += "Presente este correo en la entrada el día del evento para poder ingresar.\n Te esperamos!"; 
 
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("comunidad.practica.g1@gmail.com", "AdriancitoG1.");
