@@ -214,7 +214,64 @@ namespace PIBasesISGrupo1.Handler
 
             comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
-            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora",  cambiarFormatoFecha(fechaYHora));
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                listaSectores.Add(
+                new Sector
+                {
+                    nombreDeSector = Convert.ToString(columna["nombreDeSectorPK"]),
+                    tipo = Convert.ToString(columna["tipo"]),
+                    cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"])
+                });
+            }
+
+            return listaSectores;
+        }
+
+        public List<Sector> obtenerSectoresNoNumeradosEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            List<Sector> listaSectores = new List<Sector>();
+
+            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND tipo='No numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                listaSectores.Add(
+                new Sector
+                {
+                    nombreDeSector = Convert.ToString(columna["nombreDeSectorPK"]),
+                    tipo = Convert.ToString(columna["tipo"]),
+                    cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"])
+                });
+            }
+
+            return listaSectores;
+        }
+
+        public List<Sector> obtenerSectoresNumeradosEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            List<Sector> listaSectores = new List<Sector>();
+            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND tipo='Numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
 
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
 
@@ -245,7 +302,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@nombreSector", nombreSector);
             comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
-            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
 
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
 
@@ -438,6 +495,12 @@ namespace PIBasesISGrupo1.Handler
             archivo.OpenReadStream().CopyTo(stream);
             bytes = stream.ToArray();
             return bytes;
+        }
+        private string cambiarFormatoFecha(DateTime fecha)
+        {
+            string fechaCorregida = "";
+            fechaCorregida = fecha.Year.ToString()+"-"+fecha.Month.ToString()+ "-" + fecha.Day.ToString()+" " +fecha.Hour.ToString() +":"+fecha.Minute.ToString()+":00.000";
+            return fechaCorregida;
         }
     }
 }

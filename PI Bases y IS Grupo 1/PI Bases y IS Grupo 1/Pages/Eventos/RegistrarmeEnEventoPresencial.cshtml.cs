@@ -11,8 +11,6 @@ namespace PIBasesISGrupo1.Pages.Eventos
 {
     public class RegistrarmeEnEventoPresencialNumeradoModel : PageModel
     {
-        [BindProperty]
-        public Evento evento { get; set; }
 
         EventoHandler baseDeDatosHandler = new EventoHandler();
         List<Sector> sectores = new List<Sector>();
@@ -20,27 +18,54 @@ namespace PIBasesISGrupo1.Pages.Eventos
         [BindProperty]
         public InformacionDeRegistroEnEvento registro { get; set; }
 
-        public void OnGet()
+        public IActionResult OnGet()
         {
-            string emailCoordinador = (string)TempData["emailCoordinador"];
-            string nombreEvento = (string)TempData["nombreEvento"];
-            DateTime fechaYHora = (DateTime)TempData["fechaEvento"];
-            string lugar = (string)TempData["lugarEvento"];
+            IActionResult vista;
+            try {
+                string emailCoordinador = (string)TempData["emailCoordinador"];
+                string nombreEvento = (string)TempData["nombreEvento"];
+                DateTime fechaYHora = (DateTime)TempData["fechaEvento"];
+                string lugar = (string)TempData["lugarEvento"];
+                ViewData["nombreEvento"] = nombreEvento;
+                ViewData["fechaYHora"] = fechaYHora;
+                ViewData["lugar"] = lugar;
+                ViewData["emailCoordinador"] = emailCoordinador;
+                DateTime fecha = Convert.ToDateTime(fechaYHora);
 
-            ViewData["nombreEvento"] = nombreEvento;
-            ViewData["fechaYHora"] = fechaYHora;
-            ViewData["lugar"] = lugar;
-            ViewData["emailCoordinador"] = emailCoordinador;
-            DateTime fecha = Convert.ToDateTime(fechaYHora);
-            ViewData["listaSectores"] = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
+                List<Sector> listaSectoresNoNumerados = new List<Sector>();
 
-            sectores = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
-
-            for (int index = 0; index < sectores.Count; index++) {
-                if (sectores[index].tipo == "Numerado") {
-                    sectores[index].asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fecha, sectores[index].nombreDeSector);
+                List<Sector> listaSectoresNumerados = new List<Sector>();            
+                listaSectoresNumerados = baseDeDatosHandler.obtenerSectoresNumeradosEventoPresencial(emailCoordinador, nombreEvento, fecha);
+                foreach (var sector in listaSectoresNumerados)
+                {
+                    sector.asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fechaYHora, sector.nombreDeSector);
                 }
+                ViewData["listaSectoresNumerados"] = listaSectoresNumerados;
+
+
+                sectores = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
+
+                for (int index = 0; index < sectores.Count; index++)
+                {
+                    if (sectores[index].tipo == "Numerado")
+                    {
+                        sectores[index].asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fecha, sectores[index].nombreDeSector);
+                    }
+                }
+                vista = Page();
             }
+            catch
+            {
+                vista = Redirect("~/Error");
+            }
+            return vista;
+        }
+
+        public IActionResult OnPostElegirAsientos(string nombreSectorElegido, string nombreEvento, string emailCoordinador, DateTime fechaYHora)
+        {
+            Sector sector = new Sector();
+            sector.asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fechaYHora, nombreSectorElegido);
+            return new JsonResult(sector);
         }
 
         public void OnPost () {

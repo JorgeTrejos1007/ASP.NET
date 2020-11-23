@@ -6,7 +6,7 @@
     var lugarEvento = (string)ViewData["lugarEvento"];
     var emailCoordinador = (string)ViewData["emailCoordinador"];
     var fechaYHora = (DateTime)ViewData["fechaYHora"];
-    var listaSectores = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectores"];
+    var listaSectoresNumerados = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectoresNumerados"];
 }
 
 
@@ -36,120 +36,160 @@
         }
     </style>
 </head>
-<body>
-    <div class="cursos-container-2">
-        <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;">
-            <div class="col-lg-12 right-contents">
-                <div style="background-color:#002347; height:70px;">
-                    <h2 class="title_color align-content-lg-center centrar" style="color:#fdc632; padding:1%;">@nombreEvento</h2>
-                </div>
-                <hr class="new5">
-                <ul>
-                    <li>
-                        <a class="justify-content-between d-flex">
-                            <p>Lugar</p>
-                            <span class="or">@lugarEvento</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="justify-content-between d-flex">
-                            <p>Fecha: </p>
-                            <span>@fechaYHora.ToString()</span>
-                        </a>
-                    </li>
-                </ul>
+
+
+@Html.AntiForgeryToken()
+<div class="cursos-container-2">
+    <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;">
+        <div class="col-lg-12 right-contents">
+            <div style="background-color:#002347; height:70px;">
+                <h2 class="title_color align-content-lg-center centrar" style="color:#fdc632; padding:1%;">@nombreEvento</h2>
             </div>
+            <hr class="new5">
+            <ul>
+                <li>
+                    <a class="justify-content-between d-flex">
+                        <p>Lugar</p>
+                        <span class="or">@lugarEvento</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="justify-content-between d-flex">
+                        <p>Fecha: </p>
+                        <span>@fechaYHora.ToString()</span>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
 
-    <div class="wrap">
-        <ul class="tabs">
-            <li><a href="#tab1"><span class="tab-text "> 1. Cantidad de asientos </span></a></li>
-            <li><a href="#tab2"><span class="tab-text "> 2. Elija sus asientos </span></a></li>
-            <li><a href="#tab3"><span class="tab-text "> 3. Confirme registro </span></a></li>
-        </ul>
-        <div class="secciones">
-            <article id="tab1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content center">
-                        <div class="modal-header">
-                            <div class="center-login">
-                                <img class="logo-2" src="~/img/logo.png" alt="" />
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div style="">
-                                <h2 class="modal-title">Seleccione la cantidad de asientos que desea reservar</h2>
-                                <div class="login-form">
-                                    <form method="post">
-
-                                        <input id="cantidadDeAsientos" class="sector__input" />
-                                        <br>
-                                        <div class="center-login">
-                                            <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
-                                            <a href="#tab2"></a>
-                                        </div>
-
-                                        <br>
-
-                                    </form>
-                                </div>
-                            </div>
-
+<div class="wrap">
+    <ul class="tabs">
+        <li><a href="#tab1"><span class="tab-text "> 1. Cantidad de asientos </span></a></li>
+        <li><a href="#tab2"><span class="tab-text "> 2. Elija sus asientos </span></a></li>
+        <li><a href="#tab3"><span class="tab-text "> 3. Confirme registro </span></a></li>
+    </ul>
+    <div class="secciones">
+        <article id="tab1">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content center">
+                    <div class="modal-header">
+                        <div class="center-login">
+                            <img class="logo-2" src="~/img/logo.png" alt="" />
                         </div>
                     </div>
-                </div>
-            </article>
-            <article id="tab2">
+                    <div class="modal-body">
+                        <div style="">
+                            <h2 class="modal-title">Seleccione la cantidad de asientos que desea reservar</h2>
+                            <div class="login-form">
+                                <form method="post">
 
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content center">
-                        <div class="modal-header">
-                            <div class="center-login">
-                                <img class="logo-2" src="~/img/logo.png" alt="" />
+                                    <input id="cantidadDeAsientos" class="sector__input" />
+                                    <br>
+                                    <div class="center-login">
+                                        <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
+                                        <a href="#tab2"></a>
+                                    </div>
+
+                                    <br>
+
+                                </form>
                             </div>
                         </div>
-                        <div class="modal-body">
-                            <div>
-                                <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
-                                <div class="login-form">
-                                    <form method="post">
-                                        <!--Aqui va lo de elegir ubicacion de sus asientos-->
-                             
-                                        <div class=" input-group mt-10">                     
-                                            <span asp-validation-for="@Model.evento.sectores" class="text-danger"></span>
-                                            <select class="border-0  sector-select single-input-primary" asp-for="@Model.evento.sectores" required>
-                                                @foreach (var sector in listaSectores)
-                                                {
-                                                    <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
 
-
-                                                }
-                                            </select>
-                                        </div>
-
-                                        <br>
-                                        <div class="center-login">
-                                            <a class="primary-btn text-uppercase enroll" href="#tab3"> Siguiente</a>
-                                            <a href="#tab3"></a>
-                                        </div>
-
-                                        <br>
-
-                                    </form>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
-            </article>
-            <article id="tab3"></article>
-            <form method="post">
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+            </div>
+        </article>
+        <article id="tab2">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content center">
+                    <div class="modal-header">
+                        <div class="center-login">
+                            <img class="logo-2" src="~/img/logo.png" alt="" />
+                        </div>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
+                            <div class="login-form">
+                                <form method="post">
+                                    <!--Aqui va lo de elegir ubicacion de sus asientos-->
+                                    <input type="hidden" asp-for="@Model.registro.emailCoordinador" id="registroEmailCoordinador" value="@emailCoordinador" />
+                                    <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
+                                    <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
+                                    <div class="input-group mt-10">
+                                        <select style="width: 465px;" class="mul-select2" id="seleccionarSector" required>
+                                            <option value="SinSeleccion">- Sin selección -</option>
+                                            @foreach (var sector in listaSectoresNumerados)
+                                            {
+                                                <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
+
+                                            }
+                                        </select>
+                                    </div>
+                                    <h2 class="modal-title">Seleccione su numero de asiento</h2>
+
+                                    <div id="elegirNumeroAsiento" style="display:none">
+                                        <select style="width: 465px;" class="mul-select" multiple id="seleccionarAsiento" required>
+
+                                        </select>
+                                    </div>
+      
+
+                                    <br>
+                                    <div class="center-login">
+                                        <a class="primary-btn text-uppercase enroll" href="#tab3"> Siguiente</a>
+                                        <a href="#tab3"></a>
+                                    </div>
+
+                                    <br>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </article>
+        <article id="tab3"></article>
+        <form method="post">
+            <input type="submit" value="Submit">
+        </form>
     </div>
-    <script src="~/js/tabs.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
-</body>
+</div>
+<script src="~/js/tabs.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
+
+<script type="text/javascript">
+    $(function () {
+        $("#seleccionarSector").change(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Eventos/RegistrarmeEnEventoPresencial?handler=ElegirAsientos",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "nombreSectorElegido": $("#seleccionarSector").val(), "nombreEvento": $("#registroNombreEvento").val(), "emailCoordinador": $("#registroEmailCoordinador").val(), "fechaYHora": $("#registroFechaYHora").val() },
+                success: function (response) {
+                    if (response.asientosDisponibles != null) {
+                        document.getElementById("elegirNumeroAsiento").style.display = "block";
+                        document.getElementById("seleccionarAsiento").innerHTML = "";
+                        for (var i = 0; i < response.asientosDisponibles.length; i++) {
+                            var newOption = new Option(response.asientosDisponibles[i], response.asientosDisponibles[i], false, false);
+                            $('#seleccionarAsiento').append(newOption).trigger('change');
+                        }
+                    }
+                    else {
+                        document.getElementById("elegirNumeroAsiento").style.display = "none";
+                    }
+
+                }
+            });
+        });
+    });
+</script>

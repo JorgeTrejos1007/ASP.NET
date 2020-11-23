@@ -106,8 +106,11 @@
 
                                                 </p>
                                                 <div class="center-event" style="margin-top:-2%;">
+                                                    @{ 
+                                                        string fechaYHora = evento.fechaYHora.ToString();
+                                                    }
                                                     <form method="post">
-                                                        <button type="submit" asp-route-nombre="@evento.nombre" asp-route-lugar="@evento.lugar" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-fechaYHora="@evento.fechaYHora" asp-page-handler="RegistrarmeEnElEventoPresencial" class="primary-btn rounded-0  white_bg_btn" style="color:#002347">Registrarme</button>
+                                                        <button type="submit" asp-route-nombre="@evento.nombre" asp-route-lugar="@evento.lugar" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-fechaYHora="@fechaYHora" asp-page-handler="RegistrarmeEnElEventoPresencial" class="primary-btn rounded-0  white_bg_btn" style="color:#002347">Registrarme</button>
                                                     </form>
                                                 </div>
                                             </div>
