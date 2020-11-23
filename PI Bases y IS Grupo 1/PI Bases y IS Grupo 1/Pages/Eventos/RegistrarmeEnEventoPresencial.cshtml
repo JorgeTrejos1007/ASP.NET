@@ -96,11 +96,11 @@
 
                                     <input type="submit" style="display:none">
                                 </form>
-                                    <div class="center-login">
-                                        <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
-                                        <a href="#tab2"></a>
-                                    </div>
-                                    <br>
+                                <div class="center-login">
+                                    <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
+                                    <a href="#tab2"></a>
+                                </div>
+                                <br>
                             </div>
                         </div>
 
@@ -123,7 +123,7 @@
                                 <div class="login-form">
 
                                     <div class="input-group mt-10">
-                                        <select style="width: 465px;" class="mul-select" id="seleccionarSector" onchange="ubicacionElegida('seleccionarSector')" required>
+                                        <select style="width: 465px;" class="mul-select" id="seleccionarSector" onchange="obtenerAsientos(); ubicacionElegida('seleccionarSector');" required>
                                             <option value="SinSeleccion">- Sin selección -</option>
                                             @foreach (var sector in listaSectoresNumerados)
                                             {
@@ -181,7 +181,7 @@
                                     </div>
                                     <h2 class="modal-title">Seleccione la cantidad de asientos</h2>
 
-                                    <input type="number" value="" id="cantidadDeAsientos" required/>
+                                    <input type="number" value="" id="cantidadDeAsientos" required />
 
 
                                     <br>
@@ -213,7 +213,7 @@
                     <div class="modal-body">
                         <div style="">
                             <h2 class="modal-title">Seleccionado</h2>
-                            <div class="login-form">                         
+                            <div class="login-form">
                                 <form method="post">
                                     <!--Aqui va lo de elegir ubicacion de sus asientos-->
                                     <input type="hidden" asp-for="@Model.registro.emailCoordinador" id="registroEmailCoordinador" value="@emailCoordinador" />
@@ -232,11 +232,11 @@
                                         <h2>Cantidad</h2>
                                         <input asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" readonly />
                                     </div>
-                                   
+
                                     <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
 
                                 </form>
-                                
+
                             </div>
                         </div>
 
@@ -253,7 +253,7 @@
 <script>
     function ubicacionElegida(seleccionTipoSector) {
         var elem = document.getElementById(seleccionTipoSector).value;
-        document.getElementById("ubicacionEscogida").value = ""+elem+"";
+        document.getElementById("ubicacionEscogida").value = "" + elem + "";
     }
     function asientosElegidos() {
         var values = $('#seleccionarAsiento').val();
@@ -268,7 +268,7 @@
             document.getElementById("cantidadAsientosElegidos").style.display = "none";
 
 
-            document.getElementById("registroTipo").value = ""+tipo+"";
+            document.getElementById("registroTipo").value = "" + tipo + "";
         }
         else {
             document.getElementById("registroNoNumerado").style.display = "block";
@@ -286,34 +286,36 @@
     }
 </script>
 
-<script type="text/javascript">
-    $(function () {
-        $("#seleccionarSector").change(function () {
-            $.ajax({
-                type: "POST",
-                url: "/Eventos/RegistrarmeEnEventoPresencial?handler=ElegirAsientos",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: { "nombreSectorElegido": $("#seleccionarSector").val(), "nombreEvento": $("#registroNombreEvento").val(), "emailCoordinador": $("#registroEmailCoordinador").val(), "fechaYHora": $("#registroFechaYHora").val() },
-                success: function (response) {
-                    if (response.asientosDisponibles != null) {
-                        document.getElementById("elegirNumeroAsiento").style.display = "block";
-                        document.getElementById("seleccionarAsiento").innerHTML = "";
-                        for (var i = 0; i < response.asientosDisponibles.length; i++) {
-                            var newOption = new Option(response.asientosDisponibles[i], response.asientosDisponibles[i], false, false);
-                            $('#seleccionarAsiento').append(newOption).trigger('change');
-                        }
-                    }
-                    else {
-                        document.getElementById("elegirNumeroAsiento").style.display = "none";
-                    }
 
+<script type="text/javascript">
+    function obtenerAsientos() {
+
+        $.ajax({
+            type: "POST",
+            url: "/Eventos/RegistrarmeEnEventoPresencial?handler=ElegirAsientos",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "nombreSectorElegido": $("#seleccionarSector").val(), "nombreEvento": $("#registroNombreEvento").val(), "emailCoordinador": $("#registroEmailCoordinador").val(), "fechaYHora": $("#registroFechaYHora").val() },
+            success: function (response) {
+                if (response.asientosDisponibles != null) {
+                    document.getElementById("elegirNumeroAsiento").style.display = "block";
+                    document.getElementById("seleccionarAsiento").innerHTML = "";
+                    for (var i = 0; i < response.asientosDisponibles.length; i++) {
+                        var newOption = new Option(response.asientosDisponibles[i], response.asientosDisponibles[i], false, false);
+                        $('#seleccionarAsiento').append(newOption).trigger('change');
+                    }
                 }
-            });
+                else {
+                    document.getElementById("elegirNumeroAsiento").style.display = "none";
+                }
+
+            }
         });
-    });
+
+    }
 </script>
+
 
 
