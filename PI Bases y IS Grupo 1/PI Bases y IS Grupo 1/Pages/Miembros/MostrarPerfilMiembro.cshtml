@@ -56,6 +56,9 @@
         .member-container {
             margin-top: 1%;
         }
+         .fa-thumbs-up {
+             color: #f1f9ff;
+         }
     </style>
     <style type="text/css">
         body {
@@ -98,11 +101,23 @@
                                 }
                             }
                             <div style="text-align:center;align-content:center"></div>
-                            <i onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
-                            <div  >
-                                <text id="likesActuales">@ViewData["misLikes"]</text>
+                            @{if ((bool)ViewData["enSesion"] == true)
+                                {
+                                    <i id="pq" onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
+                                    <script>
+                                        window.onload = function () {
+                                            if (@TempData["estadoDelLike"]== 0) {
+                                                var element = document.getElementById("pq");
+                                                element.classList.toggle("fa-thumbs-down");
+                                            }
+                                        }
+                                    </script>
+                                    <div  >
+                                        <text id="likesActuales">@ViewData["misLikes"]</text>
 
-                            </div>
+                                    </div>
+                                    }
+                                }
                         </div>
                         <div class="col-lg-8">
                             <div class="testi_text">

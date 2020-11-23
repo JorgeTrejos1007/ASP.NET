@@ -55,8 +55,12 @@ namespace PIBasesISGrupo1.Pages.Miembros
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
             ViewData["misLikes"] = accesoDatos.obtenerLikesTotalesDeMiembro(miembro.email);
             miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
-            if(miembroEnSesion != null )
-                TempData["estadoDelLike"]=accesoDatos.obtenerElEstadoDelLike(miembroEnSesion.email, miembro.email);
+            ViewData["enSesion"] = false;
+            if (miembroEnSesion != null)
+            {
+                ViewData["enSesion"] = true;
+                TempData["estadoDelLike"] = accesoDatos.obtenerElEstadoDelLike(miembroEnSesion.email, miembro.email);
+            }
         }
         public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
         {
