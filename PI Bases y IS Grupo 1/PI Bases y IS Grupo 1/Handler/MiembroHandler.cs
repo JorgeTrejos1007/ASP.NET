@@ -498,6 +498,45 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
+        }
+        public bool darLike(string emailDelQueDaLike, string emailDelQueRecibeLike) {
+            string consulta = "INSERT INTO Vota(emailMiembroQueRecibeLikeFK,emailMiembroQueDaLikeFK) " +
+                "VALUES (@emailRecibeLike,@emailDaLike)";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailRecibeLike", emailDelQueRecibeLike);
+            comando.Parameters.AddWithValue("@emailDaLike", emailDelQueDaLike);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
+            return exito;
+        }
+        public bool darDisLike(string emailDelQueDaDisLike, string emailDelQueRecibeDisLike)
+        {
+            string consulta = "DELETE FROM Vota WHERE emailMiembroQueRecibeLikeFK=@emailRecibeLike and " +
+                "emailMiembroQueDaLikeFK= @emailDaLike" ;
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailRecibeLike", emailDelQueRecibeDisLike);
+            comando.Parameters.AddWithValue("@emailDaLike", emailDelQueDaDisLike);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
+            return exito;
+        }
+        public int obtenerLikesTotalesDeMiembro(string emailMiembro) {
+            string consulta = "SELECT COUNT(*) AS likes FROM Vota WHERE emailMiembroQueRecibeLikeFK= '"+emailMiembro+"';";
+            DataTable tablaResultado = crearTablaConsulta(consulta);
+            int likes = 0;
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                 likes= Convert.ToInt32(columna["likes"]) ;
+            }
+            return likes;
+        }
+        public int obtenerElEstadoDelLike(string emailDelQueDaDisLike, string emailDelQueRecibeDisLike)
+        {
+            string consulta = "SELECT 1 FROM Vota WHERE  emailMiembroQueDaLikeFK =@emailDaLike AND emailMiembroQueRecibeLikeFK= @emailRecibeLike;";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailRecibeLike", emailDelQueRecibeDisLike);
+            comando.Parameters.AddWithValue("@emailDaLike", emailDelQueDaDisLike);
+            int estado = baseDeDatos.saberSiExisteTupla(comando);
+            return estado;
+        }
     }
 }
  

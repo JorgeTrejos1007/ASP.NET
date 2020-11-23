@@ -5,16 +5,26 @@
 }
 
 <header>
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+     <style>
 
         .center-perfil {
             //margin: 0;
             margin-left: 10%;
             margin-right: 20%;
         }
+         .fa {
+             font-size: 50px;
+             cursor: pointer;
+             user-select: none;
+         }
+
+             .fa:hover {
+                 color: darkblue;
+             }
 
         .testi_item {
-            background-color:white;
+            background-color: white;
             width: 1200px;
             padding: 50px 55px;
             margin-bottom: 200px;
@@ -26,22 +36,30 @@
             -o-transition: all 0.3s ease 0s;
             transition: all 0.3s ease 0s;
         }
+
         .member_img-perfil {
             height: 300px;
             width: 300px;
             margin-right: 100px;
             border-radius: 10px;
         }
+
         .main_title {
-            margin-bottom:2%;
-            padding-left:4%;
+            margin-bottom: 2%;
+            padding-left: 4%;
         }
+
         .testi_text {
-            margin-left:5%;
+            margin-left: 5%;
         }
+
         .member-container {
-            margin-top:1%;
+            margin-top: 1%;
         }
+         .fa-thumbs-up {
+             color: #000070;
+              
+         }
     </style>
     <style type="text/css">
         body {
@@ -54,10 +72,12 @@
 
 
 <html>
+
 <br>
 
 <div class="member-container">
     <body id="top">
+        @Html.AntiForgeryToken()
         <div class="center-perfil">
             <div class="row">
                 <div class="testi_item">
@@ -81,6 +101,26 @@
                                     <img class="member_img-perfil" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
                                 }
                             }
+                                    <div class="checkbox-inline" style="text-align:center;align-content:center;nav-down:">
+                                        <br>
+                                        @{if ((bool)ViewData["enSesion"] == true)
+                                            {
+                                                <i id="pq" onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
+                                                <script>
+                                        window.onload = function () {
+                                            if (@TempData["estadoDelLike"]== 0) {
+                                                var element = document.getElementById("pq");
+                                                element.classList.toggle("fa-thumbs-down");
+                                            }
+                                        }
+                                                </script>
+                                                <div>
+                                                    <text id="likesActuales">@ViewData["misLikes"]</text><text> personas les gusta este perfil</text>
+
+                                                </div>
+                                            }
+                                        }
+                                    </div>
                         </div>
                         <div class="col-lg-8">
                             <div class="testi_text">
@@ -220,3 +260,43 @@
 </div>
 
 </html>
+<script>
+    function myFunction(x,email) {
+        x.classList.toggle("fa-thumbs-down");
+        //alert(email);
+        myAjax(email);
+         
+    }
+    function myAjax(emailDelMiembro) {
+        $.ajax({
+            type: "POST",
+            url: "MostrarPerfilMiembro?handler=ActualizarLikesDelMiembro",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: {
+                "emailDelPerfilActual":emailDelMiembro
+            },
+            success: function (response) {
+
+                actualizaLikesDelMiembro(response);
+
+
+            },
+            failure: function (response) {
+                alert('fallo');
+            },
+            error: function (response) {
+                alert('error');
+            }
+
+        });
+    }
+    function actualizaLikesDelMiembro(cantLikes) {
+        document.getElementById("likesActuales").innerHTML = cantLikes;
+        
+         
+
+    }
+</script>

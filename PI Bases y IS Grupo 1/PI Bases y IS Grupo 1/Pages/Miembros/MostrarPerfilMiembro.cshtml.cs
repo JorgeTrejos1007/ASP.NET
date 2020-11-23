@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Models;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.MotorSimilitudes;
+using Newtonsoft.Json;
+
 
 namespace PIBasesISGrupo1.Pages.Miembros
 {
@@ -14,16 +16,16 @@ namespace PIBasesISGrupo1.Pages.Miembros
     {      
         [BindProperty]
         public Miembro miembro { get; set; }
+        public static Miembro   miembroEnSesion;
 
         public void OnGet(string email)
         {
+            MiembroHandler accesoDatos = new MiembroHandler();
             //Si es null es porque es mi perfil
             if (email == null) {
                 var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 email = miembro.email;
             }
-
-            MiembroHandler accesoDatos = new MiembroHandler();
             ViewData["email"] = email;
             miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
 
@@ -57,6 +59,26 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 informacionDePerfilesMasSimilares.Add(accesoDatos.obtenerDatosDeUnMiembro(correosDePerfilesMasSimilares[index]));
             }
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
+            ViewData["misLikes"] = accesoDatos.obtenerLikesTotalesDeMiembro(miembro.email);
+            miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+            ViewData["enSesion"] = false;
+            if (miembroEnSesion != null)
+            {
+                ViewData["enSesion"] = true;
+                TempData["estadoDelLike"] = accesoDatos.obtenerElEstadoDelLike(miembroEnSesion.email, miembro.email);
+            }
         }
-    }    
+        public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
+        {
+            string emailMiembroEnSesion = "stevegc112016@gmail.com";
+            MiembroHandler accesoMiembro = new MiembroHandler();
+            if (!accesoMiembro.darLike(emailMiembroEnSesion,emailDelPerfilActual)) {
+                accesoMiembro.darDisLike(emailMiembroEnSesion,emailDelPerfilActual);
+            }
+            return new JsonResult(accesoMiembro.obtenerLikesTotalesDeMiembro(emailDelPerfilActual)) ;
+        }
+    }
+    
+     
+
 }
