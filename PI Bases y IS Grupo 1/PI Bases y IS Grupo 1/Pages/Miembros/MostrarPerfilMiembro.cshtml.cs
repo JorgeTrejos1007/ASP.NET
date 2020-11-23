@@ -53,10 +53,15 @@ namespace PIBasesISGrupo1.Pages.Miembros
                 informacionDePerfilesMasSimilares.Add(accesoDatos.obtenerDatosDeUnMiembro(correosDePerfilesMasSimilares[index]));
             }
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
+            ViewData["misLikes"] = accesoDatos.obtenerLikesTotalesDeMiembro(email);
         }
         public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
         {
             string emailMiembroEnSesion = "stevegc112016@gmail.com";
+            MiembroHandler accesoMiembro = new MiembroHandler();
+            if (!accesoMiembro.darLike(emailMiembroEnSesion,emailDelPerfilActual)) {
+                accesoMiembro.darDisLike(emailMiembroEnSesion,emailDelPerfilActual);
+            }
             return new JsonResult(emailMiembroEnSesion); ;
         }
     }
