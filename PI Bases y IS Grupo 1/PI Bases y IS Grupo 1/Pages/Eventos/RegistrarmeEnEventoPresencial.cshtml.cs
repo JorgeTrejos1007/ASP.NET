@@ -28,7 +28,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 string lugar = (string)TempData["lugarEvento"];
                 ViewData["nombreEvento"] = nombreEvento;
                 ViewData["fechaYHora"] = fechaYHora;
-                ViewData["lugar"] = lugar;
+                ViewData["lugarEvento"] = lugar;
                 ViewData["emailCoordinador"] = emailCoordinador;
                 DateTime fecha = Convert.ToDateTime(fechaYHora);
 

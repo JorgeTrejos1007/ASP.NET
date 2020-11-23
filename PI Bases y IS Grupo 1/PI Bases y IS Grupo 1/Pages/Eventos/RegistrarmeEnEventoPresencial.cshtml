@@ -14,9 +14,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-
     <style type="text/css">
-
         body {
             background-image: url("~/img/event/evento3.jpg");
             background-size: 100%;
@@ -49,8 +47,8 @@
             <ul>
                 <li>
                     <a class="justify-content-between d-flex">
-                        <p>Lugar</p>
-                        <span class="or">@lugarEvento</span>
+                        <p>Lugar: </p>
+                        <span>@lugarEvento</span>
                     </a>
                 </li>
                 <li>
@@ -72,6 +70,7 @@
     </ul>
     <div class="secciones">
         <article id="tab1">
+         
             <div class="modal-dialog" role="document">
                 <div class="modal-content center">
                     <div class="modal-header">
@@ -101,6 +100,7 @@
                     </div>
                 </div>
             </div>
+               
         </article>
         <article id="tab2">
 
@@ -121,7 +121,7 @@
                                     <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
                                     <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
                                     <div class="input-group mt-10">
-                                        <select style="width: 465px;" class="mul-select2" id="seleccionarSector" required>
+                                        <select style="width: 465px;" class="mul-select" id="seleccionarSector" required>
                                             <option value="SinSeleccion">- Sin selección -</option>
                                             @foreach (var sector in listaSectoresNumerados)
                                             {
@@ -133,11 +133,9 @@
                                     <h2 class="modal-title">Seleccione su numero de asiento</h2>
 
                                     <div id="elegirNumeroAsiento" style="display:none">
-                                        <select style="width: 465px;" class="mul-select" multiple id="seleccionarAsiento" required>
-
-                                        </select>
+                                        <select style="width: 465px;" class="mul-select" multiple id="seleccionarAsiento" required></select>
                                     </div>
-      
+
 
                                     <br>
                                     <div class="center-login">
@@ -156,14 +154,10 @@
             </div>
         </article>
         <article id="tab3"></article>
-        <form method="post">
-            <input type="submit" value="Submit">
-        </form>
     </div>
 </div>
 <script src="~/js/tabs.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
-
 <script type="text/javascript">
     $(function () {
         $("#seleccionarSector").change(function () {
