@@ -1,45 +1,64 @@
 ﻿@page
 @model PIBasesISGrupo1.Pages.Certificado.MisCertificadosModel
 @{
-    ViewData["Title"] = "MisCertificados";
-    var certificados = (List<PIBasesISGrupo1.Models.Certificado>)ViewData["Certificados"];
+    ViewData["Title"] = "Mis Certificado";
+    var email = (string)ViewData["email"];
+    var certificados = (List<PIBasesISGrupo1.Models.Certificados>)ViewData["Certificados"];
 }
 <head>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
     </script>
-
     <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
     </script>
+    <style>
 
+        .certifica {
+            text-align: center;
+        }
+
+        #subtitulo {
+            font-family: Chancery L;
+        }
+    </style>
 </head>
-<h1 class="mb-3">Mis Certificados</h1>
-@foreach (var certificado in certificados)
-{
 
+<table class="table certificado__table" style="text-align:center;">
+    <thead>
+        <tr>
+            <th>
+                <h3>Curso</h3>
+            </th>
 
-    <div style="margin:auto">
-        <img id="certificado" src="@certificado.imagenCertificado" style="width:50%;height:15% " /><br>
-        <button id="btn-Convert-Html2Image" class="primary-btn2 text-uppercase enroll rounded-0">Descargar</button>
+            <th>
+                <h3>Version</h3>
+            </th>
+            <th>
+                <h3>Educador</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        @foreach (var certificado in certificados)
+        {
 
-    </div>
+            <tr>
+                <td>
+                    <p>@certificado.nombreCurso</p>
+                </td>
+                <td>
+                    <p>@certificado.version</p>
+                </td>
+                <td>
+                    <p>@certificado.nombreEducador</p>
+                </td>
+                <td>
 
-
-}
-<script>
-    $('#btn-Convert-Html2Image').click(function () {
-
-            
-            html2canvas($('#certificado'),
-                {
-                    onrendered: function (canvas) {
-                        var a = document.createElement('a');
-                        // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-                        a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                        a.download = 'Certificado.png';
-                        a.click();
-                    }
-                });
-                    
-    });
-
-</script>
+                    <form method="post" asp-for asp-route-fecha="@certificado.fecha" asp-route-emailCoordinador="@certificado.emailCoordinador" asp-route-emailEducador="@certificado.emailEducador" asp-route-nombreEstudiante="@certificado.nombreEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-nombreEducador="@certificado.nombreEducador">
+                        <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">Ver Certificado</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -20,28 +20,29 @@ namespace PIBasesISGrupo1.Handler
            baseDeDatos = new BaseDeDatosHandler();
         }
 
-        public List<Certificado> obtenerCertificadosNoAprobados(){
-            List<Certificado> listaDeCertificados = new List<Certificado>();
-            string consulta = "SELECT C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'"+ 
-             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante', Ed.Firma as 'firma'"+
+        public List<Certificados> obtenerCertificadosNoAprobados(){
+            List<Certificados> listaDeCertificados = new List<Certificados>();
+            string consulta = "SELECT c.version AS 'version', C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'"+ 
+             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante' "+
              "FROM Certificado C " +
              "JOIN Curso Cur ON C.nombreCursoFK = Cur.nombrePK " +
              "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
              "JOIN Usuario E ON Cur.emailEducadorFK = E.emailPK " +
              "JOIN Educador Ed ON Ed.emailEducadorFK = Cur.emailEducadorFK " +
-             "WHERE C.estado = 'No Aprobado'; ";
+             "WHERE C.estado = 'Completado'; ";
             SqlCommand comando= baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
-            Certificado certificadoTemporal;
+            Certificados certificadoTemporal;
             foreach (DataRow columna in tablaCurso.Rows)
             {
-                certificadoTemporal = new Certificado
+                certificadoTemporal = new Certificados
                 {
-                    emailEstudiante= Convert.ToString(columna["emailEstudiante"]),
+                    emailEstudiante = Convert.ToString(columna["emailEstudiante"]),
                     nombreCurso = Convert.ToString(columna["nombreCurso"]),
                     nombreEducador = Convert.ToString(columna["nombreEducador"]),
                     nombreEstudiante = Convert.ToString(columna["nombreEstudiante"]),
-                    firmaEducador= Convert.IsDBNull(columna["firma"]) ? null :  (byte[])columna["firma"]
+                    version= Convert.ToInt32(columna["version"]),
+
 
                 };
                 listaDeCertificados.Add(certificadoTemporal);
@@ -49,38 +50,51 @@ namespace PIBasesISGrupo1.Handler
             return listaDeCertificados;
         }
 
-        public List<Certificado> obtenerMisCertificados(string email)
+        public List<Certificados> obtenerMisCertificados(string emailEstudiante)
         {
-            List<Certificado> listaDeCertificados = new List<Certificado>();
-            string consulta = "SELECT imagenCertificado "+
-                "FROM Certificado " +
-                "WHERE  estado  = 'Aprobado'  AND  emailEstudianteFK= @email; ";
+            List<Certificados> listaDeCertificados = new List<Certificados>();
+            string consulta = "SELECT C.fechaEmitido AS 'fecha',C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'" +
+             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante', Ed.emailEducadorFK as 'firmaEducador', C.emailCoordinadorFK as 'firmaCoordinador', C.version AS 'version' " +
+             "FROM Certificado C " +
+             "JOIN Curso Cur ON C.nombreCursoFK = Cur.nombrePK " +
+             "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
+             "JOIN Usuario E ON Cur.emailEducadorFK = E.emailPK " +
+             "JOIN Educador Ed ON Ed.emailEducadorFK = Cur.emailEducadorFK " +
+             "JOIN Coordinador Coord ON C.emailCoordinadorFK = Coord.emailCoordinadorFK " +
+             "WHERE C.estado = 'Aprobado' AND emailEstudianteFK = @email; ";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
-            comando.Parameters.AddWithValue("@email", email);
+            comando.Parameters.AddWithValue("@email", emailEstudiante);
             DataTable tablaCurso = baseDeDatos.crearTablaConsulta(comando);
-            Certificado certificadoTemporal;
+            Certificados certificadoTemporal;
             foreach (DataRow columna in tablaCurso.Rows)
             {
-                certificadoTemporal = new Certificado
+                certificadoTemporal = new Certificados
                 {
-                     
-                    imagenCertificado = Convert.IsDBNull(columna["imagenCertificado"]) ? null : (string)(columna["imagenCertificado"]) 
-                    
+                    emailEstudiante = Convert.ToString(columna["emailEstudiante"]),
+                    nombreCurso = Convert.ToString(columna["nombreCurso"]),
+                    nombreEducador = Convert.ToString(columna["nombreEducador"]),
+                    nombreEstudiante = Convert.ToString(columna["nombreEstudiante"]),
+                    emailEducador = Convert.ToString(columna["firmaEducador"])  ,
+                    emailCoordinador = Convert.ToString(columna["firmaCoordinador"])  ,
+                    fecha = Convert.ToString(columna["fecha"]),
+                    version = Convert.ToInt32(columna["version"])
 
                 };
                 listaDeCertificados.Add(certificadoTemporal);
             }
             return listaDeCertificados;
         }
-        public bool aprobarCertificado(string emailEstudiante, string nombreCurso, string emailCoordinador,string imagen) {
+
+        public bool aprobarCertificado(string emailEstudiante, string nombreCurso, string emailCoordinador ,int version) {
             string consulta = "UPDATE Certificado SET estado= 'Aprobado'," +
-                " emailCoordinadorFK = @emailCoordinador,fechaEmitido=GETDATE(),imagenCertificado= @imagen" +
-            " WHERE emailEstudianteFK = @emailEstudiante AND nombreCursoFK = @curso";
+                " emailCoordinadorFK = @emailCoordinador,fechaEmitido=GETDATE()" +
+            " WHERE emailEstudianteFK = @emailEstudiante AND nombreCursoFK = @curso AND version =@version";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
             comando.Parameters.AddWithValue("@emailCoordinador", emailCoordinador);
             comando.Parameters.AddWithValue("@curso", nombreCurso);
-            comando.Parameters.AddWithValue("@imagen", imagen);
+         
+            comando.Parameters.AddWithValue("@version", version);
             //agregarFirmaCoordinador(idCertificado, email);
             bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
             return exito;

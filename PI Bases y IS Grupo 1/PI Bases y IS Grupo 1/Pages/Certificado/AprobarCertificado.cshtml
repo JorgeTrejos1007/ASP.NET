@@ -3,82 +3,46 @@
 @{
     ViewData["Title"] = "AprobarCertificado";
     var email = (string)ViewData["email"];
-    var certificados = (List<PIBasesISGrupo1.Models.Certificado>)ViewData["Certificados"];
-    var firmaCoordinador = (byte[])ViewData["firmaCoordinador"];
-}
-
-<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js">
-    </script>
-
-    <script src="https://files.codepedia.info/files/uploads/iScripts/html2canvas.js">
-    </script>
-
-</head>
- 
-
-@foreach (var certificado in certificados)
-{
-
-    <div class="certificado__container" id="certificado">
-        <div class="certificado__elements">
-            <p class="certificado__title">Certificado de finalización</p>
-            <br />
-            <p class="certificado__content">POR MEDIO DEL PRESENTE, SE CONFIRMA QUE</p>
-            <p class="certificado__ownerName">@certificado.nombreEstudiante</p>
-            <br />
-            <p class="certificado__content">HA FINALIZADO SATISFACTORIAMENTE</p>
-            <p class="certificado__content certificado__content-lessMargin">EL CURSO @certificado.nombreCurso</p>
-            <br />
-            <p class="certificado__content">IMPARTIDO POR EL EDUCADOR @certificado.nombreEducador</p>
-            <br />
-            <br />
-
-            <div class="certificado__members">
-                <div>
-                    <img src="data:image/png;base64,@(Convert.ToBase64String(firmaCoordinador))" style="width:200px;height:100px" />
-                    <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">FIRMA COORDINADOR</p>
-                </div>
-                <div>
-                    <img src="data:image/png;base64,@(Convert.ToBase64String(certificado.firmaEducador))" style="width:200px;height:100px" />
-                    <p class="certificado__members__line"></p>
-                    <p class="certificado__members__information">FIRMA EDUCADOR</p>
-                </div>
-            </div>
-            <form method="post" asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email">
-                <input asp-for="@Model.tipoImagen" type="hidden" id="informacionImagen" value="" />
-                <button type="submit" id="btn-Convert-Html2Image" onclick="myFunction()" class="primary-btn2 text-uppercase enroll rounded-0" href="#">Firmar</button>
-            </form>
-        </div>
-    </div>
-    <script>
-
-        html2canvas($('#certificado'), {
-            onrendered: function (canvas) {
-                var dataURL = canvas.toDataURL();
-                document.getElementById("informacionImagen").value = dataURL;
-            }
-        });
-        $('#btn-Convert-Html2Image').click(function () {
-
-            /*
-                html2canvas($('#certificado'),
-                    {
-                        onrendered: function (canvas) {
-                            var a = document.createElement('a');
-                            // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
-                            a.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
-                            a.download = 'Certificado.png';
-                            a.click();
-                        }
-                    });
-                    */
-        });
-
-    </script>
+    var certificados = (List<PIBasesISGrupo1.Models.Certificados>)ViewData["Certificados"];
 }
 
 
+<table class="table certificado__table" style="text-align:center;">
+    <thead>
+        <tr>
+            <th>
+                <h3>Estudiante</h3>
+            </th>
 
+            <th>
+                <h3>Curso</h3>
+            </th>
+            <th>
+                <h3>Educador</h3>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody style="text-align:center;">
+        @foreach (var certificado in certificados)
+        {
 
+            <tr>
+                <td>
+                    <p>@certificado.nombreEstudiante</p>
+                </td>
+                <td>
+                    <p>@certificado.nombreCurso @certificado.version</p>
+                </td>
+                <td>
+                    <p>@certificado.nombreEducador</p>
+                </td>
+                <td>
+                    <form method="post" asp-for asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email" asp-route-version="@certificado.version">
+                        <button type="submit" class="primary-btn__reverse text-uppercase enroll rounded-0" href="#">Aprobar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
