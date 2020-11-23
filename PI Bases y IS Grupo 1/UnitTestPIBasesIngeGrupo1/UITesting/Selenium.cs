@@ -4,6 +4,7 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Support.UI;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace UnitTestPIBasesIngeGrupo1.UITesting
@@ -75,6 +76,7 @@ namespace UnitTestPIBasesIngeGrupo1.UITesting
             IWebElement idiomas = driver.FindElement(By.Id("totalIdiomas"));
             Assert.AreEqual("12", idiomas.Text);
         }
+
         [TestMethod]
         public void pruebaVerificarCertificadoDisponibleParaAprobar()
         {
@@ -107,6 +109,55 @@ namespace UnitTestPIBasesIngeGrupo1.UITesting
             Assert.AreEqual("Ronny Castro Esquivel", educador.Text);
          }
 
+        [TestMethod]
+        public void pruebaVerificarCorrectitudDeMiPerfil()
+        {
+            driver = new ChromeDriver(Environment.CurrentDirectory);
+            string URL = "https://localhost:44326/Login/LoginMiembro";
+            ///Pone la pantalla en full screen
+            driver.Manage().Window.Maximize();
+            ///Act
+            //////Se va a la URL indicada
+            driver.Url = URL;
+
+            IWebElement campoCorreo = driver.FindElement(By.Id("correo"));
+            IWebElement campoPass = driver.FindElement(By.Id("pass"));
+
+            campoCorreo.SendKeys("hellenfdz12@gmail.com");
+            campoPass.SendKeys("Hellencita");
+            IWebElement form = driver.FindElement(By.Id("myForm"));
+            form.Submit();
+            IWebElement perfil = driver.FindElement(By.Id("mi-perfil"));
+            perfil.Click();
+            IWebElement perfilHellen = driver.FindElement(By.Id("perfilHellen"));
+            Assert.AreEqual("Hellen Fernandez Jimenez", perfilHellen.Text);
+
+        }
+
+        [TestMethod]
+        public void pruebaVerificarCursosAprobados()
+        {
+            driver = new ChromeDriver(Environment.CurrentDirectory);
+            string URL = "https://localhost:44326/Login/LoginMiembro";
+            ///Pone la pantalla en full screen
+            driver.Manage().Window.Maximize();
+            ///Act
+            //////Se va a la URL indicadaC:\Users\ecci\source\repos\proyecto-integrador-de-ingenieria-de-software-y-bases-de-datos-grupo-14\PI Bases y IS Grupo 1\PI Bases y IS Grupo 1\Pages\Login\LoginEstudiante.cshtml.cs
+            driver.Url = URL;
+
+            IWebElement campoCorreo = driver.FindElement(By.Id("correo"));
+            IWebElement campoPass = driver.FindElement(By.Id("pass"));
+
+            campoCorreo.SendKeys("rojas3099@gmail.com");
+            campoPass.SendKeys("adriancito");
+            IWebElement form = driver.FindElement(By.Id("myForm"));
+            form.Submit();
+            IWebElement perfil = driver.FindElement(By.Id("mi-perfil"));
+            perfil.Click();
+            IWebElement perfilHellen = driver.FindElement(By.Id("cursosAprobadosMiPerfil"));
+            Assert.AreEqual("Introduccion a las bases de datos v.3", perfilHellen.Text);
+
+        }
 
 
         [TestCleanup]

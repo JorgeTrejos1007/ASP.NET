@@ -61,7 +61,7 @@
         <div class="center-perfil">
             <div class="row">
                 <div class="testi_item">
-                    <h1 class="main_title">
+                    <h1 class="main_title" id="perfilHellen">
                         @Model.miembro.nombre @Model.miembro.primerApellido
                         @if (@Model.miembro.segundoApellido != null)
                         {
@@ -137,7 +137,7 @@
                                         @if (cursosVersionAprobados.Any())
                                         {
                                             <div class="col-sm-4"><h4 class="widget_title">Cursos aprobados</h4></div>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-8" id="cursosAprobadosMiPerfil">
                                                 @foreach (var curso in cursosVersionAprobados)
                                                 {
                                                     @curso<br />
