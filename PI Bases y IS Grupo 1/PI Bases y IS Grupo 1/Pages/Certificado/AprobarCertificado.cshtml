@@ -29,13 +29,13 @@
 
             <tr>
                 <td>
-                    <p>@certificado.nombreEstudiante</p>
+                    <p id="estudiante">@certificado.nombreEstudiante</p>
                 </td>
                 <td>
-                    <p>@certificado.nombreCurso @certificado.version</p>
+                    <p id="curso">@certificado.nombreCurso @certificado.version</p>
                 </td>
                 <td>
-                    <p>@certificado.nombreEducador</p>
+                    <p id="educador">@certificado.nombreEducador</p>
                 </td>
                 <td>
                     <form method="post" asp-for asp-route-emailEstudiante="@certificado.emailEstudiante" asp-route-nombreCurso="@certificado.nombreCurso" asp-route-emailCoordinador="@email" asp-route-version="@certificado.version">

@@ -93,7 +93,7 @@
                             @if (miembroEnSesion != null)
                             {
                                 <li class="nav-item submenu dropdown">
-                                    <a href="#"
+                                    <a href="#" id="certificados"
                                        class="nav-link dropdown-toggle"
                                        data-toggle="dropdown"
                                        role="button"
@@ -103,7 +103,7 @@
                                         @if (filtros.verificarRol(miembroEnSesion.email, "Coordinador"))
                                         {
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/Certificado/AprobarCertificado">Aprobar</a>
+                                                <a id="aprobar" class="nav-link" href="/Certificado/AprobarCertificado">Aprobar</a>
                                             </li>
                                         }
                                         @if (estudianteEnSesion != null || miembroEnSesion != null)
@@ -117,7 +117,7 @@
                                 @if (filtros.verificarRol(miembroEnSesion.email, "Coordinador"))
                                 {
                                     <li class="nav-item submenu dropdown">
-                                        <a href="#"
+                                        <a href="#" id="analitica"
                                            class="nav-link dropdown-toggle"
                                            data-toggle="dropdown"
                                            role="button"
@@ -125,10 +125,10 @@
                                            aria-expanded="false">Analitica</a>
                                         <ul class="dropdown-menu">
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/Curso/Grafico">Cursos</a>
+                                                <a id="analiticaCursos" class="nav-link" href="/Curso/Grafico">Cursos</a>
                                             </li>
                                             <li class="nav-item">
-                                                <a class="nav-link" href="/Comunidad/GraficoComunidad">Comunidad</a>
+                                                <a id="analiticaComunidad" class="nav-link" href="/Comunidad/GraficoComunidad">Comunidad</a>
                                             </li>
                                         </ul>
                                     </li>

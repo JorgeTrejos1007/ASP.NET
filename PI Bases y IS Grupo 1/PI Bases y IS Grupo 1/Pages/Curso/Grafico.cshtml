@@ -151,17 +151,17 @@
 </head>
 <body>
     <br>
-    <h2>Estadísticas de los Cursos</h2>
+    <h2 id="p">Estadísticas de los Cursos</h2>
 
     <div style="margin-left:70px; margin-right: 70px;">
         <div style="margin-left:30%; margin-bottom: 30px; margin-top:30px;">
             <form method="post" id="formCursos" enctype="multipart/form-data">
                 <span asp-validation-for="@Model.cursosAFiltrar" class="text-danger"></span>
-                <select style="width: 390px;" class="mul-select" asp-for="@Model.cursosAFiltrar" multiple size="@cursosDisponibles.Count" required>
+                <select id="cursosElegidos" style="width: 390px;" class="mul-select" asp-for="@Model.cursosAFiltrar" multiple size="@cursosDisponibles.Count" required>
                     @foreach (var curso in cursosDisponibles)
                     {
 
-                        <option value="@curso">@curso</option>
+                        <option id="cursoSeleccionado" value="@curso">@curso</option>
 
                         <br>
                     }
