@@ -57,7 +57,8 @@
             margin-top: 1%;
         }
          .fa-thumbs-up {
-             color: #f1f9ff;
+             color: #000070;
+              
          }
     </style>
     <style type="text/css">
@@ -100,24 +101,26 @@
                                     <img class="member_img-perfil" src="~/img/imagenGenerica.jpeg" asp-append-version="true" />
                                 }
                             }
-                            <div style="text-align:center;align-content:center"></div>
-                            @{if ((bool)ViewData["enSesion"] == true)
-                                {
-                                    <i id="pq" onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
-                                    <script>
+                                    <div class="checkbox-inline" style="text-align:center;align-content:center;nav-down:">
+                                        <br>
+                                        @{if ((bool)ViewData["enSesion"] == true)
+                                            {
+                                                <i id="pq" onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
+                                                <script>
                                         window.onload = function () {
                                             if (@TempData["estadoDelLike"]== 0) {
                                                 var element = document.getElementById("pq");
                                                 element.classList.toggle("fa-thumbs-down");
                                             }
                                         }
-                                    </script>
-                                    <div  >
-                                        <text id="likesActuales">@ViewData["misLikes"]</text>
+                                                </script>
+                                                <div>
+                                                    <text id="likesActuales">@ViewData["misLikes"]</text><text> personas les gusta este perfil</text>
 
+                                                </div>
+                                            }
+                                        }
                                     </div>
-                                    }
-                                }
                         </div>
                         <div class="col-lg-8">
                             <div class="testi_text">
