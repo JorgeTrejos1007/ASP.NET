@@ -3,18 +3,29 @@
 @{
     ViewData["Title"] = "StreamDeEvento";
 
-    string canal = "auronplay";
+    string canal = (string)TempData["nombreCanal"];
+    string nombreEvento = (string)TempData["nombreEvento"];
 }
-<html>
 
+<html>
 <head>
-    <h1>Ver evento en vivo!!</h1>    
+    <style>
+        body {
+            //background-color: #f1f9ff;
+            background-color: #e0efff;
+            background-size: 100%;
+        }
+
+    </style>
+
+    <h1 style="margin-top:30px; margin-bottom: 30px;">@nombreEvento</h1>    
 </head>
 
 <body>
     <!-- Add a placeholder for the Twitch embed -->
-    <div id="twitch-embed"></div>
-
+    <div style="text-align:center;">
+        <div id="twitch-embed"></div>
+    </div>
     <!-- Load the Twitch embed script -->
     <script src="https://embed.twitch.tv/embed/v1.js"></script>
 
@@ -24,8 +35,8 @@
     -->
     <script type="text/javascript">
         var embed = new Twitch.Embed("twitch-embed", {
-            width: 854,
-            height: 480,
+            width: 1054,
+            height: 640,
             channel: '@canal',
             layout: "video",
             autoplay: true,
