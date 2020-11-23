@@ -451,12 +451,16 @@ namespace PIBasesISGrupo1.Handler
                  likes= Convert.ToInt32(columna["likes"]) ;
             }
             return likes;
-             
-
         }
-
-
-
+        public int obtenerElEstadoDelLike(string emailDelQueDaDisLike, string emailDelQueRecibeDisLike)
+        {
+            string consulta = "SELECT 1 FROM Vota WHERE  emailMiembroQueDaLikeFK =@emailDaLike AND emailMiembroQueRecibeLikeFK= @emailRecibeLike;";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailRecibeLike", emailDelQueRecibeDisLike);
+            comando.Parameters.AddWithValue("@emailDaLike", emailDelQueDaDisLike);
+            int estado = baseDeDatos.saberSiExisteTupla(comando);
+            return estado;
+        }
     }
 }
  

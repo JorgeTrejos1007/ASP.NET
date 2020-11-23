@@ -99,6 +99,10 @@
                             }
                             <div style="text-align:center;align-content:center"></div>
                             <i onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
+                            <div  >
+                                <text id="likesActuales">@ViewData["misLikes"]</text>
+
+                            </div>
                         </div>
                         <div class="col-lg-8">
                             <div class="testi_text">
@@ -257,6 +261,9 @@
         });
     }
     function actualizaLikesDelMiembro(response) {
-        alert("hola");
+        document.getElementById("likesActuales").innerHTML = response;
+        alert(document.getElementById("likesActuales"));
+         
+
     }
 </script>

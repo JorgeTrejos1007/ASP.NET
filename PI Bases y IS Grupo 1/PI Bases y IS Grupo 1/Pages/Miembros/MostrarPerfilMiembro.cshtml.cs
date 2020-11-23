@@ -16,16 +16,16 @@ namespace PIBasesISGrupo1.Pages.Miembros
     {      
         [BindProperty]
         public Miembro miembro { get; set; }
+        public static Miembro   miembroEnSesion;
 
         public void OnGet(string email)
         {
+            MiembroHandler accesoDatos = new MiembroHandler();
             //Si es null es porque es mi perfil
             if (email == null) {
                 var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
                 email = miembro.email;
             }
-
-            MiembroHandler accesoDatos = new MiembroHandler();
             ViewData["email"] = email;
             miembro = accesoDatos.obtenerDatosDeUnMiembro(email);
 
@@ -54,6 +54,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
             }
             ViewData["informacionDePerfilesMasSimilares"] = informacionDePerfilesMasSimilares;
             ViewData["misLikes"] = accesoDatos.obtenerLikesTotalesDeMiembro(miembro.email);
+            miembroEnSesion = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+            if(miembroEnSesion != null )
+                TempData["estadoDelLike"]=accesoDatos.obtenerElEstadoDelLike(miembroEnSesion.email, miembro.email);
         }
         public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
         {
@@ -62,7 +65,7 @@ namespace PIBasesISGrupo1.Pages.Miembros
             if (!accesoMiembro.darLike(emailMiembroEnSesion,emailDelPerfilActual)) {
                 accesoMiembro.darDisLike(emailMiembroEnSesion,emailDelPerfilActual);
             }
-            return new JsonResult(emailMiembroEnSesion); ;
+            return new JsonResult(accesoMiembro.obtenerLikesTotalesDeMiembro(emailDelPerfilActual)) ;
         }
     }
     
