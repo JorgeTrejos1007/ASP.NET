@@ -95,9 +95,9 @@
 
                                             @if (filtros.verificarRol(miembroEnSesion.email, "Coordinador"))
                                             {
-                                            <li class="nav-item">
-                                                <a class="nav-link" href="/Eventos/CrearEvento">Crear evento</a>
-                                            </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/Eventos/CrearEvento">Crear evento</a>
+                                                </li>
 
                                             }
 
@@ -311,7 +311,13 @@
             });
         });
     </script>
+    <script>
+        $(".sectores-select").select2({
+            placeholder: "Sectores",
+            tokenSeparators: ['/', ',', ';']
+        });
 
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
