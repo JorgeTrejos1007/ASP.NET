@@ -13,7 +13,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+   
     <style type="text/css">
         body {
             background-image: url("~/img/event/evento3.jpg");
@@ -121,7 +121,7 @@
                                     <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
                                     <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
                                     <div class="input-group mt-10">
-                                        <select style="width: 465px;" class="mul-select" id="seleccionarSector" required>
+                                        <select  style="width: 465px;" class="mul-select" id="seleccionarSector" onchange="obtenerAsientos()" required >
                                             <option value="SinSeleccion">- Sin selección -</option>
                                             @foreach (var sector in listaSectoresNumerados)
                                             {
@@ -159,31 +159,34 @@
 <script src="~/js/tabs.js"></script>
 <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
 <script type="text/javascript">
-    $(function () {
-        $("#seleccionarSector").change(function () {
-            $.ajax({
-                type: "POST",
-                url: "/Eventos/RegistrarmeEnEventoPresencial?handler=ElegirAsientos",
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("XSRF-TOKEN",
-                        $('input:hidden[name="__RequestVerificationToken"]').val());
-                },
-                data: { "nombreSectorElegido": $("#seleccionarSector").val(), "nombreEvento": $("#registroNombreEvento").val(), "emailCoordinador": $("#registroEmailCoordinador").val(), "fechaYHora": $("#registroFechaYHora").val() },
-                success: function (response) {
-                    if (response.asientosDisponibles != null) {
-                        document.getElementById("elegirNumeroAsiento").style.display = "block";
-                        document.getElementById("seleccionarAsiento").innerHTML = "";
-                        for (var i = 0; i < response.asientosDisponibles.length; i++) {
-                            var newOption = new Option(response.asientosDisponibles[i], response.asientosDisponibles[i], false, false);
-                            $('#seleccionarAsiento').append(newOption).trigger('change');
-                        }
+  
+    function obtenerAsientos() {
+       
+        $.ajax({
+            type: "POST",
+            url: "/Eventos/RegistrarmeEnEventoPresencial?handler=ElegirAsientos",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "nombreSectorElegido": $("#seleccionarSector").val(), "nombreEvento": $("#registroNombreEvento").val(), "emailCoordinador": $("#registroEmailCoordinador").val(), "fechaYHora": $("#registroFechaYHora").val() },
+            success: function (response) {
+                if (response.asientosDisponibles != null) {
+                    document.getElementById("elegirNumeroAsiento").style.display = "block";
+                    document.getElementById("seleccionarAsiento").innerHTML = "";
+                    for (var i = 0; i < response.asientosDisponibles.length; i++) {
+                        var newOption = new Option(response.asientosDisponibles[i], response.asientosDisponibles[i], false, false);
+                        $('#seleccionarAsiento').append(newOption).trigger('change');
                     }
-                    else {
-                        document.getElementById("elegirNumeroAsiento").style.display = "none";
-                    }
-
                 }
-            });
+                else {
+                    document.getElementById("elegirNumeroAsiento").style.display = "none";
+                }
+
+            }
         });
-    });
+
+    }
+
+   
 </script>
