@@ -13,7 +13,6 @@ namespace PIBasesISGrupo1.Pages.Eventos
     {
 
         EventoHandler baseDeDatosHandler = new EventoHandler();
-        List<Sector> sectores = new List<Sector>();
 
         [BindProperty]
         public InformacionDeRegistroEnEvento registro { get; set; }
@@ -30,28 +29,16 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 ViewData["fechaYHora"] = fechaYHora;
                 ViewData["lugarEvento"] = lugar;
                 ViewData["emailCoordinador"] = emailCoordinador;
-                DateTime fecha = Convert.ToDateTime(fechaYHora);
-
                 List<Sector> listaSectoresNoNumerados = new List<Sector>();
+                listaSectoresNoNumerados = baseDeDatosHandler.obtenerSectoresNoNumeradosEventoPresencial(emailCoordinador,nombreEvento,fechaYHora);
+                ViewData["listaSectoresNoNumerados"] = listaSectoresNoNumerados;
 
                 List<Sector> listaSectoresNumerados = new List<Sector>();            
-                listaSectoresNumerados = baseDeDatosHandler.obtenerSectoresNumeradosEventoPresencial(emailCoordinador, nombreEvento, fecha);
-                foreach (var sector in listaSectoresNumerados)
-                {
-                    sector.asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fechaYHora, sector.nombreDeSector);
-                }
+                listaSectoresNumerados = baseDeDatosHandler.obtenerSectoresNumeradosEventoPresencial(emailCoordinador, nombreEvento, fechaYHora);
                 ViewData["listaSectoresNumerados"] = listaSectoresNumerados;
 
 
-                sectores = baseDeDatosHandler.obtenerSectoresEventoPresencial(emailCoordinador, nombreEvento, fecha);
-
-                for (int index = 0; index < sectores.Count; index++)
-                {
-                    if (sectores[index].tipo == "Numerado")
-                    {
-                        sectores[index].asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fecha, sectores[index].nombreDeSector);
-                    }
-                }
+                
                 vista = Page();
             }
             catch
@@ -68,41 +55,45 @@ namespace PIBasesISGrupo1.Pages.Eventos
             return new JsonResult(sector);
         }
 
-        public IActionResult OnPost () {
+        public IActionResult OnPostRegistrarmeEnElEvento() {
             IActionResult vista;
 
-            // datos de prueba
-            InformacionDeRegistroEnEvento info = new InformacionDeRegistroEnEvento();
-            info.nombreEvento = "Standup comedy con Ronny  se puede quedar 5 minutitos mas";
-            info.emailCoordinador = "stevegc112016@gmail.com";
-            info.nombreSector = "Altair";
-            info.fechaYHora = Convert.ToDateTime("2020-11-27 18:00:00.000");
-            info.tipoDeSector = "Numerado";
-            //info.cantidadAsientos = 10;
-            List<int> asientos = new List<int>();
-            asientos.Add(2);
-            asientos.Add(4);
-            asientos.Add(5);
-            info.asientosDeseados = asientos;
+            if(registro.tipoDeSector == "Numerado") {
+                registro.asientosDeseados = convertirAsientosElegidosALista(registro.asientosElegidos);
+            }
+            
 
             vista = Redirect("~/index");
 
-            if (info.tipoDeSector == "Numerado") {
+            if (registro.tipoDeSector == "Numerado") {
                 var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
-                bool exito = baseDeDatosHandler.transaccionReservarAsientosNumerados(info, miembro.email);
+                bool exito = baseDeDatosHandler.transaccionReservarAsientosNumerados(registro, miembro.email);
                 if (exito == false) {
                     vista = Redirect("~/index");
                 }
             }
             else
             {
-                bool exito = baseDeDatosHandler.transaccionReservarAsientosNoNumerados(info);
+                bool exito = baseDeDatosHandler.transaccionReservarAsientosNoNumerados(registro);
                 if (exito == false) {
                     vista = Redirect("~/index");
                 }
             }
 
             return vista;
+        }
+
+        public List<int> convertirAsientosElegidosALista(string asientos)
+        {
+            List<int> asientosDisponibles = new List<int>();
+            string[] arregloAsientos = asientos.Split(",");
+
+            for(int i = 0; i < arregloAsientos.Length; i++)
+            {
+                asientosDisponibles.Add(Convert.ToInt32(arregloAsientos[i]));
+            }
+
+            return asientosDisponibles;
         }
     }
 }

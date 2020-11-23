@@ -13,6 +13,7 @@ namespace PIBasesISGrupo1.Models
         public string tipoDeSector { get; set; }
         public string nombreSector { get; set; }
         public List<int> asientosDeseados { get; set; } = new List<int>();
+        public string asientosElegidos { get; set; }
         public int cantidadAsientos { get; set; }
     }
 }
