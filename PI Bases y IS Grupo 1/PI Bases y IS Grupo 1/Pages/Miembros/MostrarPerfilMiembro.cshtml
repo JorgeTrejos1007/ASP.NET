@@ -98,7 +98,7 @@
                                 }
                             }
                             <div style="text-align:center;align-content:center"></div>
-                            <i onclick="myFunction(this )" class="fa fa-thumbs-up"></i>
+                            <i onclick="myFunction(this,'@Model.miembro.email')" class="fa fa-thumbs-up"></i>
                         </div>
                         <div class="col-lg-8">
                             <div class="testi_text">
@@ -224,9 +224,10 @@
 
 </html>
 <script>
-    function myFunction(x) {
+    function myFunction(x,email) {
         x.classList.toggle("fa-thumbs-down");
-        myAjax("hellen");
+        //alert(email);
+        myAjax(email);
          
     }
     function myAjax(emailDelMiembro) {
