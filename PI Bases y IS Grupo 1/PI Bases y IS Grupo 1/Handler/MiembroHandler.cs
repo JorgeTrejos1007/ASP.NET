@@ -423,7 +423,38 @@ namespace PIBasesISGrupo1.Handler
             return paisesMiembros;
             conexion.Close();
         }
-         
+        public bool darLike(string emailDelQueDaLike, string emailDelQueRecibeLike) {
+            string consulta = "INSERT INTO Vota(emailMiembroQueRecibeLikeFK,emailMiembroQueDaLikeFK) " +
+                "VALUES (@emailRecibeLike,@emailDaLike)";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailRecibeLike", emailDelQueRecibeLike);
+            comando.Parameters.AddWithValue("@emailDaLike", emailDelQueDaLike);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
+            return exito;
+        }
+        public bool darDisLike(string emailDelQueDaDisLike, string emailDelQueRecibeDisLike)
+        {
+            string consulta = "DELETE FROM Vota WHERE emailMiembroQueRecibeLikeFK=@emailRecibeLike and " +
+                "emailMiembroQueDaLikeFK= @emailDaLike" ;
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            comando.Parameters.AddWithValue("@emailRecibeLike", emailDelQueRecibeDisLike);
+            comando.Parameters.AddWithValue("@emailDaLike", emailDelQueDaDisLike);
+            bool exito = baseDeDatos.ejecutarComandoParaConsulta(comando);
+            return exito;
+        }
+        public int obtenerLikesTotalesDeMiembro(string emailMiembro) {
+            string consulta = "SELECT COUNT(*) AS likes FROM Vota WHERE emailMiembroQueRecibeLikeFK=@email;";
+            DataTable tablaResultado = crearTablaConsulta(consulta);
+            int likes = 0;
+            foreach (DataRow columna in tablaResultado.Rows)
+            {
+                 likes= Convert.ToInt32(columna["likes"]) ;
+            }
+            return likes;
+             
+
+        }
+
 
 
     }
