@@ -21,7 +21,6 @@ namespace PIBasesISGrupo1.Pages.Eventos
         
         [BindProperty]
         [Required(ErrorMessage = "Es necesario que ingreses los cupos que deseas")]
-
         public int cuposSolicitados { get; set; }
 
         public IActionResult OnGet()
@@ -69,7 +68,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 mail.Subject = "Link para el evento: " + evento.nombre;
 
                 mail.Body = "Hola, usted ha sido registrado en un evento virtual. Los detalles de su registro se muestran a continuación:\n\n";
-                mail.Body += "Cantidad de asientos: " + cuposSolicitados.ToString();
+                mail.Body += "Cantidad de cupos: " + cuposSolicitados.ToString();
                 mail.Body += ".\nFecha: " + evento.fechaYHora.ToString("dd/MM/yyyy") + ".\n";
                 mail.Body += "Hora: " + evento.fechaYHora.ToString("HH:mm");
                 mail.Body += ".\nCanal de twitch: " + evento.nombreCanalStream + ".\n";
