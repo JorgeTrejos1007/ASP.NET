@@ -109,7 +109,7 @@ namespace PIBasesISGrupo1.Handler
 
         public List<string> obtenerCursosAprobados(string emailEstudiante) {
             List<string> cursosAprobados = new List<string>();
-            string consulta = "SELECT nombreCursoFK, version FROM Certificado WHERE emailEstudianteFK=@emailEstudiante";
+            string consulta = "SELECT nombreCursoFK, version FROM Certificado WHERE emailEstudianteFK=@emailEstudiante AND estado='Aprobado'";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@emailEstudiante", emailEstudiante);
             DataTable tablaCertificado = baseDeDatos.crearTablaConsulta(comando);
