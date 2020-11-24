@@ -2,7 +2,7 @@
 @model PIBasesISGrupo1.Pages.Curso.CursosCreadosModel
 @{
     ViewData["Title"] = "CursosCreados";
-    var listaDeCursos = (List<Tuple<string,int>>)ViewData["CursosCreados"];
+    var listaDeCursos = (List<Tuple<string,int,bool>>)ViewData["CursosCreados"];
 }
 
 <header>
@@ -11,7 +11,17 @@
             border-color: #002347;
             border-style: solid;
             border-width: thin;
+            
         }
+
+        #botonParaPerfil {
+            flex: 1 0 21%;
+            margin: 5px;
+            height: 179px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+
     </style>
 </header>
 <div class="cajota-cursos">
@@ -30,19 +40,39 @@
                     <div class="row" id="filaDeCursosInscritos">
                         @for (int j = i; j < i + 1; j++)
                         {
+                            @if (@listaDeCursos[j].Item3 == true)
+                            {
+                                <a class="borde" id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j].Item1">
+                                    @if (j < listaDeCursos.Count())
+                                    {
+                                        <div id="cuadro-mis-cursos">
+                                            <span class="flaticon-student"></span>
+                                            <h4 id="nombrePersona">@listaDeCursos[j].Item1</h4>
+                                             <h4>Version: @listaDeCursos[j].Item2</h4>
+                                             <h4 style="color:green">Este curso es editable</h4>
+                                            <br>
+                                        </div>
 
-                            <a class="borde" id="botonParaPerfil" asp-page="./CursoCreado" asp-route-nombreCurso="@listaDeCursos[j].Item1">
-                                @if (j < listaDeCursos.Count())
-                                {
-                                    <div id="cuadro-mis-cursos">
-                                        <span class="flaticon-student"></span>
-                                        <h4 id="nombrePersona">@listaDeCursos[j].Item1</h4>
-                                        <h4>Version: @listaDeCursos[j].Item2</h4>
-                                    </div>
+                                    }
+                                </a>
+                            }
+                            else {
+                                <a class="borde" id="botonParaPerfil">
+                                    @if (j < listaDeCursos.Count())
+                                    {
+                                        <div id="cuadro-mis-cursos">
+                                            <span class="flaticon-student"></span>
+                                            <h4 id="nombrePersona">@listaDeCursos[j].Item1</h4>
+                                            <h4>Version: @listaDeCursos[j].Item2</h4>
+                                            <h4 style="color:red">Este curso no es editable</h4>
+                                        </div>
 
-                                }
-                            </a>
-                        }
+                                    }
+                                </a>
+
+
+                            }
+                         }
                     </div>
                 }
             }

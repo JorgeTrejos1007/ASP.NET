@@ -465,6 +465,20 @@ namespace PIBasesISGrupo1.Handler
             return exito;
         }
 
+
+        private bool cursoEditable(string nombreCurso) {
+            bool editable = false;
+            string consulta = "SELECT COUNT(1) FROM Inscribirse WHERE nombreCursoFK=@nombreCurso";
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCurso", nombreCurso);
+            int cantidadEstudiantes = baseDeDatos.saberSiExisteTupla(comandoParaConsulta);
+            if (cantidadEstudiantes==0) {
+                editable = true;
+            }
+
+            return editable;
+        }
+
         public List<Tuple<string,int>> obtenerCursosCreados(string emailEducador)
         {
             List<Tuple<string, int>> cursos;
@@ -476,12 +490,33 @@ namespace PIBasesISGrupo1.Handler
             cursos = new List<Tuple<string, int>>();
             foreach (DataRow columnaCursosCreados in tablaCursosCreados.Rows)
             {
-                    cursos.Add(new Tuple<string, int>(Convert.ToString(columnaCursosCreados["nombrePK"]), Convert.ToInt32(columnaCursosCreados["version"])));
+                
+                cursos.Add(new Tuple<string, int>(Convert.ToString(columnaCursosCreados["nombrePK"]), Convert.ToInt32(columnaCursosCreados["version"])));
             
             }
 
             return cursos;
         }
+
+        public List<Tuple<string, int, bool>> obtenerCursosEditables(string emailEducador)
+        {
+            List<Tuple<string, int, bool>> cursos;
+            string consulta = "SELECT nombrePK,version FROM Curso WHERE emailEducadorFK=@emailEducador AND estado='Creado';";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+            comandoParaConsulta.Parameters.AddWithValue("@emailEducador", emailEducador);
+            DataTable tablaCursosCreados = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+            cursos = new List<Tuple<string, int, bool>>();
+            foreach (DataRow columnaCursosCreados in tablaCursosCreados.Rows)
+            {
+                bool editable = cursoEditable(Convert.ToString(columnaCursosCreados["nombrePK"]));
+                cursos.Add(new Tuple<string, int, bool>(Convert.ToString(columnaCursosCreados["nombrePK"]), Convert.ToInt32(columnaCursosCreados["version"]), editable));
+
+            }
+
+            return cursos;
+        }
+
 
         public Tuple<Cursos, Miembro, List<Tuple<string, string>>> obtenerInformacionCurso(string nombreCurso)
         {
