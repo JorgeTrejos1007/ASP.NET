@@ -70,10 +70,9 @@ namespace PIBasesISGrupo1.Pages.Miembros
         }
         public IActionResult OnPostActualizarLikesDelMiembro(string emailDelPerfilActual)
         {
-            string emailMiembroEnSesion = "stevegc112016@gmail.com";
             MiembroHandler accesoMiembro = new MiembroHandler();
-            if (!accesoMiembro.darLike(emailMiembroEnSesion,emailDelPerfilActual)) {
-                accesoMiembro.darDisLike(emailMiembroEnSesion,emailDelPerfilActual);
+            if (!accesoMiembro.darLike(miembroEnSesion.email,emailDelPerfilActual)) {
+                accesoMiembro.darDisLike(miembroEnSesion.email, emailDelPerfilActual);
             }
             return new JsonResult(accesoMiembro.obtenerLikesTotalesDeMiembro(emailDelPerfilActual)) ;
         }
