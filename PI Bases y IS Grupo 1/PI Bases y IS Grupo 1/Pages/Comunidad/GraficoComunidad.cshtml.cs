@@ -28,6 +28,8 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             obtenerEstudiantesCertificadosYnoCertificados();
             obtenerCantidadDeEventos();
             obtenerCantidadCursosCreados();
+            obtenerPerfilesConMasLikes();
+            obtenerEducadoresYEstudiantes();
 
         }
         public void ObtenerTopCursos()
@@ -47,21 +49,36 @@ namespace PIBasesISGrupo1.Pages.Comunidad
         public void ObtenerTiposUsuario()
         {
             List<DataPoint> dataPoints = new List<DataPoint>();
-            
+            double cantidadArestar = 0;
+            double miembros = 0;
             List<Tuple<string, int>> tiposUsuario = grafico.obtenerTiposDeUsuarios();
-            double cantidadEstudiantes = grafico.obtenerCantidadEstudiantes();
-            double total = cantidadEstudiantes;
+            
+            double total = 0;
             foreach (var tipoUsuario in tiposUsuario)
             {
-                total = total + tipoUsuario.Item2;
-               
+                if (tipoUsuario.Item1 != "Miembro")
+                {
+                    cantidadArestar = cantidadArestar+ tipoUsuario.Item2;
+                }
+                else {
+                    miembros = tipoUsuario.Item2;
+                }
+                 
             }
+            miembros = miembros - cantidadArestar;
+
+            total = miembros + cantidadArestar;
 
             foreach (var tipoUsuario in tiposUsuario)
             {
-                dataPoints.Add(new DataPoint(tipoUsuario.Item1, Math.Round((tipoUsuario.Item2/total)*100)));
+                if (tipoUsuario.Item1!= "Miembro") {
+                    dataPoints.Add(new DataPoint(tipoUsuario.Item1, Math.Round((tipoUsuario.Item2 / total) * 100)));
+                }
+                
             }
-            dataPoints.Add(new DataPoint("Estudiantes", Math.Round((cantidadEstudiantes/total)*100)));
+
+
+            dataPoints.Add(new DataPoint("Miembros", Math.Round((miembros / total)*100)));
 
 
             TempData["GraficoTiposUsuario"] = JsonConvert.SerializeObject(dataPoints);
@@ -191,6 +208,29 @@ namespace PIBasesISGrupo1.Pages.Comunidad
 
             TempData["CantidadIdiomas"] = grafico.obtenerCantidadDeIdiomas();
 
+        }
+        public void obtenerPerfilesConMasLikes() {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            List<Tuple<string, int>> perfilesConMasLikes = grafico.obtenerPerfilesConMasLikes();
+            foreach (var perfil in perfilesConMasLikes)
+            {
+                dataPoints.Add(new DataPoint(perfil.Item1, perfil.Item2));
+            }
+
+            TempData["GraficoTopLikes"] = JsonConvert.SerializeObject(dataPoints);
+        }
+        public void obtenerEducadoresYEstudiantes()
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            int cantidadEstudiantes= grafico.obtenerCantidadEstudiantes();
+            int cantidadEducadores = grafico.obtenerCantidadEducadores();
+           
+           
+            dataPoints.Add(new DataPoint("Estudiantes", cantidadEstudiantes));
+            dataPoints.Add(new DataPoint("Educador", cantidadEducadores));
+
+
+            TempData["GraficoEstudientesEducadores"] = JsonConvert.SerializeObject(dataPoints);
         }
 
 

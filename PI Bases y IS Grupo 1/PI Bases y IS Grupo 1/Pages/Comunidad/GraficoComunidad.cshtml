@@ -98,7 +98,8 @@
         @Html.AntiForgeryToken()
         <div class="row" style="margin-top:80px;">
             <div id="tipoUsuarios" class="col-lg-4 col-md-6" style="margin-left:5px;"></div>
-            <div id="cantEventos" class="col-lg-4 col-md-6" style="margin-left:50px; margin-right:50px;"></div>
+            <div id="estuYedu" class="col-lg-4 col-md-6" style="margin-left:50px; margin-right:50px;"></div>
+
             <div style=" flex:0 0 33%;  max-width:250px;">
                 <div id="totalCursosCreados" class="box">
                     <div class="box__header">
@@ -148,12 +149,17 @@
 
 
 
-            <div id="habilidadesComunidad" style="height: 300px;  width: 45%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
-            <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;display: none;"></div>
+            <div id="habilidadesComunidad" style="height: 300px;  width: 30%; margin-top:50px;margin-left:20px;  margin-bottom:20px;"></div>
+            <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; display: none;"></div>
 
-            <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
+            <div id="cantPorPais" style="height: 300px; width: 30%; margin-top:50px;margin-left:20px; margin-bottom:20px;"></div>
             <div id="habilidadesPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
             <div id="tiposDeUsuarioPorPais" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
+
+            <div id="cantEventos" style="height: 300px; width: 30%; margin-top:50px;margin-left:20px; margin-bottom:20px;"></div>
+            <div id="topLikes" style="height: 300px; width: 30%; margin-top:20px;margin-left:32.5%; margin-bottom:50px;"></div>
+
+
 
         </div>
 
@@ -201,7 +207,7 @@
             exportEnabled: false,
             theme: "light2",
             title: {
-                text: "Eventos presenciales y virtuales"
+                text: "Eventos"
             },
             data: [{
                 type: "pie",
@@ -226,7 +232,7 @@
             exportEnabled: false,
             theme: "light2",
             title: {
-                text: "Estudiantes certificados y no certificados"
+                text: "Estudiantes"
             },
             data: [{
                 type: "pie",
@@ -242,7 +248,71 @@
         chart.render();
 
     }
+     function topLikesComunidad() {
 
+         var chart = new CanvasJS.Chart("topLikes", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Top miembros con más likes"
+            },
+            data: [{
+                type: "column",
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "inside",
+                dataPoints: @Html.Raw(TempData["GraficoTopLikes"])
+            }]
+        });
+        chart.render();
+    }
+    topLikesComunidad();
+
+    function estudiantesYeducadores() {
+
+        var chart = new CanvasJS.Chart("estuYedu", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Población de estudiantes y educadores"
+            },
+            data: [{
+                type: "bar",
+                click: onClick,
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "inside",
+                dataPoints: @Html.Raw(TempData["GraficoEstudientesEducadores"])
+            }]
+        });
+        chart.render();
+        function onClick(e) {
+
+            if (e.dataPoint.label == "Educador") {
+                if (document.getElementById("educadoresComunidad").style.display === "none") {
+
+                    document.getElementById("educadoresComunidad").style.display = "block";
+                    educadoresComunidad();
+                } else {
+                    document.getElementById("educadoresComunidad").style.display = "none";
+
+                }
+            }
+
+            if (e.dataPoint.label == "Estudiantes") {
+                if (document.getElementById("certificadosYnoCertifcados").style.display === "none") {
+
+                    document.getElementById("certificadosYnoCertifcados").style.display = "block";
+                    estudiantesCertifcadosYnoCertificados();
+                } else {
+                    document.getElementById("certificadosYnoCertifcados").style.display = "none";
+
+                }
+            }
+
+        }
+    }
+    estudiantesYeducadores()
 
     function educadoresComunidad() {
 
@@ -270,7 +340,7 @@
                 animationEnabled: true,
                 theme: "light2",
                 title: {
-                    text: "Habilidades de " + pais,
+                    text: "Top habilidades de " + pais,
                     horizontalAlign: "center"
                 },
                 data: [{
@@ -343,12 +413,12 @@
                 animationEnabled: true,
                
 	            title: {
-		            text: "Tipos de usuario"
+		            text: "Distribución de usuarios"
 	            },
 	            data: [{
 		            type: "pie",
                     startAngle: 25,
-                    click: onClick,
+                    
 		            toolTipContent: "<b>{label}</b>: {y}%",
 		            showInLegend: "true",
 		            legendText: "{label}",
@@ -358,31 +428,7 @@
 	            }]
             });
             chart.render();
-            function onClick(e) {
-                
-                if (e.dataPoint.label == "Educador") {
-                    if (document.getElementById("educadoresComunidad").style.display === "none") {
-                        
-                        document.getElementById("educadoresComunidad").style.display= "block";
-                        educadoresComunidad();
-                    } else {
-                        document.getElementById("educadoresComunidad").style.display= "none";
-
-                    }
-                } 
-
-                if (e.dataPoint.label == "Estudiantes") {
-                    if (document.getElementById("certificadosYnoCertifcados").style.display === "none") {
-
-                        document.getElementById("certificadosYnoCertifcados").style.display = "block";
-                        estudiantesCertifcadosYnoCertificados();
-                    } else {
-                        document.getElementById("certificadosYnoCertifcados").style.display = "none";
-
-                    }
-                } 
-
-            }
+           
 
          }
 
@@ -395,7 +441,7 @@
 	        animationEnabled: true,
 
 	        title:{
-		        text:"Miembros por país"
+		        text:"Países con mayor cantidad de miembros"
 	        },
 	        axisX:{
 		        interval: 1
