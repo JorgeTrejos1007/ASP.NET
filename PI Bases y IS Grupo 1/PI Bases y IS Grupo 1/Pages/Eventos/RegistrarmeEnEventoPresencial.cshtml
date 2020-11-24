@@ -67,7 +67,7 @@
         <li><span class="tab-text "> 3. Confirme registro </span></li>
     </ul>
     <div class="secciones">
-        <article id="tab1">
+        <article id="tab1" style="margin-bottom:200px;">
 
             <div class="modal-dialog" role="document">
                 <div class="modal-content center">
@@ -111,7 +111,8 @@
                 </div>
             </div>
         </article>
-        <article id="tab2" style="display:none">
+        
+        <article id="tab2" style="display:none; margin-bottom:200px;">
             <div id="registroNumerado" style="display:none">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content center">
@@ -125,7 +126,7 @@
                                 <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
                                 <div class="login-form">
 
-                                    <div class="input-group mt-10">
+                                    <div class="input-group mt-10" style="margin-bottom:30px;">
                                         <select style="width: 465px;" class="mul-select2" id="seleccionarSector" onchange="obtenerAsientos(); ubicacionElegida('seleccionarSector');" required>
                                             <option value="SinSeleccion">- Sin selección -</option>
                                             @foreach (var sector in listaSectoresNumerados)
@@ -145,7 +146,7 @@
 
                                     <br>
                                     <div class="center-login">
-                                        <input class="primary-btn text-uppercase enroll" id="mostrarAsientosElegidos" onclick="asientosElegidos(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
+                                        <input style="margin-left:-30px;" class="primary-btn text-uppercase enroll" id="mostrarAsientosElegidos" onclick="asientosElegidos(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
                                     </div>
 
                                     <br>
@@ -212,7 +213,7 @@
 
 
         </article>
-        <article id="tab3" style="display:none">
+        <article id="tab3" style="display:none; margin-bottom:200px;">
             <div class="modal-dialog" role="document">
                 <div class="modal-content center">
                     <div class="modal-header">
@@ -222,7 +223,7 @@
                     </div>
                     <div class="modal-body">
                         <div style="">
-                            <h2 class="modal-title">Seleccionado</h2>
+                            <h2 class="modal-title" style="margin-bottom:30px;">Seleccionado</h2>
                             <div class="login-form">
                                 <form method="post">
                                     <!--Aqui va lo de elegir ubicacion de sus asientos-->
@@ -230,22 +231,26 @@
                                     <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
                                     <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
                                     <input type="hidden" asp-for="@Model.registro.tipoDeSector" id="registroTipo" value="" />
-                                    <h2>Ubicacion</h2>
-                                    <input asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
+                                    
+                                    <div style="text-align:center; margin-bottom:30px; width:auto;">
+                                        <h2>Ubicacion</h2>
+                                        <input style="border:none; text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
+                                    </div>
 
-                                    <div id="asientosElegidos" style="display:none">
+                                    <div id="asientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
                                         <h2>Asientos</h2>
-                                        <input asp-for="@Model.registro.asientosElegidos" id="asientosEscogidos" value="" readonly />
+                                        <input style="border:none; text-align:center;" asp-for="@Model.registro.asientosElegidos" id="asientosEscogidos" value="" readonly />
 
                                     </div>
-                                    <div id="cantidadAsientosElegidos" style="display:none">
+                                    <div id="cantidadAsientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
                                         <h2>Cantidad</h2>
-                                        <input asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" readonly />
+                                        <input style="border:none; text-align:center" asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" readonly />
                                     </div>
 
-                                    <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
-
-                                </form>
+                                    <div style="text-align:center; width:auto;">
+                                        <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
+                                    </div>
+</form>
 
                             </div>
                         </div>
