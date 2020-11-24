@@ -76,7 +76,7 @@ namespace PIBasesISGrupo1.Handler
             
             string consulta = " SELECT COUNT(*)" +
                             " FROM  Usuario" +
-                            " WHERE pais=@pais";
+                            " WHERE pais=@pais AND pais IS NOT NULL";
             SqlCommand comando = new SqlCommand(consulta, conexion);
             comando.Parameters.AddWithValue("@pais", pais);
 

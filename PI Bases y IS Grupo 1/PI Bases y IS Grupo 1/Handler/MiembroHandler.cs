@@ -42,7 +42,7 @@ namespace PIBasesISGrupo1.Handler
         {
             List<Miembro> miembros = new List<Miembro>();
             string consulta = "SELECT * FROM Usuario U " +
-            " WHERE EXISTS(SELECT emailMiembroFK FROM Miembro M WHERE M.emailMiembroFK= U.emailPK); ";
+            "JOIN Miembro M ON M.emailMiembroFK= U.emailPK; ";
             DataTable tablaMiembro = crearTablaConsulta(consulta);
             
             foreach (DataRow columna in tablaMiembro.Rows)
