@@ -498,7 +498,7 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
-        }
+        
         public bool darLike(string emailDelQueDaLike, string emailDelQueRecibeLike) {
             string consulta = "INSERT INTO Vota(emailMiembroQueRecibeLikeFK,emailMiembroQueDaLikeFK) " +
                 "VALUES (@emailRecibeLike,@emailDaLike)";
@@ -539,4 +539,5 @@ namespace PIBasesISGrupo1.Handler
         }
     }
 }
+
  
