@@ -253,7 +253,9 @@ namespace PIBasesISGrupo1.Handler
         {
 
             List<Tuple<string, int>> tiposUsuario = new List<Tuple<string, int>>();
-            string consulta = "SELECT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK FROM Rol GROUP BY rolUsuarioPK ";
+            string consulta ="SELECT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK FROM Rol " +
+            "WHERE rolUsuarioPK = 'Coordinador' " + "OR rolUsuarioPK = 'Miembro de Nucleo' OR rolUsuarioPK = 'Miembro' " +
+            "GROUP BY rolUsuarioPK";
 
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable tablaTiposDeUsuarios = baseDeDatos.crearTablaConsulta(comando);
@@ -605,6 +607,27 @@ namespace PIBasesISGrupo1.Handler
             return distribucionDeEstudiantes;
 
         }
+
+        public List<Tuple<string, int>> obtenerPerfilesConMasLikes()
+        {
+
+            List<Tuple<string, int>> likes = new List<Tuple<string, int>>();
+            string consulta = " SELECT TOP 5 COUNT(V.emailMiembroQueRecibeLikeFK) AS cantidad, U.nombre+' '+U.primerApellido AS nombreCompleto "+
+                              " FROM Vota V JOIN Usuario U "+
+                              " ON V.emailMiembroQueRecibeLikeFK = U.emailPK " +
+                              " GROUP BY V.emailMiembroQueRecibeLikeFK, U.nombre, U.primerApellido " +
+                              " ORDER BY emailMiembroQueRecibeLikeFK DESC ";
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable perfilesConMasLikes = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaPerfilesConMasLikes in perfilesConMasLikes.Rows)
+            {
+                likes.Add(new Tuple<string, int>(Convert.ToString(columnaPerfilesConMasLikes["nombreCompleto"]), Convert.ToInt32(columnaPerfilesConMasLikes["cantidad"])));
+
+            }
+            return likes;
+
+        }
+
         public int obtenerTotalDeEstudiantesDeEsePais()
         {
             return totalEstudiantesPorPaisEnCursos;

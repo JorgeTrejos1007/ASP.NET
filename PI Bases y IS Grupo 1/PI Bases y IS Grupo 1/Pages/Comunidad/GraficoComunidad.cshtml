@@ -147,13 +147,15 @@
             <div id="certificadosYnoCertifcados" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none"></div>
 
 
-
-            <div id="habilidadesComunidad" style="height: 300px;  width: 45%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
+           
+            <div id="habilidadesComunidad" style="height: 300px;  width: 30%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
             <div id="idiomasComunidad" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px;display: none;"></div>
 
-            <div id="cantPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
+            <div id="cantPorPais" style="height: 300px; width: 30%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
             <div id="habilidadesPorPais" style="height: 300px; width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
             <div id="tiposDeUsuarioPorPais" style="height: 300px;width: 45%; margin-top:50px;margin-left:20px;display: none;"></div>
+
+            <div id="topLikes" style="height: 300px; width: 30%; margin-top:50px;margin-left:20px; margin-top:50px; margin-bottom:50px;"></div>
 
         </div>
 
@@ -242,7 +244,25 @@
         chart.render();
 
     }
+     function topLikesComunidad() {
 
+         var chart = new CanvasJS.Chart("topLikes", {
+            animationEnabled: true,
+            exportEnabled: false,
+            theme: "light2",
+            title: {
+                text: "Top miembros con más likes"
+            },
+            data: [{
+                type: "column",
+                indexLabelFontColor: "#5A5757",
+                indexLabelPlacement: "inside",
+                dataPoints: @Html.Raw(TempData["GraficoTopLikes"])
+            }]
+        });
+        chart.render();
+    }
+    topLikesComunidad();
 
     function educadoresComunidad() {
 
