@@ -11,6 +11,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <script src='https://kit.fontawesome.com/a076d05399.js'></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
 
 
 
@@ -94,7 +95,7 @@
                                                     </div>
                                                     <div class="time-location">
                                                         <p>
-                                                            <span class="ti-time mr-2"></span> @evento.fechaYHora.Hour : @evento.fechaYHora.Minute
+                                                            <span class="ti-time mr-2"></span> @evento.fechaYHora.ToString("H:mm")
                                                         </p>
                                                         <p>
                                                             <span class="ti-location-pin mr-2"></span> @evento.lugar
@@ -139,7 +140,7 @@
                                                         <div class="date"><span>@evento.fechaYHora.Day</span>@evento.retorneElNombreDelMes(evento.fechaYHora.Month)</div>
                                                         <div class="time-location">
                                                             <p>
-                                                                <span class="ti-time mr-2"></span> @evento.fechaYHora.Hour : @evento.fechaYHora.Minute
+                                                                <span class="ti-time mr-2"></span> @evento.fechaYHora.ToString("H:mm")
                                                             </p>
                                                             <p>
                                                                 <span class="ti-link mr-2"></span> ¡Transmitido en nuestra comunidad!
@@ -168,5 +169,4 @@
         </div>
     </div>
     <script src="~/js/tabs.js"></script>
-    <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
 </body>

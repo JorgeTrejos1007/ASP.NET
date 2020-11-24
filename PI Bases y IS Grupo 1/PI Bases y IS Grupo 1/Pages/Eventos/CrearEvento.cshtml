@@ -22,6 +22,11 @@
 <div class="evento__container">
     <form method="post" enctype="multipart/form-data">
         <div class="evento__elements">
+
+            <div style="align-self:center; margin-top:2%;">
+                <img class="logo-2" src="~/img/logo.png" />
+            </div>
+            <hr>
             <h2 class="evento__title">Registrar Evento</h2>
             @{
                 if (mensajeError != "")
@@ -68,7 +73,15 @@
             </div>
 
             <div class="evento__type" id="Virtual" style="display:none">
+
+                <div>
+                    <span asp-validation-for="@Model.evento.cupoMaximo" class="text-danger"></span>
+                    <label class="evento__label" asp-for="@Model.evento.cupoMaximo">Ingrese el cupo máximo del evento</label>
+                    <input asp-for="@Model.evento.cupoMaximo" class="evento__type-input" />
+
+                </div>
                 <span asp-validation-for="@Model.evento.nombreCanalStream" class="text-danger"></span>
+                <br>
                 <div>
                     <label asp-for="@Model.evento.nombreCanalStream" class="evento__label">Ingrese el nombre del canal del stream:</label>
                     <input asp-for="@Model.evento.nombreCanalStream" class="evento__type-input" />

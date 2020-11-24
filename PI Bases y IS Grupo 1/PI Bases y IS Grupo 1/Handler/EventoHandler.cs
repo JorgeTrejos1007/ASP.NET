@@ -45,7 +45,7 @@ namespace PIBasesISGrupo1.Handler
         }
 
         public bool registrarEventoVirtual(Evento evento) {
-            string consulta = "INSERT INTO Virtual " + "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal)";
+            string consulta = "INSERT INTO Virtual " + "VALUES(@emailCoordinador, @nombreEvento, @fechaYHora, @nombreCanal, @cupoMaximo)";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
 
@@ -53,6 +53,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", evento.nombre);
             comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
             comandoParaConsulta.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
+            comandoParaConsulta.Parameters.AddWithValue("@cupoMaximo", evento.cupoMaximo);
 
             return baseDeDatos.ejecutarComandoParaConsulta(comandoParaConsulta);
         }
