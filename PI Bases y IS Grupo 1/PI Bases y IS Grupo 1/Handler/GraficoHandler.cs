@@ -284,6 +284,23 @@ namespace PIBasesISGrupo1.Handler
 
         }
 
+        public int obtenerCantidadEducadores()
+        {
+
+            int cantidadDeEducadores = 0;
+            string consulta = "SELECT COUNT(*) as CantidadDeEducadores  FROM Educador";
+
+            SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
+            DataTable tablaCantidadDeEducadores = baseDeDatos.crearTablaConsulta(comando);
+            foreach (DataRow columnaCantidad in tablaCantidadDeEducadores.Rows)
+            {
+                cantidadDeEducadores = Convert.ToInt32(columnaCantidad["CantidadDeEducadores"]);
+
+            }
+            return cantidadDeEducadores;
+
+        }
+
         public List<Tuple<string, int>> obtenerCantidadDeMiembrosPorPais()
         {
 
@@ -323,6 +340,7 @@ namespace PIBasesISGrupo1.Handler
 
             List<Tuple<string, int>> tipoUsuario = new List<Tuple<string, int>>();
             string consulta = " SELECT COUNT(rolUsuarioPK) AS cantidad, rolUsuarioPK" +                             " FROM Rol WHERE emailUsuarioFK IN(SELECT emailPK FROM Usuario WHERE pais=@pais)" +
+                             " AND rolUsuarioPK !='Educador' "+
                              " GROUP BY rolUsuarioPK";
             SqlCommand comando = baseDeDatos.crearComandoParaConsulta(consulta);
             comando.Parameters.AddWithValue("@pais", pais);

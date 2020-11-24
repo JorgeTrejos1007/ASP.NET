@@ -29,6 +29,7 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             obtenerCantidadDeEventos();
             obtenerCantidadCursosCreados();
             obtenerPerfilesConMasLikes();
+            obtenerEducadoresYEstudiantes();
 
         }
         public void ObtenerTopCursos()
@@ -217,6 +218,19 @@ namespace PIBasesISGrupo1.Pages.Comunidad
             }
 
             TempData["GraficoTopLikes"] = JsonConvert.SerializeObject(dataPoints);
+        }
+        public void obtenerEducadoresYEstudiantes()
+        {
+            List<DataPoint> dataPoints = new List<DataPoint>();
+            int cantidadEstudiantes= grafico.obtenerCantidadEstudiantes();
+            int cantidadEducadores = grafico.obtenerCantidadEducadores();
+           
+           
+            dataPoints.Add(new DataPoint("Estudiantes", cantidadEstudiantes));
+            dataPoints.Add(new DataPoint("Educador", cantidadEducadores));
+
+
+            TempData["GraficoEstudientesEducadores"] = JsonConvert.SerializeObject(dataPoints);
         }
 
 
