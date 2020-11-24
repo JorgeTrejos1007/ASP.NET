@@ -1,0 +1,91 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.RegistrarmeEnEventoVirtualModel
+@{
+    ViewData["Title"] = "RegistrarmeEnEventoVirtual";
+    var nombreEvento = (string)ViewData["nombreEvento"];
+    var canalDeStream = (string)ViewData["canalDeStream"];
+    var emailCoordinador = (string)ViewData["emailCoordinador"];
+    var fechaYHora = (DateTime)ViewData["fechaYHora"];
+    var cuposDisponibles = (int)ViewData["cuposDisponibles"];
+}
+
+
+<head>
+    <style type="text/css">
+        body {
+            background-image: url("/img/event/evento2.jpg");
+            background-size: 100%;
+        }
+
+        ul.tabs li {
+            width: 33%;
+        }
+
+        .center-login {
+            margin: 0;
+            margin-left: 30%;
+        }
+
+        .left-login {
+            text-align: left;
+        }
+    </style>
+</head>
+
+<div class="cursos-container-2">
+    <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;">
+        <div class="col-lg-12 right-contents">
+            <div style="background-color:#002347; height:70px;">
+                <h2 class="title_color align-content-lg-center centrar" style="color:#fdc632; padding:1%;">@nombreEvento</h2>
+            </div>
+            <hr class="new5">
+            <ul>
+                <li>
+                    <a class="justify-content-between d-flex">
+                        <p>Lugar: </p>
+                        <span>@canalDeStream</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="justify-content-between d-flex">
+                        <p>Fecha: </p>
+                        <span>@fechaYHora.ToString()</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal-dialog" role="document">
+    <div class="modal-content center">
+        <div class="modal-header">
+            <div class="center-login">
+                <img class="logo-2" src="~/img/logo.png" alt="" />
+            </div>
+        </div>
+        <div class="modal-body">
+            <div style="">
+                <h2 class="modal-title">Seleccionado</h2>
+                <div class="login-form">
+                    <form method="post">
+                        <!--Aqui va lo de elegir ubicacion de sus asientos-->
+                        <input type="hidden" asp-for="@Model.evento.emailCoordinador"  value="@emailCoordinador" />
+                        <input type="hidden" asp-for="@Model.evento.nombre" value="@nombreEvento" />
+                        <input type="hidden" asp-for="@Model.evento.fechaYHora"  value="@fechaYHora" />
+                        <input type="hidden" asp-for="@Model.evento.nombreCanalStream" value=@canalDeStream />
+                        <h2>La cantidad de cupos disponibles para este evento es: @cuposDisponibles</h2>
+
+                        <h2>Ingrese la cantidad de cupos deseados</h2>
+                        <input asp-for="@Model.cuposSolicitados" /> 
+
+                        <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

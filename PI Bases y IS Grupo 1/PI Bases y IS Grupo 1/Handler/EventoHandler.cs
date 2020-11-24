@@ -337,6 +337,29 @@ namespace PIBasesISGrupo1.Handler
             return cantidadAsientos;
         }
 
+        public int cuposDisponiblesEventoVirtual(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreCanal)
+        {
+            int cuposDisponibles = 0;
+            string consulta = "SELECT cuposDisponibles FROM Virtual " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND nombreCanal = @nombreCanal";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCanal", nombreCanal);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                cuposDisponibles = Convert.ToInt32(columna["cuposDisponibles"]);
+            }
+
+            return cuposDisponibles;
+        }
+
         public bool transaccionReservarAsientosNoNumerados(InformacionDeRegistroEnEvento cantidadAsientosDeseados)
         {
             conexion.Open();
