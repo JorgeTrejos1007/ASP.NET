@@ -314,6 +314,29 @@ namespace PIBasesISGrupo1.Handler
             return asientosDisponibles;
         }
 
+        public int asientosDisponiblesEnSectorNoNumerado(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
+        {
+            int cantidadAsientos = 0;
+            string consulta = "SELECT numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND nombreDeSectorPK = @nombreSector AND tipo = 'No numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSector", nombreSector);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"]);
+            }
+
+            return cantidadAsientos;
+        }
+
         public bool transaccionReservarAsientosNoNumerados(InformacionDeRegistroEnEvento cantidadAsientosDeseados)
         {
             conexion.Open();

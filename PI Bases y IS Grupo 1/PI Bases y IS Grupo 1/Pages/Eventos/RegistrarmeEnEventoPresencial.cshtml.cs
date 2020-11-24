@@ -57,6 +57,13 @@ namespace PIBasesISGrupo1.Pages.Eventos
             return new JsonResult(sector);
         }
 
+        public IActionResult OnPostCantidadAsientos(string nombreSectorElegido, string nombreEvento, string emailCoordinador, DateTime fechaYHora)
+        {
+            Sector sector = new Sector();
+            sector.cantidadAsientos = baseDeDatosHandler.asientosDisponiblesEnSectorNoNumerado(emailCoordinador, nombreEvento, fechaYHora, nombreSectorElegido);
+            return new JsonResult(sector);
+        }
+
         public IActionResult OnPostRegistrarmeEnElEvento() {
             IActionResult vista;
 

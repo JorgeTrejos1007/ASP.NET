@@ -62,9 +62,9 @@
 
 <div class="wrap">
     <ul class="tabs">
-        <li><a href="#tab1"><span class="tab-text "> 1. Cantidad de asientos </span></a></li>
-        <li><a href="#tab2"><span class="tab-text "> 2. Elija sus asientos </span></a></li>
-        <li><a href="#tab3"><span class="tab-text "> 3. Confirme registro </span></a></li>
+        <li><span class="tab-text "> 1. Cantidad de asientos </span></li>
+        <li><span class="tab-text "> 2. Elija sus asientos </span></li>
+        <li><span class="tab-text "> 3. Confirme registro </span></li>
     </ul>
     <div class="secciones">
         <article id="tab1">
@@ -81,21 +81,27 @@
                             <h2 class="modal-title">Seleccione el tipo de sector</h2>
                             <div class="login-form">
                                 <form>
-                                    <label>
-                                        <input type="radio" name="type" onchange="tipoSector('Numerado')" value="Numerado" required>
-                                        Numerado
-                                    </label><br>
+                                    <label style="display:none" class="text-danger" id="ErrorTipoSector">Por favor ingrese un tipo de sector</label>
+                                    @if (listaSectoresNumerados.Count>0)
+                                    {
+                                        <label>
+                                            <input type="radio" name="type" onchange="tipoSector('Numerado')" value="Numerado" required>
+                                            Numerado
+                                        </label><br>
+                                    }
 
-                                    <label>
-                                        <input type="radio" name="type" onchange="tipoSector('No Numerado')" value="No Numerado">
-                                        No numerado
-                                    </label><br>
+                                    @if (listaSectoresNoNumerado.Count>0)
+                                    {
+                                        <label>
+                                            <input type="radio" name="type" onchange="tipoSector('No Numerado')" value="No Numerado">
+                                            No numerado
+                                        </label><br>
+                                    }
 
-                                    <input type="submit" style="display:none">
+                                    <input type="submit" style="display:none" />
                                 </form>
                                 <div class="center-login">
-                                    <a class="primary-btn text-uppercase enroll" href="#tab2"> Siguiente</a>
-                                    <a href="#tab2"></a>
+                                    <input type="button" value="Siguiente" class="primary-btn text-uppercase enroll" onclick="cambioDeTab('tab1','tab2')" />
                                 </div>
                                 <br>
                             </div>
@@ -105,7 +111,7 @@
                 </div>
             </div>
         </article>
-        <article id="tab2">
+        <article id="tab2" style="display:none">
             <div id="registroNumerado" style="display:none">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content center">
@@ -120,7 +126,7 @@
                                 <div class="login-form">
 
                                     <div class="input-group mt-10">
-                                        <select style="width: 465px;" class="mul-select" id="seleccionarSector" onchange="obtenerAsientos(); ubicacionElegida('seleccionarSector');" required>
+                                        <select style="width: 465px;" class="mul-select2" id="seleccionarSector" onchange="obtenerAsientos(); ubicacionElegida('seleccionarSector');" required>
                                             <option value="SinSeleccion">- Sin selección -</option>
                                             @foreach (var sector in listaSectoresNumerados)
                                             {
@@ -131,6 +137,7 @@
                                     </div>
                                     <h2 class="modal-title">Seleccione su numero de asiento</h2>
 
+                                    <label style="display:none" class="text-danger" id="ErrorSeleccionarAsientos">Por favor ingrese los asientos que desea</label>
                                     <div id="elegirNumeroAsiento" style="display:none">
                                         <select style="width: 465px;" class="mul-select" multiple id="seleccionarAsiento" required></select>
                                     </div>
@@ -138,7 +145,7 @@
 
                                     <br>
                                     <div class="center-login">
-                                        <input class="primary-btn text-uppercase enroll" id="mostrarAsientosElegidos" onclick="asientosElegidos()" value="Siguiente" />
+                                        <input class="primary-btn text-uppercase enroll" id="mostrarAsientosElegidos" onclick="asientosElegidos(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
                                     </div>
 
                                     <br>
@@ -167,7 +174,7 @@
                                 <div class="login-form">
 
                                     <div class="input-group mt-10">
-                                        <select style="width: 465px;" class="mul-select" id="seleccionarSectorNoNumerado" onchange="ubicacionElegida('seleccionarSectorNoNumerado')" required>
+                                        <select style="width: 465px;" class="mul-select2" id="seleccionarSectorNoNumerado" onchange="obtenerCantidadAsientos(); ubicacionElegida('seleccionarSectorNoNumerado');" required>
                                             <option value="SinSeleccion">- Sin selección -</option>
                                             @foreach (var sector in listaSectoresNoNumerado)
                                             {
@@ -176,14 +183,20 @@
                                             }
                                         </select>
                                     </div>
-                                    <h2 class="modal-title">Seleccione la cantidad de asientos</h2>
 
-                                    <input type="number" value="" id="cantidadDeAsientos" required />
-
+                                    <div id="obtenerCantidadAsientosDeSector" style="display:none">
+                                        <h2 class="modal-title">Seleccione la cantidad de asientos</h2>
+                                        <h2 class="modal-title">Quedan en este sector:</h2>
+                                        <input type="number" id="obtenerNumeroDeAsientos" value="" readonly />
+                                        <h2>asientos</h2>
+                                        <label style="display:none" class="text-danger" id="ErrorNumeroAsientosVacio">Por favor ingrese un numero</label>
+                                        <label style="display:none" class="text-danger" id="ErrorNumeroAsientos">Por favor ingrese un numero valido</label>
+                                        <input type="number" id="cantidadDeAsientos" onchange="cantidadAsientosValida()" min="1" required />
+                                    </div>
 
                                     <br>
                                     <div class="center-login">
-                                        <input class="primary-btn text-uppercase enroll" id="mostrarCantidadAsientosElegida" onclick="cantidadAsientosElegida()" value="Siguiente" />
+                                        <input class="primary-btn text-uppercase enroll" id="mostrarCantidadAsientosElegida" onclick="cantidadAsientosElegida(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
                                     </div>
 
                                     <br>
@@ -199,7 +212,7 @@
 
 
         </article>
-        <article id="tab3">
+        <article id="tab3" style="display:none">
             <div class="modal-dialog" role="document">
                 <div class="modal-content center">
                     <div class="modal-header">
@@ -280,6 +293,51 @@
         var elem = document.getElementById("cantidadDeAsientos").value;
         document.getElementById("cantidadAsientos").value = "" + elem + "";
     }
+    function cantidadAsientosValida() {
+        var numeroAsientosTotales = document.getElementById("obtenerNumeroDeAsientos").value;
+        var asientoSolicitados = document.getElementById("cantidadDeAsientos").value;
+        if ((Number.parseInt(asientoSolicitados) > Number.parseInt(numeroAsientosTotales))) {
+            document.getElementById("ErrorNumeroAsientos").style.display = "block";
+        }
+        else {
+            document.getElementById("ErrorNumeroAsientos").style.display = "none";
+        }
+    }
+    function cambioDeTab(tabActual, tabSiguiente) {
+        if (tabActual == "tab1") {
+            var checkRadio = document.querySelector(
+                'input[name="type"]:checked');
+            if (checkRadio != null) {
+                document.getElementById(tabActual).style.display = "none";
+                document.getElementById(tabSiguiente).style.display = "block";
+                document.getElementById("ErrorTipoSector").style.display = "none";
+            }
+            else {
+                document.getElementById("ErrorTipoSector").style.display = "block";
+            }
+
+        }
+        else {
+            var ubicacionElegida = document.getElementById("ubicacionEscogida").value;
+            var cantidadAsientos = document.getElementById("cantidadAsientos").value;
+            var asientosEscogidos = document.getElementById("asientosEscogidos").value;
+            if (ubicacionElegida != "") {
+                if (cantidadAsientos == "") {
+                    document.getElementById("ErrorNumeroAsientosVacio").style.display = "block";
+                }
+                if (asientosEscogidos == "") {
+                    document.getElementById("ErrorSeleccionarAsientos").style.display = "block";
+                }
+                if ((asientosEscogidos != "") || (cantidadAsientos != "")) {
+                    document.getElementById("ErrorNumeroAsientosVacio").style.display = "none";
+                    document.getElementById("ErrorSeleccionarAsientos").style.display = "none";
+                    document.getElementById(tabActual).style.display = "none";
+                    document.getElementById(tabSiguiente).style.display = "block";
+                }
+            }
+        }
+
+    }
 </script>
 
 
@@ -313,5 +371,32 @@
     }
 </script>
 
+<script type="text/javascript">
+    function obtenerCantidadAsientos() {
+
+        $.ajax({
+            type: "POST",
+            url: "/Eventos/RegistrarmeEnEventoPresencial?handler=CantidadAsientos",
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader("XSRF-TOKEN",
+                    $('input:hidden[name="__RequestVerificationToken"]').val());
+            },
+            data: { "nombreSectorElegido": $("#seleccionarSectorNoNumerado").val(), "nombreEvento": $("#registroNombreEvento").val(), "emailCoordinador": $("#registroEmailCoordinador").val(), "fechaYHora": $("#registroFechaYHora").val() },
+            success: function (response) {
+                if (response.cantidadAsientos != null) {
+                    document.getElementById("obtenerCantidadAsientosDeSector").style.display = "block";
+                    document.getElementById("obtenerNumeroDeAsientos").value = "" + response.cantidadAsientos + "";
+
+                }
+                else {
+                    document.getElementById("obtenerCantidadAsientosDeSector").style.display = "none";
+                    document.getElementById("obtenerNumeroDeAsientos").value = "";
+                }
+
+            }
+        });
+
+    }
+</script>
 
 
