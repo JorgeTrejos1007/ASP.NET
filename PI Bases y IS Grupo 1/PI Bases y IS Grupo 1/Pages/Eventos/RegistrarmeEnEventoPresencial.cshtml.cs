@@ -51,7 +51,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
         public IActionResult OnPostElegirAsientos(string nombreSectorElegido, string nombreEvento, string emailCoordinador, DateTime fechaYHora)
         {
             Sector sector = new Sector();
-            sector.asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSector(emailCoordinador, nombreEvento, fechaYHora, nombreSectorElegido);
+            sector.asientosDisponibles = baseDeDatosHandler.asientosDisponiblesEnSectorNumerado(emailCoordinador, nombreEvento, fechaYHora, nombreSectorElegido);
             return new JsonResult(sector);
         }
 

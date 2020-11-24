@@ -289,7 +289,7 @@ namespace PIBasesISGrupo1.Handler
             return listaSectores;
         }
 
-        public List<int> asientosDisponiblesEnSector(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
+        public List<int> asientosDisponiblesEnSectorNumerado(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
         {
             List<int> asientosDisponibles = new List<int> ();
 
