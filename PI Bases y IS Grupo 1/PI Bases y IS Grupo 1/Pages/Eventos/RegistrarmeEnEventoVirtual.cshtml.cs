@@ -47,8 +47,45 @@ namespace PIBasesISGrupo1.Pages.Eventos
             return vista;
         }
         
-        public void OnPostRegistrarmeEnElEvento()
+        public IActionResult OnPostRegistrarmeEnElEvento()
         {
+            IActionResult vista;
+            EventoHandler eventoHandler = new EventoHandler();
+            var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
+
+            bool exito = eventoHandler.transaccionReservarCuposEventoVirtual(evento, cuposSolicitados);
+
+            if (exito)
+            {
+                vista = Redirect("~/Index");
+
+                //string url = "http://edustage.azurewebsites.net/Eventos/StreamDeEvento?nombreE=" + evento.nombre + "&nombreCanal=" + evento.nombreCanalStream;
+                string url = "https://localhost:44326/Eventos/StreamDeEvento?nombreE=" + evento.nombre.Replace(" ","%20") + "&nombreCanal=" + evento.nombreCanalStream.Replace(" ", "%20");
+
+                MailMessage mail = new MailMessage();
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("comunidad.practica.g1@gmail.com");
+                mail.To.Add(miembro.email);
+                mail.Subject = "Link para el evento: " + evento.nombre;
+
+                mail.Body = "Hola, usted ha sido registrado en un evento virtual. Los detalles de su registro se muestran a continuación:\n\n";
+                mail.Body += "Cantidad de asientos: " + cuposSolicitados.ToString();
+                mail.Body += ".\nFecha: " + evento.fechaYHora.ToString("dd/MM/yyyy") + ".\n";
+                mail.Body += "Hora: " + evento.fechaYHora.ToString("HH:mm");
+                mail.Body += ".\nCanal de twitch: " + evento.nombreCanalStream + ".\n";
+                mail.Body += "Link para ingresar al stream: " + url + ".\n\n";
+                mail.Body += "Gracias por participar en este evento.\nTe esperamos!";
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("comunidad.practica.g1@gmail.com", "AdriancitoG1.");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(mail);
+            }
+            else {
+                vista = Redirect("~/Index");
+            }
+
+            return vista;
         }
     }
 }

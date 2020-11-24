@@ -14,7 +14,7 @@
     <style type="text/css">
         body {
             background-image: url("/img/event/evento2.jpg");
-            background-size: 100%;
+            background-size: 150%;
         }
 
         ul.tabs li {
@@ -58,7 +58,7 @@
 </div>
 
 <div class="modal-dialog" role="document">
-    <div class="modal-content center">
+    <div class="modal-content center" style="margin-bottom:100px; margin-top:-30px;">
         <div class="modal-header">
             <div class="center-login">
                 <img class="logo-2" src="~/img/logo.png" alt="" />
@@ -66,7 +66,6 @@
         </div>
         <div class="modal-body">
             <div style="">
-                <h2 class="modal-title">Seleccionado</h2>
                 <div class="login-form">
                     <form method="post">
                         <!--Aqui va lo de elegir ubicacion de sus asientos-->
@@ -74,7 +73,7 @@
                         <input type="hidden" asp-for="@Model.evento.nombre" value="@nombreEvento" />
                         <input type="hidden" asp-for="@Model.evento.fechaYHora"  value="@fechaYHora" />
                         <input type="hidden" asp-for="@Model.evento.nombreCanalStream" value=@canalDeStream />
-                        <h2>La cantidad de cupos disponibles para este evento es: @cuposDisponibles</h2>
+                        <h2 style="margin-bottom:20px;">La cantidad de cupos disponibles para este evento es: @cuposDisponibles</h2>
 
                         <h2>Ingrese la cantidad de cupos deseados</h2>
                         <input asp-for="@Model.cuposSolicitados" /> 

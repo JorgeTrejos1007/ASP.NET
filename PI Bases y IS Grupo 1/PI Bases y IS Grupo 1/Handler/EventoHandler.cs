@@ -401,9 +401,10 @@ namespace PIBasesISGrupo1.Handler
                 return exito;
             }
 
-            if (cantidadAsientosBD < cantidadAsientosDeseados.cantidadAsientos) {
-                exito = false;
-                consulta = "ROLLBACK";
+            if (cantidadAsientosBD < cantidadAsientosDeseados.cantidadAsientos || cantidadAsientosDeseados.cantidadAsientos <= 0) {
+                consulta = "ROLLBACK \n" +
+                           "SET IMPLICIT_TRANSACTIONS OFF";
+
                 comando = new SqlCommand(consulta, conexion);
                 try
                 {
@@ -494,8 +495,10 @@ namespace PIBasesISGrupo1.Handler
 
             exito = false;
             if (cantidadDeAsientosDeseadosDisponibles != asientos.asientosDeseados.Count) {
-                consulta = "ROLLBACK";
+                consulta = "ROLLBACK \n" +
+                           "SET IMPLICIT_TRANSACTIONS OFF";
                 comando = new SqlCommand(consulta, conexion);
+
                 try
                 {
                     exito = comando.ExecuteNonQuery() >= 1;
@@ -620,6 +623,93 @@ namespace PIBasesISGrupo1.Handler
             return consulta;
         }
 
+        public bool transaccionReservarCuposEventoVirtual(Evento evento, int cuposDeseados)
+        {
+            conexion.Open();
+            bool exito = false;
+
+            string consulta = "SET IMPLICIT_TRANSACTIONS ON \n" +
+                              "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ \n" +
+                              "BEGIN TRAN";
+
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            try
+            {
+                exito = comando.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            consulta = "SELECT cuposDisponibles FROM Virtual WHERE emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento " +
+                       "AND fechaYHoraFK = @fechaYHora AND nombreCanal = @nombreCanal";
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
+            comando.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", evento.nombre);
+            comando.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
+
+            int cantidadAsientosBD = 0;
+            exito = false;
+            try
+            {
+                cantidadAsientosBD = (int)comando.ExecuteScalar();
+                exito = true;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            if (cantidadAsientosBD < cuposDeseados || cuposDeseados <= 0)
+            {
+                consulta = "ROLLBACK \n" +
+                           "SET IMPLICIT_TRANSACTIONS OFF";
+
+                comando = new SqlCommand(consulta, conexion);
+                try
+                {
+                    exito = comando.ExecuteNonQuery() >= 1;
+                    exito = false;
+                    return exito;
+                }
+                catch
+                {
+                    return exito;
+                }
+            }
+
+            consulta = "UPDATE Virtual SET cuposDisponibles = cuposDisponibles - @cuposDeseados WHERE " +
+                       "emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora " +
+                       "AND nombreCanal = @nombreCanal \n" + 
+                       "COMMIT TRAN \n" +
+                       "COMMIT TRAN \n" +
+                       "SET IMPLICIT_TRANSACTIONS OFF";
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@cuposDeseados", cuposDeseados);
+            comando.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", evento.nombre);
+            comando.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
+            comando.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
+
+            try
+            {
+                exito = comando.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            conexion.Close();
+            return true;
+        }
+
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
@@ -628,6 +718,7 @@ namespace PIBasesISGrupo1.Handler
             bytes = stream.ToArray();
             return bytes;
         }
+
         private string cambiarFormatoFecha(DateTime fecha)
         {
             string fechaCorregida = "";

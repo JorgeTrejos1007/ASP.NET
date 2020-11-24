@@ -100,7 +100,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 mail.Subject = "Entradas para el evento " + registro.nombreEvento;
 
 
-                mail.Body = "Hola, usted ha sido registrado en un evento. Los detalles de se registro se muestran a continuación:\n\n";
+                mail.Body = "Hola, usted ha sido registrado en un evento. Los detalles de su registro se muestran a continuación:\n\n";
                 mail.Body += "Evento: " + registro.nombreEvento + ".\n";
                 mail.Body += "Sector: " + registro.nombreSector + ".\n";
 
@@ -119,7 +119,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
                 mail.Body += ".\nFecha: " + registro.fechaYHora.ToString("dd/MM/yyyy") + ".\n";
                 mail.Body += "Hora: " + registro.fechaYHora.ToString("HH:mm");
-                mail.Body += "\nLugar: " + (string)TempData["nombreLugar"] + ".\n\n";
+                mail.Body += ".\nLugar: " + (string)TempData["nombreLugar"] + ".\n\n";
                 mail.Body += "Presente este correo en la entrada el día del evento para poder ingresar.\nTe esperamos!";
 
                 SmtpServer.Port = 587;
