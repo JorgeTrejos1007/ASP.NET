@@ -1,0 +1,132 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.CrearSectoresModel
+@{
+    ViewData["Title"] = "CrearSectores";
+    var nombreEvento = (string)ViewData["nombreEvento"];
+}
+
+
+<head>
+    <style>
+        body {
+            background-image: url("/img/RegistrarEvento.jpg");
+            background-size: 100%;
+        }
+
+        .text-danger {
+            margin: auto;
+        }
+    </style>
+
+</head>
+
+@Html.AntiForgeryToken()
+<div class="sector__container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="sector__elements">
+            <div style="align-self:center; margin-top:2%;">
+                <img class="logo-2" src="~/img/logo.png" />
+            </div>
+            <hr>
+            <h2 class="sector__title">@nombreEvento</h2>
+
+            <label id="errorAñadirSector" class="text-danger" style="display:none">Este sector ya existe</label>
+            <span asp-validation-for="@Model.sector.nombreDeSector" class="text-danger"></span>
+            <label class="sector__label" asp-for="@Model.sector.nombreDeSector">Ingrese el nombre del sector</label>
+            <input asp-for="@Model.sector.nombreDeSector" id="nombreSector" class="sector__input" />
+
+            <br>
+            <span asp-validation-for="@Model.sector.cantidadAsientos" class="text-danger"></span>
+            <label class="sector__label" asp-for="@Model.sector.cantidadAsientos">Ingrese la cantidad de asientos</label>
+            <input asp-for="@Model.sector.cantidadAsientos" id="cantidadDeAsientos" class="sector__input" />
+            <br />
+
+            <span asp-validation-for="@Model.sector.tipo" class="text-danger"></span>
+            <div class="sector__type">
+                <div>
+                    <label asp-for="@Model.sector.tipo" class="sector__label">Numerado</label>
+                    <input asp-for="@Model.sector.tipo" type="radio" value="Numerado" id="tipoAsientoNumerado" onchange="tipoAsiento('Numerado')" class="sector__input-type" />
+                </div>
+                <div>
+                    <label asp-for="@Model.sector.tipo" class="sector__label">No numerado</label>
+                    <input asp-for="@Model.sector.tipo" type="radio" value="No numerado" id="tipoAsientoNoNumerado" onchange="tipoAsiento('No numerado')" class="sector__input-type" />
+                </div>
+            </div>
+            <input type="hidden" value="" id="tipoDeAsiento" />
+            <input type="button" id="añadirSector" class="primary-btn2 text-uppercase enroll rounded-0" value="Añadir Sector" style="width:200px;margin:0 auto 20px auto" />
+        </div>
+        <table class="table sector__table">
+            <thead>
+                <tr>
+                    <th>
+                        <h3>Nombre del sector</h3>
+                    </th>
+                    <th>
+                        <h3>Cantidad de asientos</h3>
+                    </th>
+                    <th>
+                        <h3>Tipo de asiento</h3>
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="sector__table-rows"></tbody>
+        </table>
+        <div>
+            <a href="~/Eventos/MostrarEventos" class="primary-btn2 text-uppercase enroll rounded-0" style="width:200px;margin:0 0 20px 250px">Terminar</a>
+            <button type="submit" asp-page-handler="TerminarCrearSectores" style="display:none"></button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function agregarSector(nombreSector, cantidadAsientos, tipoAsiento) {
+        var elem = document.getElementById("sector__table-rows");
+        elem.innerHTML += '<tr> <td> <p style="margin-left:70px;">' + nombreSector + '</p></td><td><p style="margin-left:100px;">' + cantidadAsientos + '</p></td><td><p style="margin-left:50px;">' + tipoAsiento + '</p></td></tr>';
+    }
+
+    function tipoAsiento(tipoAsiento) {
+        document.getElementById("tipoDeAsiento").value = tipoAsiento;
+    }
+
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("#añadirSector").click(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Eventos/CrearSectores?handler=AgregarSector",
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("XSRF-TOKEN",
+                        $('input:hidden[name="__RequestVerificationToken"]').val());
+                },
+                data: { "nombre": $("#nombreSector").val(), "cantidadDeAsientos": $("#cantidadDeAsientos").val(), "tipoAsiento": $("#tipoDeAsiento").val() },
+                success: function (response) {
+                    if (response == "ErrorAlAñadirSector") {
+                        document.getElementById("errorAñadirSector").style.display = "block";
+                    }
+                    else {
+                        if (response != "FaltanDatos") {
+                            document.getElementById("errorAñadirSector").style.display = "none";
+                            agregarSector(response.nombreDeSector, response.cantidadAsientos, response.tipo);
+                            document.getElementById("nombreSector").value = "";
+                            document.getElementById("cantidadDeAsientos").value = "";
+                            document.getElementById("tipoAsientoNumerado").checked = false;
+                            document.getElementById("tipoAsientoNumerado").checked = false;
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+</scripts>

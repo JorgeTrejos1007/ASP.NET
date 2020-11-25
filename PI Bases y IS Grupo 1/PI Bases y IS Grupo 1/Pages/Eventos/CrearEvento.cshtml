@@ -1,0 +1,163 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.CrearEventoModel
+@{
+    ViewData["Title"] = "CrearEvento";
+    var mensajeError = (string)TempData["MensajeError"];
+}
+
+<head>
+    <style>
+        body {
+            background-image: url("/img/RegistrarEvento.jpg");
+            background-size: 100%;
+        }
+
+        .text-danger {
+            margin: auto;
+        }
+    </style>
+
+</head>
+@Html.AntiForgeryToken()
+<div class="evento__container">
+    <form method="post" enctype="multipart/form-data">
+        <div class="evento__elements">
+
+            <div style="align-self:center; margin-top:2%;">
+                <img class="logo-2" src="~/img/logo.png" />
+            </div>
+            <hr>
+            <h2 class="evento__title">Registrar Evento</h2>
+            @{
+                if (mensajeError != "")
+                {
+                    <label class="text-danger">@mensajeError</label>
+                }
+            }
+            <span asp-validation-for="@Model.evento.nombre" class="text-danger"></span>
+            <label asp-for="@Model.evento.nombre" class="evento__label">Ingrese el nombre del evento:</label>
+            <input asp-for="@Model.evento.nombre" class="evento__input" maxlength="100"/>
+
+            <br />
+            <label id="errorFecha" class="text-danger" style="display:none">Digite una fecha valida</label>
+            <span asp-validation-for="@Model.fecha" class="text-danger"></span>
+            <span asp-validation-for="@Model.hora" class="text-danger"></span>
+            <label class="evento__label">Ingrese la fecha del evento</label>
+            <div class="evento__datetime">
+                <input type="date" asp-for="@Model.fecha" id="fechaEvento" onchange="fechaValida()" class="evento__input-time" />
+                <input type="time" asp-for="@Model.hora" class="evento__input-time" />
+            </div>
+
+            <br />
+            <span asp-validation-for="@Model.evento.descripcionDelEvento" class="text-danger"></span>
+            <label asp-for="@Model.evento.descripcionDelEvento" class="evento__label">Ingrese la descripcion del evento</label>
+            <textarea rows="5" cols="70" asp-for="@Model.evento.descripcionDelEvento" style="margin:auto;max-height:150px" maxlength="500"></textarea>
+            <br />
+
+            <span asp-validation-for="@Model.imagenEvento" class="text-danger"></span>
+            <label asp-for="@Model.imagenEvento" class="evento__label">Ingrese la imagen del evento:</label>
+            <input asp-for="@Model.imagenEvento" id="imagenEvento" class="evento__input" />
+
+            <br />
+
+            <span asp-validation-for="@Model.evento.tipo" class="text-danger"></span>
+            <div class="evento__type">
+                <div>
+                    <label asp-for="@Model.evento.tipo" class="evento__label">Virtual</label>
+                    <input asp-for="@Model.evento.tipo" type="radio" value="Virtual" onchange="tipoEvento('Virtual')" class="evento__input-type" />
+                </div>
+                <div>
+                    <label asp-for="@Model.evento.tipo" class="evento__label">Presencial</label>
+                    <input asp-for="@Model.evento.tipo" type="radio" value="Presencial" onchange="tipoEvento('Presencial')" class="evento__input-type" />
+                </div>
+            </div>
+
+            <div class="evento__type" id="Virtual" style="display:none">
+
+                <div>
+                    <span asp-validation-for="@Model.evento.cupoMaximo" class="text-danger"></span>
+                    <label class="evento__label" asp-for="@Model.evento.cupoMaximo">Ingrese el cupo máximo del evento</label>
+                    <input asp-for="@Model.evento.cupoMaximo" class="evento__type-input" />
+
+                </div>
+                <span asp-validation-for="@Model.evento.nombreCanalStream" class="text-danger"></span>
+                <br>
+                <div>
+                    <label asp-for="@Model.evento.nombreCanalStream" class="evento__label">Ingrese el nombre del canal del stream:</label>
+                    <input asp-for="@Model.evento.nombreCanalStream" class="evento__type-input" />
+                    <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="CrearEventoVirtual">Crear Evento</button>
+                </div>
+            </div>
+
+            <div class="evento__type" id="Presencial" style="display:none">
+                <span asp-validation-for="@Model.evento.lugar" class="text-danger"></span>
+                <div>
+                    <label asp-for="@Model.evento.lugar" class="evento__label">Ingrese el nombre del lugar del evento:</label>
+                    <input asp-for="@Model.evento.lugar" class="evento__type-input" />
+                    <button type="submit" class="primary-btn2 text-uppercase enroll rounded-0" asp-page-handler="CrearSeccionEventoPresencial">Crear Sectores</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>
+
+
+
+<script>
+    function tipoEvento(tipo) {
+        var tipoEventoAMostrar = document.getElementById(tipo);
+        if (tipo == "Virtual") {
+            var tipoEventoOculto = document.getElementById("Presencial");
+            tipoEventoOculto.style.display = "none";
+            tipoEventoAMostrar.style.display = "block";
+        }
+        else {
+            var tipoEventoOculto = document.getElementById("Virtual");
+            tipoEventoAMostrar.style.display = "block";
+            tipoEventoOculto.style.display = "none";
+        }
+    }
+    function fechaValida() {
+        var fechaDigitada = document.getElementById("fechaEvento").value;
+        var añoDigitado = fechaDigitada.substring(0, 4);
+        var mesDigitado = fechaDigitada.substring(5, 7);
+        var diaDigitado = fechaDigitada.substring(8, 10);
+        var fechaActual = new Date().toLocaleDateString();
+        var diaActual = fechaActual.substring(0, 2);
+        var mesActual = fechaActual.substring(3, 5);
+        var añoActual = fechaActual.substring(6, 10);
+
+        if (parseInt(añoDigitado) > parseInt(añoActual)) {
+            document.getElementById("errorFecha").style.display = "none";
+        }
+        else if (parseInt(añoDigitado) == parseInt(añoActual)) {
+            if (parseInt(mesDigitado) > parseInt(mesActual)) {
+                document.getElementById("errorFecha").style.display = "none";
+            }
+            else if (parseInt(mesDigitado) == parseInt(mesActual)) {
+                if (parseInt(diaDigitado) >= parseInt(diaActual)) {
+                    document.getElementById("errorFecha").style.display = "none";
+                }
+                else {
+                    document.getElementById("errorFecha").style.display = "block";
+                }
+            }
+            else {
+                document.getElementById("errorFecha").style.display = "block";
+            }
+        }
+        else {
+            document.getElementById("errorFecha").style.display = "block";
+        }
+
+    }
+</script>
+
+<scripts>
+
+
+    @section scripts{
+        <partial name="_ValidationScriptsPartial" />
+    }
+</scripts>

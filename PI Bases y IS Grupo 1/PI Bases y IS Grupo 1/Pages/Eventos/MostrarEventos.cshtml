@@ -1,0 +1,203 @@
+﻿@page
+@model PIBasesISGrupo1.Pages.Eventos.MostrarEventosModel
+@using System.Globalization;
+@{
+    ViewData["Title"] = "MostrarEventos";
+    var mensaje = (string)TempData["mensaje"];
+}
+
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/tabs.css" />
+
+
+
+    <style type="text/css">
+
+        .single_event .event_details {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            width: 50%;
+            padding: 30px 25px;
+            color: #ffffff;
+            height: 100%;
+            margin-right: 10%;
+        }
+
+        .single_event .event_thumb {
+            overflow: hidden;
+            background-image: url("/img/event/blue-Event.jpg.jpg");
+            background-size: 100%;
+            margin-left: 10%;
+            width: 80%;
+            height: 400px;
+        }
+
+        .center-event {
+            width: 100%;
+            text-align: center;
+        }
+
+        body {
+            
+            background-color: #e0efff;
+            background-size: 100%;
+        }
+
+        .event-imagen {
+            height: 400px;
+            width: 460px;
+           
+        }
+
+        .mt-3-event {
+            margin-bottom: 0%;
+        }
+       
+    </style>
+</head>
+
+<body>
+    <br>
+    <h2>Próximos eventos en nuestra comunidad</h2>
+
+    @if (mensaje != null)
+    {
+        <div style="text-align:center;">
+            <h2 style="display:inline-block;" class="alert alert-success">@mensaje</h2>
+        </div>
+    }
+
+    <div class="wrap">
+        <ul class="tabs">
+            <li><a href="#tab1"><span class="tab-text "> Eventos presenciales </span></a></li>
+            <li><a href="#tab2"><span class="tab-text "> Eventos virtuales </span></a></li>
+        </ul>
+        <div class="secciones">
+            <article id="tab1">
+                <div class="container" style="background-color:white;">
+                    @if ((List<PIBasesISGrupo1.Models.Evento>)ViewData["EventosPresenciales"] != null)
+                    {
+                        @foreach (var evento in (List<PIBasesISGrupo1.Models.Evento>)ViewData["EventosPresenciales"])
+                        {
+                            <div class="row">
+                                <div class="center-event">
+
+                                    <div class="">
+                                        <div class="single_event position-relative">
+                                            <div class="event_thumb">
+                                                <img class="event-imagen" src="data: @evento.tipoArchivoImagen;base64,@(Convert.ToBase64String(@evento.arrayArchivoImagen))" asp-append-version="true" style="margin-left:-70%" />
+                                                <div class="event_details">
+                                                    <div class="date"><span>@evento.nombre</span></div>
+                                                    <br>
+                                                    <div class="d-flex mb-4">
+
+                                                        <div class="date" style="margin-left:0%;">
+                                                            <span>@evento.fechaYHora.Day</span>
+                                                            @evento.retorneElNombreDelMes(evento.fechaYHora.Month)
+
+
+                                                        </div>
+                                                        <div class="time-location">
+                                                            <p>
+                                                                <span class="ti-time mr-2"></span> @evento.fechaYHora.ToString("H:mm")
+                                                            </p>
+                                                            <p>
+                                                                <span class="ti-location-pin mr-2"></span> @evento.lugar
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="max-width:100%;height:150px;">
+                                                        <p>
+                                                            @evento.descripcionDelEvento
+
+                                                        </p>
+                                                    </div>
+                                                    <div class="center-event">
+                                                        <form method="post">
+                                                            <button type="submit" asp-route-nombre="@evento.nombre" asp-route-lugar="@evento.lugar" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-fechaYHora="@evento.fechaYHora" asp-page-handler="RegistrarmeEnElEventoPresencial" class="primary-btn rounded-0 white_bg_btn" style="color:#002347; background-color:#fdc632;">Registrarme</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <br>
+                        <br>
+                        <h1>Por el momento no existe eventos presenciales programados, esté atento a nuestra página para próximos eventos.</h1>
+                        <br>
+                    }
+                </div>
+            </article>
+            <article id="tab2">
+                <div class="container" style="background-color:white;">
+                    @if ((List<PIBasesISGrupo1.Models.Evento>)ViewData["EventosVirtuales"] != null)
+                    {
+                        @foreach (var evento in (List<PIBasesISGrupo1.Models.Evento>)ViewData["EventosVirtuales"])
+                        {
+                            <div class="row">
+                                <div class="center-event">
+
+                                    <div class="">
+                                        <div class="single_event position-relative">
+                                            <div class="event_thumb">
+                                                <img class="event-imagen" src="data: @evento.tipoArchivoImagen;base64,@(Convert.ToBase64String(@evento.arrayArchivoImagen))" asp-append-version="true" style="margin-left:-70%;" />
+                                                <div class="event_details">
+                                                    <div class="date"><span>@evento.nombre</span></div>
+                                                    <br>
+                                                    <div class="d-flex mb-4">
+
+                                                        <div class="date"><span>@evento.fechaYHora.Day</span>@evento.retorneElNombreDelMes(evento.fechaYHora.Month)</div>
+                                                        <div class="time-location">
+                                                            <p>
+                                                                <span class="ti-time mr-2"></span> @evento.fechaYHora.ToString("H:mm")
+                                                            </p>
+                                                            <p>
+                                                                <span class="ti-link mr-2"></span> ¡Transmitido en nuestra comunidad!
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div style="width:100%;height:150px;">
+                                                        <p>
+                                                            @evento.descripcionDelEvento
+
+                                                        </p>
+                                                    </div><div class="center-event">
+                                                        <form method="post">
+                                                            <button type="submit" asp-route-nombre="@evento.nombre" asp-route-stream="@evento.nombreCanalStream" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-fechaYHora="@evento.fechaYHora" asp-page-handler="RegistrarmeEnElEventoVirtual" class="primary-btn rounded-0  white_bg_btn" style="color:#002347; background-color:#fdc632;">Registrarme</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                       
+                    }
+                    }
+                    else
+                    {
+                        <br>
+                        <br>
+                        <h1>Por el momento no existe eventos presenciales programados, esté atento a nuestra página para próximos eventos.</h1>
+                        <br>
+                    }
+            </div>
+            </article>
+        </div>
+        </div>
+        <script src="~/js/tabs.js"></script>
+    </body>

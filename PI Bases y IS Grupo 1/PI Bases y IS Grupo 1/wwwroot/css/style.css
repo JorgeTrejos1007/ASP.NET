@@ -40,6 +40,149 @@ body {
     color: #7b838a;
 }
 
+/*Eventos*/
+
+
+.evento__container {
+    display: block;
+    width: 700px;
+    height: auto;
+    background: #fff;
+    margin: 20px auto;
+    border: 1px solid #777777;
+}
+
+.evento__elements {
+    display: flex;
+    flex-direction: column;
+}
+
+.evento__label {
+    margin: auto;
+}
+
+.evento__input {
+    margin: auto;
+    width: 250px;
+}
+
+.evento__datetime {
+    display: flex;
+    margin: auto;
+}
+
+.evento__input-time {
+    margin: 0;
+}
+
+.evento__type {
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+
+    .evento__type div {
+        display: flex;
+        flex-direction: column;
+        margin-right: 15px;
+    }
+
+.evento__input-type {
+    margin: auto;
+}
+
+.evento__virtual {
+    margin: auto;
+}
+
+.evento__presencial {
+    margin: auto;
+}
+
+.evento__type-input {
+    margin: auto;
+    width: 235px;
+}
+
+.virtual__type {
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+
+    .virtual__type div {
+        display: flex;
+        flex-direction: column;
+        margin: auto;
+    }
+
+.event__tabs {
+    display: flex;
+    margin: auto;
+    list-style: none;
+    padding: 0;
+    position: relative;
+    bottom: 10px;
+    border-radius: 15px;
+    background: #002347;
+}
+
+    .event__tabs li {
+        margin: auto;
+        text-decoration: none;
+        flex-grow: 1;
+        height: 55px;
+        border-radius: 16px;
+        text-align: center;
+        background: #002347;
+    }
+
+.event__tab-text {
+    color: #fdc632;
+    font-size: 18px;
+    position:relative;
+    top:12px;
+}
+/*---------------*/
+
+/*Sector*/
+.sector__container {
+    display: block;
+    width: 700px;
+    height: auto;
+    background: #fff;
+    margin: 20px auto;
+    border: 1px solid #777777;
+}
+
+.sector__elements {
+    display: flex;
+    flex-direction: column;
+}
+
+.sector__label {
+    margin: auto;
+}
+
+.sector__input {
+    margin: auto;
+    width: 250px;
+}
+
+.sector__type {
+    display: flex;
+    margin: 0 auto 20px auto;
+}
+
+    .sector__type div {
+        display: flex;
+        flex-direction: column;
+        margin-right: 20px;
+    }
+
+.sector__input-type {
+    margin: auto;
+}
+/*-----------*/
+/*Encuestas*/
 
 /*Certificado*/
 
@@ -279,6 +422,13 @@ body {
     width: 200px;
     margin-right: 100px;
     border-radius: 10px;
+}
+
+.event-image {
+    height: 350px;
+    width: 350px;
+    //margin-right: 100px;
+    //border-radius: 10px;
 }
 
 
@@ -1680,7 +1830,7 @@ button:focus {
         }
 
     .single_event .event_details {
-        background: rgba(0, 35, 71, 0.5);
+        // background: rgba(0, 35, 71, 0.5);
         position: absolute;
         top: 0px;
         right: 0px;

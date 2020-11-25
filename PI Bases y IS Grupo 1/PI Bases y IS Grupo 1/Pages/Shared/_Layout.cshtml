@@ -83,10 +83,39 @@
                     <div class="collapse navbar-collapse offset"
                          id="navbarSupportedContent">
                         <ul class="nav navbar-nav menu_nav ml-auto">
-                             
+                            @{ if (miembroEnSesion != null)
+                                {
+                                    <li class="nav-item submenu dropdown">
+                                        <a href="#"
+                                           class="nav-link dropdown-toggle"
+                                           data-toggle="dropdown"
+                                           role="button"
+                                           aria-haspopup="true"
+                                           aria-expanded="false">Eventos</a>
+                                        <ul class="dropdown-menu">
+
+                                            @if (filtros.verificarRol(miembroEnSesion.email, "Coordinador"))
+                                            {
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="/Eventos/CrearEvento">Crear evento</a>
+                                                </li>
+
+                                            }
+
+                                            <li class="nav-item">
+                                                <a class="nav-link" href="/Eventos/MostrarEventos">Ver eventos</a>
+                                            </li>
+
+
+                                        </ul>
+                                    </li>
+                                }
+                            }
+
                             <li class="nav-item">
                                 <a class="nav-link" href="/Noticias">Noticias</a>
                             </li>
+
                             <li class="nav-item">
                                 <a class="nav-link" href="/Miembros/DesplegarMiembros">Miembros</a>
                             </li>
@@ -289,6 +318,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
         <script src="~/js/gmaps.min.js"></script>
         <script src="~/js/theme.js"></script>
+
     </environment>
     <environment exclude="Production">
     </environment>
@@ -313,6 +343,13 @@
     </script>
     <script>
         $(document).ready(function () {
+            $(".mul-select2").select2({
+                placeholder: "- Sin selección -"
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
             $(".idiomas-select").select2({
                 placeholder: "Idiomas",
                 tokenSeparators: ['/', ',', ';']
@@ -327,7 +364,13 @@
             });
         });
     </script>
+    <script>
+        $(".sectores-select").select2({
+            placeholder: "Sectores",
+            tokenSeparators: ['/', ',', ';']
+        });
 
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>
