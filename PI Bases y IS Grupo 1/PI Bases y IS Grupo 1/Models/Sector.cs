@@ -10,7 +10,7 @@ namespace PIBasesISGrupo1.Models
     {
         [Required(ErrorMessage = "Es necesario que ingrese el nombre del sector")]
         [Display(Name = "Ingrese el nombre del sector")]
-        [RegularExpression(@"^[a-zA-Z\s][a-zA-Z-0-9\s]+$", ErrorMessage = "Por favor ingrese el nombre del sector")]
+        [RegularExpression(@"^([a-z]|[A-Z]|[0-9])+.*$", ErrorMessage = "Por favor ingrese el nombre del sector")]
         public string nombreDeSector { get; set; }
 
         [Required(ErrorMessage = "Es necesario que elija el tipo de sector")]

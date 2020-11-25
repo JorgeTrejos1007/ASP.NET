@@ -16,7 +16,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
         public Evento evento { get; set; }
 
         [BindProperty]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:()])+(.png|.jpg)$", ErrorMessage = "Ingrese una imagen png o jpg")]
+        [RegularExpression(@"^.*(.png|.jpg)$", ErrorMessage = "Ingrese una imagen png o jpg")]
         [Required(ErrorMessage = "Es necesario que ingreses una imagen del evento")]
         public IFormFile imagenEvento { get; set; }
 
