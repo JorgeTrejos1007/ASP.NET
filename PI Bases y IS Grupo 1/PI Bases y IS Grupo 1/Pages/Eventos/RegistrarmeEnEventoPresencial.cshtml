@@ -15,7 +15,7 @@
     <style type="text/css">
         body {
             background-image: url("/img/event/evento2.jpg");
-            background-size: 100%;
+            background-size: 160%;
         }
 
         ul.tabs li {
@@ -59,13 +59,18 @@
         </div>
     </div>
 </div>
+<div class="cursos-container-2">
+    <div class="cajita-cursos col-lg-12"style="width:80%; margin-left:10%;background:transparent;height:60px;border:none">
+
+                <ul class="event__tabs">
+                    <li style="background:#013364;" id="event_tab1"><span class="event__tab-text "> 1. Cantidad de asientos</span> </li>
+                    <li id="event_tab2"><span class="event__tab-text "> 2. Elija sus asientos </span></li>
+                    <li id="event_tab3"><span class="event__tab-text "> 3. Confirme registro </span></li>
+                </ul>      
+    </div>
+</div>
 
 <div class="wrap">
-    <ul class="tabs">
-        <li><span class="tab-text "> 1. Cantidad de asientos </span></li>
-        <li><span class="tab-text "> 2. Elija sus asientos </span></li>
-        <li><span class="tab-text "> 3. Confirme registro </span></li>
-    </ul>
     <div class="secciones">
         <article id="tab1" style="margin-bottom:200px;">
 
@@ -82,22 +87,27 @@
                             <div class="login-form">
                                 <form>
                                     <label style="display:none" class="text-danger" id="ErrorTipoSector">Por favor ingrese un tipo de sector</label>
-                                    @if (listaSectoresNumerados.Count>0)
-                                    {
-                                        <label>
-                                            <input type="radio" name="type" onchange="tipoSector('Numerado')" value="Numerado" required>
-                                            Numerado
-                                        </label><br>
-                                    }
+                                    <div class="virtual__type">
+                                        <div>
+                                            @if (listaSectoresNumerados.Count > 0)
+                                            {
+                                                <label> Numerado </label>
+                                                <input type="radio" name="type" onchange="tipoSector('Numerado')" value="Numerado" style="margin-left:20px" required>
+                                                <br>
 
-                                    @if (listaSectoresNoNumerado.Count>0)
-                                    {
-                                        <label>
-                                            <input type="radio" name="type" onchange="tipoSector('No Numerado')" value="No Numerado">
-                                            No numerado
-                                        </label><br>
-                                    }
-
+                                            }
+                                        </div>
+                                        <div>
+                                            @if (listaSectoresNoNumerado.Count > 0)
+                                            {
+                                                <label>
+                                                    No numerado
+                                                </label>
+                                                <input type="radio" name="type" onchange="tipoSector('No Numerado')" style="margin-left:20px" value="No Numerado">
+                                                <br>
+                                            }
+                                        </div>
+                                    </div>
                                     <input type="submit" style="display:none" />
                                 </form>
                                 <div class="center-login">
@@ -111,7 +121,7 @@
                 </div>
             </div>
         </article>
-        
+
         <article id="tab2" style="display:none; margin-bottom:200px;">
             <div id="registroNumerado" style="display:none">
                 <div class="modal-dialog" role="document">
@@ -192,7 +202,7 @@
                                         <h2>asientos</h2>
                                         <label style="display:none" class="text-danger" id="ErrorNumeroAsientosVacio">Por favor ingrese un numero</label>
                                         <label style="display:none" class="text-danger" id="ErrorNumeroAsientos">Por favor ingrese un numero valido</label>
-                                        <input type="number" id="cantidadDeAsientos" onchange="cantidadAsientosValida()" min="1" required />
+                                        <input type="number" id="cantidadDeAsientos" min="1" max="" required />
                                     </div>
 
                                     <br>
@@ -231,7 +241,7 @@
                                     <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
                                     <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
                                     <input type="hidden" asp-for="@Model.registro.tipoDeSector" id="registroTipo" value="" />
-                                    
+
                                     <div style="text-align:center; margin-bottom:30px; width:auto;">
                                         <h2>Ubicacion</h2>
                                         <input style="border:none; text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
@@ -250,7 +260,7 @@
                                     <div style="text-align:center; width:auto;">
                                         <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
                                     </div>
-</form>
+                                </form>
 
                             </div>
                         </div>
@@ -316,6 +326,8 @@
                 document.getElementById(tabActual).style.display = "none";
                 document.getElementById(tabSiguiente).style.display = "block";
                 document.getElementById("ErrorTipoSector").style.display = "none";
+                document.getElementById("event_tab1").style.background = "#002347";
+                document.getElementById("event_tab2").style.background = "#013364";
             }
             else {
                 document.getElementById("ErrorTipoSector").style.display = "block";
@@ -326,6 +338,7 @@
             var ubicacionElegida = document.getElementById("ubicacionEscogida").value;
             var cantidadAsientos = document.getElementById("cantidadAsientos").value;
             var asientosEscogidos = document.getElementById("asientosEscogidos").value;
+            var cantidadAsientosValida = document.getElementById("ErrorNumeroAsientos").style.display;
             if (ubicacionElegida != "") {
                 if (cantidadAsientos == "") {
                     document.getElementById("ErrorNumeroAsientosVacio").style.display = "block";
@@ -336,8 +349,13 @@
                 if ((asientosEscogidos != "") || (cantidadAsientos != "")) {
                     document.getElementById("ErrorNumeroAsientosVacio").style.display = "none";
                     document.getElementById("ErrorSeleccionarAsientos").style.display = "none";
-                    document.getElementById(tabActual).style.display = "none";
-                    document.getElementById(tabSiguiente).style.display = "block";
+                    if (cantidadAsientosValida == "none") {
+
+                        document.getElementById(tabActual).style.display = "none";
+                        document.getElementById(tabSiguiente).style.display = "block";
+                        document.getElementById("event_tab2").style.background = "#002347";
+                        document.getElementById("event_tab3").style.background = "#013364";
+                    }
                 }
             }
         }
@@ -391,7 +409,7 @@
                 if (response.cantidadAsientos != null) {
                     document.getElementById("obtenerCantidadAsientosDeSector").style.display = "block";
                     document.getElementById("obtenerNumeroDeAsientos").value = "" + response.cantidadAsientos + "";
-
+                    document.getElementById("cantidadDeAsientos").max = "" + response.cantidadAsientos + "";
                 }
                 else {
                     document.getElementById("obtenerCantidadAsientosDeSector").style.display = "none";
