@@ -22,8 +22,10 @@ namespace PIBasesISGrupo1.Handler
 
         public List<Certificados> obtenerCertificadosNoAprobados(){
             List<Certificados> listaDeCertificados = new List<Certificados>();
-            string consulta = "SELECT c.version AS 'version', C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'"+ 
-             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante' "+
+            string consulta = "SELECT c.version AS 'version', C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '" +
+                "+CASE  WHEN E.segundoApellido is NULL THEN ' ' ELSE E.segundoApellido END AS 'nombreEducador'"+
+             ", S.nombre + ' ' + S.primerApellido + ' ' +" +
+             "CASE  WHEN S.segundoApellido is NULL THEN ' ' ELSE S.segundoApellido END AS 'nombreEstudiante'  "+
              "FROM Certificado C " +
              "JOIN Curso Cur ON C.nombreCursoFK = Cur.nombrePK " +
              "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
@@ -53,8 +55,10 @@ namespace PIBasesISGrupo1.Handler
         public List<Certificados> obtenerMisCertificados(string emailEstudiante)
         {
             List<Certificados> listaDeCertificados = new List<Certificados>();
-            string consulta = "SELECT C.fechaEmitido AS 'fecha',C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+E.segundoApellido AS 'nombreEducador'" +
-             ", S.nombre + ' ' + S.primerApellido + ' ' + S.segundoApellido AS 'nombreEstudiante', Ed.emailEducadorFK as 'firmaEducador', C.emailCoordinadorFK as 'firmaCoordinador', C.version AS 'version' " +
+            string consulta = "SELECT C.fechaEmitido AS 'fecha',C.emailEstudianteFK AS 'emailEstudiante',C.nombreCursoFK AS 'nombreCurso', E.nombre+ ' '+E.primerApellido+ ' '+" +
+                "CASE  WHEN E.segundoApellido is NULL THEN ' ' ELSE E.segundoApellido END AS 'nombreEducador'" +
+             ", S.nombre + ' ' + S.primerApellido + ' ' +"+
+             "CASE  WHEN S.segundoApellido is NULL THEN ' ' ELSE S.segundoApellido END AS 'nombreEstudiante', Ed.emailEducadorFK as 'firmaEducador', C.emailCoordinadorFK as 'firmaCoordinador', C.version AS 'version' " +
              "FROM Certificado C " +
              "JOIN Curso Cur ON C.nombreCursoFK = Cur.nombrePK " +
              "JOIN Usuario S ON C.emailEstudianteFK = s.emailPK " +
