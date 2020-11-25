@@ -26,26 +26,26 @@
         <div id="twitch-embed"></div>
     </div>
     <!-- Load the Twitch embed script -->
-    <script src="https://embed.twitch.tv/embed/v1.js"></script>
+    <script src="https://player.twitch.tv/js/embed/v1.js"></script>
     <!--
       Create a Twitch.Embed object that will render
       within the "twitch-embed" root element.
     -->
     <script type="text/javascript">
-        var embed = new Twitch.Embed("twitch-embed", {
+        var embed = new Twitch.Player("twitch-embed", {
             width: 1054,
             height: 640,
             channel: '@canal',
-            layout: "video",
+            //layout: "video",
             autoplay: true,
             // only needed if your site is also embedded on embed.example.com and othersite.example.com
-            parent: ["embed.example.com", "othersite.example.com"]
+            //parent: ["embed.example.com", "othersite.example.com"]
         });
 
-        embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
+        /*embed.addEventListener(Twitch.Embed.VIDEO_READY, () => {
             var player = embed.getPlayer();
             player.play();
-        });
+        });*/
     </script>
 </body>
 </html>
