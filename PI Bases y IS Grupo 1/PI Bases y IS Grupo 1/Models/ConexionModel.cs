@@ -14,8 +14,8 @@ namespace PIBasesISGrupo1.Models
         public SqlConnection Connection() {
 
             SqlConnection con;
-            //string conString = @"Server=grupo1.database.windows.net;Database=Grupo1;User ID=Grupo1;password=Adriancito1;";
-            string conString = @"Server=172.16.202.75;Database=BD_Grupo1;User ID=Grupo1;password=Hellencita;";
+            string conString = @"Server=grupo1.database.windows.net;Database=Grupo1;User ID=Grupo1;password=Adriancito1;";
+            //string conString = @"Server=172.16.202.75;Database=BD_Grupo1;User ID=Grupo1;password=Hellencita;";
             //string conString = @"Server=LAPTOP-GAO7BEGA;Database=Demostracion_Comunidad;Integrated Security = True;Pooling = False";
 
             con = new SqlConnection(conString);
