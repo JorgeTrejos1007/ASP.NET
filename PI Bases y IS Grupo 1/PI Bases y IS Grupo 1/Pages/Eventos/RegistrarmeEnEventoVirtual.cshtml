@@ -88,7 +88,7 @@
                             <h3>@cuposDisponibles</h3>
                             <br>
                             <h3>Ingrese la cantidad de cupos deseados</h3>
-                            <input style="margin-bottom:30px;" min="1" max="@cuposDisponibles" asp-for="@Model.cuposSolicitados" />
+                            <input style="margin-bottom:30px;text-align:center;" min="1" max="@cuposDisponibles" asp-for="@Model.cuposSolicitados" />
                             <br>
                             <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
                         }
