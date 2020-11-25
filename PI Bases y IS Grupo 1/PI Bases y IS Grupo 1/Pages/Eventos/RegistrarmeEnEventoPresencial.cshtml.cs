@@ -39,6 +39,8 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 listaSectoresNumerados = baseDeDatosHandler.obtenerSectoresNumeradosEventoPresencial(emailCoordinador, nombreEvento, fechaYHora);
                 ViewData["listaSectoresNumerados"] = listaSectoresNumerados;
 
+                ViewData["cantidadAsientosDisponiblesNoNumerado"] = baseDeDatosHandler.cantidadAsientosEnSectorNoNumeradosDisponibles(emailCoordinador, nombreEvento, fechaYHora);
+                ViewData["cantidadAsientosDisponiblesNumerado"] = baseDeDatosHandler.cantidadAsientosEnSectorNumeradosDisponibles(emailCoordinador, nombreEvento, fechaYHora);
 
                 
                 vista = Page();
