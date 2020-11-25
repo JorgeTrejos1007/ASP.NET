@@ -273,6 +273,7 @@
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjCGmQ0Uq4exrzdcL6rvxywDDOvfAu6eE"></script>
         <script src="~/js/gmaps.min.js"></script>
         <script src="~/js/theme.js"></script>
+
     </environment>
     <environment exclude="Production">
     </environment>
@@ -292,6 +293,13 @@
             $(".mul-select").select2({
                 placeholder: "- Sin selección -",
                 tokenSeparators: ['/', ',', ';']
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $(".mul-select2").select2({
+                placeholder: "- Sin selección -"
             });
         });
     </script>

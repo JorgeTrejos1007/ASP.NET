@@ -50,16 +50,34 @@ namespace PIBasesISGrupo1.Pages.Eventos
             return vista;
         }
 
-        public IActionResult OnPostRegistrarmeEnElEventoPresencial(string nombre, string lugar, DateTime fechaYHora, string emailCoordinador)
+        public IActionResult OnPostRegistrarmeEnElEventoPresencial(string nombre, string lugar, string fechaYHora, string emailCoordinador)
         {
             IActionResult vista;
             try                   
             {
-                TempData["nombreEvento"] = evento.nombre;
-                TempData["lugarEvento"] = evento.lugar;
-                TempData["fechaEvento"] = evento.fechaYHora;
-                TempData["emailCoordinador"] = evento.emailCoordinador;              
+                TempData["nombreEvento"] = nombre;
+                TempData["lugarEvento"] = lugar;
+                TempData["fechaEvento"] = Convert.ToDateTime(fechaYHora);
+                TempData["emailCoordinador"] = emailCoordinador;              
                 vista = Redirect("~/Eventos/RegistrarmeEnEventoPresencial");
+            }
+            catch
+            {
+                vista = Redirect("~/Error");
+            }
+            return vista;
+        }
+
+        public IActionResult OnPostRegistrarmeEnElEventoVirtual(string nombre, string stream, string fechaYHora, string emailCoordinador)
+        {
+            IActionResult vista;
+            try
+            {
+                TempData["nombreEvento"] = nombre;
+                TempData["canalDeStream"] = stream;
+                TempData["fechaEvento"] = Convert.ToDateTime(fechaYHora);
+                TempData["emailCoordinador"] = emailCoordinador;
+                vista = Redirect("~/Eventos/RegistrarmeEnEventoVirtual");
             }
             catch
             {

@@ -3,6 +3,7 @@
 @using System.Globalization;
 @{
     ViewData["Title"] = "MostrarEventos";
+    var mensaje = (string)TempData["mensaje"];
 }
 
 
@@ -64,6 +65,14 @@
 <body>
     <br>
     <h2>Próximos eventos en nuestra comunidad</h2>
+
+    @if (mensaje != null)
+    {
+        <div style="text-align:center;">
+            <h2 style="display:inline-block;" class="alert alert-success">@mensaje</h2>
+        </div>
+    }
+
     <div class="wrap">
         <ul class="tabs">
             <li><a href="#tab1"><span class="tab-text "> Eventos presenciales </span></a></li>
@@ -167,7 +176,7 @@
                                                         </p>
                                                     </div><div class="center-event">
                                                         <form method="post">
-                                                            <button type="submit" asp-route-nombre="@evento.nombre" asp-route-lugar="@evento.lugar" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-fechaYHora="@evento.fechaYHora" asp-page-handler="RegistrarmeEnElEventoPresencial" class="primary-btn rounded-0 white_bg_btn" style="color:#002347; background-color:#fdc632;">Registrarme</button>
+                                                            <button type="submit" asp-route-nombre="@evento.nombre" asp-route-stream="@evento.nombreCanalStream" asp-route-emailCoordinador="@evento.emailCoordinador" asp-route-fechaYHora="@evento.fechaYHora" asp-page-handler="RegistrarmeEnElEventoVirtual" class="primary-btn rounded-0  white_bg_btn" style="color:#002347">Registrarme</button>
                                                         </form>
                                                     </div>
                                                 </div>

@@ -215,7 +215,7 @@ namespace PIBasesISGrupo1.Handler
 
             comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
-            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora",  cambiarFormatoFecha(fechaYHora));
 
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
 
@@ -233,7 +233,64 @@ namespace PIBasesISGrupo1.Handler
             return listaSectores;
         }
 
-        public List<int> asientosDisponiblesEnSector(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
+        public List<Sector> obtenerSectoresNoNumeradosEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            List<Sector> listaSectores = new List<Sector>();
+
+            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND tipo='No numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                listaSectores.Add(
+                new Sector
+                {
+                    nombreDeSector = Convert.ToString(columna["nombreDeSectorPK"]),
+                    tipo = Convert.ToString(columna["tipo"]),
+                    cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"])
+                });
+            }
+
+            return listaSectores;
+        }
+
+        public List<Sector> obtenerSectoresNumeradosEventoPresencial(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            List<Sector> listaSectores = new List<Sector>();
+            string consulta = "SELECT nombreDeSectorPK, tipo, numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND tipo='Numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                listaSectores.Add(
+                new Sector
+                {
+                    nombreDeSector = Convert.ToString(columna["nombreDeSectorPK"]),
+                    tipo = Convert.ToString(columna["tipo"]),
+                    cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"])
+                });
+            }
+
+            return listaSectores;
+        }
+
+        public List<int> asientosDisponiblesEnSectorNumerado(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
         {
             List<int> asientosDisponibles = new List<int> ();
 
@@ -246,7 +303,7 @@ namespace PIBasesISGrupo1.Handler
             comandoParaConsulta.Parameters.AddWithValue("@nombreSector", nombreSector);
             comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
             comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
-            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", fechaYHora);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
 
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
 
@@ -256,6 +313,52 @@ namespace PIBasesISGrupo1.Handler
             }
 
             return asientosDisponibles;
+        }
+
+        public int asientosDisponiblesEnSectorNoNumerado(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreSector)
+        {
+            int cantidadAsientos = 0;
+            string consulta = "SELECT numeroDeAsientos FROM Sector " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND nombreDeSectorPK = @nombreSector AND tipo = 'No numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+            comandoParaConsulta.Parameters.AddWithValue("@nombreSector", nombreSector);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                cantidadAsientos = Convert.ToInt32(columna["numeroDeAsientos"]);
+            }
+
+            return cantidadAsientos;
+        }
+
+        public int cuposDisponiblesEventoVirtual(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreCanal)
+        {
+            int cuposDisponibles = 0;
+            string consulta = "SELECT cuposDisponibles FROM Virtual " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND nombreCanal = @nombreCanal";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+            comandoParaConsulta.Parameters.AddWithValue("@nombreCanal", nombreCanal);
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                cuposDisponibles = Convert.ToInt32(columna["cuposDisponibles"]);
+            }
+
+            return cuposDisponibles;
         }
 
         public bool transaccionReservarAsientosNoNumerados(InformacionDeRegistroEnEvento cantidadAsientosDeseados)
@@ -299,9 +402,10 @@ namespace PIBasesISGrupo1.Handler
                 return exito;
             }
 
-            if (cantidadAsientosBD < cantidadAsientosDeseados.cantidadAsientos) {
-                exito = false;
-                consulta = "ROLLBACK";
+            if (cantidadAsientosBD < cantidadAsientosDeseados.cantidadAsientos || cantidadAsientosDeseados.cantidadAsientos <= 0) {
+                consulta = "ROLLBACK \n" +
+                           "SET IMPLICIT_TRANSACTIONS OFF";
+
                 comando = new SqlCommand(consulta, conexion);
                 try
                 {
@@ -392,8 +496,10 @@ namespace PIBasesISGrupo1.Handler
 
             exito = false;
             if (cantidadDeAsientosDeseadosDisponibles != asientos.asientosDeseados.Count) {
-                consulta = "ROLLBACK";
+                consulta = "ROLLBACK \n" +
+                           "SET IMPLICIT_TRANSACTIONS OFF";
                 comando = new SqlCommand(consulta, conexion);
+
                 try
                 {
                     exito = comando.ExecuteNonQuery() >= 1;
@@ -518,6 +624,93 @@ namespace PIBasesISGrupo1.Handler
             return consulta;
         }
 
+        public bool transaccionReservarCuposEventoVirtual(Evento evento, int cuposDeseados)
+        {
+            conexion.Open();
+            bool exito = false;
+
+            string consulta = "SET IMPLICIT_TRANSACTIONS ON \n" +
+                              "SET TRANSACTION ISOLATION LEVEL REPEATABLE READ \n" +
+                              "BEGIN TRAN";
+
+            SqlCommand comando = new SqlCommand(consulta, conexion);
+            try
+            {
+                exito = comando.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            consulta = "SELECT cuposDisponibles FROM Virtual WHERE emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento " +
+                       "AND fechaYHoraFK = @fechaYHora AND nombreCanal = @nombreCanal";
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
+            comando.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", evento.nombre);
+            comando.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
+
+            int cantidadAsientosBD = 0;
+            exito = false;
+            try
+            {
+                cantidadAsientosBD = (int)comando.ExecuteScalar();
+                exito = true;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            if (cantidadAsientosBD < cuposDeseados || cuposDeseados <= 0)
+            {
+                consulta = "ROLLBACK \n" +
+                           "SET IMPLICIT_TRANSACTIONS OFF";
+
+                comando = new SqlCommand(consulta, conexion);
+                try
+                {
+                    exito = comando.ExecuteNonQuery() >= 1;
+                    exito = false;
+                    return exito;
+                }
+                catch
+                {
+                    return exito;
+                }
+            }
+
+            consulta = "UPDATE Virtual SET cuposDisponibles = cuposDisponibles - @cuposDeseados WHERE " +
+                       "emailCoordinadorFK = @emailCoordinador AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora " +
+                       "AND nombreCanal = @nombreCanal \n" + 
+                       "COMMIT TRAN \n" +
+                       "COMMIT TRAN \n" +
+                       "SET IMPLICIT_TRANSACTIONS OFF";
+
+            comando = new SqlCommand(consulta, conexion);
+
+            comando.Parameters.AddWithValue("@cuposDeseados", cuposDeseados);
+            comando.Parameters.AddWithValue("@emailCoordinador", evento.emailCoordinador);
+            comando.Parameters.AddWithValue("@nombreEvento", evento.nombre);
+            comando.Parameters.AddWithValue("@fechaYHora", evento.fechaYHora);
+            comando.Parameters.AddWithValue("@nombreCanal", evento.nombreCanalStream);
+
+            try
+            {
+                exito = comando.ExecuteNonQuery() >= 1;
+            }
+            catch
+            {
+                return exito;
+            }
+
+            conexion.Close();
+            return true;
+        }
+
         private byte[] obtenerBytes(IFormFile archivo)
         {
             byte[] bytes;
@@ -525,6 +718,13 @@ namespace PIBasesISGrupo1.Handler
             archivo.OpenReadStream().CopyTo(stream);
             bytes = stream.ToArray();
             return bytes;
+        }
+
+        private string cambiarFormatoFecha(DateTime fecha)
+        {
+            string fechaCorregida = "";
+            fechaCorregida = fecha.Year.ToString()+"-"+fecha.Month.ToString()+ "-" + fecha.Day.ToString()+" " +fecha.Hour.ToString() +":"+fecha.Minute.ToString()+":00.000";
+            return fechaCorregida;
         }
     }
 }
