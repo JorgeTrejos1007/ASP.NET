@@ -118,26 +118,28 @@ body {
     display: flex;
     margin: auto;
     list-style: none;
-    padding:0;
-    position:relative;
-    bottom:10px;
-    border-radius:15px;
-    background:#002347;
+    padding: 0;
+    position: relative;
+    bottom: 10px;
+    border-radius: 15px;
+    background: #002347;
 }
 
     .event__tabs li {
         margin: auto;
         text-decoration: none;
-        flex-grow:1;
-        height:55px;
-        border-radius:16px;
-        text-align:center;
-        background:#002347;
+        flex-grow: 1;
+        height: 55px;
+        border-radius: 16px;
+        text-align: center;
+        background: #002347;
     }
 
 .event__tab-text {
     color: #fdc632;
     font-size: 18px;
+    position:relative;
+    top:12px;
 }
 /*---------------*/
 
