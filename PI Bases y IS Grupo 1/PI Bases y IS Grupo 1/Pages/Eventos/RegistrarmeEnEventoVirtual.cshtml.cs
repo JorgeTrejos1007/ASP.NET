@@ -57,7 +57,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
             if (exito)
             {
                 vista = Redirect("~/Eventos/MostrarEventos");
-                TempData["mensaje"] = "Transacción realizada con éxito";
+                TempData["mensaje"] = "Su registro ha sido exitoso. Se le enviara la información a su correo";
 
                 string url = "http://edustage.azurewebsites.net/Eventos/StreamDeEvento?nombreE=" + evento.nombre.Replace(" ", "%20") + "&nombreCanal=" + evento.nombreCanalStream.Replace(" ", "%20");
                 //string url = "https://localhost:44326/Eventos/StreamDeEvento?nombreE=" + evento.nombre.Replace(" ","%20") + "&nombreCanal=" + evento.nombreCanalStream.Replace(" ", "%20");

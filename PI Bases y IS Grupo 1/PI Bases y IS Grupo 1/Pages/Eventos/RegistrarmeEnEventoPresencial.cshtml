@@ -75,241 +75,270 @@
         </div>
     </div>
 </div>
-<div class="cursos-container-2" style="position:relative;bottom:120px">
-    <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;background:transparent;height:60px;border:none">
 
-        <ul class="event__tabs">
-            <li style="background:#fdc632;" id="event_tab1"><span class="event__tab-text" id="tab_text1" style="color:#002347"> 1. Cantidad de asientos</span> </li>
-            <li id="event_tab2"><span class="event__tab-text" id="tab_text2"> 2. Elija sus asientos </span></li>
-            <li id="event_tab3"><span class="event__tab-text" id="tab_text3"> 3. Confirme registro </span></li>
-        </ul>
-    </div>
-</div>
+@{
+    if ((listaSectoresNumerados.Count > 0) || (listaSectoresNoNumerado.Count > 0))
+    {
+        <div class="cursos-container-2" style="position:relative;bottom:120px">
+            <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;background:transparent;height:60px;border:none">
+
+                <ul class="event__tabs">
+                    <li style="background:#fdc632;" id="event_tab1"><span class="event__tab-text" id="tab_text1" style="color:#002347"> 1. Cantidad de asientos</span> </li>
+                    <li id="event_tab2"><span class="event__tab-text" id="tab_text2"> 2. Elija sus asientos </span></li>
+                    <li id="event_tab3"><span class="event__tab-text" id="tab_text3"> 3. Confirme registro </span></li>
+                </ul>
+            </div>
+        </div>
 
 
-@if (mensaje != null)
-{
-    <div style="text-align:center;">
-        <h2 style="display:inline-block;;position:relative;bottom:160px;" class="alert alert-danger">
-            @mensaje
-        </h2>
-    </div>
-}
-<div class="wrap" style="position:relative;bottom:180px">
-    <div class="secciones">
-        <article id="tab1" style="margin-bottom:200px;">
+        @if (mensaje != null)
+        {
+            <div style="text-align:center;">
+                <h2 style="display:inline-block;;position:relative;bottom:160px;" class="alert alert-danger">
+                    @mensaje
+                </h2>
+            </div>
+        }
+        <div class="wrap" style="position:relative;bottom:180px">
+            <div class="secciones">
+                <article id="tab1" style="margin-bottom:200px;">
 
-            <div class="modal-dialog" role="document">
-                <div class="modal-content center">
-                    <div class="modal-header">
-                        <div class="center-login">
-                            <img class="logo-2" src="~/img/logo.png" alt="" />
-                        </div>
-                    </div>
-                    <div class="modal-body">
-                        <div style="">
-                            <h2 class="modal-title">Seleccione el tipo de sector</h2>
-                            <br />
-                            <div class="login-form">
-                                <form>
-                                    <label style="display:none;text-align:center;" class="text-danger" id="ErrorTipoSector">Por favor ingrese un tipo de sector</label>
-                                    <div class="virtual__type">
-                                        <div id="virtual__type-Numerado">
-                                            @if (listaSectoresNumerados.Count > 0)
-                                            {
-                                                <label> Numerado </label>
-                                                <input type="radio" name="type" onchange="tipoSector('Numerado')" value="Numerado" style="margin-left:35px" required>
-                                                <br>
-
-                                            }
-                                        </div>
-                                        <div id="virtual__type-NoNumerado">
-                                            @if (listaSectoresNoNumerado.Count > 0)
-                                            {
-                                                <label>
-                                                    No numerado
-                                                </label>
-                                                <input type="radio" name="type" onchange="tipoSector('No Numerado')" style="margin-left:47px" value="No Numerado">
-                                                <br>
-                                            }
-                                        </div>
-                                    </div>
-                                    <input type="submit" style="display:none" />
-                                </form>
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content center">
+                            <div class="modal-header">
                                 <div class="center-login">
-                                    <input type="button" value="Siguiente" class="primary-btn text-uppercase enroll" onclick="cambioDeTab('tab1','tab2')" />
-                                </div>
-                                <br>
-                                @{
-                                    if ((listaSectoresNumerados.Count > 0) && (listaSectoresNoNumerado.Count == 0))
-                                    {
-                                        <script>centrarTipoEvento('Numerado');</script>
-                                    }
-                                    if ((listaSectoresNumerados.Count == 0) && (listaSectoresNoNumerado.Count > 0))
-                                    {
-                                        <script>centrarTipoEvento('NoNumerado');</script>
-                                    }
-
-                                }
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </article>
-
-        <article id="tab2" style="display:none; margin-bottom:200px;">
-            <div id="registroNumerado" style="display:none">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content center">
-                        <div class="modal-header">
-                            <div class="center-login">
-                                <img class="logo-2" src="~/img/logo.png" alt="" />
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div>
-                                <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
-                                <div class="login-form">
-                                    <div class="input-group mt-10" style="margin-bottom:30px;">
-                                        <select style="width: 465px" class="mul-select2" id="seleccionarSector" onchange="obtenerAsientos(); ubicacionElegida('seleccionarSector');" required>
-                                            <option value="SinSeleccion">- Sin selección -</option>
-                                            @foreach (var sector in listaSectoresNumerados)
-                                            {
-                                                <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
-
-                                            }
-                                        </select>
-                                    </div>
-
-                                    <h2 class="modal-title">Seleccione su numero de asiento</h2>
-
-                                    <label style="display:none;text-align:center;" class="text-danger" id="ErrorSeleccionarAsientos">Por favor ingrese los asientos que desea</label>
-                                    <div id="elegirNumeroAsiento" style="display:none">
-                                        <select style="width: 465px;" class="mul-select" multiple id="seleccionarAsiento" required></select>
-                                    </div>
-
-
-                                    <br>
-                                    <div class="center-login">
-                                        <input style="margin-left:-30px;" class="primary-btn text-uppercase enroll" id="mostrarAsientosElegidos" onclick="asientosElegidos(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
-                                    </div>
-
-                                    <br>
-
-
+                                    <img class="logo-2" src="~/img/logo.png" alt="" />
                                 </div>
                             </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <div id="registroNoNumerado" style="display:none">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content center">
-                        <div class="modal-header">
-                            <div class="center-login">
-                                <img class="logo-2" src="~/img/logo.png" alt="" />
-                            </div>
-                        </div>
-                        <div class="modal-body">
-                            <div>
-                                <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
-                                <div class="login-form">
-
-                                    <div class="input-group mt-10">
-                                        <select style="width: 465px" class="mul-select2" id="seleccionarSectorNoNumerado" onchange="obtenerCantidadAsientos(); ubicacionElegida('seleccionarSectorNoNumerado');" required>
-                                            <option value="SinSeleccion">- Sin selección -</option>
-                                            @foreach (var sector in listaSectoresNoNumerado)
-                                            {
-                                                <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
-
-                                            }
-                                        </select>
-                                    </div>
+                            <div class="modal-body">
+                                <div style="">
+                                    <h2 class="modal-title">Seleccione el tipo de sector</h2>
                                     <br />
-                                    <div id="obtenerCantidadAsientosDeSector" style="display:none">
-                                        <div>
-                                            <h3>La cantidad actual de asientos disponibles para este sector es: </h3>
-                                            <input type="number" id="obtenerNumeroDeAsientos" value="" style="font-size:20px;margin-left:120px ;border:none;text-align:center;" readonly />
+                                    <div class="login-form">
+                                        <form>
+                                            <label style="display:none;text-align:center;" class="text-danger" id="ErrorTipoSector">Por favor ingrese un tipo de sector</label>
+                                            <div class="virtual__type">
+                                                <div id="virtual__type-Numerado">
+                                                    @if (listaSectoresNumerados.Count > 0)
+                                                    {
+                                                        <label> Numerado </label>
+                                                        <input type="radio" name="type" onchange="tipoSector('Numerado')" value="Numerado" style="margin-left:35px" required>
+                                                        <br>
+
+                                                    }
+                                                </div>
+                                                <div id="virtual__type-NoNumerado">
+                                                    @if (listaSectoresNoNumerado.Count > 0)
+                                                    {
+                                                        <label>
+                                                            No numerado
+                                                        </label>
+                                                        <input type="radio" name="type" onchange="tipoSector('No Numerado')" style="margin-left:47px" value="No Numerado">
+                                                        <br>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <input type="submit" style="display:none" />
+                                        </form>
+                                        <div class="center-login">
+                                            <input type="button" value="Siguiente" class="primary-btn text-uppercase enroll" onclick="cambioDeTab('tab1','tab2')" />
+                                        </div>
+                                        <br>
+                                        @{
+                                            if ((listaSectoresNumerados.Count > 0) && (listaSectoresNoNumerado.Count == 0))
+                                            {
+                                                <script>centrarTipoEvento('Numerado');</script>
+                                            }
+                                            if ((listaSectoresNumerados.Count == 0) && (listaSectoresNoNumerado.Count > 0))
+                                            {
+                                                <script>centrarTipoEvento('NoNumerado');</script>
+                                            }
+
+                                        }
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </article>
+
+                <article id="tab2" style="display:none; margin-bottom:200px;">
+                    <div id="registroNumerado" style="display:none">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content center">
+                                <div class="modal-header">
+                                    <div class="center-login">
+                                        <img class="logo-2" src="~/img/logo.png" alt="" />
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
+                                        <div class="login-form">
+                                            <div class="input-group mt-10" style="margin-bottom:30px;">
+                                                <select style="width: 465px" class="mul-select2" id="seleccionarSector" onchange="obtenerAsientos(); ubicacionElegida('seleccionarSector');" required>
+                                                    <option value="SinSeleccion">- Sin selección -</option>
+                                                    @foreach (var sector in listaSectoresNumerados)
+                                                    {
+                                                        <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
+
+                                                    }
+                                                </select>
+                                            </div>
+
+                                            <h2 class="modal-title">Seleccione su numero de asiento</h2>
+
+                                            <label style="display:none;text-align:center;" class="text-danger" id="ErrorSeleccionarAsientos">Por favor ingrese los asientos que desea</label>
+                                            <div id="elegirNumeroAsiento" style="display:none">
+                                                <select style="width: 465px;" class="mul-select" multiple id="seleccionarAsiento" required></select>
+                                            </div>
+
+
+                                            <br>
+                                            <div class="center-login">
+                                                <input style="margin-left:-30px;" class="primary-btn text-uppercase enroll" id="mostrarAsientosElegidos" onclick="asientosElegidos(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
+                                            </div>
+
+                                            <br>
+
 
                                         </div>
-                                        <br />
-                                        <label style="display:none;text-align:center;" class="text-danger" id="ErrorNumeroAsientosVacio">Por favor ingrese un numero</label>
-                                        <label style="display:none;text-align:center;" class="text-danger" id="ErrorNumeroAsientos">Por favor ingrese un numero valido</label>
-                                        <input type="number" id="cantidadDeAsientos" onchange="cantidadAsientosValida()" min="1" style="margin-left:140px;text-align:center;" required />
                                     </div>
-
-                                    <br>
-                                    <div class="center-login" style="margin-left:23%;">
-                                        <input class="primary-btn text-uppercase enroll" id="mostrarCantidadAsientosElegida" onclick="cantidadAsientosElegida(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
-                                    </div>
-
-                                    <br>
-
 
                                 </div>
                             </div>
-
                         </div>
                     </div>
-                </div>
-            </div>
 
 
-        </article>
-        <article id="tab3" style="display:none; margin-bottom:200px;">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content center">
-                    <div class="modal-header">
-                        <div class="center-login">
-                            <img class="logo-2" src="~/img/logo.png" alt="" />
+                    <div id="registroNoNumerado" style="display:none">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content center">
+                                <div class="modal-header">
+                                    <div class="center-login">
+                                        <img class="logo-2" src="~/img/logo.png" alt="" />
+                                    </div>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <h2 class="modal-title">Seleccione la ubicación de sus asientos</h2>
+                                        <div class="login-form">
+
+                                            <div class="input-group mt-10">
+                                                <select style="width: 465px" class="mul-select2" id="seleccionarSectorNoNumerado" onchange="obtenerCantidadAsientos(); ubicacionElegida('seleccionarSectorNoNumerado');" required>
+                                                    <option value="SinSeleccion">- Sin selección -</option>
+                                                    @foreach (var sector in listaSectoresNoNumerado)
+                                                    {
+                                                        <option value="@sector.nombreDeSector">@sector.nombreDeSector</option>
+
+                                                    }
+                                                </select>
+                                            </div>
+                                            <br />
+                                            <div id="obtenerCantidadAsientosDeSector" style="display:none">
+                                                <div>
+                                                    <h3>La cantidad actual de asientos disponibles para este sector es: </h3>
+                                                    <input type="number" id="obtenerNumeroDeAsientos" value="" style="font-size:20px;margin-left:120px ;border:none;text-align:center;" readonly />
+
+                                                </div>
+                                                <br />
+                                                <label style="display:none;text-align:center;" class="text-danger" id="ErrorNumeroAsientosVacio">Por favor ingrese un numero</label>
+                                                <label style="display:none;text-align:center;" class="text-danger" id="ErrorNumeroAsientos">Por favor ingrese un numero valido</label>
+                                                <input type="number" id="cantidadDeAsientos" onchange="cantidadAsientosValida()" min="1" style="margin-left:140px;text-align:center;" required />
+                                            </div>
+
+                                            <br>
+                                            <div class="center-login" style="margin-left:23%;">
+                                                <input class="primary-btn text-uppercase enroll" id="mostrarCantidadAsientosElegida" onclick="cantidadAsientosElegida(); cambioDeTab('tab2', 'tab3');" value="Siguiente" />
+                                            </div>
+
+                                            <br>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-body">
-                        <div style="">
-                            <h2 class="modal-title" style="margin-bottom:30px;">Seleccionado</h2>
-                            <div class="login-form">
-                                <form method="post">
-                                    <!--Aqui va lo de elegir ubicacion de sus asientos-->
-                                    <input type="hidden" asp-for="@Model.registro.emailCoordinador" id="registroEmailCoordinador" value="@emailCoordinador" />
-                                    <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
-                                    <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
-                                    <input type="hidden" asp-for="@Model.registro.tipoDeSector" id="registroTipo" value="" />
 
-                                    <div style="text-align:center; margin-bottom:30px; width:auto;">
-                                        <h2>Ubicacion</h2>
-                                        <input style="border:none;text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
-                                    </div>
 
-                                    <div id="asientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
-                                        <h2>Asientos</h2>
-                                        <input style="border:none;text-align:center" asp-for="@Model.registro.asientosElegidos" id="asientosEscogidos" value="" readonly />
+                </article>
+                <article id="tab3" style="display:none; margin-bottom:200px;">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content center">
+                            <div class="modal-header">
+                                <div class="center-login">
+                                    <img class="logo-2" src="~/img/logo.png" alt="" />
+                                </div>
+                            </div>
+                            <div class="modal-body">
+                                <div style="">
+                                    <h2 class="modal-title" style="margin-bottom:30px;">Seleccionado</h2>
+                                    <div class="login-form">
+                                        <form method="post">
+                                            <!--Aqui va lo de elegir ubicacion de sus asientos-->
+                                            <input type="hidden" asp-for="@Model.registro.emailCoordinador" id="registroEmailCoordinador" value="@emailCoordinador" />
+                                            <input type="hidden" asp-for="@Model.registro.nombreEvento" id="registroNombreEvento" value="@nombreEvento" />
+                                            <input type="hidden" asp-for="@Model.registro.fechaYHora" id="registroFechaYHora" value="@fechaYHora" />
+                                            <input type="hidden" asp-for="@Model.registro.tipoDeSector" id="registroTipo" value="" />
+
+                                            <div style="text-align:center; margin-bottom:30px; width:auto;">
+                                                <h2>Ubicacion</h2>
+                                                <input style="border:none;text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
+                                            </div>
+
+                                            <div id="asientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
+                                                <h2>Asientos</h2>
+                                                <input style="border:none;text-align:center" asp-for="@Model.registro.asientosElegidos" id="asientosEscogidos" value="" readonly />
+
+                                            </div>
+                                            <div id="cantidadAsientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
+                                                <h2>Cantidad</h2>
+                                                <input style="border:none; text-align:center" asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" readonly />
+                                            </div>
+
+                                            <div style="text-align:center; width:auto;">
+                                                <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
+                                            </div>
+                                        </form>
 
                                     </div>
-                                    <div id="cantidadAsientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
-                                        <h2>Cantidad</h2>
-                                        <input style="border:none; text-align:center" asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" readonly />
-                                    </div>
-
-                                    <div style="text-align:center; width:auto;">
-                                        <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
-                                    </div>
-                                </form>
+                                </div>
 
                             </div>
                         </div>
+                    </div>
+                </article>
+            </div>
+        </div>
 
+    }
+    else
+    {
+        <div class="modal-dialog" role="document">
+            <div class="modal-content center" style="margin-bottom:150px; margin-top:-30px;">
+                <div class="modal-header">
+                    <div class="center-login">
+                        <img class="logo-2" src="~/img/logo.png" alt="" />
                     </div>
                 </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="login-form" style="text-align:center;">
+
+                            <h2 style="margin-bottom:20px;">Agotado</h2>
+                            <a href="~/Eventos/MostrarEventos" class="primary-btn text-uppercase enroll">Volver</a>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </article>
-    </div>
-</div>
+        </div>
+    }
+}
 
 
 

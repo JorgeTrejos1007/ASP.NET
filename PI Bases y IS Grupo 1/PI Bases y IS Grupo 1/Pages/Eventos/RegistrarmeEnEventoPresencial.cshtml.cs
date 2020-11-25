@@ -100,7 +100,7 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
             if (exito)
             {
-                TempData["mensaje"] = "Transacción realizada con éxito";
+                TempData["mensaje"] = "Su registro ha sido exitoso. Se le enviara la información a su correo";
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
                 mail.From = new MailAddress("comunidad.practica.g1@gmail.com");
