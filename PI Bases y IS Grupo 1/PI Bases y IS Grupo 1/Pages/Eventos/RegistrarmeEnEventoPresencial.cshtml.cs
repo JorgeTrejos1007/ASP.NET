@@ -80,9 +80,9 @@ namespace PIBasesISGrupo1.Pages.Eventos
                     TempData["emailCoordinador"] = registro.emailCoordinador;
                     TempData["nombreEvento"] = registro.nombreEvento;
                     TempData["fechaEvento"] = registro.fechaYHora;
-                    TempData["nombreLugar"] = TempData["nombreLugar"];
+                    TempData["lugarEvento"] = TempData["nombreLugar"];
                     TempData["mensaje"] = "Ups! Hubo un error al realizar el registro de sus asientos, vuelva a intentarlo";
-                    vista = Redirect("~/Eventos/RegistrarEnEventoPresencial");
+                    vista = Redirect("~/Eventos/RegistrarmeEnEventoPresencial");
                 }
             }
             else
@@ -92,9 +92,9 @@ namespace PIBasesISGrupo1.Pages.Eventos
                     TempData["emailCoordinador"] = registro.emailCoordinador;
                     TempData["nombreEvento"] = registro.nombreEvento;
                     TempData["fechaEvento"] = registro.fechaYHora;
-                    TempData["nombreLugar"] = TempData["nombreLugar"];
+                    TempData["lugarEvento"] = TempData["nombreLugar"];
                     TempData["mensaje"] = "Ups! Hubo un error al realizar el registro de sus asientos, vuelva a intentarlo";
-                    vista = Redirect("~/Eventos/RegistrarEnEventoPresencial");
+                    vista = Redirect("~/Eventos/RegistrarmeEnEventoPresencial");
                 }
             }
 
