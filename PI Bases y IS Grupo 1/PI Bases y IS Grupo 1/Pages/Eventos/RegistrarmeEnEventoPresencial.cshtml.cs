@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using System.Net.Mail;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Eventos
 {
+    [PermisosDeVista("Miembro")]
     public class RegistrarmeEnEventoPresencialNumeradoModel : PageModel
     {
 

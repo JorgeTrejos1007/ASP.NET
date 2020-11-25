@@ -6,10 +6,11 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System;
-
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Eventos
 {
+    [PermisosDeVista("Coordinador")]
     public class CrearEventoModel : PageModel
     {
         [BindProperty]

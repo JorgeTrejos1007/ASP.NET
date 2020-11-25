@@ -8,9 +8,11 @@ using PIBasesISGrupo1.Handler;
 using PIBasesISGrupo1.Models;
 using System.Net.Mail;
 using System.ComponentModel.DataAnnotations;
+using PIBasesISGrupo1.Filters;
 
 namespace PIBasesISGrupo1.Pages.Eventos
 {
+    [PermisosDeVista("Miembro")]
     public class RegistrarmeEnEventoVirtualModel : PageModel
     {
         EventoHandler baseDeDatosHandler = new EventoHandler();
