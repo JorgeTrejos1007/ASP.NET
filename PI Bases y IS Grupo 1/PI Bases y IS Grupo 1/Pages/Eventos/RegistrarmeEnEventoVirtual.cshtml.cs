@@ -56,10 +56,11 @@ namespace PIBasesISGrupo1.Pages.Eventos
 
             if (exito)
             {
-                vista = Redirect("~/Index");
+                vista = Redirect("~/Eventos/MostrarEventos");
+                TempData["mensaje"] = "Transacción realizada con éxito";
 
-                //string url = "http://edustage.azurewebsites.net/Eventos/StreamDeEvento?nombreE=" + evento.nombre + "&nombreCanal=" + evento.nombreCanalStream;
-                string url = "https://localhost:44326/Eventos/StreamDeEvento?nombreE=" + evento.nombre.Replace(" ","%20") + "&nombreCanal=" + evento.nombreCanalStream.Replace(" ", "%20");
+                string url = "http://edustage.azurewebsites.net/Eventos/StreamDeEvento?nombreE=" + evento.nombre.Replace(" ", "%20") + "&nombreCanal=" + evento.nombreCanalStream.Replace(" ", "%20");
+                //string url = "https://localhost:44326/Eventos/StreamDeEvento?nombreE=" + evento.nombre.Replace(" ","%20") + "&nombreCanal=" + evento.nombreCanalStream.Replace(" ", "%20");
 
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -81,7 +82,12 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 SmtpServer.Send(mail);
             }
             else {
-                vista = Redirect("~/Index");
+                TempData["mensaje"] = "Ups! Usted a pedido una cantidad de cupos invalida, vuelva a intentarlo";
+                TempData["nombreEvento"] = evento.nombre;
+                TempData["fechaEvento"] = evento.fechaYHora;
+                TempData["canalDeStream"] = evento.nombreCanalStream;
+                TempData["emailCoordinador"] = evento.emailCoordinador;
+                vista = Redirect("~/Eventos/RegistrarmeEnEventoVirtual");
             }
 
             return vista;

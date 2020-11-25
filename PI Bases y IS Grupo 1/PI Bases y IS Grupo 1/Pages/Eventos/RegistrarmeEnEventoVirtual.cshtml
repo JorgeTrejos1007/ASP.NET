@@ -7,6 +7,7 @@
     var emailCoordinador = (string)ViewData["emailCoordinador"];
     var fechaYHora = (DateTime)ViewData["fechaYHora"];
     var cuposDisponibles = (int)ViewData["cuposDisponibles"];
+    var mensaje = (string)TempData["mensaje"];
 }
 
 
@@ -57,6 +58,14 @@
     </div>
 </div>
 
+@if (mensaje != null)
+{
+    <div style="text-align:center;">
+        <h2 style="display:inline-block;" class="alert alert-danger">@mensaje
+        </h2>
+    </div>
+}
+
 <div class="modal-dialog" role="document">
     <div class="modal-content center" style="margin-bottom:150px; margin-top:-30px;">
         <div class="modal-header">
@@ -69,17 +78,25 @@
                 <div class="login-form" style="text-align:center;">
                     <form method="post">
                         <!--Aqui va lo de elegir ubicacion de sus asientos-->
-                        <input type="hidden" asp-for="@Model.evento.emailCoordinador"  value="@emailCoordinador" />
+                        <input type="hidden" asp-for="@Model.evento.emailCoordinador" value="@emailCoordinador" />
                         <input type="hidden" asp-for="@Model.evento.nombre" value="@nombreEvento" />
-                        <input type="hidden" asp-for="@Model.evento.fechaYHora"  value="@fechaYHora" />
+                        <input type="hidden" asp-for="@Model.evento.fechaYHora" value="@fechaYHora" />
                         <input type="hidden" asp-for="@Model.evento.nombreCanalStream" value=@canalDeStream />
-                        <h3 style="margin-bottom:20px;">La cantidad actual de cupos disponibles para este evento es: @cuposDisponibles</h3>
-                        <br>
-                        <h3>Ingrese la cantidad de cupos deseados</h3>
-                        <input style="margin-bottom:30px;" min="1" max="@cuposDisponibles" asp-for="@Model.cuposSolicitados" /> 
-                        <br>
-                        <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
-
+                        @if (cuposDisponibles >= 1)
+                        {
+                            <h3 style="margin-bottom:20px;">La cantidad actual de cupos disponibles para este evento es: </h3>
+                            <h3>@cuposDisponibles</h3>
+                            <br>
+                            <h3>Ingrese la cantidad de cupos deseados</h3>
+                            <input style="margin-bottom:30px;" min="1" max="@cuposDisponibles" asp-for="@Model.cuposSolicitados" />
+                            <br>
+                            <input type="submit" class="primary-btn text-uppercase enroll" value="Confirmar" asp-page-handler="RegistrarmeEnElEvento" />
+                        }
+                        else
+                        {
+                            <h2 style="margin-bottom:20px;">Agotado</h2>
+                            <a href="~/Eventos/MostrarEventos" class="primary-btn text-uppercase enroll">Volver</a>
+                        }
                     </form>
 
                 </div>
