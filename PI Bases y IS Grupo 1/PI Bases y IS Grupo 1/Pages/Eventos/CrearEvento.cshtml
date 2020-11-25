@@ -36,7 +36,7 @@
             }
             <span asp-validation-for="@Model.evento.nombre" class="text-danger"></span>
             <label asp-for="@Model.evento.nombre" class="evento__label">Ingrese el nombre del evento:</label>
-            <input asp-for="@Model.evento.nombre" class="evento__input" />
+            <input asp-for="@Model.evento.nombre" class="evento__input" maxlength="100"/>
 
             <br />
             <label id="errorFecha" class="text-danger" style="display:none">Digite una fecha valida</label>
@@ -51,7 +51,7 @@
             <br />
             <span asp-validation-for="@Model.evento.descripcionDelEvento" class="text-danger"></span>
             <label asp-for="@Model.evento.descripcionDelEvento" class="evento__label">Ingrese la descripcion del evento</label>
-            <textarea rows="5" cols="70" asp-for="@Model.evento.descripcionDelEvento" style="margin:auto;max-height:150px"></textarea>
+            <textarea rows="5" cols="70" asp-for="@Model.evento.descripcionDelEvento" style="margin:auto;max-height:150px" maxlength="500"></textarea>
             <br />
 
             <span asp-validation-for="@Model.imagenEvento" class="text-danger"></span>

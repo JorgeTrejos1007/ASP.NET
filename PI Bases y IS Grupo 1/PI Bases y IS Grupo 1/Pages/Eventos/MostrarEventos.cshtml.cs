@@ -30,9 +30,16 @@ namespace PIBasesISGrupo1.Pages.Eventos
                 {
                     ViewData["EventosPresenciales"] = eventosPresenciales;
                 }
+                else {
+                    ViewData["MensajeEventosPresenciales"] = "Por el momento no existe eventos presenciales programados";
+                }
                 if (eventosPresenciales.Any())
                 {
                     ViewData["EventosVirtuales"] = eventosVirtuales;
+                }
+                else
+                {
+                    ViewData["MensajeEventosVirtuales"] = "Por el momento no existe eventos virtuales programados";
                 }
                 vista = Page();
             }

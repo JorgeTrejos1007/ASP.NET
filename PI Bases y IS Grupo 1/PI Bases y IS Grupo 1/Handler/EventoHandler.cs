@@ -92,7 +92,7 @@ namespace PIBasesISGrupo1.Handler
             List<Evento> eventos = new List<Evento>();
             string consulta = "SELECT Evento.*, Virtual.nombreCanal FROM Evento JOIN Virtual " +
                               "ON Evento.emailCoordinadorFK = Virtual.emailCoordinadorFK AND Evento.nombreEventoPK = Virtual.nombreEventoFK AND Evento.fechaYHoraPK = Virtual.fechaYHoraFK " +
-                              "WHERE fechaYHoraPK > GETDATE()";
+                              "WHERE fechaYHoraPK > GETDATE() ORDER BY fechaYhoraPK ASC";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
@@ -121,7 +121,7 @@ namespace PIBasesISGrupo1.Handler
             List<Evento> eventos = new List<Evento>();
             string consulta = "SELECT Evento.*, Presencial.lugar FROM Evento JOIN Presencial " +
                               "ON Evento.emailCoordinadorFK = Presencial.emailCoordinadorFK AND Evento.nombreEventoPK = Presencial.nombreEventoFK AND Evento.fechaYHoraPK = Presencial.fechaYHoraFK " +
-                              "WHERE fechaYHoraPK > GETDATE()";
+                              "WHERE fechaYHoraPK > GETDATE() ORDER BY fechaYhoraPK ASC";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
