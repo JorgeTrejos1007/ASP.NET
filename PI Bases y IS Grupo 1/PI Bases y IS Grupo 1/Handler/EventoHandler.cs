@@ -121,7 +121,7 @@ namespace PIBasesISGrupo1.Handler
             List<Evento> eventos = new List<Evento>();
             string consulta = "SELECT Evento.*, Presencial.lugar FROM Evento JOIN Presencial " +
                               "ON Evento.emailCoordinadorFK = Presencial.emailCoordinadorFK AND Evento.nombreEventoPK = Presencial.nombreEventoFK AND Evento.fechaYHoraPK = Presencial.fechaYHoraFK " +
-                              "WHERE fechaYHoraPK > GETDATE() ORDER BY fechaYhoraPK ASC";
+                              "WHERE Evento.nombreEventoPK IN (Select nombreEventoFK FROM Sector) and fechaYHoraPK > GETDATE() ORDER BY fechaYhoraPK ASC";
 
             SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
             DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
