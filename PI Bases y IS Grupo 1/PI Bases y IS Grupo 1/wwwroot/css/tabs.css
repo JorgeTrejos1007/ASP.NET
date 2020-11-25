@@ -36,9 +36,10 @@ ul.tabs {
         }
 
 .active {
-    background: #013364;
-    color: #fdc632;
-    font-weight:bolder;
+    background: #fdc632;
+   
+    color: #013364 !important;
+    font-weight: bolder;
 }
 
 ul.tabs li a .tab-text {
