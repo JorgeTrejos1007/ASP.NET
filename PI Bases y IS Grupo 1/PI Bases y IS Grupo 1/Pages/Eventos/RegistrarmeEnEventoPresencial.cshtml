@@ -8,6 +8,7 @@
     var fechaYHora = (DateTime)ViewData["fechaYHora"];
     var listaSectoresNumerados = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectoresNumerados"];
     var listaSectoresNoNumerado = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectoresNoNumerados"];
+    var mensaje = (string)TempData["mensaje"];
 }
 
 
@@ -49,6 +50,15 @@
 </head>
 
 @Html.AntiForgeryToken()
+
+@if (mensaje != null)
+{
+    <div style="text-align:center;">
+        <h2 style="display:inline-block;" class="alert alert-danger">
+            @mensaje
+        </h2>
+    </div>
+}
 <div class="cursos-container-2">
     <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;">
         <div class="col-lg-12 right-contents">
@@ -224,7 +234,7 @@
                                     <div id="obtenerCantidadAsientosDeSector" style="display:none">
                                         <div>
                                             <h3>La cantidad actual de asientos disponibles para este sector es: </h3>
-                                            <input type="number" id="obtenerNumeroDeAsientos" value="" style="font-size:20px;margin-left:120px ;border:none;text-align:center;" disabled />
+                                            <input type="number" id="obtenerNumeroDeAsientos" value="" style="font-size:20px;margin-left:120px ;border:none;text-align:center;" readonly />
 
                                         </div>
                                         <br />
@@ -272,17 +282,17 @@
 
                                     <div style="text-align:center; margin-bottom:30px; width:auto;">
                                         <h2>Ubicacion</h2>
-                                        <input style="border:none;text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" disabled />
+                                        <input style="border:none;text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
                                     </div>
 
                                     <div id="asientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
                                         <h2>Asientos</h2>
-                                        <input style="border:none;text-align:center" asp-for="@Model.registro.asientosElegidos" id="asientosEscogidos" value="" disabled />
+                                        <input style="border:none;text-align:center" asp-for="@Model.registro.asientosElegidos" id="asientosEscogidos" value="" readonly />
 
                                     </div>
                                     <div id="cantidadAsientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
                                         <h2>Cantidad</h2>
-                                        <input style="border:none; text-align:center" asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" disabled />
+                                        <input style="border:none; text-align:center" asp-for="@Model.registro.cantidadAsientos" id="cantidadAsientos" value="" readonly />
                                     </div>
 
                                     <div style="text-align:center; width:auto;">

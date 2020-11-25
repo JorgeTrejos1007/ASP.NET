@@ -65,14 +65,11 @@ namespace PIBasesISGrupo1.Pages.Eventos
         }
 
         public IActionResult OnPostRegistrarmeEnElEvento() {
-            IActionResult vista;
+            IActionResult vista = Redirect("~/Eventos/MostrarEventos");
 
-            if(registro.tipoDeSector == "Numerado") {
+            if (registro.tipoDeSector == "Numerado") {
                 registro.asientosDeseados = convertirAsientosElegidosALista(registro.asientosElegidos);
             }
-            
-
-            vista = Redirect("~/index");
 
             var miembro = Sesion.obtenerDatosDeSesion(HttpContext.Session, "Miembro");
             bool exito = true;
@@ -80,19 +77,30 @@ namespace PIBasesISGrupo1.Pages.Eventos
             if (registro.tipoDeSector == "Numerado") {
                 exito = baseDeDatosHandler.transaccionReservarAsientosNumerados(registro, miembro.email);
                 if (exito == false) {
-                    vista = Redirect("~/index");
+                    TempData["emailCoordinador"] = registro.emailCoordinador;
+                    TempData["nombreEvento"] = registro.nombreEvento;
+                    TempData["fechaEvento"] = registro.fechaYHora;
+                    TempData["nombreLugar"] = TempData["nombreLugar"];
+                    TempData["mensaje"] = "Ups! Hubo un error al realizar el registro de sus asientos, vuelva a intentarlo";
+                    vista = Redirect("~/Eventos/RegistrarEnEventoPresencial");
                 }
             }
             else
             {
                 exito = baseDeDatosHandler.transaccionReservarAsientosNoNumerados(registro);
                 if (exito == false) {
-                    vista = Redirect("~/index");
+                    TempData["emailCoordinador"] = registro.emailCoordinador;
+                    TempData["nombreEvento"] = registro.nombreEvento;
+                    TempData["fechaEvento"] = registro.fechaYHora;
+                    TempData["nombreLugar"] = TempData["nombreLugar"];
+                    TempData["mensaje"] = "Ups! Hubo un error al realizar el registro de sus asientos, vuelva a intentarlo";
+                    vista = Redirect("~/Eventos/RegistrarEnEventoPresencial");
                 }
             }
 
             if (exito)
             {
+                TempData["mensaje"] = "Transacción realizada con éxito";
                 MailMessage mail = new MailMessage();
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
                 mail.From = new MailAddress("comunidad.practica.g1@gmail.com");
