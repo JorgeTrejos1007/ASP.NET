@@ -338,6 +338,57 @@ namespace PIBasesISGrupo1.Handler
             return cantidadAsientos;
         }
 
+        public int cantidadAsientosEnSectorNoNumeradosDisponibles(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            int cantidadAsientos = 0;
+            string consulta = "SELECT SUM(numeroDeAsientos) AS cantidadAsientosDisponibles FROM Sector  " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND tipo = 'No numerado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                if(columna["cantidadAsientosDisponibles"] != DBNull.Value)
+                {
+                    cantidadAsientos = Convert.ToInt32(columna["cantidadAsientosDisponibles"]);
+                }
+                else
+                {
+                    cantidadAsientos = 0;
+                }
+            }
+
+            return cantidadAsientos;
+        }
+
+        public int cantidadAsientosEnSectorNumeradosDisponibles(string emailCoordinador, string nombreEvento, DateTime fechaYHora)
+        {
+            int cantidadAsientos = 0;
+            string consulta = "SELECT COUNT(1) cantidadAsientosDisponibles FROM AsientoNumerado  " +
+                              "WHERE emailCoordinadorFK = @email AND nombreEventoFK = @nombreEvento AND fechaYHoraFK = @fechaYHora AND estado = 'No reservado'";
+
+            SqlCommand comandoParaConsulta = baseDeDatos.crearComandoParaConsulta(consulta);
+
+            comandoParaConsulta.Parameters.AddWithValue("@email", emailCoordinador);
+            comandoParaConsulta.Parameters.AddWithValue("@nombreEvento", nombreEvento);
+            comandoParaConsulta.Parameters.AddWithValue("@fechaYHora", cambiarFormatoFecha(fechaYHora));
+
+            DataTable consultaFormatoTabla = baseDeDatos.crearTablaConsulta(comandoParaConsulta);
+
+            foreach (DataRow columna in consultaFormatoTabla.Rows)
+            {
+                cantidadAsientos = Convert.ToInt32(columna["cantidadAsientosDisponibles"]);
+            }
+
+            return cantidadAsientos;
+        }
+
         public int cuposDisponiblesEventoVirtual(string emailCoordinador, string nombreEvento, DateTime fechaYHora, string nombreCanal)
         {
             int cuposDisponibles = 0;

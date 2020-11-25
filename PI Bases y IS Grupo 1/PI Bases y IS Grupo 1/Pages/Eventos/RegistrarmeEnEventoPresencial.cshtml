@@ -9,6 +9,8 @@
     var listaSectoresNumerados = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectoresNumerados"];
     var listaSectoresNoNumerado = (List<PIBasesISGrupo1.Models.Sector>)ViewData["listaSectoresNoNumerados"];
     var mensaje = (string)TempData["mensaje"];
+    var cantidadAsientosNoNumerado = (int)ViewData["cantidadAsientosDisponiblesNoNumerado"];
+    var cantidadAsientosNumerado = (int)ViewData["cantidadAsientosDisponiblesNumerado"];
 }
 
 
@@ -77,13 +79,13 @@
 </div>
 
 @{
-    if ((listaSectoresNumerados.Count > 0) || (listaSectoresNoNumerado.Count > 0))
+    if ((cantidadAsientosNoNumerado > 0) || (cantidadAsientosNumerado > 0))
     {
         <div class="cursos-container-2" style="position:relative;bottom:120px">
             <div class="cajita-cursos col-lg-12" style="width:80%; margin-left:10%;background:transparent;height:60px;border:none">
 
                 <ul class="event__tabs">
-                    <li style="background:#fdc632;" id="event_tab1"><span class="event__tab-text" id="tab_text1" style="color:#002347"> 1. Cantidad de asientos</span> </li>
+                    <li style="background:#fdc632;" id="event_tab1"><span class="event__tab-text" id="tab_text1" style="color:#002347"> 1. Elija el tipo de sector</span> </li>
                     <li id="event_tab2"><span class="event__tab-text" id="tab_text2"> 2. Elija sus asientos </span></li>
                     <li id="event_tab3"><span class="event__tab-text" id="tab_text3"> 3. Confirme registro </span></li>
                 </ul>
@@ -287,7 +289,7 @@
 
                                             <div style="text-align:center; margin-bottom:30px; width:auto;">
                                                 <h2>Ubicacion</h2>
-                                                <input style="border:none;text-align:center" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
+                                                <input style="border:none;text-align:center;width:350px" asp-for="@Model.registro.nombreSector" id="ubicacionEscogida" value="" readonly />
                                             </div>
 
                                             <div id="asientosElegidos" style="display:none; text-align:center; margin-bottom:30px; width:auto;">
