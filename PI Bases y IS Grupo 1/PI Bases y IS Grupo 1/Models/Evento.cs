@@ -10,7 +10,7 @@ namespace PIBasesISGrupo1.Models
     {
         [Required(ErrorMessage = "Es necesario que ingreses el nombre del evento")]
         [Display(Name = "Ingrese el Nombre del evento")]
-        [RegularExpression(@"([a-z]|[A-Z])+.*", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [RegularExpression(@"^([a-z]|[A-Z]|[0-9])+.*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         public string nombre { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingreses la fecha del evento")]
@@ -18,7 +18,7 @@ namespace PIBasesISGrupo1.Models
         public DateTime fechaYHora { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingreses la información sobre el evento")]
-        [RegularExpression(@"([a-z]|[A-Z])+.*", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [RegularExpression(@"^([a-z]|[A-Z]|[0-9])+.*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         [Display(Name = "Ingrese informacion del evento")]
         public string descripcionDelEvento{ get; set; }
 
@@ -28,12 +28,12 @@ namespace PIBasesISGrupo1.Models
 
         [Required(ErrorMessage = "Es necesario que ingrese el nombre del canal donde se realizara el stream")]
         [Display(Name = "Ingrese el nombre del canal de Twitch donde se va a realizar la transimision del evento")]
-        [RegularExpression(@"^\s*[a-zA-Z0-9][a-zA-Z-0-9\s]*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [RegularExpression(@"^.+$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         public string nombreCanalStream { get; set; }
 
         [Required(ErrorMessage = "Es necesario que ingrese el lugar donde será el evento")]
         [Display(Name = "Ingrese la direccion de dónde se va a llevar a cabo el evento")]
-        [RegularExpression(@"([a-z]|[A-Z])+.*", ErrorMessage = "Por favor ingrese solo letras y numeros")]
+        [RegularExpression(@"^([a-z]|[A-Z]|[0-9])+.*$", ErrorMessage = "Por favor ingrese solo letras y numeros")]
         public string lugar { get; set; }
 
         [Required(ErrorMessage = "Es necesario que elija el tipo de evento")]
